@@ -14,7 +14,7 @@ The skill builder uses ElevenLabs Conversational AI. The agent is configured in 
 - System prompt:
 
 ```text
-You are a skill builder assistant for channel47. The user has already told you:
+You are a skill builder assistant for Channel 47. The user has already told you:
 - Their role: {{user_role}}
 - Their platform: {{user_platform}}
 - Their workflow: {{user_workflow}}

@@ -5,9 +5,6 @@
  * Accent bar top, compound hover.
  */
 
-import Badge from './ui/Badge.astro';
-import Separator from './ui/Separator.astro';
-
 interface Props {
   title: string;
   description: string;
@@ -32,8 +29,11 @@ const isBreakdown = tag === 'breakdown';
 <a href={`/notes/${slug}`} class:list={['content-card block py-5 border-b border-smoke group', className]}>
   <div class="content-card__bar w-6 h-0.5 bg-signal/40 mb-3 transition-all duration-200 group-hover:w-10 group-hover:bg-signal" aria-hidden="true"></div>
   <div class="flex items-center gap-3 mb-2">
-    <Badge variant="default" class={isBreakdown ? 'bg-[var(--signal-dim-alpha)] !text-signal font-semibold' : 'font-semibold'}>{tagLabel}</Badge>
-    <Separator orientation="vertical" />
+    <span class:list={[
+      'font-mono text-[10px] font-semibold tracking-[0.15em] uppercase px-2 py-0.5 rounded-tight',
+      isBreakdown ? 'bg-[var(--signal-dim-alpha)] text-signal' : 'bg-soot text-stone'
+    ]}>{tagLabel}</span>
+    <span class="w-px h-3 bg-ash" aria-hidden="true"></span>
     <time class="font-mono text-[11px] text-stone tracking-wide" datetime={date.toISOString()}>{formatted}</time>
   </div>
   <h3 class="content-card__title mb-1">{title}</h3>

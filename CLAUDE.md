@@ -1,4 +1,4 @@
-# channel47 Site
+# Channel 47 Site
 
 Astro 5 → channel47.dev via Vercel. Static output + one serverless endpoint (`api/subscribe.ts`).
 
@@ -15,7 +15,7 @@ Tests use `node:test` (no framework). Test files in `tests/`.
 
 ## Strategy Docs
 
-- `../.claude/product-marketing-context.md` — single source of truth for positioning, competitive landscape, audience, differentiation, messaging, voice, proof points, metrics (lives at ch47 root, not site-specific)
+- `.claude/product-marketing-context.md` — single source of truth for positioning, competitive landscape, audience, differentiation, messaging, voice, proof points, metrics
 
 ## Environment
 
@@ -23,7 +23,7 @@ Tests use `node:test` (no framework). Test files in `tests/`.
 
 ## Pages
 
-- `/` — Homepage: Claude plugins for paid media (hero + proof bar + plugin directory + credibility + rupture + product callout + CTA)
+- `/` — Homepage: AI plugins for media buyers (hero + proof bar + plugin directory + credibility + rupture + product callout + CTA)
 - `/build` — 301 redirect to `/`
 - `/tools` — 301 redirect to `/`
 - `/plugins/` — Plugins hub — filtered listing of plugins

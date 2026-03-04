@@ -11,7 +11,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import EmailSignup from '../components/EmailSignup.astro';
-import ArrowLink from '../components/ui/ArrowLink.astro';
 
 const SKOOL_LINK = 'https://www.skool.com/the-vibe-marketers/about?ref=a005b4a2e4e9420e814a94e5e1c2e708';
 
@@ -30,7 +29,7 @@ const schema = {
 ---
 
 <BaseLayout
-  title="Skill Remix Lab — channel47"
+  title="Skill Remix Lab — Channel 47"
   description="Monthly live build sessions. Pick a skill. Break it down. Rebuild it yours. Free inside The Vibe Marketers."
   schema={schema}
 >
@@ -112,7 +111,9 @@ const schema = {
         <p class="font-mono text-sm text-ink/70 leading-[1.7] tracking-wide mb-5 max-w-[480px]">
           Skill and date announced inside the community. Members get first access.
         </p>
-        <ArrowLink href={SKOOL_LINK} variant="signal" external>Join The Vibe Marketers</ArrowLink>
+        <a class="font-mono text-[11px] font-semibold tracking-widest uppercase text-signal hover:text-[#D97706] transition-colors duration-100" href={SKOOL_LINK} target="_blank" rel="noopener">
+          Join The Vibe Marketers &rarr;
+        </a>
       </div>
     </section>
 

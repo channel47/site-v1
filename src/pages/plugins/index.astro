@@ -20,8 +20,6 @@ import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
 import ToolCard from '../../components/ToolCard.astro';
 import EmailSignup from '../../components/EmailSignup.astro';
-import ArrowLink from '../../components/ui/ArrowLink.astro';
-import InstallBlock from '../../components/ui/InstallBlock.astro';
 
 const allTools = await getCollection('tools');
 const plugins = allTools.filter(t => t.data.type === 'plugin');
@@ -50,7 +48,7 @@ const schema = [
 ---
 
 <BaseLayout
-  title="Plugins for Paid Search, Meta Ads & TikTok — channel47"
+  title="Plugins for Paid Search, Meta Ads & TikTok — Channel 47"
   description="Free, open-source Claude Code plugins for Google Ads, Bing Ads, Meta Ads, and TikTok. Built from managing 25+ ad accounts daily. Install and run."
   schema={schema}
 >
@@ -67,8 +65,13 @@ const schema = [
         <p class="hero__sub">
           Each plugin bundles skills, API connections, and safety hooks for one ad platform. Install with one command. Everything just works.
         </p>
-        <div class="hero-install" data-section="install">
-          <InstallBlock command="/plugin marketplace add channel47/plugins" />
+        <div class="install-block" data-section="install">
+          <code class="install-block__cmd">/plugin marketplace add channel47/plugins</code>
+          <button
+            class="install-block__copy"
+            data-install="/plugin marketplace add channel47/plugins"
+            aria-label="Copy install command"
+          >Copy</button>
         </div>
       </div>
     </section>
@@ -77,7 +80,7 @@ const schema = [
     <section class="py-[clamp(40px,6vh,60px)] border-t border-smoke" data-reveal>
       <div class="wrap">
         <p class="font-mono text-sm text-dust leading-[1.75] tracking-wide max-w-[600px]">
-          channel47 plugins are free, open-source packages for Claude Code that give AI direct access to ad platform APIs. The paid-search plugin (v7.0.0) connects to Google Ads and Bing Ads with six skills for daily briefs, waste detection, search term classification, and Performance Max transparency. Built by Jackson Dean from managing 25+ accounts daily.
+          Channel 47 plugins are free, open-source packages for Claude Code that give AI direct access to ad platform APIs. The paid-search plugin (v7.0.0) connects to Google Ads and Bing Ads with six skills for daily briefs, waste detection, search term classification, and Performance Max transparency. Built by Jackson Dean from managing 25+ accounts daily.
         </p>
       </div>
     </section>
@@ -119,7 +122,9 @@ const schema = [
         <h2 class="font-display text-ink text-[clamp(1.5rem,3vw,2.25rem)] font-semibold tracking-tight leading-[1.15] mb-4">
           One skill caught $3K/month in wasted spend across two accounts.
         </h2>
-        <ArrowLink href="/plugins/paid-search" variant="signal">See the paid-search plugin</ArrowLink>
+        <a class="font-mono text-[11px] font-semibold tracking-widest uppercase text-signal hover:text-[#D97706] transition-colors duration-100" href="/plugins/paid-search">
+          See the paid-search plugin &rarr;
+        </a>
       </div>
     </section>
 
@@ -142,15 +147,69 @@ const schema = [
   </main>
 </BaseLayout>
 
+<script>
+  import { initCopyButtons } from '../../scripts/copy-to-clipboard';
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCopyButtons);
+  } else {
+    initCopyButtons();
+  }
+  document.addEventListener('astro:page-load', initCopyButtons);
+</script>
+
 <style>
-  .hero-install {
+  .install-block {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
     margin-top: 32px;
     opacity: 0;
   }
-  :global(.hero.is-visible) .hero-install {
+  :global(.hero.is-visible) .install-block {
     animation: fade-up 400ms var(--ease-out) 900ms forwards;
   }
+  .install-block__cmd {
+    font-family: var(--font-family-mono);
+    font-size: clamp(13px, 1.4vw, 15px);
+    color: var(--color-chalk);
+    letter-spacing: 0.02em;
+    user-select: all;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--color-ash);
+    padding-bottom: 4px;
+  }
+  .install-block__copy {
+    font-family: var(--font-family-mono);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-signal);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: color 100ms var(--ease-sharp);
+    white-space: nowrap;
+  }
+  .install-block__copy:hover {
+    color: var(--color-signal-hover);
+  }
+  .install-block__copy:focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 4px;
+    border-radius: var(--radius-tight);
+  }
+  @media (max-width: 480px) {
+    .install-block {
+      flex-direction: column;
+      gap: 8px;
+    }
+    .install-block__cmd {
+      font-size: 12px;
+    }
+  }
   @media (prefers-reduced-motion: reduce) {
-    .hero-install { opacity: 1; }
+    .install-block { opacity: 1; }
   }
 </style>

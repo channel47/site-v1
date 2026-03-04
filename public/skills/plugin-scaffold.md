@@ -1,6 +1,6 @@
 # Plugin Scaffold
 
-Directory structure and plugin.json template for new channel47 plugins.
+Directory structure and plugin.json template for new Channel 47 plugins.
 
 ---
 
@@ -97,6 +97,6 @@ profession-name/
 
 ## Resources
 
-- [channel47 Ecosystem](https://github.com/channel47/plugins) — browse existing plugins
+- [Channel 47 Ecosystem](https://github.com/channel47/plugins) — browse existing plugins
 - [Contributing Guide](https://github.com/channel47/plugins/blob/main/CONTRIBUTING.md) — submit your plugin
 - [skill-template.md](/skills/skill-template.md) — starter template for individual skills
