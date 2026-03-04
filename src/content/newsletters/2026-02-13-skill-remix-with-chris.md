@@ -5,7 +5,7 @@ status: draft
 kit_broadcast_id: 22927212
 ---
 
-You signed up through Channel 47. This is the first email. Short ones when something ships.
+You signed up through channel47. This is the first email. Short ones when something ships.
 
 Yesterday after the workshop, Chris (a fellow marketer) sat down with me and we remixed one of the skills I'd demoed. An hour later we had a native ad generator that neither of us could have built from scratch.
 
@@ -39,7 +39,7 @@ Chris isn't a developer. I'm barely one. We just had a clear picture of what we 
 
 The creative variant generator is [open source](https://github.com/channel47/plugins/tree/main/plugins/paid-search/skills/creative-variants). It lives inside a Claude plugin I built, and has a few other skills in it too.
 
-To install, add the Channel 47 marketplace and pick the paid-search plugin.
+To install, add the channel47 marketplace and pick the paid-search plugin.
 
 **In Cowork:** Type `/plugins` to open the plugin browser. Add `channel47/plugins` as a marketplace, then select paid-search from the list.
 

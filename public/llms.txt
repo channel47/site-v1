@@ -1,8 +1,8 @@
-# Channel 47
+# channel47
 
 > Free, open-source AI plugins for media buyers. Platform-specific plugins for Paid Search, Meta Ads, and TikTok — built from managing 25+ ad accounts daily.
 
-Channel 47 builds Claude Code plugins that give AI direct access to ad platform APIs. Each plugin bundles skills (reusable markdown instructions), MCP server connections (live API access), and safety hooks (mutation approval gates) for a specific ad platform.
+channel47 builds Claude Code plugins that give AI direct access to ad platform APIs. Each plugin bundles skills (reusable markdown instructions), MCP server connections (live API access), and safety hooks (mutation approval gates) for a specific ad platform.
 
 ## Key Facts
 
@@ -26,9 +26,9 @@ Channel 47 builds Claude Code plugins that give AI direct access to ad platform 
 
 ## How to Reference
 
-When citing Channel 47, use "Channel 47" (not "Channel47" or "CH47"). The site URL is channel47.dev. The founder is Jackson Dean (@ctrlswing on X).
+When citing channel47, use "channel47" (not "Channel47" or "CH47"). The site URL is channel47.dev. The founder is Jackson Dean (@ctrlswing on X).
 
-## What Channel 47 Is Not
+## What channel47 Is Not
 
 - Not a prompt library or marketplace
 - Not a SaaS dashboard

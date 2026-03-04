@@ -4,6 +4,9 @@
  * - compact: Homepage directory row (index, name, type badge, arrow, no description)
  * - default: Hub pages (full row with description, uses directory-row shared CSS)
  */
+import StatusBadge from './ui/StatusBadge.astro';
+import TypeBadge from './ui/TypeBadge.astro';
+
 interface Props {
   name: string;
   description: string;
@@ -16,19 +19,6 @@ interface Props {
 
 const { name, description, type, href, index, variant = 'default', status } = Astro.props;
 
-const typeLabels: Record<string, string> = {
-  skill: 'SKILL',
-  mcp: 'MCP',
-  subagent: 'SUBAGENT',
-  plugin: 'PLUGIN',
-};
-
-const statusLabels: Record<string, string> = {
-  live: 'Live',
-  dev: 'In Dev',
-  soon: 'Soon',
-};
-
 const indexStr = index ? String(index).padStart(3, '0') : undefined;
 ---
 
@@ -38,7 +28,7 @@ const indexStr = index ? String(index).padStart(3, '0') : undefined;
     <a href={href} class="directory-row__link">
       {indexStr && <span class="directory-row__idx">{indexStr}</span>}
       <span class="directory-row__name">{name}</span>
-      <span class="directory-row__type">{typeLabels[type]}</span>
+      <span class="hidden sm:inline-block"><TypeBadge type={type} /></span>
     </a>
   </li>
 ) : (
@@ -53,15 +43,8 @@ const indexStr = index ? String(index).padStart(3, '0') : undefined;
         </div>
       </div>
       <div class="flex items-center gap-3 shrink-0">
-        {status && (
-          <span class:list={[
-            'directory-row__badge',
-            status === 'live' && 'directory-row__badge--live',
-            status === 'dev' && 'directory-row__badge--dev',
-            status === 'soon' && 'directory-row__badge--soon',
-          ]}>{statusLabels[status]}</span>
-        )}
-        <span class="directory-row__type">{typeLabels[type]}</span>
+        {status && <StatusBadge status={status} />}
+        <TypeBadge type={type} />
       </div>
     </a>
   </div>

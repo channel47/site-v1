@@ -1,0 +1,33 @@
+---
+/**
+ * ArrowLink — mono uppercase link with trailing arrow.
+ * default: signal color (12px)
+ * signal: signal color with hover dim (11px, semibold, wider tracking)
+ * muted: stone color with signal hover (11px, semibold)
+ */
+interface Props {
+  href: string;
+  variant?: 'default' | 'signal' | 'muted';
+  class?: string;
+  external?: boolean;
+}
+
+const { href, variant = 'default', class: className, external } = Astro.props;
+
+const variantClasses: Record<string, string> = {
+  default: 'text-[12px] tracking-[0.1em] text-signal hover:opacity-80',
+  signal: 'text-[11px] font-semibold tracking-widest text-signal hover:text-[var(--color-signal-dim)]',
+  muted: 'text-[11px] font-semibold tracking-[0.1em] text-stone hover:text-signal',
+};
+---
+
+<a
+  data-slot="arrow-link"
+  href={href}
+  class:list={[
+    'font-mono uppercase transition-colors duration-100 focus-visible:outline-2 focus-visible:outline-signal focus-visible:outline-offset-2 rounded-tight',
+    variantClasses[variant],
+    className,
+  ]}
+  {...external ? { target: '_blank', rel: 'noopener' } : {}}
+><slot /> <span aria-hidden="true">&rarr;</span></a>

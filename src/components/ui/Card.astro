@@ -1,0 +1,25 @@
+---
+/**
+ * Card — surface container with variant styles.
+ * default: border-smoke bg-void
+ * elevated: border-ash bg-soot
+ * interactive: border-smoke bg-void + card-hover
+ */
+interface Props {
+  variant?: 'default' | 'elevated' | 'interactive';
+  class?: string;
+  as?: string;
+}
+
+const { variant = 'default', class: className, as: Tag = 'div' } = Astro.props;
+
+const variantClasses: Record<string, string> = {
+  default: 'border border-smoke bg-void rounded-tight',
+  elevated: 'border border-ash bg-soot rounded-tight',
+  interactive: 'border border-smoke bg-void rounded-tight card-hover',
+};
+---
+
+<Tag data-slot="card" class:list={[variantClasses[variant], className]}>
+  <slot />
+</Tag>

@@ -1,0 +1,12 @@
+---
+import ShowcaseLayout from '../layouts/ShowcaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import ToolShowcase from '../components/showcase/ToolShowcase';
+---
+
+<ShowcaseLayout title="Tools — channel47">
+  <Nav />
+  <main id="main-content">
+    <ToolShowcase client:load />
+  </main>
+</ShowcaseLayout>

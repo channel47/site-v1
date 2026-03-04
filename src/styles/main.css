@@ -48,6 +48,14 @@
   /* ── Radius ── */
   --radius-tight: 2px;
 
+  /* ── Shadows ── */
+  --shadow-signal-sm: 0 2px 12px rgba(245, 158, 11, 0.25);
+  --shadow-signal-md: 0 4px 20px rgba(245, 158, 11, 0.3);
+
+  /* ── Alpha Surfaces ── */
+  --color-white-alpha-5: rgba(255, 255, 255, 0.05);
+  --color-white-alpha-10: rgba(255, 255, 255, 0.10);
+
   /* ── Animation ── */
   --animate-fade-up: fade-up 0.4s var(--ease-out) forwards;
   --animate-fade-in: fade-in 0.4s var(--ease-out) forwards;
@@ -68,7 +76,13 @@
   --signal-dim-alpha: rgba(245, 158, 11, 0.12);
 
   /* Z-index */
+  --z-nav: 100;
+  --z-toast: 9998;
   --z-progress: 9999;
+
+  /* Text sizes */
+  --text-badge: 10px;
+  --text-label: 11px;
 }
 
 /* ═══════════════════════════════════════════
@@ -312,21 +326,6 @@
     max-width: 580px;
     margin-bottom: 32px;
   }
-  .credibility__link {
-    font-family: var(--font-family-mono);
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-signal);
-    transition: opacity var(--dur-instant) var(--ease-sharp);
-  }
-  .credibility__link:hover { opacity: 0.8; }
-  .credibility__link:focus-visible {
-    outline: 2px solid var(--color-signal);
-    outline-offset: 2px;
-    border-radius: var(--radius-tight);
-  }
-
   /* ── Directory Preview (HIGH density) ── */
   .directory { padding: clamp(72px, 12vh, 120px) 0 clamp(80px, 14vh, 140px); border-top: 1px solid var(--color-smoke); }
   .directory__header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 32px; }
@@ -337,16 +336,6 @@
     letter-spacing: -0.02em;
     color: var(--color-chalk);
   }
-  .directory__link {
-    font-family: var(--font-family-mono);
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-signal);
-    transition: opacity var(--dur-instant) var(--ease-sharp);
-  }
-  .directory__link:hover { opacity: 0.8; }
-  .directory__link:focus-visible { outline: 2px solid var(--color-signal); outline-offset: 2px; border-radius: var(--radius-tight); }
   .directory__list { list-style: none; }
 
   /* ── Directory Row (compact homepage variant) ── */
@@ -406,16 +395,6 @@
   .directory-row__link:hover .directory-row__name {
     color: var(--color-chalk);
   }
-  .directory-row__type {
-    padding: 3px 8px;
-    border: 1px solid var(--color-ash);
-    border-radius: var(--radius-tight);
-    font-family: var(--font-family-mono);
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-dust);
-  }
   .directory-row__desc {
     font-family: var(--font-family-mono);
     font-size: 14px;
@@ -453,29 +432,6 @@
     padding: 20px 0;
   }
 
-  /* ── Directory Row Badges ── */
-  .directory-row__badge {
-    padding: 3px 8px;
-    border-radius: var(--radius-tight);
-    font-family: var(--font-family-mono);
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-  .directory-row__badge--live {
-    background: var(--color-signal);
-    color: var(--color-void);
-  }
-  .directory-row__badge--dev {
-    border: 1px solid var(--color-ash);
-    color: var(--color-dust);
-  }
-  .directory-row__badge--soon {
-    border: 1px solid var(--color-smoke);
-    color: var(--color-stone);
-  }
-
   /* ── Rupture (light surface inversion) ── */
   .rupture {
     background: var(--color-canvas);
@@ -511,18 +467,6 @@
     max-width: 580px;
     margin-bottom: 24px;
   }
-  .rupture__link {
-    font-family: var(--font-family-mono);
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--color-signal);
-    transition: color var(--dur-instant) var(--ease-sharp);
-  }
-  .rupture__link:hover { color: var(--color-signal-dim); }
-  .rupture__link:focus-visible { outline: 2px solid var(--color-signal); outline-offset: 2px; border-radius: var(--radius-tight); }
-
   /* ── Product Callout (MEDIUM density) ── */
   .product { padding: clamp(80px, 14vh, 160px) 0; border-top: 1px solid var(--color-smoke); }
   .product__card {
@@ -683,7 +627,7 @@
   }
   .btn-signal:hover {
     background: var(--color-signal-hover);
-    box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
+    box-shadow: var(--shadow-signal-md);
     transform: translateY(-1px);
   }
   .btn-signal:active { transform: translateY(0); }
@@ -775,7 +719,7 @@
   }
   .email-signup__submit:hover {
     background: var(--color-signal-hover);
-    box-shadow: 0 2px 12px rgba(245, 158, 11, 0.25);
+    box-shadow: var(--shadow-signal-sm);
     transform: translateY(-1px);
   }
   .email-signup__submit:active { transform: translateY(0); }
@@ -822,7 +766,7 @@
   .email-form .email-signup__submit:hover,
   .email-form__btn:hover {
     background: var(--color-signal-hover);
-    box-shadow: 0 2px 12px rgba(245, 158, 11, 0.3);
+    box-shadow: var(--shadow-signal-sm);
     transform: none;
   }
 
@@ -921,6 +865,7 @@
   }
 
   /* ── FAQ Accordion ── */
+  .faq-item { interpolate-size: allow-keywords; }
   .faq-item:first-child { border-top: 1px solid var(--color-smoke); }
   .faq-item__q {
     font-family: var(--font-family-display);
@@ -953,6 +898,17 @@
   }
   .faq-item__q:hover { color: var(--color-chalk); }
   .faq-item__q:focus-visible { outline: 2px solid var(--color-signal); outline-offset: 2px; border-radius: var(--radius-tight); }
+  .faq-item__a-wrap {
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: height var(--dur-measured) var(--ease-out),
+                opacity var(--dur-quick) var(--ease-out);
+  }
+  .faq-item[open] .faq-item__a-wrap {
+    height: auto;
+    opacity: 1;
+  }
   .faq-item__a {
     font-family: var(--font-family-mono);
     font-size: 13px;
@@ -1073,7 +1029,6 @@
 @media (max-width: 768px) {
   .proof-bar { grid-template-columns: repeat(2, 1fr); }
   .directory-row__link:not(.directory-row__link--full) { grid-template-columns: 2.5rem 1fr auto; }
-  .directory-row__link:not(.directory-row__link--full) .directory-row__type { display: none; }
   .email-form {
     flex-direction: column;
     gap: 8px;

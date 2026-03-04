@@ -28,7 +28,7 @@ I'd been cramming both jobs into one skill. Worked fine for Bing alone. The mome
 
 By the afternoon I'd pulled the connection piece out. Built a Bing Ads MCP server and packaged it into the media buyer plugin so it installs automatically. No dependency hunting. No manual config.
 
-That's the architecture I'm building with Channel 47. Plugins that package entire professions. The MCP servers handle connections. The skills carry domain knowledge. And sub-agents run workflows that tie them together. The media buyer plugin is Season 1, and every future profession follows the same structure.
+That's the architecture I'm building with channel47. Plugins that package entire professions. The MCP servers handle connections. The skills carry domain knowledge. And sub-agents run workflows that tie them together. The media buyer plugin is Season 1, and every future profession follows the same structure.
 
 None of this came from reading docs. I learned it from four failed connection attempts on a Monday morning.
 

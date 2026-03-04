@@ -43,7 +43,7 @@ Chris isn't a developer. I'm barely one. We just had a clear picture of what we 
 
 The creative variant generator is [open source](https://github.com/channel47/plugins/tree/main/plugins/paid-search/skills/creative-variants). It lives inside a Claude plugin, and has a few other skills in it too.
 
-To install, add the Channel 47 marketplace and pick the paid-search plugin.
+To install, add the channel47 marketplace and pick the paid-search plugin.
 
 **In Cowork:** Type `/plugins` to open the plugin browser. Add `channel47/plugins` as a marketplace, then select paid-search from the list.
 

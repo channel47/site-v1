@@ -13,28 +13,27 @@ import Footer from '../components/Footer.astro';
 import EmailSignup from '../components/EmailSignup.astro';
 import ProductCallout from '../components/ProductCallout.astro';
 import ToolCard from '../components/ToolCard.astro';
-
-const SKOOL_LINK = 'https://www.skool.com/the-vibe-marketers/about?ref=a005b4a2e4e9420e814a94e5e1c2e708';
+import ArrowLink from '../components/ui/ArrowLink.astro';
 
 const allTools = await getCollection('tools');
 const skills = allTools.filter(t => t.data.type === 'skill');
 
 const faqs = [
   {
-    q: 'What is Channel 47?',
-    a: 'Channel 47 is a free, open-source platform that builds AI skills and plugins for marketers who build. Each skill is a focused AI workflow you can install with one command. Every tool is built by Jackson Dean from managing 25+ ad accounts daily.',
+    q: 'What is channel47?',
+    a: 'channel47 is a free, open-source platform that builds AI skills and plugins for marketers who build. Each skill is a focused AI workflow you can install with one command. Every tool is built by Jackson Dean from managing 25+ ad accounts daily.',
   },
   {
     q: "What's the difference between a skill and a plugin?",
     a: 'A skill is a single, focused AI workflow — install it and run it today. A plugin bundles multiple skills, API connections, and safety hooks into one package for a specific ad platform. Skills are the entry point. Plugins are the depth layer.',
   },
   {
-    q: 'Are Channel 47 skills free?',
-    a: 'Yes. All Channel 47 skills and plugins are free and open source on GitHub. The paid-search plugin (Google Ads and Bing Ads) is live at v7.0.0 with six skills included. PaidBrief, a commercial product built from the same ecosystem, is available separately at paidbrief.com.',
+    q: 'Are channel47 skills free?',
+    a: 'Yes. All channel47 skills and plugins are free and open source on GitHub. The paid-search plugin (Google Ads and Bing Ads) is live at v7.0.0 with six skills included. PaidBrief, a commercial product built from the same ecosystem, is available separately at paidbrief.com.',
   },
   {
-    q: 'What ad platforms does Channel 47 support?',
-    a: 'Channel 47 currently supports Google Ads and Bing Ads through the paid-search plugin, which includes six skills and two MCP servers for live API access. Meta Ads (Facebook and Instagram) and TikTok Ads plugins are in active development.',
+    q: 'What ad platforms does channel47 support?',
+    a: 'channel47 currently supports Google Ads and Bing Ads through the paid-search plugin, which includes six skills and two MCP servers for live API access. Meta Ads (Facebook and Instagram) and TikTok Ads plugins are in active development.',
   },
   {
     q: 'How do I install a skill?',
@@ -45,10 +44,10 @@ const faqs = [
 const schema = [
   {
     '@type': 'Organization',
-    'name': 'Channel 47',
+    'name': 'channel47',
     'url': 'https://channel47.dev',
     'logo': 'https://channel47.dev/logo-square.png',
-    'description': 'Free AI skills and plugins for marketers who build. Install a skill and run it today, or learn to build your own at monthly workshops. Built from managing 25+ ad accounts daily.',
+    'description': 'Free AI skills and plugins for marketers who build. Install a skill and run it today, or learn to build your own. Built from managing 25+ ad accounts daily.',
     'founder': {
       '@type': 'Person',
       'name': 'Jackson Dean',
@@ -62,7 +61,7 @@ const schema = [
   },
   {
     '@type': 'WebSite',
-    'name': 'Channel 47',
+    'name': 'channel47',
     'url': 'https://channel47.dev',
   },
   {
@@ -80,8 +79,8 @@ const schema = [
 ---
 
 <BaseLayout
-  title="AI Skills for Marketers — Channel 47"
-  description="Free AI skills for marketers who build. Install and run today, or learn to build your own at monthly workshops. Built from managing 25+ ad accounts daily."
+  title="AI Skills for Marketers — channel47"
+  description="Free AI skills for marketers who build. Install and run today, or learn to build your own. Built from managing 25+ ad accounts daily."
   schema={schema}
 >
   <Nav />
@@ -95,7 +94,7 @@ const schema = [
         <p class="label hero__label">Transmitting</p>
         <h1 class="hero__headline">AI skills for<br />marketers who build.</h1>
         <p class="hero__sub">
-          Install a skill. Run it today. Or come to a workshop and build your own.
+          Install a skill. Run it today. Or learn to build your own.
         </p>
         <div class="hero__cta">
           <EmailSignup variant="inline" placeholder="you@domain.com" tag="home" submitText="Get Build Notes" />
@@ -129,7 +128,7 @@ const schema = [
       <div class="wrap">
         <div class="directory__header" data-reveal-child data-stagger="1">
           <h2 class="directory__title">Browse the skills</h2>
-          <a href="/skills" class="directory__link">View all →</a>
+          <ArrowLink href="/skills" variant="default">View all</ArrowLink>
         </div>
 
         <ul class="directory__list" data-reveal-child data-stagger="2">
@@ -147,9 +146,7 @@ const schema = [
         </ul>
 
         <div class="mt-6" data-reveal-child data-stagger="3">
-          <a href="/plugins" class="font-mono text-[11px] font-semibold tracking-widest uppercase text-stone hover:text-signal transition-colors duration-100">
-            Go deeper → See the plugins
-          </a>
+          <ArrowLink href="/plugins" variant="muted">Go deeper — See the plugins</ArrowLink>
         </div>
       </div>
     </section>
@@ -161,27 +158,7 @@ const schema = [
         <p class="credibility__body">
           The paid-search plugin caught ~$3K/month in wasted spend across two accounts. A pacing alert flagged a budget overrun four days before the client noticed. Every tool here comes from managing 25+ accounts daily — not a lab.
         </p>
-        <a href="/notes" class="credibility__link">Follow the build notes →</a>
-      </div>
-    </section>
-
-    <!-- ═══════ WORKSHOP CALLOUT — MEDIUM density ═══════ -->
-    <section class="py-[clamp(60px,10vh,100px)] border-t border-smoke" data-reveal>
-      <div class="wrap">
-        <div class="accent-bar" aria-hidden="true"></div>
-        <p class="label mt-5 mb-5">Skill Remix Lab</p>
-        <h2 class="section-headline mb-4">Monthly live build. One hour. You leave with a working skill.</h2>
-        <p class="font-mono text-sm text-dust leading-[1.75] tracking-wide max-w-[600px] mb-6">
-          Next session inside the Vibe Marketers community.
-        </p>
-        <a
-          class="font-mono text-[11px] font-semibold tracking-widest uppercase text-signal hover:text-[#D97706] transition-colors duration-100"
-          href={SKOOL_LINK}
-          target="_blank"
-          rel="noopener"
-        >
-          Join the next Lab &rarr;
-        </a>
+        <ArrowLink href="/notes" variant="default">Follow the build notes</ArrowLink>
       </div>
     </section>
 
@@ -193,7 +170,7 @@ const schema = [
           {faqs.map((faq, i) => (
             <details class="faq-item border-b border-smoke" data-reveal-child data-stagger={String(Math.min(i + 2, 6))}>
               <summary class="faq-item__q">{faq.q}</summary>
-              <p class="faq-item__a">{faq.a}</p>
+              <div class="faq-item__a-wrap"><p class="faq-item__a">{faq.a}</p></div>
             </details>
           ))}
         </div>
@@ -206,7 +183,7 @@ const schema = [
         <div class="rupture__bar"></div>
         <p class="label label--muted mb-5">Signal</p>
         <h2 class="rupture__headline">The people who build skills become the most valuable people in their field.</h2>
-        <a href="/skills" class="rupture__link">Browse the skills →</a>
+        <ArrowLink href="/skills" variant="signal">Browse the skills</ArrowLink>
       </div>
     </section>
 

@@ -1,0 +1,21 @@
+---
+/**
+ * TypeBadge — maps tool type to an outline Badge.
+ */
+import Badge from './Badge.astro';
+
+interface Props {
+  type: 'skill' | 'mcp' | 'subagent' | 'plugin';
+}
+
+const { type } = Astro.props;
+
+const typeLabels: Record<string, string> = {
+  skill: 'SKILL',
+  mcp: 'MCP',
+  subagent: 'SUBAGENT',
+  plugin: 'PLUGIN',
+};
+---
+
+<Badge variant="outline">{typeLabels[type]}</Badge>

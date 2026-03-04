@@ -8,6 +8,8 @@
 import Breadcrumbs from './Breadcrumbs.astro';
 import ToolCard from './ToolCard.astro';
 import EmailSignup from './EmailSignup.astro';
+import Separator from './ui/Separator.astro';
+import InstallBlock from './ui/InstallBlock.astro';
 
 interface Props {
   tool: any;
@@ -43,19 +45,12 @@ const typePrefix: Record<string, string> = { skill: 'skills', mcp: 'mcps', plugi
   <div class="wrap">
     {install && (
       <div class="mb-8">
-        <div class="install-block relative font-mono text-sm text-dust bg-soot border border-smoke rounded-tight px-4 py-3 overflow-x-auto">
-          <code>{install}</code>
-          <button
-            class="install-copy absolute top-2 right-2 font-mono text-[10px] uppercase tracking-[0.1em] text-stone hover:text-signal bg-void border border-smoke rounded-tight px-2 py-1 cursor-pointer transition-colors duration-100 focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none"
-            data-install={install}
-            aria-label="Copy install command"
-          >Copy</button>
-        </div>
+        <InstallBlock command={install} />
       </div>
     )}
 
     <div class="font-mono text-xs text-stone space-y-1.5 mb-8">
-      <p>By {author} <span class="inline-block w-px h-2.5 bg-ash mx-2 align-middle" aria-hidden="true"></span> Source: {source}</p>
+      <p class="flex items-center gap-2">By {author} <Separator orientation="vertical" /> Source: {source}</p>
       {tags.length > 0 && <p>Tags: {tags.join(', ')}</p>}
       {compatibleWith.length > 0 && <p>Works with: {compatibleWith.join(', ')}</p>}
     </div>
@@ -91,14 +86,4 @@ const typePrefix: Record<string, string> = { skill: 'skills', mcp: 'mcps', plugi
 <section class="cta" data-section="tool-cta">
   <a class="cta__headline" href={hubHref}>Browse all {hubLabel.toLowerCase()}</a>
 </section>
-
-<script>
-  import { initCopyButtons } from '../scripts/copy-to-clipboard';
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initCopyButtons);
-  } else {
-    initCopyButtons();
-  }
-  document.addEventListener('astro:page-load', initCopyButtons);
-</script>
 

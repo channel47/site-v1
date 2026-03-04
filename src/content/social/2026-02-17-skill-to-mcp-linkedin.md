@@ -14,6 +14,6 @@ It eventually connected, but the friction made me stop and rethink the whole thi
 
 Scrapped the approach, built a Bing Ads MCP server, packaged it into the plugin. Install the plugin, the connections come with it.
 
-I keep coming back to this framing of plugins that package professions. Skills for the knowledge, MCPs for the connections, sub-agents for the workflows. Three layers, each doing one thing. This is what I'm building with Channel 47, starting with the media buyer plugin.
+I keep coming back to this framing of plugins that package professions. Skills for the knowledge, MCPs for the connections, sub-agents for the workflows. Three layers, each doing one thing. This is what I'm building with channel47, starting with the media buyer plugin.
 
 What's the most useful thing that broke on you recently?

@@ -8,6 +8,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
 import EmailSignup from '../../components/EmailSignup.astro';
+import Badge from '../../components/ui/Badge.astro';
+import Separator from '../../components/ui/Separator.astro';
 
 export async function getStaticPaths() {
   const notes = await getCollection('notes', ({ data }) => !data.draft);
@@ -44,7 +46,7 @@ const schema = [
     },
     publisher: {
       '@type': 'Organization',
-      name: 'Channel 47',
+      name: 'channel47',
       url: 'https://channel47.dev',
       logo: {
         '@type': 'ImageObject',
@@ -64,7 +66,7 @@ const schema = [
 ---
 
 <BaseLayout
-  title={`${title} — Channel 47`}
+  title={`${title} — channel47`}
   description={description}
   schema={schema}
 >
@@ -79,8 +81,8 @@ const schema = [
       <div class="article-hero__content">
         <div class="article-hero__bar" aria-hidden="true"></div>
         <div class="article-hero__meta">
-          <span class:list={['article-hero__tag', `article-hero__tag--${tag}`]}>{tagLabel}</span>
-          <span class="w-px h-3 bg-ash" aria-hidden="true"></span>
+          <Badge variant="default" class={tag === 'breakdown' ? 'bg-[var(--signal-dim-alpha)] !text-signal font-semibold' : 'font-semibold'}>{tagLabel}</Badge>
+          <Separator orientation="vertical" />
           <time class="font-mono text-[11px] text-stone tracking-[0.05em]" datetime={date.toISOString()}>Published {formatted}</time>
         </div>
         <h1 class="article-hero__title">{title}</h1>
@@ -198,21 +200,6 @@ const schema = [
   }
   [data-section="hero"].is-visible .article-hero__meta {
     animation: fade-in 200ms var(--ease-out) 300ms forwards;
-  }
-  .article-hero__tag {
-    font-family: var(--font-family-mono);
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: var(--radius-tight);
-    background: var(--color-soot);
-    color: var(--color-stone);
-  }
-  .article-hero__tag--breakdown {
-    background: var(--signal-dim-alpha);
-    color: var(--color-signal);
   }
   .article-hero__title {
     font-family: var(--font-family-display);
