@@ -60,6 +60,10 @@ const typePrefix: Record<string, string> = { skill: 'skills', mcp: 'mcps', plugi
       {compatibleWith.length > 0 && <p>Works with: {compatibleWith.join(', ')}</p>}
     </div>
 
+    <div class="tool-prose border-t border-smoke pt-8 mb-8">
+      <slot />
+    </div>
+
     {related.length > 0 && (
       <div class="border-t border-smoke pt-8 mb-8">
         <p class="label mb-4">Related Tools</p>
@@ -101,4 +105,74 @@ const typePrefix: Record<string, string> = { skill: 'skills', mcp: 'mcps', plugi
   }
   document.addEventListener('astro:page-load', initCopyButtons);
 </script>
+
+<style>
+  .tool-prose :global(h2) {
+    font-family: var(--font-family-display);
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--color-chalk);
+    margin-top: 40px;
+    margin-bottom: 16px;
+  }
+  .tool-prose :global(h2:first-child) { margin-top: 0; }
+  .tool-prose :global(h3) {
+    font-family: var(--font-family-display);
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--color-chalk);
+    margin-top: 32px;
+    margin-bottom: 10px;
+  }
+  .tool-prose :global(p) {
+    font-family: var(--font-family-mono);
+    font-size: 14px;
+    line-height: 1.8;
+    letter-spacing: 0.02em;
+    color: var(--color-bone);
+    margin-bottom: 20px;
+  }
+  .tool-prose :global(p:last-child) { margin-bottom: 0; }
+  .tool-prose :global(strong) { font-weight: 600; color: var(--color-chalk); }
+  .tool-prose :global(a) {
+    color: var(--color-signal);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition: color 100ms;
+  }
+  .tool-prose :global(a:hover) { color: #D97706; }
+  .tool-prose :global(ul), .tool-prose :global(ol) { padding-left: 24px; margin-bottom: 20px; }
+  .tool-prose :global(li) {
+    font-family: var(--font-family-mono);
+    font-size: 14px;
+    line-height: 1.8;
+    letter-spacing: 0.02em;
+    color: var(--color-bone);
+    margin-bottom: 8px;
+  }
+  .tool-prose :global(li:last-child) { margin-bottom: 0; }
+  .tool-prose :global(li::marker) { color: var(--color-stone); }
+  .tool-prose :global(code) {
+    font-family: var(--font-family-mono);
+    font-size: 0.9em;
+    background: var(--color-soot);
+    padding: 2px 6px;
+    border-radius: var(--radius-tight);
+    color: var(--color-chalk);
+  }
+  .tool-prose :global(pre) {
+    background: var(--color-soot);
+    border: 1px solid var(--color-smoke);
+    border-radius: var(--radius-tight);
+    padding: 16px 20px;
+    margin: 24px 0;
+    overflow-x: auto;
+  }
+  .tool-prose :global(pre code) { background: transparent; padding: 0; font-size: 13px; line-height: 1.6; color: var(--color-bone); }
+  .tool-prose :global(hr) { border: none; height: 1px; background: var(--color-smoke); margin: 40px 0; }
+</style>
 
