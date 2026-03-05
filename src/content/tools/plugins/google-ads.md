@@ -16,11 +16,11 @@ relatedTools: ["microsoft-ads", "meta-ads"]
 
 The Google Ads plugin connects Claude to your Google Ads accounts through live API access. It runs practitioner-built workflows that turn raw account data into prioritized, dollar-quantified action plans. Read-only by design — it cannot modify your accounts.
 
-Built from managing 25+ ad accounts daily. Every skill exists because the manual version was eating hours.
+Built from managing 25+ ad accounts daily. Every workflow exists because the manual version was eating hours.
 
-## Skills included
+## Workflows included
 
-Nine skills, each handling a distinct piece of the Google Ads workflow:
+Nine workflows, each handling a distinct piece of Google Ads management:
 
 **platform-setup** — Configure and verify your Google Ads credentials. Walks through OAuth, tests connections, discovers accounts, and confirms API access.
 
@@ -57,3 +57,9 @@ claude plugin install google-ads@channel47
 Run platform-setup first to configure your credentials. It walks through Google OAuth and verifies API access.
 
 After that, try morning-brief. It's the fastest way to see what the plugin actually does with your live data.
+
+## Guides
+
+- [How to Connect Google Ads to Claude](/guides/connect-google-ads-to-claude) — step-by-step setup from credentials to your first morning brief
+- [Morning Brief: Daily Google Ads Health Check](/guides/morning-brief-workflow) — how the morning brief workflow monitors spend pacing, anomalies, and quality scores
+- [Claude for PPC: A Practitioner's Guide](/guides/claude-for-ppc) — comprehensive overview of using Claude for paid media management

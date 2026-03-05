@@ -15,7 +15,7 @@ import EmailSignup from '../components/EmailSignup.astro';
 const SKOOL_LINK = 'https://www.skool.com/the-vibe-marketers/about?ref=a005b4a2e4e9420e814a94e5e1c2e708';
 
 const pastLabs = [
-  { idx: '001', name: 'Waste Detector', date: 'Jan 2026', topic: 'Find and kill wasted ad spend with one skill' },
+  { idx: '001', name: 'Waste Detector', date: 'Jan 2026', topic: 'Find and kill wasted ad spend with one workflow' },
   { idx: '002', name: 'Morning Brief', date: 'Feb 2026', topic: 'Daily cross-platform health check — anomaly detection' },
 ];
 
@@ -30,7 +30,7 @@ const schema = {
 
 <BaseLayout
   title="Skill Remix Lab — Channel 47"
-  description="Monthly live build sessions. Pick a skill. Break it down. Rebuild it yours. Free inside The Vibe Marketers."
+  description="Monthly live build sessions. Pick a workflow. Break it down. Rebuild it yours. Free inside The Vibe Marketers."
   schema={schema}
 >
   <Nav />
@@ -43,7 +43,7 @@ const schema = {
         <p class="label hero__label">SKILL REMIX LAB</p>
         <h1 class="hero__headline">Build with us, live.</h1>
         <p class="hero__sub">
-          Monthly live sessions in the Vibe Marketers community. Pick a skill.
+          Monthly live sessions in the Vibe Marketers community. Pick a workflow.
           Break it down. Rebuild it yours.
         </p>
         <a
@@ -82,7 +82,7 @@ const schema = {
           <div class="directory-row border-b border-smoke" data-reveal-child data-stagger="1">
             <div class="directory-row--static">
               <span class="directory-row__idx">001</span>
-              <p class="directory-row__desc m-0"><strong class="font-semibold text-chalk">Live build</strong> — I pick a real workflow from my day job and build a Claude skill from scratch. You watch the whole process, decisions included.</p>
+              <p class="directory-row__desc m-0"><strong class="font-semibold text-chalk">Live build</strong> — I pick a real workflow from my day job and build it from scratch in Claude. You watch the whole process, decisions included.</p>
             </div>
           </div>
           <div class="directory-row border-b border-smoke" data-reveal-child data-stagger="2">
@@ -94,7 +94,7 @@ const schema = {
           <div class="directory-row border-b border-smoke" data-reveal-child data-stagger="3">
             <div class="directory-row--static">
               <span class="directory-row__idx">003</span>
-              <p class="directory-row__desc m-0"><strong class="font-semibold text-chalk">Take it home</strong> — Every lab ships a finished skill you can install and use immediately. No homework, no fluff.</p>
+              <p class="directory-row__desc m-0"><strong class="font-semibold text-chalk">Take it home</strong> — Every lab ships a finished workflow you can install and use immediately. No homework, no fluff.</p>
             </div>
           </div>
         </div>
@@ -109,7 +109,7 @@ const schema = {
         <p class="label text-ink/50 mb-2">NEXT LAB</p>
         <h2 class="font-display text-ink text-[clamp(1.75rem,4vw,2.5rem)] font-semibold tracking-tight leading-[1.1] mb-3">March 2026</h2>
         <p class="font-mono text-sm text-ink/70 leading-[1.7] tracking-wide mb-5 max-w-[480px]">
-          Skill and date announced inside the community. Members get first access.
+          Topic and date announced inside the community. Members get first access.
         </p>
         <a class="font-mono text-[11px] font-semibold tracking-widest uppercase text-signal hover:text-[#D97706] transition-colors duration-100" href={SKOOL_LINK} target="_blank" rel="noopener">
           Join The Vibe Marketers &rarr;
@@ -147,7 +147,7 @@ const schema = {
 
     <!-- CTA VOID (LOW density) -->
     <section class="cta" data-reveal>
-      <a class="cta__headline" href="/skills">Browse the skills</a>
+      <a class="cta__headline" href="/plugins">Browse the plugins</a>
       <a href="/subscribe" class="btn-signal">Get Build Notes</a>
     </section>
 

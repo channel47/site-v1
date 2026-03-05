@@ -23,23 +23,23 @@ const skills = allTools.filter(t => t.data.type === 'skill');
 const faqs = [
   {
     q: 'What is Channel 47?',
-    a: 'Channel 47 builds free, open-source Claude plugins for paid media. One plugin per ad platform — Google Ads, Microsoft Ads, and Meta Ads. Each plugin connects Claude to live API data and runs practitioner-built workflows for morning briefs, waste detection, and search term analysis. Built by Jackson Dean from managing 25+ ad accounts daily.',
+    a: 'Channel 47 builds free, open-source Claude plugins for paid media. One plugin per ad platform — Google Ads, Microsoft Ads, and Meta Ads. Each plugin connects Claude to your live account data and runs practitioner-built workflows for morning briefs, waste detection, and search term analysis. Built by Jackson Dean from managing 25+ ad accounts daily.',
   },
   {
-    q: "What's the difference between a skill and a plugin?",
-    a: 'A skill is a single, focused AI workflow — install it and run it today. A plugin bundles multiple skills, API connections, and safety hooks into one package for a specific ad platform. Skills are the entry point. Plugins are the depth layer.',
+    q: "What's the difference between a workflow and a plugin?",
+    a: 'A workflow is a single, focused AI task — install it and run it today. A plugin bundles multiple workflows and account connections into one package for a specific ad platform. Workflows are the entry point. Plugins are the depth layer.',
   },
   {
     q: 'Are Channel 47 plugins free?',
-    a: 'Yes. All Channel 47 plugins are free and open source (MIT license). Three plugins are live: Google Ads (9 skills), Microsoft Ads (8 skills), and Meta Ads (9 skills + 2 agents). PaidBrief, a commercial product built from the same ecosystem, is available separately at paidbrief.com.',
+    a: 'Yes. All Channel 47 plugins are free and open source (MIT license). Three plugins are live: Google Ads (9 workflows), Microsoft Ads (8 workflows), and Meta Ads (9 workflows + 2 agents). PaidBrief, a commercial product built from the same ecosystem, is available separately at paidbrief.com.',
   },
   {
     q: 'What ad platforms does Channel 47 support?',
-    a: 'Channel 47 has three live plugins: Google Ads (9 skills including waste detection and Performance Max transparency), Microsoft Ads (8 skills including import auditing and MSAN cleanup), and Meta Ads (9 skills + 2 agents for creative analysis and audience diagnostics). All read-only by design.',
+    a: 'Channel 47 has three live plugins: Google Ads (9 workflows including waste detection and Performance Max transparency), Microsoft Ads (8 workflows including import auditing and MSAN cleanup), and Meta Ads (9 workflows + 2 agents for creative analysis and audience diagnostics). All read-only by design.',
   },
   {
     q: 'How do I install a plugin?',
-    a: 'In Claude Code, run: claude plugin install google-ads@channel47 (or microsoft-ads@channel47, or meta-ads@channel47). Then run the platform-setup skill to configure your credentials and verify API access.',
+    a: 'In Claude Code, run: claude plugin install google-ads@channel47 (or microsoft-ads@channel47, or meta-ads@channel47). Then run the platform-setup workflow to configure your credentials and verify API access.',
   },
 ];
 
@@ -49,7 +49,7 @@ const schema = [
     'name': 'Channel 47',
     'url': 'https://channel47.dev',
     'logo': 'https://channel47.dev/logo-square.png',
-    'description': 'Free, open-source Claude plugins for paid media — Google Ads, Microsoft Ads, and Meta Ads. Practitioner-built workflows for morning briefs, waste detection, and search term analysis. Read-only by design.',
+    'description': 'Free, open-source Claude plugins for paid media — Google Ads, Microsoft Ads, and Meta Ads. 26 practitioner-built workflows for morning briefs, waste detection, and search term analysis. Read-only by design.',
     'founder': {
       '@type': 'Person',
       'name': 'Jackson Dean',
@@ -81,8 +81,8 @@ const schema = [
 ---
 
 <BaseLayout
-  title="Claude Plugins for Google Ads, Microsoft Ads & Meta Ads — Channel 47"
-  description="Free, open-source Claude plugins for paid media. Morning briefs, waste detection, search term analysis — built from managing 25+ ad accounts daily. Read-only by design."
+  title="Claude Plugins for Paid Media — Google Ads, Microsoft Ads & Meta Ads | Channel 47"
+  description="Free Claude plugins for Google Ads, Microsoft Ads, and Meta Ads. AI-powered morning briefs, waste detection, and search term analysis — built from managing 25+ ad accounts daily. Read-only by design."
   schema={schema}
 >
   <Nav />
@@ -94,13 +94,24 @@ const schema = [
       <div class="hero__inner">
         <div class="hero__bar" aria-hidden="true"></div>
         <p class="label hero__label">Transmitting</p>
-        <h1 class="hero__headline">AI plugins for<br />media buyers.</h1>
+        <h1 class="hero__headline">Claude plugins for<br />paid media.</h1>
         <p class="hero__sub">
-          Free, open-source Claude plugins for Google Ads, Microsoft Ads, and Meta Ads. Install a plugin. Run it on your live data.
+          Free Claude plugins for Google Ads, Microsoft Ads, and Meta Ads. Morning briefs, waste detection, and search term analysis — from your live account data.
         </p>
         <div class="hero__cta">
-          <EmailSignup variant="inline" placeholder="you@domain.com" tag="home" submitText="Get Build Notes" />
-          <p class="hero__hint">Join 500+ marketers and builders. One email a week.</p>
+          <div class="hero-install">
+            <code class="hero-install__cmd">claude plugin marketplace add channel47</code>
+            <button
+              class="hero-install__copy"
+              data-install="claude plugin marketplace add channel47"
+              aria-label="Copy install command"
+            >Copy</button>
+          </div>
+          <div class="hero__secondary">
+            <a href="/plugins" class="hero__browse">Browse all plugins →</a>
+            <span class="hero__sep" aria-hidden="true"></span>
+            <a href="/subscribe" class="hero__subscribe">Get Build Notes</a>
+          </div>
         </div>
       </div>
     </section>
@@ -113,7 +124,7 @@ const schema = [
       </div>
       <div class="proof-bar__item" data-reveal-child data-stagger="2">
         <span class="proof-bar__value" data-counter="26">26</span>
-        <span class="proof-bar__label">Skills Included</span>
+        <span class="proof-bar__label">Workflows</span>
       </div>
       <div class="proof-bar__item" data-reveal-child data-stagger="3">
         <span class="proof-bar__value" data-counter="25">25<span class="text-signal">+</span></span>
@@ -149,8 +160,8 @@ const schema = [
 
         {skills.length > 0 && (
           <div class="mt-6" data-reveal-child data-stagger="3">
-            <a href="/skills" class="font-mono text-[11px] font-semibold tracking-widest uppercase text-stone hover:text-signal transition-colors duration-100">
-              Browse standalone skills →
+            <a href="/plugins" class="font-mono text-[11px] font-semibold tracking-widest uppercase text-stone hover:text-signal transition-colors duration-100">
+              Browse standalone workflows →
             </a>
           </div>
         )}
@@ -164,7 +175,10 @@ const schema = [
         <p class="credibility__body">
           The Google Ads plugin caught ~$3K/month in wasted spend across two accounts. A pacing alert flagged a budget overrun four days before the client noticed. Every plugin here comes from managing 25+ accounts daily — not a lab.
         </p>
-        <a href="/notes" class="credibility__link">Follow the build notes →</a>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="/guides/claude-for-ppc" class="credibility__link">Read the practitioner's guide →</a>
+          <a href="/notes" class="credibility__link">Follow the build notes →</a>
+        </div>
       </div>
     </section>
 
@@ -173,7 +187,7 @@ const schema = [
       <div class="wrap">
         <div class="accent-bar" aria-hidden="true"></div>
         <p class="label mt-5 mb-5">Skill Remix Lab</p>
-        <h2 class="section-headline mb-4">Monthly live build. One hour. You leave with a working skill.</h2>
+        <h2 class="section-headline mb-4">Monthly live build. One hour. You leave with a working workflow.</h2>
         <p class="font-mono text-sm text-dust leading-[1.75] tracking-wide max-w-[600px] mb-6">
           Next session inside the Vibe Marketers community.
         </p>
@@ -208,7 +222,7 @@ const schema = [
       <div class="rupture__inner">
         <div class="rupture__bar"></div>
         <p class="label label--muted mb-5">Signal</p>
-        <h2 class="rupture__headline">The people who build plugins become the most valuable people on their team.</h2>
+        <h2 class="rupture__headline">One workflow caught $3K/month in wasted spend. A pacing alert flagged a budget overrun four days before the client noticed.</h2>
         <a href="/plugins" class="rupture__link">Browse the plugins →</a>
       </div>
     </section>
@@ -225,3 +239,96 @@ const schema = [
     <Footer />
   </main>
 </BaseLayout>
+
+<script>
+  import { initCopyButtons } from '../scripts/copy-to-clipboard';
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCopyButtons);
+  } else {
+    initCopyButtons();
+  }
+  document.addEventListener('astro:page-load', initCopyButtons);
+</script>
+
+<style>
+  .hero-install {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+  }
+  .hero-install__cmd {
+    font-family: var(--font-family-mono);
+    font-size: clamp(13px, 1.4vw, 15px);
+    color: var(--color-chalk);
+    letter-spacing: 0.02em;
+    user-select: all;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--color-ash);
+    padding-bottom: 4px;
+  }
+  .hero-install__copy {
+    font-family: var(--font-family-mono);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-signal);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: color 100ms var(--ease-sharp);
+    white-space: nowrap;
+  }
+  .hero-install__copy:hover {
+    color: var(--color-signal-hover);
+  }
+  .hero-install__copy:focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 4px;
+    border-radius: var(--radius-tight);
+  }
+
+  .hero__secondary {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 20px;
+  }
+  .hero__browse,
+  .hero__subscribe {
+    font-family: var(--font-family-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    transition: color 100ms var(--ease-sharp);
+  }
+  .hero__browse {
+    color: var(--color-dust);
+  }
+  .hero__browse:hover {
+    color: var(--color-signal);
+  }
+  .hero__subscribe {
+    color: var(--color-signal);
+  }
+  .hero__subscribe:hover {
+    color: var(--color-signal-hover);
+  }
+  .hero__sep {
+    width: 1px;
+    height: 12px;
+    background: var(--color-ash);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 480px) {
+    .hero-install {
+      flex-direction: column;
+      gap: 8px;
+    }
+    .hero-install__cmd {
+      font-size: 12px;
+    }
+  }
+</style>

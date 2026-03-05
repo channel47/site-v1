@@ -8,7 +8,7 @@ export async function GET(context: APIContext) {
 
   return rss({
     title: 'Build Notes — Channel 47',
-    description: 'Skill breakdowns, plugin updates, and build process from managing 25+ ad accounts daily.',
+    description: 'Workflow breakdowns, plugin updates, and build process from managing 25+ ad accounts daily.',
     site: context.site!.toString(),
     items: notes.map((note) => ({
       title: note.data.title,

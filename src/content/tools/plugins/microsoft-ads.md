@@ -18,9 +18,9 @@ The Microsoft Ads plugin connects Claude to your Microsoft Advertising (Bing Ads
 
 Nobody treats Bing as a first-class platform. This plugin does.
 
-## Skills included
+## Workflows included
 
-Eight skills, each handling a distinct piece of the Microsoft Ads workflow:
+Eight workflows, each handling a distinct piece of Microsoft Ads management:
 
 **platform-setup** — Configure and verify your Microsoft Advertising credentials. Tests connections, discovers accounts, confirms API access.
 

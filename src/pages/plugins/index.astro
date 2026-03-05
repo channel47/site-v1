@@ -34,7 +34,7 @@ const schema = [
   },
   {
     '@type': 'ItemList',
-    'name': 'Claude Plugins for Paid Media',
+    'name': 'Claude Code Plugins for Paid Media — Plugin Marketplace',
     'numberOfItems': plugins.length,
     'itemListElement': plugins.map((tool, i) => ({
       '@type': 'ListItem',
@@ -48,8 +48,8 @@ const schema = [
 ---
 
 <BaseLayout
-  title="Claude Plugins for Google Ads, Microsoft Ads & Meta Ads — Channel 47"
-  description="Free, open-source Claude plugins for paid media. Three plugins, 26 skills — morning briefs, waste detection, search term analysis, Performance Max transparency. Read-only by design."
+  title="Claude Code Plugins for Google Ads, Microsoft Ads & Meta Ads — Plugin Marketplace | Channel 47"
+  description="Browse Claude Code plugins for paid media. Free, open-source plugin marketplace — Google Ads, Microsoft Ads, Meta Ads. 26 workflows for morning briefs, waste detection, search term analysis. Read-only by design."
   schema={schema}
 >
   <Nav />
@@ -63,7 +63,7 @@ const schema = [
         <p class="label hero__label">Plugins</p>
         <h1 class="hero__headline max-w-[20ch]">Built from the accounts.<br />Not the API docs.</h1>
         <p class="hero__sub">
-          Each plugin bundles skills, API connections, and safety hooks for one ad platform. Read-only by design. Install with one command.
+          Each plugin bundles practitioner-built workflows and account connections for one ad platform. Read-only by design. Install with one command.
         </p>
         <div class="install-block" data-section="install">
           <code class="install-block__cmd">claude plugin install google-ads@channel47</code>
@@ -80,7 +80,7 @@ const schema = [
     <section class="py-[clamp(40px,6vh,60px)] border-t border-smoke" data-reveal>
       <div class="wrap">
         <p class="font-mono text-sm text-dust leading-[1.75] tracking-wide max-w-[600px]">
-          Channel 47 plugins are free, open-source packages for Claude that give AI direct access to ad platform APIs. Three plugins are live: Google Ads (9 skills), Microsoft Ads (8 skills), and Meta Ads (9 skills + 2 agents). Each runs practitioner-built workflows for morning briefs, waste detection, search term classification, and account scoring. Built by Jackson Dean from managing 25+ accounts daily. Read-only by design — they cannot modify your accounts.
+          Channel 47 plugins are free, open-source packages for Claude that connect to your live ad accounts. Three plugins are live: Google Ads (9 workflows), Microsoft Ads (8 workflows), and Meta Ads (9 workflows + 2 agents). Each runs practitioner-built workflows for morning briefs, waste detection, search term classification, and account scoring. Built by Jackson Dean from managing 25+ accounts daily. Read-only by design — they cannot modify your accounts.
         </p>
       </div>
     </section>
@@ -120,7 +120,7 @@ const schema = [
         <div class="accent-bar-v" aria-hidden="true"></div>
         <p class="label text-ink/50 mb-2">Signal</p>
         <h2 class="font-display text-ink text-[clamp(1.5rem,3vw,2.25rem)] font-semibold tracking-tight leading-[1.15] mb-4">
-          One skill caught $3K/month in wasted spend across two accounts.
+          One workflow caught $3K/month in wasted spend across two accounts.
         </h2>
         <a class="font-mono text-[11px] font-semibold tracking-widest uppercase text-signal hover:text-[#D97706] transition-colors duration-100" href="/plugins/google-ads">
           See the Google Ads plugin &rarr;

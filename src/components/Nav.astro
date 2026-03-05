@@ -15,6 +15,8 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
     <div class="flex items-center gap-3">
       <a href="/plugins" class="nav__link hidden sm:inline">Plugins</a>
       <span class="nav__sep hidden sm:block" aria-hidden="true"></span>
+      <a href="/guides" class="nav__link hidden sm:inline">Guides</a>
+      <span class="nav__sep hidden sm:block" aria-hidden="true"></span>
       <a href="/notes" class="nav__link hidden sm:inline">Notes</a>
       <span class="nav__sep hidden sm:block" aria-hidden="true"></span>
       <a href="/labs" class="nav__link hidden sm:inline">Labs</a>
@@ -41,6 +43,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
   >
     <div class="nav__panel-inner">
       <a href="/plugins" class="nav__panel-link" aria-current={currentPath.startsWith('/plugins') ? 'page' : undefined}>Plugins</a>
+      <a href="/guides" class="nav__panel-link" aria-current={currentPath.startsWith('/guides') ? 'page' : undefined}>Guides</a>
       <a href="/notes" class="nav__panel-link" aria-current={currentPath.startsWith('/notes') ? 'page' : undefined}>Notes</a>
       <a href="/labs" class="nav__panel-link" aria-current={currentPath === '/labs' ? 'page' : undefined}>Labs</a>
       <a href="/subscribe" class="nav__panel-link nav__panel-link--signal" aria-current={currentPath === '/subscribe' ? 'page' : undefined}>Subscribe</a>

@@ -38,9 +38,11 @@ Install command format: `claude plugin install google-ads@channel47` (NOT the ol
 ## Pages
 
 - `/` — Homepage: AI plugins for media buyers (hero + proof bar + plugin directory + credibility + workshop + FAQ + rupture + product callout + CTA)
-- `/plugins/` — Plugins hub — filtered listing of featured plugins (excludes deprecated/unmarketable)
+- `/plugins/` — Plugins hub — filtered listing of featured plugins (excludes deprecated/unmarketable). Targets "claude code plugins", "claude plugin marketplace"
 - `/plugins/[slug]` — Plugin detail page with rendered markdown body, schema (SoftwareApplication + BreadcrumbList + HowTo)
-- `/notes` — Build Notes hub (content collection index)
+- `/guides/` — Guides hub — SEO content hub for practitioner guides. Targets "google ads ai tool", "ai ppc management"
+- `/guides/[slug]` — Individual guide articles (Article + BreadcrumbList schema). Categories: setup, workflow, comparison, overview
+- `/notes` — Build Notes hub (content collection index, newsletter community content)
 - `/notes/[slug]` — Individual note articles (Article + BreadcrumbList schema)
 - `/labs` — Skills Labs landing page (monthly live builds → Skool community)
 - `/subscribe` — Email signup standalone page
@@ -53,14 +55,42 @@ Install command format: `claude plugin install google-ads@channel47` (NOT the ol
 - `/build`, `/tools`, `/ecosystem`, `/hire` — 301 redirects to `/`
 - `/api/subscribe` — POST, proxies to Kit API
 
+## Content Sections
+
+| Section | Purpose | SEO role |
+|---------|---------|----------|
+| `/plugins/` | Product hub — the plugins | Targets "claude code plugins", "claude plugin marketplace" |
+| `/guides/` | SEO content hub — keyword-targeted how-to guides | Captures search intent: setup, workflows, comparisons |
+| `/notes/` | Community content — Build Notes newsletter | Community/newsletter, not SEO-optimized |
+
+### Guides content collection
+
+Guides live in `src/content/guides/`. Schema: title, description, date, updated, category (setup/workflow/comparison/overview), plugin (optional related plugin slug), featured, draft. Guide detail pages reuse the article layout pattern from notes with reading progress bar.
+
+**Phase 1 guides (live):**
+- `claude-for-ppc.md` — Pillar page. Targets "claude for google ads", "ai ppc management"
+- `connect-google-ads-to-claude.md` — Setup guide. Targets "connect google ads to claude", "google ads mcp claude"
+- `morning-brief-workflow.md` — Workflow guide. Targets "google ads morning brief"
+
+**Phase 2 guides (planned):**
+- `waste-detection-google-ads.md` — Workflow guide
+- `search-term-analysis.md` — Workflow guide
+- `claude-prompts-google-ads.md` — Competes with Adspirer's blog post (they rank #16)
+- `connect-meta-ads-to-claude.md` — Setup guide
+- `connect-microsoft-ads-to-claude.md` — Setup guide
+
+**Phase 3 guides (planned):**
+- `best-ai-tools-google-ads.md` — Listicle/comparison
+- `ai-ppc-management.md` — Broad category guide
+
 ## Navigation
 
-Header: Plugins · Notes · Labs · Subscribe (no "Skills" — it 301s to /plugins)
-Footer: Plugins · Notes · Labs · Privacy · jackson attribution
+Header: Plugins · Guides · Notes · Labs · Subscribe
+Footer: Plugins · Guides · Notes · Labs · Privacy · jackson attribution
 
 ## Sitemap
 
-12 URLs in sitemap. Excluded via `astro.config.mjs` filter: `/skills/*`, `/mcps/*`, `/tools/*`, `/plugins/paid-search`, `/plugins/frontend-craft`, `/coming-soon`, redirect pages.
+16 URLs in sitemap. Excluded via `astro.config.mjs` filter: `/skills/*`, `/mcps/*`, `/tools/*`, `/plugins/paid-search`, `/plugins/frontend-craft`, `/coming-soon`, redirect pages.
 
 ## Key Files
 
@@ -72,6 +102,8 @@ src/
 │   ├── index.astro               # Homepage
 │   ├── plugins/index.astro       # Plugins hub — filtered listing (featured only)
 │   ├── plugins/[slug].astro      # Plugin detail (renders Content via slot)
+│   ├── guides/index.astro        # Guides hub — SEO content listing
+│   ├── guides/[...slug].astro    # Guide detail (article layout with reading progress)
 │   ├── skills/[slug].astro       # Skill detail (legacy, renders Content via slot)
 │   ├── mcps/[slug].astro         # MCP detail (legacy, renders Content via slot)
 │   ├── notes/index.astro         # Build Notes hub
@@ -82,8 +114,8 @@ src/
 │   ├── coming-soon.astro         # Empty state
 │   └── api/subscribe.ts          # Kit API proxy (serverless)
 ├── components/
-│   ├── Nav.astro                 # Fixed glass nav (Plugins · Notes · Labs · Subscribe)
-│   ├── Footer.astro              # Plugins · Notes · Labs · Privacy + attribution
+│   ├── Nav.astro                 # Fixed glass nav (Plugins · Guides · Notes · Labs · Subscribe)
+│   ├── Footer.astro              # Plugins · Guides · Notes · Labs · Privacy + attribution
 │   ├── Breadcrumbs.astro         # Breadcrumb navigation
 │   ├── EmailSignup.astro         # Email capture form (JS state handling)
 │   ├── ContentCard.astro         # Note card for grid
@@ -94,7 +126,8 @@ src/
 │   ├── ui/button.tsx             # shadcn/ui Button (React)
 │   └── ui/input.tsx              # shadcn/ui Input (React)
 ├── content/
-│   ├── notes/                    # Published notes (markdown, `notes` collection)
+│   ├── guides/                   # Practitioner guides (markdown, `guides` collection — SEO content)
+│   ├── notes/                    # Published notes (markdown, `notes` collection — newsletter content)
 │   ├── tools/                    # Tool registry (markdown with YAML frontmatter, `tools` collection)
 │   │   ├── plugins/              # google-ads, microsoft-ads, meta-ads, paid-search, frontend-craft
 │   │   ├── skills/               # morning-brief, waste-detector, search-term-verdict, pmax-decoder, platform-setup, gaql
@@ -113,8 +146,10 @@ src/
 BaseLayout accepts a `schema` prop → renders JSON-LD. Currently deployed:
 - **Homepage**: Organization + WebSite + FAQPage
 - **Plugin detail pages**: SoftwareApplication + BreadcrumbList + HowTo
-- **Notes articles**: Article + BreadcrumbList
 - **Plugins hub**: BreadcrumbList + ItemList
+- **Guides hub**: BreadcrumbList + ItemList
+- **Guide articles**: Article + BreadcrumbList
+- **Notes articles**: Article + BreadcrumbList
 
 ## Subscribe API
 
@@ -156,3 +191,6 @@ Tailwind CSS v4 via `@tailwindcss/vite`. Single entry point: `src/styles/main.cs
 - **Install command format changed** — Old: `/plugin install paid-search@channel47`. New: `claude plugin install google-ads@channel47`. Don't use the old format.
 - **paid-search is deprecated** — Frozen at v7.0.0, `featured: false`, excluded from sitemap. Use google-ads + microsoft-ads instead.
 - **Tool content bodies** — Markdown body in tool .md files renders on detail pages via ToolDetail slot. Skills with no body render an empty (hidden) prose div.
+- **Guide and note detail pages share duplicated article styles** — `.article-hero`, `.article-prose`, `.article-signup` CSS is duplicated in `guides/[...slug].astro` and `notes/[...slug].astro`. Update both when changing article layout styles.
+- **Sitemap auto-includes new directories** — New page directories (e.g., `/guides/`, `/compare/`) are included in the sitemap automatically. Only add to `astro.config.mjs` filter to *exclude* pages.
+- **DataForSEO MCP available** — Use `mcp__dataforseo__*` tools for keyword research, competitor ranked keywords, keyword difficulty, and domain analysis. No API key setup needed — it's preconfigured.

@@ -18,9 +18,9 @@ The Meta Ads plugin connects Claude to your Facebook and Instagram ad accounts t
 
 Meta's black-box optimization makes it hard to see what's working. This plugin opens the box.
 
-## Skills included
+## Workflows included
 
-Nine skills and two agents, each handling a distinct piece of the Meta Ads workflow:
+Nine workflows and two agents, each handling a distinct piece of Meta Ads management:
 
 **platform-setup** — Configure and verify your Meta Ads credentials. Tests connections, discovers ad accounts, confirms API access.
 
