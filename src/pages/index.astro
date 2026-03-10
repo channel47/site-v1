@@ -1,334 +1,516 @@
 ---
-/**
- * Homepage — AI plugins for media buyers.
- *
- * Density: LOW (hero) → HIGH (proof bar) → HIGH (plugin directory) →
- *          MEDIUM (credibility) → MEDIUM (workshop callout) →
- *          RUPTURE → MEDIUM (product) → LOW (CTA void)
- */
-import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Nav from '../components/Nav.astro';
-import Footer from '../components/Footer.astro';
+import LogoAnimated from '../components/LogoAnimated.astro';
 import EmailSignup from '../components/EmailSignup.astro';
-import ProductCallout from '../components/ProductCallout.astro';
-import ToolCard from '../components/ToolCard.astro';
-
-const SKOOL_LINK = 'https://www.skool.com/the-vibe-marketers/about?ref=a005b4a2e4e9420e814a94e5e1c2e708';
-
-const allTools = await getCollection('tools');
-const plugins = allTools.filter(t => t.data.type === 'plugin' && t.data.featured);
-const skills = allTools.filter(t => t.data.type === 'skill');
-
-const faqs = [
-  {
-    q: 'What is Channel 47?',
-    a: 'Channel 47 builds free, open-source Claude plugins for paid media. One plugin per ad platform — Google Ads, Microsoft Ads, and Meta Ads. Each plugin connects Claude to your live account data and runs practitioner-built workflows for morning briefs, waste detection, and search term analysis. Built by Jackson Dean from managing 25+ ad accounts daily.',
-  },
-  {
-    q: "What's the difference between a workflow and a plugin?",
-    a: 'A workflow is a single, focused AI task — install it and run it today. A plugin bundles multiple workflows and account connections into one package for a specific ad platform. Workflows are the entry point. Plugins are the depth layer.',
-  },
-  {
-    q: 'Are Channel 47 plugins free?',
-    a: 'Yes. All Channel 47 plugins are free and open source (MIT license). Three plugins are live: Google Ads (9 workflows), Microsoft Ads (8 workflows), and Meta Ads (9 workflows + 2 agents). PaidBrief, a commercial product built from the same ecosystem, is available separately at paidbrief.com.',
-  },
-  {
-    q: 'What ad platforms does Channel 47 support?',
-    a: 'Channel 47 has three live plugins: Google Ads (9 workflows including waste detection and Performance Max transparency), Microsoft Ads (8 workflows including import auditing and MSAN cleanup), and Meta Ads (9 workflows + 2 agents for creative analysis and audience diagnostics). All read-only by design.',
-  },
-  {
-    q: 'How do I install a plugin?',
-    a: 'In Claude Code, run: claude plugin install google-ads@channel47 (or microsoft-ads@channel47, or meta-ads@channel47). Then run the platform-setup workflow to configure your credentials and verify API access.',
-  },
-];
-
-const schema = [
-  {
-    '@type': 'Organization',
-    'name': 'Channel 47',
-    'url': 'https://channel47.dev',
-    'logo': 'https://channel47.dev/logo-square.png',
-    'description': 'Free, open-source Claude plugins for paid media — Google Ads, Microsoft Ads, and Meta Ads. 26 practitioner-built workflows for morning briefs, waste detection, and search term analysis. Read-only by design.',
-    'founder': {
-      '@type': 'Person',
-      'name': 'Jackson Dean',
-      'url': 'https://x.com/ctrlswing',
-      'jobTitle': 'Marketer & Plugin Builder',
-    },
-    'sameAs': [
-      'https://github.com/channel47',
-      'https://x.com/ctrlswing',
-    ],
-  },
-  {
-    '@type': 'WebSite',
-    'name': 'Channel 47',
-    'url': 'https://channel47.dev',
-  },
-  {
-    '@type': 'FAQPage',
-    'mainEntity': faqs.map(f => ({
-      '@type': 'Question',
-      'name': f.q,
-      'acceptedAnswer': {
-        '@type': 'Answer',
-        'text': f.a,
-      },
-    })),
-  },
-];
 ---
 
-<BaseLayout
-  title="Claude Plugins for Paid Media — Google Ads, Microsoft Ads & Meta Ads | Channel 47"
-  description="Free Claude plugins for Google Ads, Microsoft Ads, and Meta Ads. AI-powered morning briefs, waste detection, and search term analysis — built from managing 25+ ad accounts daily. Read-only by design."
-  schema={schema}
->
-  <Nav />
+<BaseLayout title="Channel 47 — Claude Plugins for DTC Media Buyers">
+  <main id="main-content" class="hero-card-page">
 
-  <main id="main-content">
-
-    <!-- ═══════ HERO — LOW density ═══════ -->
-    <section class="hero is-visible">
-      <div class="hero__inner">
-        <div class="hero__bar" aria-hidden="true"></div>
-        <p class="label hero__label">Transmitting</p>
-        <h1 class="hero__headline">Claude plugins for<br />paid media.</h1>
-        <p class="hero__sub">
-          Free Claude plugins for Google Ads, Microsoft Ads, and Meta Ads. Morning briefs, waste detection, and search term analysis — from your live account data.
-        </p>
-        <div class="hero__cta">
-          <div class="hero-install">
-            <code class="hero-install__cmd">claude plugin marketplace add channel47</code>
-            <button
-              class="hero-install__copy"
-              data-install="claude plugin marketplace add channel47"
-              aria-label="Copy install command"
-            >Copy</button>
-          </div>
-          <div class="hero__secondary">
-            <a href="/plugins" class="hero__browse">Browse all plugins →</a>
-            <span class="hero__sep" aria-hidden="true"></span>
-            <a href="/subscribe" class="hero__subscribe">Get Build Notes</a>
-          </div>
+    <div class="hero-card">
+      <!-- Header -->
+      <header class="hero-card__header">
+        <div class="hero-card__brand">
+          <LogoAnimated />
+          <span class="hero-card__brand-name">channel47</span>
         </div>
-      </div>
-    </section>
-
-    <!-- ═══════ PROOF BAR — HIGH density ═══════ -->
-    <section class="proof-bar" data-reveal-stagger>
-      <div class="proof-bar__item" data-reveal-child data-stagger="1">
-        <span class="proof-bar__value" data-counter="3">3</span>
-        <span class="proof-bar__label">Plugins Live</span>
-      </div>
-      <div class="proof-bar__item" data-reveal-child data-stagger="2">
-        <span class="proof-bar__value" data-counter="26">26</span>
-        <span class="proof-bar__label">Workflows</span>
-      </div>
-      <div class="proof-bar__item" data-reveal-child data-stagger="3">
-        <span class="proof-bar__value" data-counter="25">25<span class="text-signal">+</span></span>
-        <span class="proof-bar__label">Accounts Managed Daily</span>
-      </div>
-      <div class="proof-bar__item" data-reveal-child data-stagger="4">
-        <span class="proof-bar__value">Weekly</span>
-        <span class="proof-bar__label">Build Notes</span>
-      </div>
-    </section>
-
-    <!-- ═══════ PLUGIN DIRECTORY — HIGH density ═══════ -->
-    <section class="directory" data-reveal-stagger>
-      <div class="wrap">
-        <div class="directory__header" data-reveal-child data-stagger="1">
-          <h2 class="directory__title">The plugins</h2>
-          <a href="/plugins" class="directory__link">View all →</a>
-        </div>
-
-        <ul class="directory__list" data-reveal-child data-stagger="2">
-          {plugins.map((tool, i) => (
-            <ToolCard
-              name={tool.data.name}
-              description={tool.data.description}
-              type={tool.data.type}
-              href={`/plugins/${tool.id.split('/').pop()?.replace(/\.md$/, '')}`}
-              index={i + 1}
-              variant="compact"
-              status={tool.data.status}
-            />
-          ))}
-        </ul>
-
-        {skills.length > 0 && (
-          <div class="mt-6" data-reveal-child data-stagger="3">
-            <a href="/plugins" class="font-mono text-[11px] font-semibold tracking-widest uppercase text-stone hover:text-signal transition-colors duration-100">
-              Browse standalone workflows →
-            </a>
-          </div>
-        )}
-      </div>
-    </section>
-
-    <!-- ═══════ CREDIBILITY — MEDIUM density ═══════ -->
-    <section class="credibility" data-reveal>
-      <div class="wrap">
-        <p class="label">Built from the work, not the docs</p>
-        <p class="credibility__body">
-          The Google Ads plugin caught ~$3K/month in wasted spend across two accounts. A pacing alert flagged a budget overrun four days before the client noticed. Every plugin here comes from managing 25+ accounts daily — not a lab.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4">
-          <a href="/guides/claude-for-ppc" class="credibility__link">Read the practitioner's guide →</a>
-          <a href="/notes" class="credibility__link">Follow the build notes →</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════ WORKSHOP CALLOUT — MEDIUM density ═══════ -->
-    <section class="py-[clamp(60px,10vh,100px)] border-t border-smoke" data-reveal>
-      <div class="wrap">
-        <div class="accent-bar" aria-hidden="true"></div>
-        <p class="label mt-5 mb-5">Skill Remix Lab</p>
-        <h2 class="section-headline mb-4">Monthly live build. One hour. You leave with a working workflow.</h2>
-        <p class="font-mono text-sm text-dust leading-[1.75] tracking-wide max-w-[600px] mb-6">
-          Next session inside the Vibe Marketers community.
-        </p>
         <a
-          class="font-mono text-[11px] font-semibold tracking-widest uppercase text-signal hover:text-[#D97706] transition-colors duration-100"
-          href={SKOOL_LINK}
+          href="https://github.com/ctrlswing"
           target="_blank"
-          rel="noopener"
-        >
-          Join the next Lab &rarr;
-        </a>
+          rel="noopener noreferrer"
+          class="hero-card__nav-link"
+          aria-label="View on GitHub"
+        >GitHub</a>
+      </header>
+
+      <!-- Main 2-column grid -->
+      <div class="hero-card__main">
+
+        <!-- Left: Hero content -->
+        <section class="hero-card__hero">
+          <div class="hero-card__hero-content">
+            <div class="hero-card__bar" aria-hidden="true"></div>
+            <p class="hero-card__label">Open-Source Claude Plugins</p>
+            <h1 class="hero-card__headline">DTC Google&nbsp;Ads,<br>meet Claude.</h1>
+          </div>
+          <div class="hero-card__hero-bottom">
+            <p class="hero-card__sub">
+              Two open-source plugins built from $6M+ in real DTC spend. Campaign architecture, daily optimization, customer research to creative — install and go.
+            </p>
+            <div class="hero-card__cta">
+              <EmailSignup
+                variant="inline"
+                placeholder="you@company.com"
+                tag="homepage"
+                submitText="Join the Community"
+              />
+              <p class="hero-card__hint">Early access to new plugins and DTC playbooks.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Right: Metrics grid -->
+        <section class="hero-card__metrics" data-reveal-stagger aria-label="Key metrics">
+          <div class="hero-card__metric-row">
+            <article class="hero-card__cell" data-reveal-child data-stagger="1">
+              <div class="hero-card__cell-top">
+                <svg class="hero-card__icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="3" y="3" width="7" height="7" rx="1" />
+                  <rect x="14" y="3" width="7" height="7" rx="1" />
+                  <rect x="3" y="14" width="7" height="7" rx="1" />
+                  <path d="M14 17.5h7M17.5 14v7" stroke-linecap="round" />
+                </svg>
+                <span class="hero-card__number" data-counter="2">0</span>
+              </div>
+              <div class="hero-card__cell-content">
+                <h3>Free Plugins</h3>
+                <p>A Google Ads playbook and a research-to-creative engine. Open-source, MIT-licensed.</p>
+              </div>
+            </article>
+
+            <article class="hero-card__cell" data-reveal-child data-stagger="2">
+              <div class="hero-card__cell-top">
+                <svg class="hero-card__icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+                  <polyline points="16 7 22 7 22 13" />
+                </svg>
+                <span class="hero-card__number">$6M+</span>
+              </div>
+              <div class="hero-card__cell-content">
+                <h3>In Managed Spend</h3>
+                <p>Frameworks from real DTC accounts — not blog posts, not theory.</p>
+              </div>
+            </article>
+          </div>
+
+          <div class="hero-card__metric-row">
+            <article class="hero-card__cell" data-reveal-child data-stagger="3">
+              <div class="hero-card__cell-top">
+                <svg class="hero-card__icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                </svg>
+                <span class="hero-card__number" data-counter="0">0</span>
+              </div>
+              <div class="hero-card__cell-content">
+                <h3>Setup Required</h3>
+                <p>No API keys, no servers, no environment variables. Install and use.</p>
+              </div>
+            </article>
+
+            <article class="hero-card__cell" data-reveal-child data-stagger="4">
+              <div class="hero-card__cell-top">
+                <svg class="hero-card__icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <span class="hero-card__number" data-counter="5">0</span>
+              </div>
+              <div class="hero-card__cell-content">
+                <h3>Research Stages</h3>
+                <p>Customer research → personas → angles → copy → scripts. Full pipeline.</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
       </div>
-    </section>
 
-    <!-- ═══════ FAQ — MEDIUM density ═══════ -->
-    <section class="py-[clamp(60px,10vh,100px)] border-t border-smoke" data-reveal-stagger>
-      <div class="wrap">
-        <p class="label mb-6" data-reveal-child data-stagger="1">Common questions</p>
-        <div class="max-w-[672px]">
-          {faqs.map((faq, i) => (
-            <details class="faq-item border-b border-smoke" data-reveal-child data-stagger={String(Math.min(i + 2, 6))}>
-              <summary class="faq-item__q">{faq.q}</summary>
-              <p class="faq-item__a">{faq.a}</p>
-            </details>
-          ))}
-        </div>
-      </div>
-    </section>
+      <!-- Footer -->
+      <footer class="hero-card__footer">
+        <span>channel47</span>
+        <span>by <a href="https://x.com/ctrlswing" target="_blank" rel="noopener noreferrer" class="hero-card__footer-link">ctrlswing</a></span>
+      </footer>
+    </div>
 
-    <!-- ═══════ RUPTURE — surface flip + density shift (LOW) ═══════ -->
-    <section class="rupture" data-reveal>
-      <div class="rupture__inner">
-        <div class="rupture__bar"></div>
-        <p class="label label--muted mb-5">Signal</p>
-        <h2 class="rupture__headline">One workflow caught $3K/month in wasted spend. A pacing alert flagged a budget overrun four days before the client noticed.</h2>
-        <a href="/plugins" class="rupture__link">Browse the plugins →</a>
-      </div>
-    </section>
-
-    <!-- ═══════ PRODUCT CALLOUT — MEDIUM density ═══════ -->
-    <ProductCallout />
-
-    <!-- ═══════ CTA VOID — LOW density ═══════ -->
-    <section class="cta" data-reveal>
-      <a href="/plugins" class="cta__headline">Browse the plugins.</a>
-      <a href="/subscribe" class="btn-signal">Get Build Notes</a>
-    </section>
-
-    <Footer />
   </main>
 </BaseLayout>
 
-<script>
-  import { initCopyButtons } from '../scripts/copy-to-clipboard';
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initCopyButtons);
-  } else {
-    initCopyButtons();
-  }
-  document.addEventListener('astro:page-load', initCopyButtons);
-</script>
-
 <style>
-  .hero-install {
+  /* ── Page body ── */
+  .hero-card-page {
+    background: var(--color-neutral-100);
     display: flex;
-    align-items: baseline;
-    gap: 16px;
-  }
-  .hero-install__cmd {
-    font-family: var(--font-family-mono);
-    font-size: clamp(13px, 1.4vw, 15px);
-    color: var(--color-chalk);
-    letter-spacing: 0.02em;
-    user-select: all;
-    white-space: nowrap;
-    border-bottom: 1px solid var(--color-ash);
-    padding-bottom: 4px;
-  }
-  .hero-install__copy {
-    font-family: var(--font-family-mono);
-    font-size: 10px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--color-signal);
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    transition: color 100ms var(--ease-sharp);
-    white-space: nowrap;
-  }
-  .hero-install__copy:hover {
-    color: var(--color-signal-hover);
-  }
-  .hero-install__copy:focus-visible {
-    outline: 2px solid var(--color-signal);
-    outline-offset: 4px;
-    border-radius: var(--radius-tight);
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: clamp(16px, 4vw, 40px);
   }
 
-  .hero__secondary {
+  /* ── Card container ── */
+  .hero-card {
+    background: var(--color-panel);
+    width: 100%;
+    max-width: 1400px;
+    min-height: 800px;
+    border-radius: 24px;
+    box-shadow: 0 40px 80px -20px rgba(25, 25, 24, 0.3);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* ── Header ── */
+  .hero-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 32px 48px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+  }
+
+  .hero-card__brand {
     display: flex;
     align-items: center;
-    gap: 16px;
-    margin-top: 20px;
+    gap: 12px;
   }
-  .hero__browse,
-  .hero__subscribe {
-    font-family: var(--font-family-mono);
+
+  .hero-card__brand-name {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.85);
+    letter-spacing: -0.01em;
+  }
+
+  .hero-card__nav-link {
+    font-family: var(--font-mono);
     font-size: 11px;
     font-weight: 500;
-    letter-spacing: 0.05em;
-    transition: color 100ms var(--ease-sharp);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(255, 255, 255, 0.35);
+    transition: color var(--dur-instant) var(--ease-sharp);
   }
-  .hero__browse {
-    color: var(--color-dust);
+  .hero-card__nav-link:hover { color: var(--color-primary-500); }
+  .hero-card__nav-link:focus-visible {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+    border-radius: var(--radius-xs);
   }
-  .hero__browse:hover {
-    color: var(--color-signal);
+
+  /* ── Logo inversion for dark surface ── */
+  .hero-card :global(.logo-animated) {
+    color: rgba(255, 255, 255, 0.85);
+    --logo-glow: rgba(252, 170, 45, 0.4);
   }
-  .hero__subscribe {
-    color: var(--color-signal);
+
+  /* ── Main grid ── */
+  .hero-card__main {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    flex-grow: 1;
   }
-  .hero__subscribe:hover {
-    color: var(--color-signal-hover);
+
+  /* ── Hero (left column) ── */
+  .hero-card__hero {
+    padding: 48px;
+    border-right: 1px solid rgba(255, 255, 255, 0.10);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 40px;
   }
-  .hero__sep {
-    width: 1px;
-    height: 12px;
-    background: var(--color-ash);
+
+  .hero-card__bar {
+    width: 0;
+    height: 2px;
+    background: var(--color-primary-500);
+    margin-bottom: 20px;
+    animation: hero-card-draw-h 500ms var(--ease-out) 200ms forwards;
+  }
+
+  .hero-card__label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-primary-500);
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: hero-card-fade-in 300ms var(--ease-out) 450ms forwards;
+  }
+
+  .hero-card__headline {
+    font-family: var(--font-heading);
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: rgba(255, 255, 255, 0.92);
+    opacity: 0;
+    clip-path: inset(0 50% 0 50%);
+    animation: hero-card-clip-reveal 600ms var(--ease-out) 550ms forwards;
+  }
+
+  .hero-card__sub {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.5);
+    max-width: 44ch;
+    opacity: 0;
+    animation: hero-card-fade-up 400ms var(--ease-out) 850ms forwards;
+  }
+
+  .hero-card__cta {
+    margin-top: 28px;
+    opacity: 0;
+    animation: hero-card-fade-up 400ms var(--ease-out) 1050ms forwards;
+  }
+
+  .hero-card__hint {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.25);
+    margin-top: 10px;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── Email form dark overrides ── */
+  .hero-card :global(.email-form) {
+    max-width: 420px;
+  }
+
+  .hero-card :global(.email-form__input) {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-right: none;
+    color: rgba(255, 255, 255, 0.85);
+    font-family: var(--font-body);
+    font-size: 14px;
+  }
+  .hero-card :global(.email-form__input::placeholder) {
+    color: rgba(255, 255, 255, 0.3);
+  }
+  .hero-card :global(.email-form__input:focus) {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--color-primary-500);
+    box-shadow: 0 0 0 3px rgba(252, 170, 45, 0.15);
+  }
+
+  .hero-card :global(.email-form__btn) {
+    background: var(--color-primary-500);
+    color: var(--color-neutral-950);
+    border: 1px solid var(--color-primary-500);
+  }
+  .hero-card :global(.email-form__btn:hover) {
+    background: var(--color-primary-400);
+    box-shadow: 0 2px 16px rgba(252, 170, 45, 0.25);
+  }
+
+  /* Success state override for dark context */
+  .hero-card :global(.email-signup.is-success .email-form__input) {
+    border-color: var(--color-success);
+  }
+  .hero-card :global(.email-signup.is-success .email-form__btn) {
+    background: var(--color-success);
+    border-color: var(--color-success);
+  }
+
+  /* ── Metrics grid (right column) ── */
+  .hero-card__metrics {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  .hero-card__metric-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+  }
+  .hero-card__metric-row:last-child {
+    border-bottom: none;
+  }
+
+  /* ── Individual metric cell ── */
+  .hero-card__cell {
+    padding: 36px;
+    border-right: 1px solid rgba(255, 255, 255, 0.10);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+    transition: background-color 200ms var(--ease-out);
+  }
+  .hero-card__cell:last-child {
+    border-right: none;
+  }
+  .hero-card__cell:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .hero-card__cell-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .hero-card__icon {
+    width: 28px;
+    height: 28px;
+    stroke: rgba(255, 255, 255, 0.3);
+    stroke-width: 1.5;
+    fill: none;
     flex-shrink: 0;
   }
 
-  @media (max-width: 480px) {
-    .hero-install {
+  .hero-card__number {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 300;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.85);
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .hero-card__cell-content h3 {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-primary-500);
+    margin-bottom: 6px;
+  }
+
+  .hero-card__cell-content p {
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  /* ── Footer ── */
+  .hero-card__footer {
+    padding: 24px 48px;
+    border-top: 1px solid rgba(255, 255, 255, 0.10);
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.3);
+    letter-spacing: 0.02em;
+  }
+
+  .hero-card__footer-link {
+    color: rgba(255, 255, 255, 0.3);
+    transition: color var(--dur-instant) var(--ease-sharp);
+  }
+  .hero-card__footer-link:hover { color: var(--color-primary-500); }
+  .hero-card__footer-link:focus-visible {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+    border-radius: var(--radius-xs);
+  }
+
+  /* ── Keyframes (scoped to this card) ── */
+  @keyframes hero-card-draw-h {
+    from { width: 0; }
+    to { width: 40px; }
+  }
+
+  @keyframes hero-card-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes hero-card-clip-reveal {
+    from { opacity: 0; clip-path: inset(0 50% 0 50%); }
+    to { opacity: 1; clip-path: inset(0 0 0 0); }
+  }
+
+  @keyframes hero-card-fade-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 1024px) {
+    .hero-card__main {
+      grid-template-columns: 1fr;
+    }
+    .hero-card__hero {
+      border-right: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+    }
+    .hero-card {
+      min-height: auto;
+      border-radius: 20px;
+    }
+    .hero-card__header,
+    .hero-card__hero,
+    .hero-card__footer {
+      padding-left: 36px;
+      padding-right: 36px;
+    }
+    .hero-card__cell {
+      padding: 28px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero-card {
+      border-radius: 16px;
+    }
+    .hero-card__header {
+      padding: 24px 24px;
+    }
+    .hero-card__hero {
+      padding: 32px 24px;
+    }
+    .hero-card__cell {
+      padding: 24px;
+    }
+    .hero-card__footer {
+      padding: 20px 24px;
+    }
+
+    /* Stack email form on mobile */
+    .hero-card :global(.email-form) {
       flex-direction: column;
       gap: 8px;
     }
-    .hero-install__cmd {
-      font-size: 12px;
+    .hero-card :global(.email-form__input) {
+      border-right: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-xs);
+    }
+    .hero-card :global(.email-form__btn) {
+      border-radius: var(--radius-xs);
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-card__metric-row {
+      grid-template-columns: 1fr;
+    }
+    .hero-card__cell {
+      border-right: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+    }
+    .hero-card__metric-row:last-child .hero-card__cell:last-child {
+      border-bottom: none;
+    }
+  }
+
+  /* ── Reduced motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-card__bar {
+      width: 40px;
+      animation: none;
+    }
+    .hero-card__label,
+    .hero-card__headline,
+    .hero-card__sub,
+    .hero-card__cta {
+      opacity: 1;
+      transform: none;
+      clip-path: none;
+      animation: none;
     }
   }
 </style>
