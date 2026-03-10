@@ -276,11 +276,9 @@ import EmailSignup from '../components/EmailSignup.astro';
     font-weight: 600;
     letter-spacing: 0.08em;
     border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-    animation: hero-card-btn-glow 2s var(--ease-out) 2s both;
   }
   .hero-card :global(.email-form__btn:hover) {
     background: var(--color-primary-400);
-    box-shadow: 0 4px 20px rgba(252, 170, 45, 0.3);
   }
   .hero-card :global(.email-form__btn:focus-visible) {
     outline: 2px solid var(--color-primary-500);
@@ -432,12 +430,6 @@ import EmailSignup from '../components/EmailSignup.astro';
   @keyframes hero-card-fade-up {
     from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes hero-card-btn-glow {
-    0% { box-shadow: 0 0 0 0 rgba(252, 170, 45, 0); }
-    50% { box-shadow: 0 0 20px 4px rgba(252, 170, 45, 0.2); }
-    100% { box-shadow: none; }
   }
 
   /* ── Responsive ── */
