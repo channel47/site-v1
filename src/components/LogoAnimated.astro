@@ -254,29 +254,14 @@ const { class: className, delay = 0 } = Astro.props;
     opacity: 1;
   }
 
-  /* Flash on lock-in */
+  /* Flash on lock-in — no glow, just opacity bump */
   .logo-animated__char.is-flashing {
-    text-shadow:
-      0 0 6px var(--logo-glow),
-      0 0 12px rgba(252, 170, 45, 0.2);
+    opacity: 1;
   }
 
-  /* Completed state - subtle glow */
+  /* Completed state — no glow */
   .logo-animated.is-complete .logo-animated__glyph {
-    text-shadow: 0 0 8px var(--logo-glow);
-    animation: logo-breathe 4s ease-in-out infinite;
-    animation-delay: 1s;
-  }
-
-  @keyframes logo-breathe {
-    0%, 100% {
-      text-shadow: 0 0 8px var(--logo-glow);
-    }
-    50% {
-      text-shadow:
-        0 0 12px var(--logo-glow),
-        0 0 20px rgba(252, 170, 45, 0.15);
-    }
+    text-shadow: none;
   }
 
   /* Reduced motion - skip scramble, just fade in */
