@@ -1,0 +1,1054 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EmailSignup from '../components/EmailSignup.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="CH47 Design System" noindex={true}>
+  <Nav currentPath="/brand" />
+  <main id="main-content" class="brand-page">
+    <div class="brand-wrap">
+
+      <!-- Hero -->
+      <header class="brand-hero">
+        <div class="brand-hero__content">
+          <p class="label">Reference</p>
+          <h1 class="brand-hero__title">Design<br>System</h1>
+          <p class="brand-hero__sub">Tokens, components, and patterns for channel47.dev</p>
+        </div>
+        <span class="brand-hero__mark" aria-hidden="true">47</span>
+      </header>
+
+      <!-- Section nav -->
+      <nav class="brand-anchors" aria-label="Page sections">
+        <a href="#colors" class="brand-anchors__link">Colors</a>
+        <a href="#typography" class="brand-anchors__link">Type</a>
+        <a href="#buttons" class="brand-anchors__link">Buttons</a>
+        <a href="#cards" class="brand-anchors__link">Cards</a>
+        <a href="#code" class="brand-anchors__link">Code</a>
+        <a href="#email" class="brand-anchors__link">Email</a>
+        <a href="#radius" class="brand-anchors__link">Radius</a>
+        <a href="#dark-panel" class="brand-anchors__link">Dark Panel</a>
+        <a href="#links" class="brand-anchors__link">Links</a>
+        <a href="#type-tokens" class="brand-anchors__link">Tokens</a>
+      </nav>
+
+      <!-- ═══════════════ COLORS ═══════════════ -->
+      <section class="brand-section" id="colors">
+        <p class="label">Colors</p>
+        <h2>Color Palette</h2>
+        <p class="brand-section__desc">Warm amber accent on warm cream. Neutrals are warm gray (not pure gray). The dark panel surface uses rgba white overlays for text hierarchy.</p>
+
+        <h3>Primary (Amber)</h3>
+        <div class="swatch-row">
+          <div class="swatch" style="background: var(--color-primary-50);">
+            <span class="swatch__label">50</span>
+            <span class="swatch__hex">#fffbf0</span>
+          </div>
+          <div class="swatch" style="background: var(--color-primary-100);">
+            <span class="swatch__label">100</span>
+            <span class="swatch__hex">#fff3d6</span>
+          </div>
+          <div class="swatch" style="background: var(--color-primary-200);">
+            <span class="swatch__label">200</span>
+            <span class="swatch__hex">#ffe5a8</span>
+          </div>
+          <div class="swatch" style="background: var(--color-primary-300);">
+            <span class="swatch__label">300</span>
+            <span class="swatch__hex">#fdd574</span>
+          </div>
+          <div class="swatch" style="background: var(--color-primary-400);">
+            <span class="swatch__label">400</span>
+            <span class="swatch__hex">#fcc94d</span>
+          </div>
+          <div class="swatch swatch--dark-text" style="background: var(--color-primary-500);">
+            <span class="swatch__label">500</span>
+            <span class="swatch__hex">#fcaa2d</span>
+          </div>
+          <div class="swatch swatch--dark-text" style="background: var(--color-primary-600);">
+            <span class="swatch__label">600</span>
+            <span class="swatch__hex">#e08c10</span>
+          </div>
+          <div class="swatch swatch--light-text" style="background: var(--color-primary-700);">
+            <span class="swatch__label">700</span>
+            <span class="swatch__hex">#b87008</span>
+          </div>
+          <div class="swatch swatch--light-text" style="background: var(--color-primary-800);">
+            <span class="swatch__label">800</span>
+            <span class="swatch__hex">#945a06</span>
+          </div>
+          <div class="swatch swatch--light-text" style="background: var(--color-primary-900);">
+            <span class="swatch__label">900</span>
+            <span class="swatch__hex">#7a4a05</span>
+          </div>
+        </div>
+
+        <h3>Neutral (Warm Gray)</h3>
+        <div class="swatch-row">
+          <div class="swatch" style="background: var(--color-neutral-50);">
+            <span class="swatch__label">50</span>
+            <span class="swatch__hex">#fffef2</span>
+          </div>
+          <div class="swatch" style="background: var(--color-neutral-100);">
+            <span class="swatch__label">100</span>
+            <span class="swatch__hex">#faf9f0</span>
+          </div>
+          <div class="swatch" style="background: var(--color-neutral-200);">
+            <span class="swatch__label">200</span>
+            <span class="swatch__hex">#f0efe4</span>
+          </div>
+          <div class="swatch" style="background: var(--color-neutral-300);">
+            <span class="swatch__label">300</span>
+            <span class="swatch__hex">#dddcd2</span>
+          </div>
+          <div class="swatch" style="background: var(--color-neutral-400);">
+            <span class="swatch__label">400</span>
+            <span class="swatch__hex">#a8a79e</span>
+          </div>
+          <div class="swatch swatch--light-text" style="background: var(--color-neutral-500);">
+            <span class="swatch__label">500</span>
+            <span class="swatch__hex">#73726a</span>
+          </div>
+          <div class="swatch swatch--light-text" style="background: var(--color-neutral-600);">
+            <span class="swatch__label">600</span>
+            <span class="swatch__hex">#55544d</span>
+          </div>
+          <div class="swatch swatch--light-text" style="background: var(--color-neutral-700);">
+            <span class="swatch__label">700</span>
+            <span class="swatch__hex">#3d3c36</span>
+          </div>
+          <div class="swatch swatch--light-text" style="background: var(--color-neutral-800);">
+            <span class="swatch__label">800</span>
+            <span class="swatch__hex">#2a2a24</span>
+          </div>
+          <div class="swatch swatch--light-text" style="background: var(--color-neutral-900);">
+            <span class="swatch__label">900</span>
+            <span class="swatch__hex">#191918</span>
+          </div>
+          <div class="swatch swatch--light-text" style="background: var(--color-neutral-950);">
+            <span class="swatch__label">950</span>
+            <span class="swatch__hex">#0d0d0c</span>
+          </div>
+        </div>
+
+        <h3>Semantic</h3>
+        <div class="swatch-row">
+          <div class="swatch swatch--light-text" style="background: var(--color-success);">
+            <span class="swatch__label">Success</span>
+            <span class="swatch__hex">#28C840</span>
+          </div>
+          <div class="swatch swatch--light-text" style="background: var(--color-destructive);">
+            <span class="swatch__label">Destructive</span>
+            <span class="swatch__hex">#e5453a</span>
+          </div>
+          <div class="swatch swatch--dark-text" style="background: var(--color-warning);">
+            <span class="swatch__label">Warning</span>
+            <span class="swatch__hex">#f59e0b</span>
+          </div>
+          <div class="swatch swatch--light-text" style="background: var(--color-info);">
+            <span class="swatch__label">Info</span>
+            <span class="swatch__hex">#3b82f6</span>
+          </div>
+        </div>
+
+        <h3>Dark Panel Surface</h3>
+        <div class="panel-demo">
+          <div class="panel-demo__row">
+            <span class="panel-demo__fg">panel-fg (0.85)</span>
+            <span class="panel-demo__fg-muted">panel-fg-muted (0.6)</span>
+            <span class="panel-demo__fg-dim">panel-fg-dim (0.5)</span>
+            <span class="panel-demo__dim">panel-dim (0.35)</span>
+          </div>
+          <hr class="divider divider--panel panel-demo__divider" />
+          <div class="panel-demo__row panel-demo__row--tight">
+            <span class="panel-demo__chip panel-demo__chip--tint">tint (0.05)</span>
+            <span class="panel-demo__chip panel-demo__chip--tint-hover">tint-hover (0.08)</span>
+            <span class="panel-demo__chip panel-demo__chip--border">border (0.15)</span>
+            <span class="panel-demo__chip panel-demo__chip--divider">divider (0.10)</span>
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- ═══════════════ TYPOGRAPHY ═══════════════ -->
+      <section class="brand-section" id="typography">
+        <p class="label">Typography</p>
+        <h2>Type System</h2>
+        <p class="brand-section__desc">Geist for body and headings. Geist Mono for labels, buttons, code, and data. Light-first with warm gray body text.</p>
+
+        <div class="type-samples">
+          <div class="type-sample">
+            <span class="type-sample__label">H1 — Geist 700, clamp(2.25rem, 5vw, 3.75rem), tracking -0.03em</span>
+            <h1 class="type-sample__h1">DTC Google Ads, meet Claude.</h1>
+          </div>
+
+          <div class="type-sample">
+            <span class="type-sample__label">H2 — Geist 600, 1.5rem, tracking -0.02em</span>
+            <h2 class="type-sample__h2">Section Heading</h2>
+          </div>
+
+          <div class="type-sample">
+            <span class="type-sample__label">H3 — Geist 600, 1.125rem, tracking -0.01em</span>
+            <h3 class="type-sample__h3">Subsection Heading</h3>
+          </div>
+
+          <div class="type-sample">
+            <span class="type-sample__label">Body — Geist 400, 15px, line-height 1.6</span>
+            <p class="type-sample__body">Two open-source plugins built from $6M+ in real DTC spend. Campaign architecture, daily optimization, customer research to creative — install and go.</p>
+          </div>
+
+          <div class="type-sample">
+            <span class="type-sample__label">Body Muted — color-fg-muted</span>
+            <p class="type-sample__body-muted">Frameworks from real DTC accounts — not blog posts, not theory.</p>
+          </div>
+
+          <div class="type-sample">
+            <span class="type-sample__label">Label — Geist Mono 500, 11px, uppercase, tracking 0.15em</span>
+            <p class="label">Open-Source Claude Plugins</p>
+          </div>
+
+          <div class="type-sample">
+            <span class="type-sample__label">Mono Body — Geist Mono 400, 13px</span>
+            <p class="type-sample__mono">claude plugin install ctrlswing/dtc-google-ads-playbook</p>
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- ═══════════════ BUTTONS ═══════════════ -->
+      <section class="brand-section" id="buttons">
+        <p class="label">Components</p>
+        <h2>Buttons</h2>
+        <p class="brand-section__desc">Three variants (primary, secondary, ghost) and three sizes (sm, md, lg). Mono uppercase text with tight letter-spacing. All buttons have hover, active, focus-visible, and disabled states.</p>
+
+        <h3>Variants</h3>
+        <div class="component-row">
+          <button class="btn btn--primary">Primary</button>
+          <button class="btn btn--secondary">Secondary</button>
+          <button class="btn btn--ghost">Ghost</button>
+          <button class="btn btn--primary" disabled>Disabled</button>
+        </div>
+
+        <h3>Sizes</h3>
+        <div class="component-row">
+          <button class="btn btn--primary btn--sm">Small</button>
+          <button class="btn btn--primary">Medium</button>
+          <button class="btn btn--primary btn--lg">Large</button>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- ═══════════════ BADGES ═══════════════ -->
+      <section class="brand-section" id="badges">
+        <h2>Badges</h2>
+        <p class="brand-section__desc">Pill-shaped labels for tags, status indicators, and categories.</p>
+
+        <div class="component-row">
+          <span class="badge badge--default">Default</span>
+          <span class="badge badge--primary">Google Ads</span>
+          <span class="badge badge--success">Active</span>
+          <span class="badge badge--destructive">Deprecated</span>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- ═══════════════ CARDS ═══════════════ -->
+      <section class="brand-section" id="cards">
+        <h2>Cards</h2>
+        <p class="brand-section__desc">Light surface cards with border. Hover state adds shadow and darkens border.</p>
+
+        <div class="card-grid">
+          <div class="card">
+            <p class="label card__label">Plugin</p>
+            <h3 class="card__title">DTC Google Ads Playbook</h3>
+            <p class="card__desc">Campaign architecture, daily optimization, ad copy, and landing pages. Built from real DTC accounts.</p>
+            <div class="card__tags">
+              <span class="badge badge--primary">Google Ads</span>
+              <span class="badge badge--default">MIT</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <p class="label card__label">Plugin</p>
+            <h3 class="card__title">DTC Research Engine</h3>
+            <p class="card__desc">5-stage pipeline: customer research, personas, angles, copy, scripts. Full creative pipeline.</p>
+            <div class="card__tags">
+              <span class="badge badge--primary">Research</span>
+              <span class="badge badge--default">MIT</span>
+            </div>
+          </div>
+
+          <div class="card card--flat">
+            <p class="label label--muted card__label">Flat Variant</p>
+            <h3 class="card__title">No Border Card</h3>
+            <p class="card__desc">Uses a subtle background fill instead of a border. Good for grids where borders create too much visual noise.</p>
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- ═══════════════ CODE ═══════════════ -->
+      <section class="brand-section" id="code">
+        <h2>Code</h2>
+        <p class="brand-section__desc">Inline code for references in body text. Code blocks for install commands and examples.</p>
+
+        <h3>Inline</h3>
+        <p>Install the plugin with <code class="code">claude plugin install</code> and start using it immediately.</p>
+
+        <h3>Code Block</h3>
+        <div>
+          <div class="code-block__header">
+            <span>Terminal</span>
+          </div>
+          <pre class="code-block">claude plugin install ctrlswing/dtc-google-ads-playbook</pre>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- ═══════════════ EMAIL FORMS ═══════════════ -->
+      <section class="brand-section" id="email">
+        <h2>Email Signup</h2>
+        <p class="brand-section__desc">Three variants for different contexts. All share the same submission logic and state management.</p>
+
+        <h3>Inline (Hero)</h3>
+        <EmailSignup variant="inline" placeholder="you@company.com" tag="brand-page" submitText="Join the Community" />
+
+        <h3>Default</h3>
+        <EmailSignup variant="default" placeholder="your@email.com" tag="brand-page" submitText="Join the Community" />
+
+        <h3>Prominent</h3>
+        <EmailSignup variant="prominent" placeholder="your@email.com" tag="brand-page" submitText="Join the Community" />
+      </section>
+
+      <hr class="divider" />
+
+      <!-- ═══════════════ RADIUS & SHADOWS ═══════════════ -->
+      <section class="brand-section" id="radius">
+        <h2>Radius & Shadows</h2>
+
+        <h3>Border Radius</h3>
+        <div class="demo-row">
+          <div class="radius-demo radius-demo--xs"><span>xs (3px)</span></div>
+          <div class="radius-demo radius-demo--sm"><span>sm (6px)</span></div>
+          <div class="radius-demo radius-demo--md"><span>md (8px)</span></div>
+          <div class="radius-demo radius-demo--lg"><span>lg (10px)</span></div>
+          <div class="radius-demo radius-demo--xl"><span>xl (16px)</span></div>
+          <div class="radius-demo radius-demo--2xl"><span>2xl (24px)</span></div>
+          <div class="radius-demo radius-demo--full"><span>full</span></div>
+        </div>
+
+        <h3>Shadows</h3>
+        <div class="demo-row">
+          <div class="shadow-demo shadow-demo--subtle"><span>subtle</span></div>
+          <div class="shadow-demo shadow-demo--medium"><span>medium</span></div>
+          <div class="shadow-demo shadow-demo--elevated"><span>elevated</span></div>
+          <div class="shadow-demo shadow-demo--card"><span>card</span></div>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- ═══════════════ MOTION ═══════════════ -->
+      <section class="brand-section" id="motion">
+        <h2>Motion</h2>
+        <p class="brand-section__desc">Two easing curves and three timing tokens. All motion respects <code class="code">prefers-reduced-motion: reduce</code>.</p>
+
+        <div class="token-table">
+          <div class="token-table__row">
+            <span class="token-table__key">--ease-out</span>
+            <span class="token-table__val">cubic-bezier(0.16, 1, 0.3, 1)</span>
+            <span class="token-table__desc">Default for most transitions. Quick start, gentle land.</span>
+          </div>
+          <div class="token-table__row">
+            <span class="token-table__key">--ease-sharp</span>
+            <span class="token-table__val">cubic-bezier(0.33, 1, 0.68, 1)</span>
+            <span class="token-table__desc">Snappier. Use for active/pressed states.</span>
+          </div>
+          <div class="token-table__row">
+            <span class="token-table__key">--dur-instant</span>
+            <span class="token-table__val">100ms</span>
+            <span class="token-table__desc">Color changes, opacity flips. Should feel immediate.</span>
+          </div>
+          <div class="token-table__row">
+            <span class="token-table__key">--dur-quick</span>
+            <span class="token-table__val">200ms</span>
+            <span class="token-table__desc">Hover states, focus rings, border transitions.</span>
+          </div>
+          <div class="token-table__row">
+            <span class="token-table__key">--dur-measured</span>
+            <span class="token-table__val">400ms</span>
+            <span class="token-table__desc">Entrance animations, reveal transitions.</span>
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- ═══════════════ DARK PANEL ═══════════════ -->
+      <section class="brand-section" id="dark-panel">
+        <h2>Dark Panel</h2>
+        <p class="brand-section__desc">The hero card uses a dark panel surface. Components on dark surfaces use the panel token scale for text, borders, and tints.</p>
+
+        <div class="dark-panel-demo">
+          <p class="label dark-panel-demo__label">On Dark Surface</p>
+          <h3 class="dark-panel-demo__heading">Headline on Panel</h3>
+          <p class="dark-panel-demo__body">Body text uses panel-fg-muted for comfortable reading on dark surfaces. Panel-dim is for decorative or tertiary content.</p>
+          <div class="dark-panel-demo__actions">
+            <button class="btn btn--primary">Primary Action</button>
+            <button class="btn btn--ghost dark-panel-demo__ghost">Ghost on Dark</button>
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- ═══════════════ LINKS ═══════════════ -->
+      <section class="brand-section" id="links">
+        <h2>Links</h2>
+        <p class="brand-section__desc">Inline body links use an underline that darkens on hover. Muted variant for secondary contexts.</p>
+
+        <h3>Inline Link</h3>
+        <p>Install plugins from the <a href="https://github.com/ctrlswing" class="link">ctrlswing GitHub org</a> and start using them immediately.</p>
+
+        <h3>Muted Link</h3>
+        <p><a href="https://github.com/ctrlswing" class="link link--muted">View all repositories</a></p>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- ═══════════════ TYPOGRAPHY TOKENS ═══════════════ -->
+      <section class="brand-section" id="type-tokens">
+        <h2>Typography Tokens</h2>
+        <p class="brand-section__desc">Named size tokens for consistent typography across components. Use these instead of hardcoded values.</p>
+
+        <div class="token-table">
+          <div class="token-table__row">
+            <span class="token-table__key">--text-xs</span>
+            <span class="token-table__val">11px</span>
+            <span class="token-table__desc">Labels, badges, small mono text</span>
+          </div>
+          <div class="token-table__row">
+            <span class="token-table__key">--text-sm</span>
+            <span class="token-table__val">13px</span>
+            <span class="token-table__desc">Cell content, code blocks, metadata</span>
+          </div>
+          <div class="token-table__row">
+            <span class="token-table__key">--text-base</span>
+            <span class="token-table__val">15px</span>
+            <span class="token-table__desc">Body text (default)</span>
+          </div>
+          <div class="token-table__row">
+            <span class="token-table__key">--text-lg</span>
+            <span class="token-table__val">1.125rem</span>
+            <span class="token-table__desc">Card titles, h3 headings</span>
+          </div>
+          <div class="token-table__row">
+            <span class="token-table__key">--text-xl</span>
+            <span class="token-table__val">1.5rem</span>
+            <span class="token-table__desc">Section headings, h2</span>
+          </div>
+          <div class="token-table__row">
+            <span class="token-table__key">--text-2xl</span>
+            <span class="token-table__val">2rem</span>
+            <span class="token-table__desc">Large headings</span>
+          </div>
+          <div class="token-table__row">
+            <span class="token-table__key">--text-3xl</span>
+            <span class="token-table__val">2.5rem</span>
+            <span class="token-table__desc">Page titles</span>
+          </div>
+          <div class="token-table__row">
+            <span class="token-table__key">--text-4xl</span>
+            <span class="token-table__val">3.75rem</span>
+            <span class="token-table__desc">Hero display text</span>
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- ═══════════════ SPACING TOKENS ═══════════════ -->
+      <section class="brand-section" id="spacing-tokens">
+        <h2>Spacing Tokens</h2>
+        <p class="brand-section__desc">Consistent spacing scale for padding, margins, and gaps. Based on a 4px base unit.</p>
+
+        <div class="spacing-demo">
+          <div class="spacing-demo__item">
+            <div class="spacing-demo__bar" style="width: var(--space-1);"></div>
+            <span class="spacing-demo__label">--space-1 (4px)</span>
+          </div>
+          <div class="spacing-demo__item">
+            <div class="spacing-demo__bar" style="width: var(--space-2);"></div>
+            <span class="spacing-demo__label">--space-2 (8px)</span>
+          </div>
+          <div class="spacing-demo__item">
+            <div class="spacing-demo__bar" style="width: var(--space-3);"></div>
+            <span class="spacing-demo__label">--space-3 (12px)</span>
+          </div>
+          <div class="spacing-demo__item">
+            <div class="spacing-demo__bar" style="width: var(--space-4);"></div>
+            <span class="spacing-demo__label">--space-4 (16px)</span>
+          </div>
+          <div class="spacing-demo__item">
+            <div class="spacing-demo__bar" style="width: var(--space-5);"></div>
+            <span class="spacing-demo__label">--space-5 (20px)</span>
+          </div>
+          <div class="spacing-demo__item">
+            <div class="spacing-demo__bar" style="width: var(--space-6);"></div>
+            <span class="spacing-demo__label">--space-6 (24px)</span>
+          </div>
+          <div class="spacing-demo__item">
+            <div class="spacing-demo__bar" style="width: var(--space-8);"></div>
+            <span class="spacing-demo__label">--space-8 (32px)</span>
+          </div>
+          <div class="spacing-demo__item">
+            <div class="spacing-demo__bar" style="width: var(--space-10);"></div>
+            <span class="spacing-demo__label">--space-10 (40px)</span>
+          </div>
+          <div class="spacing-demo__item">
+            <div class="spacing-demo__bar" style="width: var(--space-12);"></div>
+            <span class="spacing-demo__label">--space-12 (48px)</span>
+          </div>
+          <div class="spacing-demo__item">
+            <div class="spacing-demo__bar" style="width: var(--space-16);"></div>
+            <span class="spacing-demo__label">--space-16 (64px)</span>
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- ═══════════════ NAV & FOOTER ═══════════════ -->
+      <section class="brand-section" id="nav-footer">
+        <h2>Navigation & Footer</h2>
+        <p class="brand-section__desc">Shared layout components used across all content pages. The Nav is sticky and hides on scroll down. Both are visible on this page.</p>
+
+        <h3>Nav</h3>
+        <p>Sticky header with logo, site name, and links. Uses <code class="code">[data-nav]</code> for scroll behavior via <code class="code">nav-scroll.ts</code>. Scroll down on this page to see the hide/show effect.</p>
+
+        <h3>Footer</h3>
+        <p>Site name left, social icons and attribution right. Shared across content pages. The homepage uses a custom footer inside the hero card instead.</p>
+      </section>
+
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  /* ── Page layout ── */
+  .brand-page {
+    padding: clamp(24px, 4vw, 64px) clamp(16px, 4vw, 40px);
+  }
+
+  .brand-wrap {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  /* ── Hero ── */
+  .brand-hero {
+    background: var(--color-panel);
+    border-radius: var(--radius-xl);
+    padding: clamp(40px, 6vw, 72px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .brand-hero__content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .brand-hero__content .label {
+    color: var(--color-primary-500);
+    margin-bottom: var(--space-4);
+    display: block;
+  }
+
+  .brand-hero__title {
+    font-family: var(--font-heading);
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    color: var(--color-panel-fg);
+  }
+
+  .brand-hero__sub {
+    font-size: var(--text-base);
+    color: var(--color-panel-fg-muted);
+    line-height: 1.6;
+    margin-top: var(--space-4);
+    max-width: 40ch;
+  }
+
+  .brand-hero__mark {
+    position: absolute;
+    right: -10px;
+    bottom: -20px;
+    font-family: var(--font-heading);
+    font-size: clamp(12rem, 28vw, 20rem);
+    font-weight: 800;
+    line-height: 0.8;
+    color: rgba(255, 255, 255, 0.03);
+    letter-spacing: -0.05em;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ── Section anchors ── */
+  .brand-anchors {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+    padding: var(--space-6) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .brand-anchors__link {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+    letter-spacing: 0.02em;
+    padding: 5px 12px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xs);
+    transition: background var(--dur-instant) var(--ease-out),
+                color var(--dur-instant) var(--ease-out),
+                border-color var(--dur-instant) var(--ease-out);
+  }
+  .brand-anchors__link:hover {
+    background: var(--color-surface);
+    color: var(--color-fg);
+    border-color: var(--color-border-hover);
+  }
+  .brand-anchors__link:focus-visible {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+    border-radius: var(--radius-xs);
+  }
+
+  /* ── Sections ── */
+  .brand-section {
+    padding: 48px 0;
+  }
+
+  .brand-section h2 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-fg);
+    letter-spacing: -0.02em;
+    margin-top: 12px;
+    margin-bottom: 8px;
+  }
+
+  .brand-section h3 {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-fg);
+    margin-top: 32px;
+    margin-bottom: 16px;
+  }
+
+  .brand-section__desc {
+    font-size: 15px;
+    color: var(--color-fg-muted);
+    line-height: 1.6;
+    max-width: 60ch;
+    margin-bottom: 24px;
+  }
+
+  .brand-section p {
+    line-height: 1.6;
+  }
+
+  /* ── Color swatches ── */
+  .swatch-row {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+
+  .swatch {
+    flex: 1;
+    min-width: 72px;
+    height: 80px;
+    border-radius: var(--radius-sm);
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid var(--color-border);
+    transition: border-color var(--dur-quick) var(--ease-out);
+  }
+
+  .swatch:hover {
+    border-color: var(--color-border-hover);
+  }
+
+  .swatch__label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    opacity: 0.7;
+  }
+
+  .swatch__hex {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    opacity: 0.6;
+    transition: opacity var(--dur-instant) var(--ease-out);
+  }
+
+  .swatch:hover .swatch__hex {
+    opacity: 0.9;
+  }
+
+  .swatch--dark-text .swatch__label,
+  .swatch--dark-text .swatch__hex {
+    color: var(--color-neutral-900);
+  }
+
+  .swatch--light-text .swatch__label,
+  .swatch--light-text .swatch__hex {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  /* ── Panel demo ── */
+  .panel-demo {
+    background: var(--color-panel);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+
+  .panel-demo__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    color: var(--color-panel-fg);
+  }
+
+  .panel-demo__row--tight { gap: 12px; }
+  .panel-demo__divider { margin: 16px 0; }
+  .panel-demo__fg { color: var(--color-panel-fg); }
+  .panel-demo__fg-muted { color: var(--color-panel-fg-muted); }
+  .panel-demo__fg-dim { color: var(--color-panel-fg-dim); }
+  .panel-demo__dim { color: var(--color-panel-dim); }
+
+  .panel-demo__chip {
+    padding: 4px 12px;
+    border-radius: var(--radius-xs);
+    transition: background var(--dur-instant) var(--ease-out),
+                border-color var(--dur-instant) var(--ease-out);
+  }
+  .panel-demo__chip--tint { background: var(--color-panel-tint); }
+  .panel-demo__chip--tint:hover { background: var(--color-panel-tint-hover); }
+  .panel-demo__chip--tint-hover { background: var(--color-panel-tint-hover); }
+  .panel-demo__chip--border { border: 1px solid var(--color-panel-border); }
+  .panel-demo__chip--divider { border: 1px solid var(--color-panel-divider); }
+
+  /* ── Type samples ── */
+  .type-samples {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .type-sample__label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-fg-dim);
+    margin-bottom: 8px;
+    letter-spacing: 0.02em;
+  }
+
+  .type-samples .type-sample__h1 {
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--color-fg);
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .type-samples .type-sample__h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--color-fg);
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .type-samples .type-sample__h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: var(--color-fg);
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .type-sample__body { color: var(--color-neutral-700); }
+  .type-sample__body-muted { color: var(--color-fg-muted); }
+
+  .type-sample__mono {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--color-fg-muted);
+  }
+
+  /* ── Component demos ── */
+  .component-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .card__label { margin-bottom: 12px; }
+  .card-grid .card__title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-fg);
+    margin-top: 0;
+    margin-bottom: 8px;
+  }
+  .card__desc {
+    font-size: 14px;
+    color: var(--color-fg-muted);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .card__tags {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  /* ── Demo row (shared for radius + shadows) ── */
+  .demo-row {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  /* ── Radius demos ── */
+  .radius-demo {
+    width: 80px;
+    height: 80px;
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color var(--dur-quick) var(--ease-out),
+                background var(--dur-quick) var(--ease-out);
+  }
+
+  .radius-demo:hover {
+    border-color: var(--color-border-hover);
+    background: var(--color-surface);
+  }
+
+  .radius-demo--xs { border-radius: var(--radius-xs); }
+  .radius-demo--sm { border-radius: var(--radius-sm); }
+  .radius-demo--md { border-radius: var(--radius-md); }
+  .radius-demo--lg { border-radius: var(--radius-lg); }
+  .radius-demo--xl { border-radius: var(--radius-xl); }
+  .radius-demo--2xl { border-radius: var(--radius-2xl); }
+  .radius-demo--full { border-radius: var(--radius-full); }
+
+  .radius-demo span {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-fg-dim);
+  }
+
+  /* ── Shadow demos ── */
+  .shadow-demo {
+    width: 120px;
+    height: 80px;
+    background: var(--color-bg);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: box-shadow var(--dur-quick) var(--ease-out);
+  }
+
+  .shadow-demo--subtle { box-shadow: var(--shadow-subtle); }
+  .shadow-demo--subtle:hover { box-shadow: var(--shadow-medium); }
+  .shadow-demo--medium { box-shadow: var(--shadow-medium); }
+  .shadow-demo--medium:hover { box-shadow: var(--shadow-elevated); }
+  .shadow-demo--elevated { box-shadow: var(--shadow-elevated); }
+  .shadow-demo--elevated:hover { box-shadow: var(--shadow-card); }
+  .shadow-demo--card { box-shadow: var(--shadow-card); }
+
+  .shadow-demo span {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-fg-dim);
+  }
+
+  /* ── Token table ── */
+  .token-table {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .token-table__row {
+    display: grid;
+    grid-template-columns: 160px 280px 1fr;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--color-border);
+    align-items: center;
+    gap: 16px;
+    transition: background var(--dur-instant) var(--ease-out);
+  }
+
+  .token-table__row:hover {
+    background: var(--color-surface);
+  }
+
+  .token-table__row:last-child {
+    border-bottom: none;
+  }
+
+  .token-table__key {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-fg);
+  }
+
+  .token-table__val {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-fg-muted);
+  }
+
+  .token-table__desc {
+    font-size: 13px;
+    color: var(--color-fg-dim);
+  }
+
+  /* ── Dark panel demo ── */
+  .dark-panel-demo {
+    background: var(--color-panel);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+  }
+
+  .dark-panel-demo .dark-panel-demo__label {
+    color: var(--color-primary-500);
+    margin-bottom: 16px;
+    margin-top: 0;
+  }
+
+  .dark-panel-demo .dark-panel-demo__heading {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-panel-fg);
+    margin-bottom: 8px;
+    margin-top: 0;
+  }
+
+  .dark-panel-demo__body {
+    color: var(--color-panel-fg-muted);
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  .dark-panel-demo__actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .dark-panel-demo__ghost {
+    color: var(--color-panel-fg-dim);
+    border-color: var(--color-panel-border);
+  }
+
+  /* Ghost button on dark override */
+  .dark-panel-demo :global(.btn--ghost:hover) {
+    background: var(--color-panel-tint-hover);
+    color: var(--color-panel-fg);
+    border-color: var(--color-panel-border);
+  }
+
+  /* ── Spacing demo ── */
+  .spacing-demo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .spacing-demo__item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .spacing-demo__bar {
+    height: 8px;
+    background: var(--color-primary-500);
+    border-radius: var(--radius-xs);
+    flex-shrink: 0;
+  }
+
+  .spacing-demo__label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-fg-dim);
+    white-space: nowrap;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .swatch {
+      min-width: 56px;
+      height: 64px;
+    }
+
+    .swatch__hex { display: none; }
+
+    .token-table__row {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+
+    .token-table__desc { display: none; }
+    .card-grid { grid-template-columns: 1fr; }
+    .demo-row { gap: 16px; }
+    .dark-panel-demo { padding: 24px; }
+  }
+</style>

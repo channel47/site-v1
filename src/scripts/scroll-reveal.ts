@@ -1,7 +1,6 @@
 /**
  * Scroll Reveal — unified IntersectionObserver system.
  *
- * - Hero gets .is-visible immediately (above the fold).
  * - [data-reveal] elements: single-element reveal at threshold 0.12.
  * - [data-reveal-stagger] parents: triggers all [data-reveal-child] children.
  * - Counter-tick: [data-counter] elements count up on reveal.
@@ -15,21 +14,12 @@ export function initScrollReveal(): void {
     document.querySelectorAll('[data-reveal]').forEach(el => el.classList.add('is-visible'));
     document.querySelectorAll('[data-reveal-child]').forEach(el => el.classList.add('is-visible'));
     document.querySelectorAll('[data-reveal-stagger]').forEach(el => el.classList.add('is-visible'));
-    document.querySelectorAll('.hero').forEach(el => el.classList.add('is-visible'));
-    document.querySelectorAll('.rupture').forEach(el => el.classList.add('is-visible'));
-    // Legacy support
-    document.querySelectorAll('[data-section]').forEach(el => el.classList.add('is-visible'));
-    document.querySelectorAll('[data-animate]').forEach(el => el.classList.add('is-visible'));
-    // Show counters at final value
     document.querySelectorAll('[data-counter]').forEach(el => {
       const target = el.getAttribute('data-counter');
       if (target) (el as HTMLElement).textContent = target;
     });
     return;
   }
-
-  // Hero is always visible immediately
-  document.querySelectorAll('.hero').forEach(el => el.classList.add('is-visible'));
 
   // Single-element reveals
   const revealObserver = new IntersectionObserver(
@@ -44,7 +34,7 @@ export function initScrollReveal(): void {
     { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
   );
 
-  document.querySelectorAll('[data-reveal], .rupture').forEach(el => {
+  document.querySelectorAll('[data-reveal]').forEach(el => {
     revealObserver.observe(el);
   });
 
@@ -53,7 +43,6 @@ export function initScrollReveal(): void {
     (entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          // Add is-visible to parent (needed for scoped CSS like .directory.is-visible)
           entry.target.classList.add('is-visible');
           entry.target.querySelectorAll('[data-reveal-child]').forEach(child => {
             child.classList.add('is-visible');
@@ -89,44 +78,6 @@ export function initScrollReveal(): void {
 
   document.querySelectorAll('[data-counter]:not([data-reveal-stagger] [data-counter])').forEach(el => {
     counterObserver.observe(el);
-  });
-
-  // Legacy data-section support
-  const sectionObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          sectionObserver.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
-  );
-
-  document.querySelectorAll('[data-section]:not([data-section="hero"])').forEach(el => {
-    sectionObserver.observe(el);
-  });
-  // Hero section is visible immediately
-  document.querySelectorAll('[data-section="hero"]').forEach(el => {
-    el.classList.add('is-visible');
-  });
-
-  // Legacy data-animate support
-  const animateObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          animateObserver.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
-  );
-
-  document.querySelectorAll('[data-animate]').forEach(el => {
-    animateObserver.observe(el);
   });
 }
 

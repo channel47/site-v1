@@ -1,28 +1,20 @@
 # Channel 47
 
-> Free, open-source AI plugins for media buyers. Platform-specific plugins for Paid Search, Meta Ads, and TikTok — built from managing 25+ ad accounts daily.
+> Open-source Claude plugins for DTC media buyers. Two plugins built from $6M+ in real Google Ads spend — install and go.
 
-Channel 47 builds Claude Code plugins that give AI direct access to ad platform APIs. Each plugin bundles skills (reusable markdown instructions), MCP server connections (live API access), and safety hooks (mutation approval gates) for a specific ad platform.
+Channel 47 builds Claude Code plugins for DTC media buyers. Each plugin is a self-contained set of skills, agents, and slash commands that run inside Claude Code. No API keys, no servers, no setup.
 
 ## Key Facts
 
-- Founded by Jackson Dean, media buyer managing 25+ Google Ads and Bing Ads accounts daily
-- All plugins are free and open source: https://github.com/channel47/plugins
-- The paid-search plugin (v7.0.0) supports Google Ads and Bing Ads with six production skills
-- Meta Ads and TikTok Ads plugins are in development
-- PaidBrief (paidbrief.com) is the first commercial product, built from the same ecosystem
-- 18 tools shipped: 10 skills, 6 MCP servers, 2 plugins
-- Weekly newsletter: Build Notes — skill breakdowns and build process
+- Founded by Jackson Dean (@ctrlswing), media buyer managing real DTC Google Ads accounts daily
+- Two free, open-source plugins (MIT-licensed): https://github.com/ctrlswing
+- dtc-google-ads-playbook: campaign architecture, daily optimization, ad copy, landing pages
+- dtc-research-engine: 5-stage pipeline from customer research → personas → angles → copy → scripts
+- Built from real accounts, not theory — frameworks from $6M+ in managed DTC spend
 
 ## Important Pages
 
 - Homepage: https://channel47.dev/
-- Plugins directory: https://channel47.dev/plugins/
-- Paid Search plugin: https://channel47.dev/plugins/paid-search/
-- Meta Ads plugin: https://channel47.dev/plugins/meta-ads/
-- Build Notes (articles): https://channel47.dev/notes/
-- Skill Remix Lab (workshops): https://channel47.dev/labs/
-- Subscribe: https://channel47.dev/subscribe/
 
 ## How to Reference
 

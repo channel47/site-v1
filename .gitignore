@@ -12,3 +12,7 @@ dist/
 # Local Claude settings
 .claude/
 node_modules/
+
+# Dev artifacts
+.playwright-mcp/
+.superdesign/

@@ -1,12 +1,11 @@
 ---
 /**
- * EmailSignup — three variants, all posting to /api/subscribe.
- *
- * Variants:
- * - inline: Hero. Side-by-side input+button. No gap. Split radius.
- * - default: Most pages. Stacked mobile, row desktop.
- * - prominent: /subscribe, /coming-soon. Larger, standalone.
+ * EmailSignup — reusable email capture form.
+ * Posts to /api/subscribe with tag and optional fields.
+ * Three variants: inline (side-by-side), default, prominent.
+ * Handles loading, success, and error states.
  */
+
 interface Props {
   placeholder?: string;
   tag?: string;
@@ -18,7 +17,7 @@ interface Props {
 const {
   placeholder = 'your@email.com',
   tag = 'general',
-  submitText = 'Subscribe',
+  submitText = 'Join the Community',
   class: className = '',
   variant = 'default'
 } = Astro.props;
@@ -27,7 +26,6 @@ const formId = `email-signup-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
 {variant === 'inline' ? (
-  <!-- Inline: flush input+button, no gap, split radius -->
   <form
     id={formId}
     class:list={['email-signup email-form', className]}
@@ -41,21 +39,23 @@ const formId = `email-signup-${Math.random().toString(36).substr(2, 9)}`;
       name="email"
       placeholder={placeholder}
       required
+      aria-required="true"
       class="email-form__input"
       autocomplete="email"
       spellcheck="false"
+      data-original-placeholder={placeholder}
     />
-    <button type="submit" class="email-form__btn email-signup__submit" aria-label="Subscribe">
+    <button type="submit" class="email-form__btn email-signup__submit">
       <span class="email-signup__submit-text">{submitText}</span>
-      <span class="email-signup__submit-icons relative w-4 h-4 shrink-0 inline-flex items-center">
+      <span class="email-signup__submit-icons relative w-4 h-4 shrink-0 inline-flex items-center" aria-hidden="true">
         <svg class="email-signup__icon email-signup__icon--arrow absolute inset-0 w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         <svg class="email-signup__icon email-signup__icon--check absolute inset-0 w-4 h-4 opacity-0 scale-[0.8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>
         <svg class="email-signup__icon email-signup__icon--loading absolute inset-0 w-4 h-4 opacity-0 scale-[0.8]" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
       </span>
     </button>
+    <p class="email-signup__status sr-only" aria-live="polite" data-signup-status></p>
   </form>
 ) : (
-  <!-- Default / Prominent -->
   <form
     id={formId}
     class:list={[
@@ -73,121 +73,90 @@ const formId = `email-signup-${Math.random().toString(36).substr(2, 9)}`;
       name="email"
       placeholder={placeholder}
       required
+      aria-required="true"
       class="email-signup__input"
       autocomplete="email"
       spellcheck="false"
+      data-original-placeholder={placeholder}
     />
-    <button
-      type="submit"
-      class="email-signup__submit"
-      aria-label="Subscribe"
-    >
+    <button type="submit" class="email-signup__submit">
       <span class="email-signup__submit-text">{submitText}</span>
-      <span class="email-signup__submit-icons relative w-4 h-4 shrink-0">
+      <span class="email-signup__submit-icons relative w-4 h-4 shrink-0" aria-hidden="true">
         <svg class="email-signup__icon email-signup__icon--arrow absolute inset-0 w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         <svg class="email-signup__icon email-signup__icon--check absolute inset-0 w-4 h-4 opacity-0 scale-[0.8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>
         <svg class="email-signup__icon email-signup__icon--loading absolute inset-0 w-4 h-4 opacity-0 scale-[0.8]" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
       </span>
     </button>
+    <p class="email-signup__status sr-only" aria-live="polite" data-signup-status></p>
   </form>
 )}
 
 <script>
   function initEmailSignup() {
-    const forms = document.querySelectorAll('[data-signup-form]');
-    const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    function validateEmail(email: string): boolean {
-      if (!email || email.length > 254) return false;
-      return EMAIL_REGEX.test(email.trim());
-    }
-
-    forms.forEach((form) => {
+    document.querySelectorAll<HTMLFormElement>('[data-signup-form]').forEach(form => {
       if (form.hasAttribute('data-initialized')) return;
       form.setAttribute('data-initialized', 'true');
 
-      const formElement = form as HTMLFormElement;
-      const emailInput = formElement.querySelector('input[name="email"]') as HTMLInputElement;
-      if (!emailInput) return;
-      const originalPlaceholder = emailInput.placeholder;
-
-      // Inline validation on blur
-      emailInput.addEventListener('blur', () => {
-        const email = emailInput.value.trim();
-        if (email && !validateEmail(email)) {
-          formElement.classList.add('is-error');
-          emailInput.setAttribute('aria-invalid', 'true');
-        } else {
-          formElement.classList.remove('is-error');
-          emailInput.removeAttribute('aria-invalid');
-        }
-      });
-
-      emailInput.addEventListener('input', () => {
-        formElement.classList.remove('is-error');
-        emailInput.removeAttribute('aria-invalid');
-        if (emailInput.placeholder !== originalPlaceholder) {
-          emailInput.placeholder = originalPlaceholder;
-        }
-      });
-
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        const input = form.querySelector<HTMLInputElement>('input[type="email"]');
+        const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+        const status = form.querySelector<HTMLElement>('[data-signup-status]');
+        const email = input?.value.trim();
+        if (!email) return;
 
-        const submitButton = formElement.querySelector('.email-signup__submit') as HTMLButtonElement;
-        const tag = formElement.dataset.tag;
-        const fieldsRaw = formElement.dataset.fields;
-        const fields = fieldsRaw ? JSON.parse(fieldsRaw) : undefined;
-        const email = emailInput.value.trim();
+        const tag = form.dataset.tag || 'general';
 
-        if (!validateEmail(email)) {
-          formElement.classList.add('is-error');
-          emailInput.setAttribute('aria-invalid', 'true');
-          emailInput.focus();
-          return;
-        }
-
-        submitButton.disabled = true;
-        formElement.classList.remove('is-error', 'is-success');
-        formElement.classList.add('is-loading');
+        // Reset states
+        form.classList.remove('is-success', 'is-error', 'is-server-error');
+        form.classList.add('is-loading');
+        if (btn) btn.disabled = true;
+        if (input) input.removeAttribute('aria-invalid');
+        if (status) status.textContent = 'Submitting...';
 
         try {
-          const response = await fetch('/api/subscribe', {
+          const res = await fetch('/api/subscribe', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, tag: tag || 'general', fields }),
+            body: JSON.stringify({ email, tag }),
           });
 
-          const data = await response.json();
+          const data = await res.json();
+          form.classList.remove('is-loading');
+          if (btn) btn.disabled = false;
 
-          if (response.ok) {
-            formElement.classList.remove('is-loading');
-            formElement.classList.add('is-success');
-            emailInput.value = '';
-
-            setTimeout(() => {
-              formElement.classList.remove('is-success');
-            }, 2500);
+          if (res.ok && data.success) {
+            form.classList.add('is-success');
+            if (input) {
+              input.value = '';
+              input.placeholder = 'You\'re in.';
+            }
+            if (status) status.textContent = 'Success! You\'re in.';
           } else {
-            formElement.classList.remove('is-loading');
-            formElement.classList.add('is-server-error');
-            emailInput.placeholder = data.message || 'Try again';
-
-            setTimeout(() => {
-              formElement.classList.remove('is-server-error');
-            }, 2000);
+            form.classList.add('is-error');
+            if (input) input.setAttribute('aria-invalid', 'true');
+            const msg = data.message || 'Something went wrong';
+            if (input) input.placeholder = msg;
+            if (status) status.textContent = msg;
           }
         } catch {
-          formElement.classList.remove('is-loading');
-          formElement.classList.add('is-server-error');
-          emailInput.placeholder = 'Try again';
-
-          setTimeout(() => {
-            formElement.classList.remove('is-server-error');
-          }, 2000);
-        } finally {
-          submitButton.disabled = false;
+          form.classList.remove('is-loading');
+          if (btn) btn.disabled = false;
+          form.classList.add('is-server-error');
+          if (input) input.setAttribute('aria-invalid', 'true');
+          if (input) input.placeholder = 'Connection error. Try again.';
+          if (status) status.textContent = 'Connection error. Try again.';
         }
+
+        // Reset error states after delay
+        setTimeout(() => {
+          form.classList.remove('is-error', 'is-server-error');
+          const input = form.querySelector<HTMLInputElement>('input[type="email"]');
+          if (input && !form.classList.contains('is-success')) {
+            input.placeholder = input.dataset.originalPlaceholder || 'your@email.com';
+            input.removeAttribute('aria-invalid');
+          }
+        }, 3000);
       });
     });
   }
@@ -197,43 +166,28 @@ const formId = `email-signup-${Math.random().toString(36).substr(2, 9)}`;
   } else {
     initEmailSignup();
   }
-
   document.addEventListener('astro:page-load', initEmailSignup);
 </script>
 
 <style>
-  /* JS-driven state styles */
   .email-signup__icon {
     transition: opacity 100ms var(--ease-out), transform 100ms var(--ease-out);
   }
-
-  /* Loading */
   .email-signup.is-loading .email-signup__submit-text { opacity: 0.6; }
   .email-signup.is-loading .email-signup__icon--arrow { opacity: 0; transform: scale(0.8); }
   .email-signup.is-loading .email-signup__icon--loading { opacity: 1; transform: scale(1); animation: spin 1s linear infinite; }
-
-  /* Success */
   .email-signup.is-success .email-signup__icon--arrow { opacity: 0; transform: scale(0.8); }
   .email-signup.is-success .email-signup__icon--check { opacity: 1; transform: scale(1); }
   .email-signup.is-success .email-signup__submit,
   .email-signup.is-success .email-form__btn { background: var(--color-success); }
   .email-signup.is-success .email-signup__input,
   .email-signup.is-success .email-form__input { border-color: var(--color-success); }
-
-  /* Error */
   .email-signup.is-error .email-signup__input,
   .email-signup.is-error .email-form__input { border-color: var(--color-destructive); animation: error-shake 0.3s var(--ease-out); }
   .email-signup.is-error .email-signup__input::placeholder,
   .email-signup.is-error .email-form__input::placeholder { color: var(--color-destructive); }
-
-  /* Server error */
   .email-signup.is-server-error .email-signup__input,
-  .email-signup.is-server-error .email-form__input { border-color: var(--color-destructive); animation: error-pulse 1.2s var(--ease-out); }
+  .email-signup.is-server-error .email-form__input { border-color: var(--color-destructive); }
   .email-signup.is-server-error .email-signup__input::placeholder,
   .email-signup.is-server-error .email-form__input::placeholder { color: var(--color-destructive); }
-
-  @keyframes error-pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.6; }
-  }
 </style>

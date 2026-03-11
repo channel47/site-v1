@@ -17,16 +17,7 @@ export default defineConfig({
   integrations: [
     react(),
     sitemap({
-      filter: (page) =>
-        !page.includes('/ecosystem') &&
-        !page.includes('/build') &&
-        !page.includes('/hire') &&
-        !page.includes('/coming-soon') &&
-        !page.includes('/tools') &&
-        !page.includes('/skills') &&
-        !page.includes('/mcps') &&
-        !page.includes('/plugins/paid-search') &&
-        !page.includes('/plugins/frontend-craft')
+      filter: (page) => !page.includes('/brand')
     })
   ],
   vite: {
