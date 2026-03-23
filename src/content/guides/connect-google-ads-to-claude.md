@@ -1,9 +1,9 @@
 ---
 title: "How to Connect Google Ads to Claude"
-description: "Step-by-step guide to connecting your Google Ads accounts to Claude using the Channel 47 plugin. From API credentials to your first morning brief in under 15 minutes."
+description: "Step-by-step guide to connecting your Google Ads accounts to Claude using the channel47 Media Buyer plugin. From API credentials to your first morning brief in under 15 minutes."
 date: 2026-03-04
 category: setup
-plugin: google-ads
+plugin: media-buyer
 featured: true
 ---
 
@@ -11,7 +11,7 @@ featured: true
 
 By the end of this guide, Claude will have read-only access to your Google Ads accounts. You'll be able to run morning briefs, waste detection, and search term analysis on live data — all from Claude.
 
-Everything runs locally on your machine. Your credentials stay in your environment variables. No data flows to Channel 47 or any third party.
+Everything runs locally on your machine. Your credentials stay in your environment variables. No data flows to channel47 or any third party.
 
 **Time required:** 10-15 minutes for initial setup. After that, it's one command to install and you're running.
 
@@ -26,10 +26,10 @@ Everything runs locally on your machine. Your credentials stay in your environme
 In Claude Code, run:
 
 ```
-claude plugin install google-ads@channel47
+claude plugin install media-buyer@channel47
 ```
 
-This installs the plugin with 9 workflows, the account connection config, and safety hooks. Everything is read-only — the plugin cannot modify your accounts.
+This installs the Media Buyer plugin with connections for Google Ads, Bing Ads, and Meta Ads, plus safety hooks for mutations. You configure credentials for the platforms you use.
 
 ## Step 2: Set up Google Cloud credentials
 
@@ -104,5 +104,5 @@ Once connected, you have 9 workflows:
 
 - [Run the waste detection workflow](/guides/waste-detection-google-ads) to find spend bleed
 - [Run the morning brief workflow](/guides/morning-brief-workflow) daily
-- Install [Microsoft Ads](/plugins/microsoft-ads) or [Meta Ads](/plugins/meta-ads) to cover more platforms
+- Configure [Bing Ads or Meta Ads](/plugins/media-buyer) credentials to cover more platforms
 - [Subscribe to Build Notes](/subscribe) for workflow updates and new releases
