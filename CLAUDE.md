@@ -1,4 +1,4 @@
-# Channel 47 Site
+# channel47 Site
 
 Astro 5 → channel47.dev via Vercel. Static output + one serverless endpoint (`api/subscribe.ts`).
 
@@ -25,29 +25,30 @@ Tests use `node:test` (no framework). Test files in `tests/`.
 
 Install commands:
 - Marketplace: `claude plugin marketplace add channel47` (homepage hero CTA)
-- Individual: `claude plugin install google-ads@channel47` (plugin detail pages)
+- Individual: `claude plugin install media-buyer@channel47` (plugin detail pages)
 
-Three live plugins, one deprecated:
+Three live role-based plugins:
 
-| Plugin | Status | Workflows | Content file |
-|--------|--------|----------:|-------------|
-| google-ads | Live v1.0.0 | 9 | `src/content/tools/plugins/google-ads.md` |
-| microsoft-ads | Live v1.0.0 | 8 | `src/content/tools/plugins/microsoft-ads.md` |
-| meta-ads | Live v1.0.0 | 9 + 2 agents | `src/content/tools/plugins/meta-ads.md` |
-| paid-search | Deprecated (frozen v7.0.0) | 6 | `src/content/tools/plugins/paid-search.md` |
-| frontend-craft | Not marketed | — | `src/content/tools/plugins/frontend-craft.md` |
+| Plugin | Status | Content file |
+|--------|--------|-------------|
+| media-buyer | Live v1.0.0 | `src/content/tools/plugins/media-buyer.md` |
+| frontend-designer | Live v1.0.0 | `src/content/tools/plugins/frontend-designer.md` |
+| creative-strategist | Live v1.0.0 | `src/content/tools/plugins/creative-strategist.md` |
+
+Deprecated (featured: false, excluded from sitemap):
+- google-ads, microsoft-ads, meta-ads, paid-search, frontend-craft
 
 
 ## Pages
 
-- `/` — Homepage: "Claude plugins for paid media" (hero with marketplace install CTA + proof bar + plugin directory + credibility + workshop + FAQ + rupture + product callout + CTA)
-- `/plugins/` — Plugins hub — filtered listing of featured plugins (excludes deprecated/unmarketable). Targets "claude code plugins", "claude plugin marketplace"
+- `/` — Homepage: role-based Claude Code plugins (hero + proof bar + plugin directory + credibility + FAQ + rupture + email capture + CTA)
+- `/plugins/` — Plugins hub — filtered listing of featured plugins (excludes deprecated). Targets "claude code plugins", "claude plugin marketplace"
 - `/plugins/[slug]` — Plugin detail page with rendered markdown body, schema (SoftwareApplication + BreadcrumbList + HowTo)
 - `/guides/` — Guides hub — SEO content hub for practitioner guides. Targets "google ads ai tool", "ai ppc management"
 - `/guides/[slug]` — Individual guide articles (Article + BreadcrumbList schema). Categories: setup, workflow, comparison, overview
 - `/notes` — Build Notes hub (content collection index, newsletter community content)
 - `/notes/[slug]` — Individual note articles (Article + BreadcrumbList schema)
-- `/labs` — Skills Labs landing page (monthly live builds → Skool community)
+- `/labs` — 301 redirect to `/`
 - `/subscribe` — Email signup standalone page
 - `/privacy` — Privacy policy
 - `/coming-soon` — Shared empty state with email signup
@@ -88,8 +89,8 @@ Guides live in `src/content/guides/`. Schema: title, description, date, updated,
 
 ## Navigation
 
-Header: Plugins · Guides · Notes · Labs · Subscribe
-Footer: Plugins · Guides · Notes · Labs · Privacy · jackson attribution
+Header: Plugins · Guides · Notes · Subscribe
+Footer: Plugins · Guides · Notes · Privacy · ctrlswing attribution
 
 ## Sitemap
 

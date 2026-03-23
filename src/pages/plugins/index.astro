@@ -1,18 +1,9 @@
 ---
 /**
- * Plugins Hub — platform-specific plugins for media buyers.
+ * Plugins Hub — role-based Claude Code plugins.
  *
  * Density: LOW (hero) → HIGH (directory) → LOW (rupture) →
  *          MED (signup) → LOW (CTA void)
- *
- * Rupture: surface flip (dark→light) + density shift (HIGH→LOW).
- *          Single proof point — loss aversion via specificity.
- *          Signup immediately follows rupture — no cognitive break
- *          between emotional trigger and conversion ask.
- *
- * Psychology: Unity ("from the accounts"), loss aversion ($3K rupture),
- *             reciprocity (free tools before ask), zero-price effect,
- *             commitment escalation (browse → feel loss → subscribe).
  */
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -34,7 +25,7 @@ const schema = [
   },
   {
     '@type': 'ItemList',
-    'name': 'Claude Code Plugins for Paid Media — Plugin Marketplace',
+    'name': 'Claude Code Plugins by Role — Plugin Marketplace',
     'numberOfItems': plugins.length,
     'itemListElement': plugins.map((tool, i) => ({
       '@type': 'ListItem',
@@ -48,8 +39,8 @@ const schema = [
 ---
 
 <BaseLayout
-  title="Claude Code Plugins for Google Ads, Microsoft Ads & Meta Ads — Plugin Marketplace | Channel 47"
-  description="Browse Claude Code plugins for paid media. Free, open-source plugin marketplace — Google Ads, Microsoft Ads, Meta Ads. 26 workflows for morning briefs, waste detection, search term analysis. Read-only by design."
+  title="Claude Code Plugins by Role — Media Buyer, Designer, Strategist | channel47"
+  description="Free, open-source Claude Code plugins organized by professional role. Media buying, frontend design, and creative strategy — install with one command."
   schema={schema}
 >
   <Nav />
@@ -61,15 +52,15 @@ const schema = [
       <div class="hero__inner">
         <div class="hero__bar" aria-hidden="true"></div>
         <p class="label hero__label">Plugins</p>
-        <h1 class="hero__headline max-w-[20ch]">Built from the accounts.<br />Not the API docs.</h1>
+        <h1 class="hero__headline max-w-[20ch]">One plugin per role.<br />Built from the work.</h1>
         <p class="hero__sub">
-          Each plugin bundles practitioner-built workflows and account connections for one ad platform. Read-only by design. Install with one command.
+          Each plugin packages real workflows into skills, commands, and agents for a specific professional role. Free, open source, install with one command.
         </p>
         <div class="install-block" data-section="install">
-          <code class="install-block__cmd">claude plugin install google-ads@channel47</code>
+          <code class="install-block__cmd">claude plugin marketplace add channel47</code>
           <button
             class="install-block__copy"
-            data-install="claude plugin install google-ads@channel47"
+            data-install="claude plugin marketplace add channel47"
             aria-label="Copy install command"
           >Copy</button>
         </div>
@@ -80,7 +71,7 @@ const schema = [
     <section class="py-[clamp(40px,6vh,60px)] border-t border-smoke" data-reveal>
       <div class="wrap">
         <p class="font-mono text-sm text-dust leading-[1.75] tracking-wide max-w-[600px]">
-          Channel 47 plugins are free, open-source packages for Claude that connect to your live ad accounts. Three plugins are live: Google Ads (9 workflows), Microsoft Ads (8 workflows), and Meta Ads (9 workflows + 2 agents). Each runs practitioner-built workflows for morning briefs, waste detection, search term classification, and account scoring. Built by Jackson Dean from managing 25+ accounts daily. Read-only by design — they cannot modify your accounts.
+          channel47 plugins are free, open-source packages for Claude Code organized by professional role. Three plugins are live: Media Buyer (paid ads across Google, Bing, and Meta), Frontend Designer (UI design, build, and review), and Creative Strategist (customer research to creative angles). Built by Jackson Dean from real workflows — not theory.
         </p>
       </div>
     </section>
@@ -120,10 +111,10 @@ const schema = [
         <div class="accent-bar-v" aria-hidden="true"></div>
         <p class="label text-ink/50 mb-2">Signal</p>
         <h2 class="font-display text-ink text-[clamp(1.5rem,3vw,2.25rem)] font-semibold tracking-tight leading-[1.15] mb-4">
-          One workflow caught $3K/month in wasted spend across two accounts.
+          The media buyer plugin caught $3K/month in wasted spend. The creative strategist turned Reddit threads into production ad angles in ten minutes.
         </h2>
-        <a class="font-mono text-[11px] font-semibold tracking-widest uppercase text-signal hover:text-[#D97706] transition-colors duration-100" href="/plugins/google-ads">
-          See the Google Ads plugin &rarr;
+        <a class="font-mono text-[11px] font-semibold tracking-widest uppercase text-signal hover:text-[#D97706] transition-colors duration-100" href="/plugins/media-buyer">
+          See the Media Buyer plugin &rarr;
         </a>
       </div>
     </section>
@@ -139,7 +130,7 @@ const schema = [
 
     <!-- ═══════ CTA VOID — LOW density ═══════ -->
     <section class="cta" data-reveal>
-      <a class="cta__headline" href="/plugins/google-ads">Try the Google Ads plugin</a>
+      <a class="cta__headline" href="/plugins/media-buyer">Try the Media Buyer plugin</a>
       <a href="/subscribe" class="btn-signal">Get Build Notes</a>
     </section>
 
