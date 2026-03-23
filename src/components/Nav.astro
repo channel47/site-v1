@@ -9,17 +9,15 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
   aria-label="Main navigation"
 >
   <div class="w-full max-w-[1060px] flex items-center justify-between px-[clamp(24px,5vw,64px)] py-5">
-    <a href="/" class="inline-flex focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2 focus-visible:ring-offset-void rounded-tight" aria-label="Channel 47 home">
+    <a href="/" class="inline-flex focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2 focus-visible:ring-offset-void rounded-tight" aria-label="channel47 home">
       <LogoAnimated />
     </a>
     <div class="flex items-center gap-3">
-      <a href="/plugins" class="nav__link hidden sm:inline">Plugins</a>
+      <a href="/plugins" class="nav__link hidden sm:inline" aria-current={currentPath.startsWith('/plugins') ? 'page' : undefined}>Plugins</a>
       <span class="nav__sep hidden sm:block" aria-hidden="true"></span>
-      <a href="/guides" class="nav__link hidden sm:inline">Guides</a>
+      <a href="/guides" class="nav__link hidden sm:inline" aria-current={currentPath.startsWith('/guides') ? 'page' : undefined}>Guides</a>
       <span class="nav__sep hidden sm:block" aria-hidden="true"></span>
-      <a href="/notes" class="nav__link hidden sm:inline">Notes</a>
-      <span class="nav__sep hidden sm:block" aria-hidden="true"></span>
-      <a href="/labs" class="nav__link hidden sm:inline">Labs</a>
+      <a href="/notes" class="nav__link hidden sm:inline" aria-current={currentPath.startsWith('/notes') ? 'page' : undefined}>Notes</a>
       <span class="nav__sep hidden sm:block" aria-hidden="true"></span>
       <button
         class="nav__burger"
@@ -45,7 +43,6 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
       <a href="/plugins" class="nav__panel-link" aria-current={currentPath.startsWith('/plugins') ? 'page' : undefined}>Plugins</a>
       <a href="/guides" class="nav__panel-link" aria-current={currentPath.startsWith('/guides') ? 'page' : undefined}>Guides</a>
       <a href="/notes" class="nav__panel-link" aria-current={currentPath.startsWith('/notes') ? 'page' : undefined}>Notes</a>
-      <a href="/labs" class="nav__panel-link" aria-current={currentPath === '/labs' ? 'page' : undefined}>Labs</a>
       <a href="/subscribe" class="nav__panel-link nav__panel-link--signal" aria-current={currentPath === '/subscribe' ? 'page' : undefined}>Subscribe</a>
     </div>
   </div>
@@ -62,7 +59,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
     text-transform: uppercase;
     letter-spacing: 0.12em;
     color: var(--color-stone);
-    transition: color 100ms;
+    transition: color var(--dur-instant) var(--ease-sharp);
   }
   .nav__link:hover { color: var(--color-signal); }
   .nav__link:focus-visible {
@@ -70,6 +67,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
     outline-offset: 2px;
     border-radius: var(--radius-tight);
   }
+  .nav__link[aria-current="page"] { color: var(--color-signal); }
   .nav__link--signal { color: var(--color-signal); }
   .nav__link--signal:hover { color: var(--color-signal-hover); }
   .nav__sep {
@@ -149,7 +147,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
     color: var(--color-stone);
     text-decoration: none;
     border-bottom: 1px solid var(--color-smoke);
-    transition: color 100ms;
+    transition: color var(--dur-instant) var(--ease-sharp);
   }
   .nav__panel-link:last-child {
     border-bottom: none;

@@ -3,7 +3,7 @@ title: "Morning Brief: Daily Google Ads Health Check with Claude"
 description: "How the morning brief workflow monitors spend pacing, anomalies, conversion shifts, and quality score changes across all your Google Ads accounts. Replaces 30-60 minutes of manual checks."
 date: 2026-03-04
 category: workflow
-plugin: google-ads
+plugin: media-buyer
 featured: true
 ---
 
@@ -106,6 +106,5 @@ It tells you exactly what to fix. You do the clicking. This is intentional — r
 
 ## Next steps
 
-- [Install the Google Ads plugin](/guides/connect-google-ads-to-claude) if you haven't already
-- [Run waste detection](/guides/waste-detection-google-ads) for a deeper spend analysis
-- [Browse all plugins](/plugins) to add Microsoft Ads or Meta Ads
+- [Install the Media Buyer plugin](/guides/connect-google-ads-to-claude) if you haven't already
+- [Browse all plugins](/plugins) to see what else is available

@@ -1,6 +1,6 @@
 ---
 title: "Claude for PPC: A Practitioner's Guide"
-description: "How to use Claude plugins for Google Ads, Microsoft Ads, and Meta Ads management. Morning briefs, waste detection, search term analysis — from managing 25+ accounts daily."
+description: "How to use Claude Code plugins for paid media management. Morning briefs, waste detection, search term analysis — from managing 25+ accounts daily."
 date: 2026-03-04
 category: overview
 featured: true
@@ -10,7 +10,7 @@ featured: true
 
 Claude can connect to your ad accounts and run practitioner-built workflows on live data. Not hypothetical prompts — actual queries against your campaigns, ad groups, search terms, and budgets.
 
-Channel 47 ships three free plugins that make this work: one for Google Ads, one for Microsoft Ads, one for Meta Ads. Each bundles the account connection with opinionated workflows built from managing 25+ accounts daily.
+channel47 ships a Media Buyer plugin that handles all three platforms — Google Ads, Bing Ads, and Meta Ads. It bundles account connections with opinionated workflows built from managing 25+ accounts daily.
 
 Read-only by design. The plugins can't change your bids, pause your campaigns, or touch your keywords. They tell you exactly what to fix, where to fix it, and how much it's costing you.
 
@@ -28,15 +28,13 @@ The difference is the workflow layer. Instead of asking Claude generic questions
 
 **Performance Max decoder** — Breaks open the PMax black box. Which search terms is PMax actually matching? What's the channel mix? How are assets performing? PMax doesn't volunteer this information — the decoder extracts it.
 
-## Three plugins, one per platform
+## One plugin, all platforms
 
-| Plugin | Workflows | Install |
-|--------|----------:|---------|
-| [Google Ads](/plugins/google-ads) | 9 | `claude plugin install google-ads@channel47` |
-| [Microsoft Ads](/plugins/microsoft-ads) | 8 | `claude plugin install microsoft-ads@channel47` |
-| [Meta Ads](/plugins/meta-ads) | 9 + 2 agents | `claude plugin install meta-ads@channel47` |
+| Plugin | Platforms | Install |
+|--------|-----------|---------|
+| [Media Buyer](/plugins/media-buyer) | Google Ads, Bing Ads, Meta Ads | `claude plugin install media-buyer@channel47` |
 
-Each plugin is independent. Install only what you need. No bloat from platforms you don't use.
+One plugin handles all three platforms. Configure credentials for the platforms you use — skip the rest.
 
 ## Why read-only?
 
@@ -48,7 +46,7 @@ The plugins tell you exactly what to fix. You do the clicking. This keeps you in
 
 **Traditional PPC tools** (Optmyzr, Adalysis) — $149-249/month. Another dashboard. Another app to check. They add screens, not capabilities.
 
-**Other AI connectors** — Give you raw data access and a blank page. You still have to figure out what to query. Channel 47 gives you workflows that know what to look for.
+**Other AI connectors** — Give you raw data access and a blank page. You still have to figure out what to query. channel47 gives you workflows that know what to look for.
 
 **Google's own AI** (AI Max, auto-apply) — Optimizes for Google's revenue, not yours. Community consensus: "broad match with a new label."
 
@@ -56,7 +54,7 @@ The plugins tell you exactly what to fix. You do the clicking. This keeps you in
 
 ## Getting started
 
-1. **Install a plugin** — Start with Google Ads: `claude plugin install google-ads@channel47`
+1. **Install the plugin** — `claude plugin install media-buyer@channel47`
 2. **Configure credentials** — Run the platform-setup workflow. It walks you through API credential configuration step by step. Takes 10-15 minutes once.
 3. **Run your first workflow** — "Run my morning brief" or "Find waste in this account." That's the moment it clicks.
 
@@ -70,6 +68,6 @@ Not for: executives who review dashboards, marketers who don't manage accounts h
 
 ## Free and open-source
 
-All three plugins are MIT-licensed. No usage limits, no upsell, no credit card. Every workflow is a readable file you can inspect, fork, and modify. If you disagree with a threshold, change it.
+The Media Buyer plugin is MIT-licensed. No usage limits, no upsell, no credit card. Every workflow is a readable file you can inspect, fork, and modify. If you disagree with a threshold, change it.
 
-[Browse the plugins](/plugins) or [subscribe to Build Notes](/subscribe) for weekly updates on how the tools get built.
+[See the Media Buyer plugin](/plugins/media-buyer) or [subscribe to Build Notes](/subscribe) for weekly updates on how the tools get built.

@@ -5,7 +5,7 @@ type: "plugin"
 author: "Jackson Dean"
 source: "channel47"
 tags: ["google-ads", "ppc", "search-ads", "performance-max", "waste-detection", "plugin"]
-featured: true
+featured: false
 status: "live"
 install: "claude plugin install google-ads@channel47"
 compatibleWith: ["Claude Code", "Claude Cowork"]

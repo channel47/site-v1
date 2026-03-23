@@ -5,7 +5,7 @@ type: "plugin"
 author: "Jackson Dean"
 source: "channel47"
 tags: ["microsoft-ads", "bing-ads", "search-ads", "waste-detection", "plugin"]
-featured: true
+featured: false
 status: "live"
 install: "claude plugin install microsoft-ads@channel47"
 compatibleWith: ["Claude Code", "Claude Cowork"]

@@ -1,4 +1,4 @@
-# Channel 47 Site
+# channel47 Site
 
 Astro 5 → channel47.dev via Vercel. Static output + one serverless endpoint (`api/subscribe.ts`).
 
@@ -25,29 +25,30 @@ Tests use `node:test` (no framework). Test files in `tests/`.
 
 Install commands:
 - Marketplace: `claude plugin marketplace add channel47` (homepage hero CTA)
-- Individual: `claude plugin install google-ads@channel47` (plugin detail pages)
+- Individual: `claude plugin install media-buyer@channel47` (plugin detail pages)
 
-Three live plugins, one deprecated:
+Three live role-based plugins:
 
-| Plugin | Status | Workflows | Content file |
-|--------|--------|----------:|-------------|
-| google-ads | Live v1.0.0 | 9 | `src/content/tools/plugins/google-ads.md` |
-| microsoft-ads | Live v1.0.0 | 8 | `src/content/tools/plugins/microsoft-ads.md` |
-| meta-ads | Live v1.0.0 | 9 + 2 agents | `src/content/tools/plugins/meta-ads.md` |
-| paid-search | Deprecated (frozen v7.0.0) | 6 | `src/content/tools/plugins/paid-search.md` |
-| frontend-craft | Not marketed | — | `src/content/tools/plugins/frontend-craft.md` |
+| Plugin | Status | Content file |
+|--------|--------|-------------|
+| media-buyer | Live v1.0.0 | `src/content/tools/plugins/media-buyer.md` |
+| frontend-designer | Live v1.0.0 | `src/content/tools/plugins/frontend-designer.md` |
+| creative-strategist | Live v1.0.0 | `src/content/tools/plugins/creative-strategist.md` |
+
+Deprecated (featured: false, excluded from sitemap):
+- google-ads, microsoft-ads, meta-ads, paid-search, frontend-craft
 
 
 ## Pages
 
-- `/` — Homepage: "Claude plugins for paid media" (hero with marketplace install CTA + proof bar + plugin directory + credibility + workshop + FAQ + rupture + product callout + CTA)
-- `/plugins/` — Plugins hub — filtered listing of featured plugins (excludes deprecated/unmarketable). Targets "claude code plugins", "claude plugin marketplace"
+- `/` — Homepage: role-based Claude Code plugins (hero + proof bar + plugin directory + credibility + FAQ + rupture + email capture + CTA)
+- `/plugins/` — Plugins hub — filtered listing of featured plugins (excludes deprecated). Targets "claude code plugins", "claude plugin marketplace"
 - `/plugins/[slug]` — Plugin detail page with rendered markdown body, schema (SoftwareApplication + BreadcrumbList + HowTo)
 - `/guides/` — Guides hub — SEO content hub for practitioner guides. Targets "google ads ai tool", "ai ppc management"
 - `/guides/[slug]` — Individual guide articles (Article + BreadcrumbList schema). Categories: setup, workflow, comparison, overview
 - `/notes` — Build Notes hub (content collection index, newsletter community content)
 - `/notes/[slug]` — Individual note articles (Article + BreadcrumbList schema)
-- `/labs` — Skills Labs landing page (monthly live builds → Skool community)
+- `/labs` — 301 redirect to `/`
 - `/subscribe` — Email signup standalone page
 - `/privacy` — Privacy policy
 - `/coming-soon` — Shared empty state with email signup
@@ -88,8 +89,8 @@ Guides live in `src/content/guides/`. Schema: title, description, date, updated,
 
 ## Navigation
 
-Header: Plugins · Guides · Notes · Labs · Subscribe
-Footer: Plugins · Guides · Notes · Labs · Privacy · jackson attribution
+Header: Plugins · Guides · Notes · Subscribe
+Footer: Plugins · Guides · Notes · Privacy · ctrlswing attribution
 
 ## Sitemap
 
@@ -194,7 +195,7 @@ Tailwind CSS v4 via `@tailwindcss/vite`. Single entry point: `src/styles/main.cs
 - **Install command format changed** — Old: `/plugin install paid-search@channel47`. New: `claude plugin install google-ads@channel47`. Don't use the old format.
 - **paid-search is deprecated** — Frozen at v7.0.0, `featured: false`, excluded from sitemap. Use google-ads + microsoft-ads instead.
 - **Tool content bodies** — Markdown body in tool .md files renders on detail pages via ToolDetail slot. Skills with no body render an empty (hidden) prose div.
-- **Guide and note detail pages share duplicated article styles** — `.article-hero`, `.article-prose`, `.article-signup` CSS is duplicated in `guides/[...slug].astro` and `notes/[...slug].astro`. Update both when changing article layout styles.
+- **Article styles are shared** — `.article-hero`, `.article-prose`, `.article-signup`, `.reading-progress`, and `.install-block` styles live in `main.css` (not in page-scoped `<style>` blocks). Edit `main.css` when changing article layout styles.
 - **Sitemap auto-includes new directories** — New page directories (e.g., `/guides/`, `/compare/`) are included in the sitemap automatically. Only add to `astro.config.mjs` filter to *exclude* pages.
 - **External copy vocabulary** — PMC (`.claude/product-marketing-context.md`) defines strict internal→external term mapping. Key rules: "skill" → "workflow", "MCP server" → "account connection", never use "tool calls", "GAQL", "stdio", or "API" in user-facing copy. Read the PMC glossary before writing any marketing copy.
 - **Scroll reveal hides content by default** — `[data-reveal-child]` and `[data-reveal]` elements start at `opacity: 0`. Content only appears after IntersectionObserver fires `.is-visible`. If a section looks blank, it's the reveal system, not missing data.

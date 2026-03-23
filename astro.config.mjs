@@ -26,7 +26,11 @@ export default defineConfig({
         !page.includes('/skills') &&
         !page.includes('/mcps') &&
         !page.includes('/plugins/paid-search') &&
-        !page.includes('/plugins/frontend-craft')
+        !page.includes('/plugins/frontend-craft') &&
+        !page.includes('/plugins/google-ads') &&
+        !page.includes('/plugins/microsoft-ads') &&
+        !page.includes('/plugins/meta-ads') &&
+        !page.includes('/labs')
     })
   ],
   vite: {

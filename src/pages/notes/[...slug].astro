@@ -29,6 +29,7 @@ const formatted = date.toLocaleDateString('en-US', {
 });
 
 const tagLabel = tag.toUpperCase();
+const isHighlight = tag === 'breakdown';
 
 const schema = [
   {
@@ -44,7 +45,7 @@ const schema = [
     },
     publisher: {
       '@type': 'Organization',
-      name: 'Channel 47',
+      name: 'channel47',
       url: 'https://channel47.dev',
       logo: {
         '@type': 'ImageObject',
@@ -64,22 +65,20 @@ const schema = [
 ---
 
 <BaseLayout
-  title={`${title} — Channel 47`}
+  title={`${title} — channel47`}
   description={description}
   schema={schema}
 >
-  <!-- Reading progress bar -->
   <div class="reading-progress" aria-hidden="true"></div>
 
   <main id="main-content" class="article-pg">
 
-    <!-- HERO -->
     <section class="article-hero" data-section="hero">
       <Nav />
       <div class="article-hero__content">
         <div class="article-hero__bar" aria-hidden="true"></div>
         <div class="article-hero__meta">
-          <span class:list={['article-hero__tag', `article-hero__tag--${tag}`]}>{tagLabel}</span>
+          <span class:list={['article-hero__tag', isHighlight && 'article-hero__tag--highlight']}>{tagLabel}</span>
           <span class="w-px h-3 bg-ash" aria-hidden="true"></span>
           <time class="font-mono text-[11px] text-stone tracking-[0.05em]" datetime={date.toISOString()}>Published {formatted}</time>
         </div>
@@ -88,7 +87,6 @@ const schema = [
       </div>
     </section>
 
-    <!-- ARTICLE -->
     <article class="article-body">
       <div class="article-body__inner">
         <div class="article-prose">
@@ -104,7 +102,6 @@ const schema = [
       </div>
     </article>
 
-    <!-- SIGNUP RUPTURE -->
     <section class="article-signup" data-section="article-signup">
       <div class="wrap">
       <div class="max-w-[480px] relative pl-8">
@@ -120,7 +117,6 @@ const schema = [
   </main>
 
   <script>
-    // Reading progress bar — JS fallback for browsers without animation-timeline
     function initReadingProgress() {
       const bar = document.querySelector('.reading-progress') as HTMLElement;
       if (!bar) return;
@@ -140,230 +136,3 @@ const schema = [
     initReadingProgress();
   </script>
 </BaseLayout>
-
-<style>
-  /* Reading Progress Bar */
-  .reading-progress {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: var(--color-signal);
-    transform-origin: left;
-    transform: scaleX(0);
-    z-index: var(--z-progress);
-    pointer-events: none;
-  }
-
-  @supports (animation-timeline: scroll()) {
-    .reading-progress {
-      animation: reading-progress-fill linear forwards;
-      animation-timeline: scroll();
-    }
-    @keyframes reading-progress-fill {
-      from { transform: scaleX(0); }
-      to { transform: scaleX(1); }
-    }
-  }
-
-  /* Article Hero */
-  .article-hero {
-    min-height: auto;
-    display: flex;
-    flex-direction: column;
-    max-width: 1060px;
-    margin: 0 auto;
-    padding: 0 clamp(24px, 5vw, 64px);
-  }
-  .article-hero__content {
-    padding: clamp(100px, 14vh, 160px) 0 clamp(56px, 10vh, 100px);
-    max-width: 672px;
-  }
-  .article-hero__bar {
-    width: 0;
-    height: 2px;
-    background-color: var(--color-signal);
-    margin-bottom: 24px;
-  }
-  [data-section="hero"].is-visible .article-hero__bar {
-    animation: draw-h 600ms var(--ease-out) 200ms forwards;
-  }
-  .article-hero__meta {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 24px;
-    opacity: 0;
-  }
-  [data-section="hero"].is-visible .article-hero__meta {
-    animation: fade-in 200ms var(--ease-out) 300ms forwards;
-  }
-  .article-hero__tag {
-    font-family: var(--font-family-mono);
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: var(--radius-tight);
-    background: var(--color-soot);
-    color: var(--color-stone);
-  }
-  .article-hero__tag--breakdown {
-    background: var(--signal-dim-alpha);
-    color: var(--color-signal);
-  }
-  .article-hero__title {
-    font-family: var(--font-family-display);
-    font-size: clamp(2.25rem, 6vw, 3.5rem);
-    line-height: 1;
-    letter-spacing: -0.035em;
-    font-weight: 600;
-    color: var(--color-chalk);
-    margin-bottom: 20px;
-    opacity: 0;
-    clip-path: inset(0 50% 0 50%);
-  }
-  [data-section="hero"].is-visible .article-hero__title {
-    animation: clip-reveal 600ms var(--ease-out) 400ms forwards;
-  }
-  .article-hero__desc {
-    font-family: var(--font-family-mono);
-    font-size: 14px;
-    line-height: 1.7;
-    color: var(--color-dust);
-    max-width: 540px;
-    letter-spacing: 0.02em;
-    opacity: 0;
-  }
-  [data-section="hero"].is-visible .article-hero__desc {
-    animation: fade-up 400ms var(--ease-out) 600ms forwards;
-  }
-
-  /* Article Body */
-  .article-body {
-    max-width: 1060px;
-    margin: 0 auto;
-    padding: 0 clamp(24px, 5vw, 64px);
-    border-top: 1px solid var(--color-smoke);
-  }
-  .article-body__inner {
-    max-width: 672px;
-    padding: clamp(48px, 8vh, 72px) 0 clamp(60px, 10vh, 80px);
-  }
-
-  /* Article Prose */
-  .article-prose {
-    font-family: var(--font-family-mono);
-    font-size: 14px;
-    line-height: 1.8;
-    letter-spacing: 0.02em;
-    color: var(--color-bone);
-  }
-  .article-prose :global(h2) {
-    font-family: var(--font-family-display);
-    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    line-height: 1.15;
-    color: var(--color-chalk);
-    margin-top: 56px;
-    margin-bottom: 20px;
-    padding-top: 32px;
-    border-top: 1px solid var(--color-smoke);
-  }
-  .article-prose :global(h2:first-child) { margin-top: 0; padding-top: 0; border-top: none; }
-  .article-prose :global(h3) {
-    font-family: var(--font-family-display);
-    font-size: clamp(1.05rem, 2vw, 1.25rem);
-    font-weight: 600;
-    letter-spacing: -0.015em;
-    color: var(--color-chalk);
-    margin-top: 40px;
-    margin-bottom: 12px;
-  }
-  .article-prose :global(p) { color: var(--color-bone); margin-bottom: 24px; }
-  .article-prose :global(p:last-child) { margin-bottom: 0; }
-  .article-prose :global(strong) { font-weight: 600; color: var(--color-chalk); }
-  .article-prose :global(a) {
-    color: var(--color-signal);
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 3px;
-    transition: color 100ms var(--ease-out);
-  }
-  .article-prose :global(a:hover) { color: #D97706; }
-  .article-prose :global(blockquote) {
-    border-left: 2px solid var(--color-signal);
-    padding: 4px 0 4px 24px;
-    margin: 32px 0;
-  }
-  .article-prose :global(blockquote p) {
-    font-family: var(--font-family-serif);
-    font-size: 17px;
-    font-style: italic;
-    line-height: 1.65;
-    letter-spacing: 0;
-    color: var(--color-dust);
-  }
-  .article-prose :global(ul), .article-prose :global(ol) { padding-left: 24px; margin-bottom: 24px; }
-  .article-prose :global(li) { margin-bottom: 10px; color: var(--color-bone); }
-  .article-prose :global(li:last-child) { margin-bottom: 0; }
-  .article-prose :global(li::marker) { color: var(--color-stone); }
-  .article-prose :global(code) {
-    font-family: var(--font-family-mono);
-    font-size: 0.9em;
-    background: var(--color-soot);
-    padding: 2px 6px;
-    border-radius: var(--radius-tight);
-    color: var(--color-chalk);
-  }
-  .article-prose :global(pre) {
-    background: var(--color-soot);
-    border: 1px solid var(--color-smoke);
-    border-radius: var(--radius-tight);
-    padding: 20px 24px;
-    margin: 32px 0;
-    overflow-x: auto;
-  }
-  .article-prose :global(pre code) { background: transparent; padding: 0; font-size: 13px; line-height: 1.6; color: var(--color-bone); }
-  .article-prose :global(hr) { border: none; height: 1px; background: var(--color-smoke); margin: 48px 0; }
-
-  /* Inline CTA Aside */
-  .article-prose :global(.note-cta) { border-left: 2px solid var(--color-signal); padding: 16px 0 16px 24px; margin: 48px 0; }
-  .article-prose :global(.note-cta__label) { font-family: var(--font-family-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-stone); margin-bottom: 6px; }
-  .article-prose :global(.note-cta__text) { font-family: var(--font-family-mono); font-size: 13px; letter-spacing: 0.02em; color: var(--color-dust); margin-bottom: 0; }
-  .article-prose :global(.note-cta__text a) { color: var(--color-signal); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; font-weight: 500; transition: color 100ms var(--ease-out); }
-  .article-prose :global(.note-cta__text a:hover) { color: #D97706; }
-
-  /* Signup Rupture */
-  .article-signup {
-    background: var(--color-canvas);
-    color: var(--color-ink);
-    padding: clamp(80px, 14vh, 140px) 0;
-    opacity: 0;
-    filter: blur(4px);
-    transform: translateY(12px);
-    transition: opacity 600ms var(--ease-out), filter 600ms var(--ease-out), transform 600ms var(--ease-out);
-  }
-  .article-signup.is-visible { opacity: 1; filter: blur(0); transform: translateY(0); }
-
-  /* Light-surface EmailSignup overrides */
-  .article-signup :global(.email-signup__input) { background: var(--color-paper); border-color: var(--color-light-border); color: var(--color-ink); }
-  .article-signup :global(.email-signup__input::placeholder) { color: var(--color-stone); }
-  .article-signup :global(.email-signup__input:focus) { background: var(--color-canvas); border-color: var(--color-signal); box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15); }
-
-  /* Reduced Motion */
-  @media (prefers-reduced-motion: reduce) {
-    .reading-progress { display: none; }
-    .article-hero__meta, .article-hero__title, .article-hero__desc { opacity: 1 !important; clip-path: none !important; }
-    .article-hero__bar { width: 40px !important; }
-    .article-signup { filter: none !important; }
-  }
-
-  @media (max-width: 640px) {
-    .article-hero__content { padding-top: clamp(60px, 10vh, 80px); }
-    .article-hero__title { font-size: clamp(1.75rem, 8vw, 2.25rem); }
-  }
-</style>

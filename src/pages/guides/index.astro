@@ -24,7 +24,7 @@ const schema = [
   },
   {
     '@type': 'ItemList',
-    'name': 'Claude Plugin Guides for Paid Media',
+    'name': 'Claude Code Plugin Guides',
     'numberOfItems': guides.length,
     'itemListElement': guides.map((guide, i) => ({
       '@type': 'ListItem',
@@ -37,8 +37,8 @@ const schema = [
 ---
 
 <BaseLayout
-  title="Guides — Claude Plugins for Google Ads, PPC Management & AI Ad Tools"
-  description="Practitioner guides for connecting Claude to your ad accounts. Setup walkthroughs, workflow breakdowns, and real examples from managing 25+ accounts daily."
+  title="Guides — Claude Code Plugin Setup, Workflows & Best Practices | channel47"
+  description="Practitioner guides for Claude Code plugins. Setup walkthroughs, workflow breakdowns, and real examples from media buying, design, and creative strategy."
   schema={schema}
 >
   <Nav />
@@ -49,10 +49,7 @@ const schema = [
       <div class="hero__inner">
         <div class="hero__bar" aria-hidden="true"></div>
         <p class="label hero__label">Guides</p>
-        <h1 class="hero__headline max-w-[20ch]">Connect Claude to your ad accounts.</h1>
-        <p class="hero__sub">
-          Setup walkthroughs, workflow breakdowns, and real examples from managing 25+ accounts daily. Every guide links to the plugin that makes it work.
-        </p>
+        <h1 class="hero__headline max-w-[20ch]">Guides from the build.</h1>
       </div>
     </section>
 
@@ -60,7 +57,7 @@ const schema = [
     <section class="py-[clamp(40px,6vh,60px)] border-t border-smoke" data-reveal>
       <div class="wrap">
         <p class="font-mono text-sm text-dust leading-[1.75] tracking-wide max-w-[600px]">
-          Channel 47 guides show media buyers how to use Claude plugins for Google Ads, Microsoft Ads, and Meta Ads management. Topics include connecting accounts, running morning briefs, detecting wasted spend, and analyzing search terms. All plugins are free, open-source, and read-only by design. Built by Jackson Dean from managing 25+ ad accounts daily.
+          channel47 guides show practitioners how to use Claude Code plugins for media buying, frontend design, and creative strategy. Topics include connecting ad accounts, running workflows, and getting value from day one. All plugins are free and open source. Built by Jackson Dean from real workflows.
         </p>
       </div>
     </section>
@@ -86,7 +83,7 @@ const schema = [
             return (
               <a
                 href={`/guides/${slug}`}
-                class="guide-card block py-5 border-b border-smoke group"
+                class="card-link block py-5 border-b border-smoke group"
                 data-reveal-child
                 data-stagger={String(Math.min(i + 2, 6))}
               >
@@ -99,8 +96,7 @@ const schema = [
                   <span class="w-px h-3 bg-ash" aria-hidden="true"></span>
                   <time class="font-mono text-[11px] text-stone tracking-wide" datetime={guide.data.date.toISOString()}>{formatted}</time>
                 </div>
-                <h3 class="font-display text-[clamp(1.1rem,2vw,1.35rem)] font-semibold tracking-[-0.02em] text-chalk mb-1 group-hover:text-signal transition-colors duration-150">{guide.data.title}</h3>
-                <p class="font-mono text-[13px] text-dust leading-relaxed tracking-wide line-clamp-2">{guide.data.description}</p>
+                <h3 class="font-display text-[clamp(1.1rem,2vw,1.35rem)] font-semibold tracking-[-0.02em] text-chalk group-hover:text-signal transition-colors duration-150">{guide.data.title}</h3>
               </a>
             );
           })}
@@ -120,7 +116,7 @@ const schema = [
         <h2 class="font-display text-ink text-[clamp(1.5rem,3vw,2.25rem)] font-semibold tracking-tight leading-[1.15] mb-4">
           A pacing alert flagged a budget overrun four days before the client noticed.
         </h2>
-        <a class="font-mono text-[11px] font-semibold tracking-widest uppercase text-signal hover:text-[#D97706] transition-colors duration-100" href="/plugins/google-ads">
+        <a class="font-mono text-[11px] font-semibold tracking-widest uppercase text-signal hover:text-signal-dim transition-colors duration-100" href="/plugins/google-ads">
           See the Google Ads plugin &rarr;
         </a>
       </div>
@@ -145,11 +141,3 @@ const schema = [
   </main>
 </BaseLayout>
 
-<style>
-  .guide-card {
-    transition: border-color 150ms var(--ease-out);
-  }
-  .guide-card:hover {
-    border-color: rgba(245, 158, 11, 0.4);
-  }
-</style>
