@@ -46,7 +46,7 @@ The plugins tell you exactly what to fix. You do the clicking. This keeps you in
 
 **Traditional PPC tools** (Optmyzr, Adalysis) — $149-249/month. Another dashboard. Another app to check. They add screens, not capabilities.
 
-**Other AI connectors** — Give you raw data access and a blank page. You still have to figure out what to query. Channel 47 gives you workflows that know what to look for.
+**Other AI connectors** — Give you raw data access and a blank page. You still have to figure out what to query. channel47 gives you workflows that know what to look for.
 
 **Google's own AI** (AI Max, auto-apply) — Optimizes for Google's revenue, not yours. Community consensus: "broad match with a new label."
 
