@@ -1,55 +1,50 @@
 ---
 /**
- * Homepage — AI plugins for media buyers.
+ * Homepage — Role-based Claude plugins.
  *
  * Density: LOW (hero) → HIGH (proof bar) → HIGH (plugin directory) →
- *          MEDIUM (credibility) → MEDIUM (workshop callout) →
- *          RUPTURE → MEDIUM (product) → LOW (CTA void)
+ *          MEDIUM (credibility) → RUPTURE → MEDIUM (FAQ) → LOW (CTA void)
  */
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import EmailSignup from '../components/EmailSignup.astro';
-import ProductCallout from '../components/ProductCallout.astro';
 import ToolCard from '../components/ToolCard.astro';
-
-const SKOOL_LINK = 'https://www.skool.com/the-vibe-marketers/about?ref=a005b4a2e4e9420e814a94e5e1c2e708';
 
 const allTools = await getCollection('tools');
 const plugins = allTools.filter(t => t.data.type === 'plugin' && t.data.featured);
-const skills = allTools.filter(t => t.data.type === 'skill');
 
 const faqs = [
   {
-    q: 'What is Channel 47?',
-    a: 'Channel 47 builds free, open-source Claude plugins for paid media. One plugin per ad platform — Google Ads, Microsoft Ads, and Meta Ads. Each plugin connects Claude to your live account data and runs practitioner-built workflows for morning briefs, waste detection, and search term analysis. Built by Jackson Dean from managing 25+ ad accounts daily.',
+    q: 'What is channel47?',
+    a: 'channel47 builds free, open-source Claude Code plugins organized by professional role — media buyer, frontend designer, creative strategist. Each plugin packages real workflows into skills, commands, and agents that activate automatically when you\'re working. Built by Jackson Dean from running ad accounts and building products daily.',
   },
   {
-    q: "What's the difference between a workflow and a plugin?",
-    a: 'A workflow is a single, focused AI task — install it and run it today. A plugin bundles multiple workflows and account connections into one package for a specific ad platform. Workflows are the entry point. Plugins are the depth layer.',
+    q: 'What is a Claude Code plugin?',
+    a: 'A plugin extends what Claude can do. It bundles skills (knowledge that auto-activates), commands (workflows you invoke), and agents (autonomous sub-tasks) into one installable package. No code required — plugins are markdown files that teach Claude your process.',
   },
   {
-    q: 'Are Channel 47 plugins free?',
-    a: 'Yes. All Channel 47 plugins are free and open source (MIT license). Three plugins are live: Google Ads (9 workflows), Microsoft Ads (8 workflows), and Meta Ads (9 workflows + 2 agents). PaidBrief, a commercial product built from the same ecosystem, is available separately at paidbrief.com.',
+    q: 'Are channel47 plugins free?',
+    a: 'Yes. All channel47 plugins are free and open source (MIT license). Three plugins are live: Media Buyer (paid ads across Google, Bing, and Meta), Frontend Designer (UI design and build), and Creative Strategist (customer research to creative angles).',
   },
   {
-    q: 'What ad platforms does Channel 47 support?',
-    a: 'Channel 47 has three live plugins: Google Ads (9 workflows including waste detection and Performance Max transparency), Microsoft Ads (8 workflows including import auditing and MSAN cleanup), and Meta Ads (9 workflows + 2 agents for creative analysis and audience diagnostics). All read-only by design.',
+    q: 'Do I need API keys?',
+    a: 'Depends on the plugin. Media Buyer connects to ad platform APIs and needs credentials for Google Ads, Bing Ads, or Meta Ads. Frontend Designer and Creative Strategist need nothing — install and start using immediately.',
   },
   {
     q: 'How do I install a plugin?',
-    a: 'In Claude Code, run: claude plugin install google-ads@channel47 (or microsoft-ads@channel47, or meta-ads@channel47). Then run the platform-setup workflow to configure your credentials and verify API access.',
+    a: 'In Claude Code, run: claude plugin install media-buyer@channel47 (or frontend-designer@channel47, or creative-strategist@channel47). The plugin activates immediately.',
   },
 ];
 
 const schema = [
   {
     '@type': 'Organization',
-    'name': 'Channel 47',
+    'name': 'channel47',
     'url': 'https://channel47.dev',
     'logo': 'https://channel47.dev/logo-square.png',
-    'description': 'Free, open-source Claude plugins for paid media — Google Ads, Microsoft Ads, and Meta Ads. 26 practitioner-built workflows for morning briefs, waste detection, and search term analysis. Read-only by design.',
+    'description': 'Free, open-source Claude Code plugins organized by professional role. Media buying, frontend design, and creative strategy — built from real work, not theory.',
     'founder': {
       '@type': 'Person',
       'name': 'Jackson Dean',
@@ -63,7 +58,7 @@ const schema = [
   },
   {
     '@type': 'WebSite',
-    'name': 'Channel 47',
+    'name': 'channel47',
     'url': 'https://channel47.dev',
   },
   {
@@ -81,8 +76,8 @@ const schema = [
 ---
 
 <BaseLayout
-  title="Claude Plugins for Paid Media — Google Ads, Microsoft Ads & Meta Ads | Channel 47"
-  description="Free Claude plugins for Google Ads, Microsoft Ads, and Meta Ads. AI-powered morning briefs, waste detection, and search term analysis — built from managing 25+ ad accounts daily. Read-only by design."
+  title="Claude Code Plugins by Role — Media Buyer, Designer, Strategist | channel47"
+  description="Free, open-source Claude Code plugins organized by professional role. Media buying across Google/Bing/Meta, frontend design, and creative strategy — built from real work."
   schema={schema}
 >
   <Nav />
@@ -94,9 +89,9 @@ const schema = [
       <div class="hero__inner">
         <div class="hero__bar" aria-hidden="true"></div>
         <p class="label hero__label">Transmitting</p>
-        <h1 class="hero__headline">Claude plugins for<br />paid media.</h1>
+        <h1 class="hero__headline">Plugins that know<br />your job.</h1>
         <p class="hero__sub">
-          Free Claude plugins for Google Ads, Microsoft Ads, and Meta Ads. Morning briefs, waste detection, and search term analysis — from your live account data.
+          Open-source Claude Code plugins organized by role. Media buying, frontend design, creative strategy — built from the work, not the docs.
         </p>
         <div class="hero__cta">
           <div class="hero-install">
@@ -108,7 +103,7 @@ const schema = [
             >Copy</button>
           </div>
           <div class="hero__secondary">
-            <a href="/plugins" class="hero__browse">Browse all plugins →</a>
+            <a href="/plugins" class="hero__browse">Browse plugins →</a>
             <span class="hero__sep" aria-hidden="true"></span>
             <a href="/subscribe" class="hero__subscribe">Get Build Notes</a>
           </div>
@@ -123,12 +118,12 @@ const schema = [
         <span class="proof-bar__label">Plugins Live</span>
       </div>
       <div class="proof-bar__item" data-reveal-child data-stagger="2">
-        <span class="proof-bar__value" data-counter="26">26</span>
-        <span class="proof-bar__label">Workflows</span>
+        <span class="proof-bar__value" data-counter="3">3</span>
+        <span class="proof-bar__label">Roles Covered</span>
       </div>
       <div class="proof-bar__item" data-reveal-child data-stagger="3">
-        <span class="proof-bar__value" data-counter="25">25<span class="text-signal">+</span></span>
-        <span class="proof-bar__label">Accounts Managed Daily</span>
+        <span class="proof-bar__value">MIT</span>
+        <span class="proof-bar__label">Licensed</span>
       </div>
       <div class="proof-bar__item" data-reveal-child data-stagger="4">
         <span class="proof-bar__value">Weekly</span>
@@ -157,14 +152,6 @@ const schema = [
             />
           ))}
         </ul>
-
-        {skills.length > 0 && (
-          <div class="mt-6" data-reveal-child data-stagger="3">
-            <a href="/plugins" class="font-mono text-[11px] font-semibold tracking-widest uppercase text-stone hover:text-signal transition-colors duration-100">
-              Browse standalone workflows →
-            </a>
-          </div>
-        )}
       </div>
     </section>
 
@@ -173,32 +160,12 @@ const schema = [
       <div class="wrap">
         <p class="label">Built from the work, not the docs</p>
         <p class="credibility__body">
-          The Google Ads plugin caught ~$3K/month in wasted spend across two accounts. A pacing alert flagged a budget overrun four days before the client noticed. Every plugin here comes from managing 25+ accounts daily — not a lab.
+          The media buyer plugin caught ~$3K/month in wasted ad spend across two accounts. The creative strategist was built from the same research pipeline that produced angles for a $6M+ Google Ads account. Every plugin here comes from real workflows — not a lab.
         </p>
         <div class="flex flex-col sm:flex-row gap-4">
-          <a href="/guides/claude-for-ppc" class="credibility__link">Read the practitioner's guide →</a>
+          <a href="/guides" class="credibility__link">Read the guides →</a>
           <a href="/notes" class="credibility__link">Follow the build notes →</a>
         </div>
-      </div>
-    </section>
-
-    <!-- ═══════ WORKSHOP CALLOUT — MEDIUM density ═══════ -->
-    <section class="py-[clamp(60px,10vh,100px)] border-t border-smoke" data-reveal>
-      <div class="wrap">
-        <div class="accent-bar" aria-hidden="true"></div>
-        <p class="label mt-5 mb-5">Skill Remix Lab</p>
-        <h2 class="section-headline mb-4">Monthly live build. One hour. You leave with a working workflow.</h2>
-        <p class="font-mono text-sm text-dust leading-[1.75] tracking-wide max-w-[600px] mb-6">
-          Next session inside the Vibe Marketers community.
-        </p>
-        <a
-          class="font-mono text-[11px] font-semibold tracking-widest uppercase text-signal hover:text-[#D97706] transition-colors duration-100"
-          href={SKOOL_LINK}
-          target="_blank"
-          rel="noopener"
-        >
-          Join the next Lab &rarr;
-        </a>
       </div>
     </section>
 
@@ -222,13 +189,22 @@ const schema = [
       <div class="rupture__inner">
         <div class="rupture__bar"></div>
         <p class="label label--muted mb-5">Signal</p>
-        <h2 class="rupture__headline">One workflow caught $3K/month in wasted spend. A pacing alert flagged a budget overrun four days before the client noticed.</h2>
+        <h2 class="rupture__headline">One plugin caught $3K/month in wasted spend. Another turned Reddit threads into production ad angles in under ten minutes.</h2>
         <a href="/plugins" class="rupture__link">Browse the plugins →</a>
       </div>
     </section>
 
-    <!-- ═══════ PRODUCT CALLOUT — MEDIUM density ═══════ -->
-    <ProductCallout />
+    <!-- ═══════ EMAIL CAPTURE — MEDIUM density ═══════ -->
+    <section class="py-[clamp(60px,10vh,100px)] border-t border-smoke" data-reveal>
+      <div class="wrap max-w-[600px]">
+        <p class="label mb-5">Build Notes</p>
+        <h2 class="section-headline mb-4">Weekly breakdowns from building plugins in production.</h2>
+        <p class="font-mono text-sm text-dust leading-[1.75] tracking-wide mb-8">
+          What worked, what broke, what I'd do differently. No theory.
+        </p>
+        <EmailSignup tag="home" />
+      </div>
+    </section>
 
     <!-- ═══════ CTA VOID — LOW density ═══════ -->
     <section class="cta" data-reveal>

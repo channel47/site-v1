@@ -5,7 +5,7 @@ type: "plugin"
 author: "Jackson Dean"
 source: "channel47"
 tags: ["meta-ads", "facebook-ads", "instagram-ads", "creative-analysis", "waste-detection", "plugin"]
-featured: true
+featured: false
 status: "live"
 install: "claude plugin install meta-ads@channel47"
 compatibleWith: ["Claude Code", "Claude Cowork"]
