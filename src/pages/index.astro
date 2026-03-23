@@ -94,10 +94,10 @@ const schema = [
           Open-source Claude Code plugins organized by role. Media buying, frontend design, creative strategy — built from the work, not the docs.
         </p>
         <div class="hero__cta">
-          <div class="hero-install">
-            <code class="hero-install__cmd">claude plugin marketplace add channel47</code>
+          <div class="install-block">
+            <code class="install-block__cmd">claude plugin marketplace add channel47</code>
             <button
-              class="hero-install__copy"
+              class="install-block__copy"
               data-install="claude plugin marketplace add channel47"
               aria-label="Copy install command"
             >Copy</button>
@@ -216,55 +216,8 @@ const schema = [
   </main>
 </BaseLayout>
 
-<script>
-  import { initCopyButtons } from '../scripts/copy-to-clipboard';
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initCopyButtons);
-  } else {
-    initCopyButtons();
-  }
-  document.addEventListener('astro:page-load', initCopyButtons);
-</script>
 
 <style>
-  .hero-install {
-    display: flex;
-    align-items: baseline;
-    gap: 16px;
-  }
-  .hero-install__cmd {
-    font-family: var(--font-family-mono);
-    font-size: clamp(13px, 1.4vw, 15px);
-    color: var(--color-chalk);
-    letter-spacing: 0.02em;
-    user-select: all;
-    white-space: nowrap;
-    border-bottom: 1px solid var(--color-ash);
-    padding-bottom: 4px;
-  }
-  .hero-install__copy {
-    font-family: var(--font-family-mono);
-    font-size: 10px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--color-signal);
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    transition: color 100ms var(--ease-sharp);
-    white-space: nowrap;
-  }
-  .hero-install__copy:hover {
-    color: var(--color-signal-hover);
-  }
-  .hero-install__copy:focus-visible {
-    outline: 2px solid var(--color-signal);
-    outline-offset: 4px;
-    border-radius: var(--radius-tight);
-  }
-
   .hero__secondary {
     display: flex;
     align-items: center;
@@ -279,32 +232,20 @@ const schema = [
     letter-spacing: 0.05em;
     transition: color 100ms var(--ease-sharp);
   }
-  .hero__browse {
-    color: var(--color-dust);
-  }
-  .hero__browse:hover {
-    color: var(--color-signal);
-  }
-  .hero__subscribe {
-    color: var(--color-signal);
-  }
-  .hero__subscribe:hover {
-    color: var(--color-signal-hover);
+  .hero__browse { color: var(--color-dust); }
+  .hero__browse:hover { color: var(--color-signal); }
+  .hero__subscribe { color: var(--color-signal); }
+  .hero__subscribe:hover { color: var(--color-signal-hover); }
+  .hero__browse:focus-visible,
+  .hero__subscribe:focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 4px;
+    border-radius: var(--radius-tight);
   }
   .hero__sep {
     width: 1px;
     height: 12px;
     background: var(--color-ash);
     flex-shrink: 0;
-  }
-
-  @media (max-width: 480px) {
-    .hero-install {
-      flex-direction: column;
-      gap: 8px;
-    }
-    .hero-install__cmd {
-      font-size: 12px;
-    }
   }
 </style>

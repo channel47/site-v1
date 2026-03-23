@@ -96,15 +96,6 @@ const typePrefix: Record<string, string> = { skill: 'skills', mcp: 'mcps', plugi
   <a class="cta__headline" href={hubHref}>Browse all {hubLabel.toLowerCase()}</a>
 </section>
 
-<script>
-  import { initCopyButtons } from '../scripts/copy-to-clipboard';
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initCopyButtons);
-  } else {
-    initCopyButtons();
-  }
-  document.addEventListener('astro:page-load', initCopyButtons);
-</script>
 
 <style>
   .tool-prose :global(h2) {
@@ -144,7 +135,7 @@ const typePrefix: Record<string, string> = { skill: 'skills', mcp: 'mcps', plugi
     text-underline-offset: 3px;
     transition: color 100ms;
   }
-  .tool-prose :global(a:hover) { color: #D97706; }
+  .tool-prose :global(a:hover) { color: var(--color-signal-dim); }
   .tool-prose :global(ul), .tool-prose :global(ol) { padding-left: 24px; margin-bottom: 20px; }
   .tool-prose :global(li) {
     font-family: var(--font-family-mono);

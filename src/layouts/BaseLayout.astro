@@ -93,10 +93,12 @@ const ogImage = Astro.site
     <script>
       import { initScrollReveal } from '../scripts/scroll-reveal';
       import { initNavScroll } from '../scripts/nav-scroll';
+      import { initCopyButtons } from '../scripts/copy-to-clipboard';
 
       function init() {
         initScrollReveal();
         initNavScroll();
+        initCopyButtons();
       }
 
       if (document.readyState === 'loading') {

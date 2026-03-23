@@ -86,7 +86,7 @@ const schema = [
             return (
               <a
                 href={`/guides/${slug}`}
-                class="guide-card block py-5 border-b border-smoke group"
+                class="card-link block py-5 border-b border-smoke group"
                 data-reveal-child
                 data-stagger={String(Math.min(i + 2, 6))}
               >
@@ -120,7 +120,7 @@ const schema = [
         <h2 class="font-display text-ink text-[clamp(1.5rem,3vw,2.25rem)] font-semibold tracking-tight leading-[1.15] mb-4">
           A pacing alert flagged a budget overrun four days before the client noticed.
         </h2>
-        <a class="font-mono text-[11px] font-semibold tracking-widest uppercase text-signal hover:text-[#D97706] transition-colors duration-100" href="/plugins/google-ads">
+        <a class="font-mono text-[11px] font-semibold tracking-widest uppercase text-signal hover:text-signal-dim transition-colors duration-100" href="/plugins/google-ads">
           See the Google Ads plugin &rarr;
         </a>
       </div>
@@ -145,11 +145,3 @@ const schema = [
   </main>
 </BaseLayout>
 
-<style>
-  .guide-card {
-    transition: border-color 150ms var(--ease-out);
-  }
-  .guide-card:hover {
-    border-color: rgba(245, 158, 11, 0.4);
-  }
-</style>

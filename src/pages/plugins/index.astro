@@ -113,7 +113,7 @@ const schema = [
         <h2 class="font-display text-ink text-[clamp(1.5rem,3vw,2.25rem)] font-semibold tracking-tight leading-[1.15] mb-4">
           The media buyer plugin caught $3K/month in wasted spend. The creative strategist turned Reddit threads into production ad angles in ten minutes.
         </h2>
-        <a class="font-mono text-[11px] font-semibold tracking-widest uppercase text-signal hover:text-[#D97706] transition-colors duration-100" href="/plugins/media-buyer">
+        <a class="font-mono text-[11px] font-semibold tracking-widest uppercase text-signal hover:text-signal-dim transition-colors duration-100" href="/plugins/media-buyer">
           See the Media Buyer plugin &rarr;
         </a>
       </div>
@@ -138,67 +138,14 @@ const schema = [
   </main>
 </BaseLayout>
 
-<script>
-  import { initCopyButtons } from '../../scripts/copy-to-clipboard';
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initCopyButtons);
-  } else {
-    initCopyButtons();
-  }
-  document.addEventListener('astro:page-load', initCopyButtons);
-</script>
 
 <style>
   .install-block {
-    display: flex;
-    align-items: baseline;
-    gap: 16px;
     margin-top: 32px;
     opacity: 0;
   }
   :global(.hero.is-visible) .install-block {
     animation: fade-up 400ms var(--ease-out) 900ms forwards;
-  }
-  .install-block__cmd {
-    font-family: var(--font-family-mono);
-    font-size: clamp(13px, 1.4vw, 15px);
-    color: var(--color-chalk);
-    letter-spacing: 0.02em;
-    user-select: all;
-    white-space: nowrap;
-    border-bottom: 1px solid var(--color-ash);
-    padding-bottom: 4px;
-  }
-  .install-block__copy {
-    font-family: var(--font-family-mono);
-    font-size: 10px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--color-signal);
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    transition: color 100ms var(--ease-sharp);
-    white-space: nowrap;
-  }
-  .install-block__copy:hover {
-    color: var(--color-signal-hover);
-  }
-  .install-block__copy:focus-visible {
-    outline: 2px solid var(--color-signal);
-    outline-offset: 4px;
-    border-radius: var(--radius-tight);
-  }
-  @media (max-width: 480px) {
-    .install-block {
-      flex-direction: column;
-      gap: 8px;
-    }
-    .install-block__cmd {
-      font-size: 12px;
-    }
   }
   @media (prefers-reduced-motion: reduce) {
     .install-block { opacity: 1; }
