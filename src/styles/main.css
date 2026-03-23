@@ -774,6 +774,9 @@
   .email-signup__submit:hover {
     background: var(--color-signal-hover);
   }
+  .email-signup__submit:active {
+    background: var(--color-signal-dim);
+  }
   .email-signup__submit:focus-visible { outline: 2px solid var(--color-bone); outline-offset: 2px; }
   .email-signup__submit:disabled { opacity: 0.7; cursor: default; pointer-events: none; }
 
