@@ -769,16 +769,11 @@
     letter-spacing: 0.12em;
     cursor: pointer;
     white-space: nowrap;
-    transition: background var(--dur-quick) var(--ease-out),
-                box-shadow var(--dur-quick) var(--ease-out),
-                transform var(--dur-instant) var(--ease-sharp);
+    transition: background var(--dur-quick) var(--ease-out);
   }
   .email-signup__submit:hover {
     background: var(--color-signal-hover);
-    box-shadow: 0 2px 12px rgba(245, 158, 11, 0.25);
-    transform: translateY(-1px);
   }
-  .email-signup__submit:active { transform: translateY(0); }
   .email-signup__submit:focus-visible { outline: 2px solid var(--color-bone); outline-offset: 2px; }
   .email-signup__submit:disabled { opacity: 0.7; cursor: default; pointer-events: none; }
 

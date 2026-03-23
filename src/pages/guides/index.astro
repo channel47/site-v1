@@ -50,9 +50,6 @@ const schema = [
         <div class="hero__bar" aria-hidden="true"></div>
         <p class="label hero__label">Guides</p>
         <h1 class="hero__headline max-w-[20ch]">Guides from the build.</h1>
-        <p class="hero__sub">
-          Setup walkthroughs, workflow breakdowns, and real examples. Every guide links to the plugin that makes it work.
-        </p>
       </div>
     </section>
 
@@ -99,8 +96,7 @@ const schema = [
                   <span class="w-px h-3 bg-ash" aria-hidden="true"></span>
                   <time class="font-mono text-[11px] text-stone tracking-wide" datetime={guide.data.date.toISOString()}>{formatted}</time>
                 </div>
-                <h3 class="font-display text-[clamp(1.1rem,2vw,1.35rem)] font-semibold tracking-[-0.02em] text-chalk mb-1 group-hover:text-signal transition-colors duration-150">{guide.data.title}</h3>
-                <p class="font-mono text-[13px] text-dust leading-relaxed tracking-wide line-clamp-2">{guide.data.description}</p>
+                <h3 class="font-display text-[clamp(1.1rem,2vw,1.35rem)] font-semibold tracking-[-0.02em] text-chalk group-hover:text-signal transition-colors duration-150">{guide.data.title}</h3>
               </a>
             );
           })}
