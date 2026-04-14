@@ -342,12 +342,11 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    // Apply Kit tag (non-blocking — subscription succeeds even if tagging fails)
+    // Apply Kit tag — fire-and-forget (don't block the response)
     if (sanitizedTag) {
-      const tagId = await resolveTagId(sanitizedTag, API_KEY);
-      if (tagId) {
-        await tagSubscriberByEmail(trimmedEmail, tagId, API_KEY);
-      }
+      resolveTagId(sanitizedTag, API_KEY).then(tagId => {
+        if (tagId) tagSubscriberByEmail(trimmedEmail, tagId, API_KEY);
+      });
     }
 
     // Success - Kit handles duplicates idempotently (returns 200 for existing subscribers)

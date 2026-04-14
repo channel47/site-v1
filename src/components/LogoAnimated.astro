@@ -221,7 +221,6 @@ const { class: className, delay = 0 } = Astro.props;
     user-select: none;
     letter-spacing: -0.08em;
     cursor: pointer;
-    text-shadow: 0 0 8px rgba(231, 229, 228, 0.15);
   }
 
   .logo-animated__glyph {
@@ -261,27 +260,9 @@ const { class: className, delay = 0 } = Astro.props;
       0 0 12px rgba(245, 158, 11, 0.25);
   }
 
-  /* Completed state - glow with breathing animation */
-  .logo-animated.is-complete .logo-animated__glyph {
-    text-shadow:
-      0 0 1px var(--logo-glow),
-      0 0 8px var(--logo-glow);
-    animation: logo-breathe 4s ease-in-out infinite;
-    animation-delay: 1s;
-  }
-
-  @keyframes logo-breathe {
-    0%, 100% {
-      text-shadow:
-        0 0 1px var(--logo-glow),
-        0 0 8px var(--logo-glow);
-    }
-    50% {
-      text-shadow:
-        0 0 2px var(--logo-glow),
-        0 0 12px var(--logo-glow),
-        0 0 20px rgba(231, 229, 228, 0.18);
-    }
+  /* Completed state — solid, no glow */
+  .logo-animated.is-complete .logo-animated__char {
+    opacity: 1;
   }
 
   /* Reduced motion - skip scramble, just fade in */
