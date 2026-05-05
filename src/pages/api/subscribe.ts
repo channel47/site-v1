@@ -25,7 +25,6 @@ import type { APIRoute } from 'astro';
 
 export const prerender = false;
 
-// Constants
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MAX_EMAIL_LENGTH = 254; // RFC 5321
 const MAX_TAG_LENGTH = 100;
@@ -34,23 +33,32 @@ const MAX_FIELD_COUNT = 10;
 const ALLOWED_FIELD_KEYS = new Set(['name', 'scope', 'brief', 'budget', 'build_role', 'build_task', 'build_tool']);
 const REQUEST_TIMEOUT_MS = 10000; // 10 seconds
 const KIT_BASE = 'https://api.kit.com/v4';
+const SECURITY_HEADERS = {
+  'Content-Type': 'application/json',
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'DENY',
+  'X-XSS-Protection': '1; mode=block',
+};
 
-// In-memory tag ID cache (persists across requests within a cold start)
 const tagIdCache = new Map<string, number>();
 
-/**
- * Validates email format according to RFC 5322 basic pattern
- */
 function isValidEmail(email: string): boolean {
   if (!email || typeof email !== 'string') return false;
   if (email.length > MAX_EMAIL_LENGTH) return false;
   return EMAIL_REGEX.test(email);
 }
 
-/**
- * Sanitizes client-provided custom fields.
- * Whitelists allowed keys, enforces length limits, strips dangerous chars.
- */
+function stripUnsafeChars(value: string): string {
+  return value.replace(/[<>"']/g, '');
+}
+
+function getKitHeaders(apiKey: string): Record<string, string> {
+  return {
+    'X-Kit-Api-Key': apiKey,
+    'Content-Type': 'application/json',
+  };
+}
+
 function sanitizeFields(fields: unknown): Record<string, string> | undefined {
   if (!fields || typeof fields !== 'object' || Array.isArray(fields)) return undefined;
 
@@ -68,17 +76,13 @@ function sanitizeFields(fields: unknown): Record<string, string> | undefined {
     const trimmed = val.trim();
     if (trimmed.length === 0 || trimmed.length > MAX_FIELD_VALUE_LENGTH) continue;
 
-    // Strip potentially dangerous characters (same as sanitizeTag)
-    result[key] = trimmed.replace(/[<>\"\']/g, '');
+    result[key] = stripUnsafeChars(trimmed);
     count++;
   }
 
   return count > 0 ? result : undefined;
 }
 
-/**
- * Sanitizes and validates tag input
- */
 function sanitizeTag(tag: unknown): string | undefined {
   if (!tag || typeof tag !== 'string') return undefined;
 
@@ -86,24 +90,17 @@ function sanitizeTag(tag: unknown): string | undefined {
   if (trimmed.length === 0) return undefined;
   if (trimmed.length > MAX_TAG_LENGTH) return undefined;
 
-  // Remove any potentially dangerous characters
-  return trimmed.replace(/[<>\"\']/g, '');
+  return stripUnsafeChars(trimmed);
 }
 
-/**
- * Resolves a tag name to a Kit tag ID.
- * Checks cache first, then lists existing tags, then creates if needed.
- */
 async function resolveTagId(tagName: string, apiKey: string): Promise<number | null> {
-  // Check cache
   const cached = tagIdCache.get(tagName);
   if (cached) return cached;
 
   const kitTagName = `ch47-${tagName}`;
-  const headers = { 'X-Kit-Api-Key': apiKey, 'Content-Type': 'application/json' };
+  const headers = getKitHeaders(apiKey);
 
   try {
-    // List tags and search for our tag name
     const listRes = await fetch(`${KIT_BASE}/tags?per_page=100`, { headers });
     if (listRes.ok) {
       const listData = await listRes.json();
@@ -114,7 +111,6 @@ async function resolveTagId(tagName: string, apiKey: string): Promise<number | n
       }
     }
 
-    // Tag doesn't exist yet, create it
     const createRes = await fetch(`${KIT_BASE}/tags`, {
       method: 'POST',
       headers,
@@ -138,15 +134,11 @@ async function resolveTagId(tagName: string, apiKey: string): Promise<number | n
   }
 }
 
-/**
- * Tags a subscriber by email address. Fire-and-forget style
- * (errors are logged but don't block the subscription response).
- */
 async function tagSubscriberByEmail(email: string, tagId: number, apiKey: string): Promise<void> {
   try {
     await fetch(`${KIT_BASE}/tags/${tagId}/subscribers`, {
       method: 'POST',
-      headers: { 'X-Kit-Api-Key': apiKey, 'Content-Type': 'application/json' },
+      headers: getKitHeaders(apiKey),
       body: JSON.stringify({ email_address: email }),
     });
   } catch (err) {
@@ -154,19 +146,55 @@ async function tagSubscriberByEmail(email: string, tagId: number, apiKey: string
   }
 }
 
-/**
- * Creates response with security headers
- */
 function createResponse(body: object, status: number): Response {
   return new Response(JSON.stringify(body), {
     status,
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Content-Type-Options': 'nosniff',
-      'X-Frame-Options': 'DENY',
-      'X-XSS-Protection': '1; mode=block',
-    }
+    headers: SECURITY_HEADERS,
   });
+}
+
+async function parseSubscriptionRequest(request: Request): Promise<{
+  email: unknown;
+  tag: unknown;
+  clientFields: unknown;
+}> {
+  const contentType = request.headers.get('content-type');
+
+  if (contentType?.includes('application/json')) {
+    const body = await request.json();
+    return {
+      email: body.email,
+      tag: body.tag,
+      clientFields: body.fields,
+    };
+  }
+
+  const formData = await request.formData();
+  return {
+    email: formData.get('email'),
+    tag: formData.get('tag'),
+    clientFields: undefined,
+  };
+}
+
+function buildKitFields(tag: string | undefined, clientFields: unknown): Record<string, string> {
+  return {
+    signup_source: 'channel47_website',
+    ...(tag ? { signup_context: tag } : {}),
+    ...sanitizeFields(clientFields),
+  };
+}
+
+function getKitErrorMessage(data: { errors?: string[] }): string {
+  if (Array.isArray(data.errors) && data.errors.length > 0) {
+    return data.errors[0];
+  }
+
+  return 'Invalid subscription data';
+}
+
+function isAbortError(error: unknown): boolean {
+  return (error as { name?: string })?.name === 'AbortError';
 }
 
 export const POST: APIRoute = async ({ request }) => {
@@ -187,10 +215,8 @@ export const POST: APIRoute = async ({ request }) => {
     }
   }
 
-  // Get environment variables
   const API_KEY = import.meta.env.KIT_API_KEY;
 
-  // Validate configuration
   if (!API_KEY) {
     console.error('Missing Kit configuration');
     return createResponse(
@@ -202,25 +228,12 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  // Parse request body
-  let email: string;
-  let tag: string | undefined;
-  let clientFields: Record<string, unknown> | undefined;
+  let email: unknown;
+  let tag: unknown;
+  let clientFields: unknown;
 
   try {
-    const contentType = request.headers.get('content-type');
-
-    if (contentType?.includes('application/json')) {
-      const body = await request.json();
-      email = body.email;
-      tag = body.tag;
-      clientFields = body.fields;
-    } else {
-      // Handle form-encoded data
-      const formData = await request.formData();
-      email = formData.get('email') as string;
-      tag = formData.get('tag') as string | undefined;
-    }
+    ({ email, tag, clientFields } = await parseSubscriptionRequest(request));
   } catch (error) {
     return createResponse(
       {
@@ -231,7 +244,6 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  // Sanitize and validate inputs
   if (!email || typeof email !== 'string') {
     return createResponse(
       {
@@ -244,7 +256,6 @@ export const POST: APIRoute = async ({ request }) => {
 
   const trimmedEmail = email.trim().toLowerCase();
 
-  // Validate email format
   if (!isValidEmail(trimmedEmail)) {
     return createResponse(
       {
@@ -255,31 +266,15 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  // Sanitize tag
   const sanitizedTag = sanitizeTag(tag);
 
-  // Call Kit API with timeout
   try {
-    // Create abort controller for timeout
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
-
-    // Build Kit payload
-    const payload: {
-      email_address: string;
-      fields?: Record<string, string>;
-    } = {
+    const payload = {
       email_address: trimmedEmail,
+      fields: buildKitFields(sanitizedTag, clientFields),
     };
-
-    // Build custom fields — server fields override client fields
-    const sanitizedClientFields = sanitizeFields(clientFields);
-    const kitFields: Record<string, string> = {
-      signup_source: 'channel47_website',
-    };
-    if (sanitizedTag) kitFields.signup_context = sanitizedTag;
-    if (sanitizedClientFields) Object.assign(kitFields, sanitizedClientFields);
-    payload.fields = kitFields;
 
     let response: Response;
     let data: { errors?: string[] };
@@ -287,10 +282,7 @@ export const POST: APIRoute = async ({ request }) => {
     try {
       response = await fetch(`${KIT_BASE}/subscribers`, {
         method: 'POST',
-        headers: {
-          'X-Kit-Api-Key': API_KEY,
-          'Content-Type': 'application/json'
-        },
+        headers: getKitHeaders(API_KEY),
         body: JSON.stringify(payload),
         signal: controller.signal
       });
@@ -300,8 +292,7 @@ export const POST: APIRoute = async ({ request }) => {
     } catch (fetchError: unknown) {
       clearTimeout(timeoutId);
 
-      // Handle timeout
-      if ((fetchError as { name?: string })?.name === 'AbortError') {
+      if (isAbortError(fetchError)) {
         console.error('Kit API timeout');
         return createResponse(
           {
@@ -318,16 +309,11 @@ export const POST: APIRoute = async ({ request }) => {
     if (!response.ok) {
       console.error('Kit API error:', data);
 
-      // Handle specific error cases
-      // Kit returns { errors: string[] } for validation errors
       if (response.status === 400 || response.status === 422) {
-        const errorMessage = Array.isArray(data.errors) && data.errors.length > 0
-          ? data.errors[0]
-          : 'Invalid subscription data';
         return createResponse(
           {
             error: 'Subscription failed',
-            message: errorMessage
+            message: getKitErrorMessage(data)
           },
           400
         );
@@ -342,14 +328,12 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    // Apply Kit tag — fire-and-forget (don't block the response)
     if (sanitizedTag) {
       resolveTagId(sanitizedTag, API_KEY).then(tagId => {
         if (tagId) tagSubscriberByEmail(trimmedEmail, tagId, API_KEY);
       });
     }
 
-    // Success - Kit handles duplicates idempotently (returns 200 for existing subscribers)
     return createResponse(
       {
         success: true,
@@ -361,7 +345,6 @@ export const POST: APIRoute = async ({ request }) => {
   } catch (error: unknown) {
     console.error('Subscription error:', error);
 
-    // Don't expose internal error details
     return createResponse(
       {
         error: 'Server error',

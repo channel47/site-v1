@@ -1,81 +1,424 @@
 ---
-import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
-import ToolDetail from '../../components/ToolDetail.astro';
 
-export async function getStaticPaths() {
-  const tools = await getCollection('tools');
-  return tools
-    .filter(t => t.data.type === 'plugin')
-    .map(tool => ({
-      params: { slug: tool.id.split('/').pop()?.replace(/\.md$/, '') },
-      props: { tool },
-    }));
+export function getStaticPaths() {
+  return [
+    {
+      params: { slug: 'funnel-architect' },
+      props: {
+        plugin: {
+          idx: '02',
+          season: 'Season 02',
+          name: 'Funnel',
+          nameAccent: 'Architect',
+          status: 'In session',
+          statusKind: 'live',
+          tagline: 'Landing pages and email sequences, scoped from a single product brief. Drop in a brief, get a launchable funnel — copy, page, sequence — out the other side.',
+          live: 'In session — Tue 14:00 PT',
+          ctaMeta: 'Free for community members · $39 standalone',
+          installCmd: 'claude plugin install channel47/funnel-architect',
+          meta: [
+            { label: 'Status', value: 'In session', amber: true },
+            { label: 'Sessions aired', value: '1 of 3' },
+            { label: 'Built with', value: 'Claude Code · Sonnet' },
+            { label: 'Updated', value: 'Apr 16, 2026' },
+          ],
+          inside: [
+            { num: '01', title: 'Brief reader', desc: 'Pulls product, audience, offer, and pricing from a single doc. Asks for what\'s missing.' },
+            { num: '02', title: 'Page generator', desc: 'Writes a hero, value props, social proof slot, FAQ, and CTA — as real HTML you can paste into a Shopify section or Webflow.' },
+            { num: '03', title: 'Sequence writer', desc: 'Six-email welcome sequence with cadence, subject lines, and send-time hints, ready to drop into Klaviyo.' },
+            { num: '04', title: 'Brand voice prompt', desc: 'Keeps the copy on-voice. Reuses your tone-of-voice doc, or generates one from sample copy.' },
+            { num: '05', title: 'Funnel patterns', desc: 'Three patterns — single-product, bundle, low-ticket-to-call. Picks the right one from the brief.' },
+            { num: '06', title: 'Quality bar', desc: 'Self-critiques each draft against the brief. Flags weak hooks, missing proof, vague CTAs.' },
+          ],
+          sessions: [
+            { code: 'S2 · E01', title: 'Scoping the funnel from a single product brief', date: 'Apr 9, 2026', status: 'Aired', kind: 'aired' },
+            { code: 'S2 · E02', title: 'Landing page — copy to code, live', date: 'Apr 16, 2026', status: 'Live now', kind: 'live' },
+            { code: 'S2 · E03', title: 'Email sequence + handoff to Klaviyo', date: 'Apr 23, 2026', status: 'Coming', kind: 'coming' },
+          ],
+        },
+      },
+    },
+  ];
 }
 
-const { tool } = Astro.props;
-const { Content } = await render(tool);
-
-const allTools = await getCollection('tools');
-const related = tool.data.relatedTools.length > 0
-  ? allTools.filter(t => tool.data.relatedTools.includes(t.id.split('/').pop()?.replace(/\.md$/, '')!))
-  : allTools.filter(t => t.data.type === 'plugin' && t.id !== tool.id).slice(0, 3);
-
-const slug = tool.id.split('/').pop()?.replace(/\.md$/, '');
-
-const schema: Record<string, any>[] = [
-  {
-    '@type': 'SoftwareApplication',
-    'name': tool.data.name,
-    'description': tool.data.description,
-    'applicationCategory': 'Claude Code Plugin',
-    'operatingSystem': 'Cross-platform',
-    'offers': { '@type': 'Offer', 'price': '0', 'priceCurrency': 'USD' },
-    'author': { '@type': 'Person', 'name': tool.data.author || 'Jackson Dean' },
-    'url': `https://channel47.dev/plugins/${slug}`,
-  },
-  {
-    '@type': 'BreadcrumbList',
-    'itemListElement': [
-      { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': 'https://channel47.dev/' },
-      { '@type': 'ListItem', 'position': 2, 'name': 'Plugins', 'item': 'https://channel47.dev/plugins/' },
-      { '@type': 'ListItem', 'position': 3, 'name': tool.data.name },
-    ],
-  },
-];
-
-// HowTo schema for plugins with install commands
-if (tool.data.install) {
-  schema.push({
-    '@type': 'HowTo',
-    'name': `How to install the ${tool.data.name} plugin for Claude Code`,
-    'description': `Install the ${tool.data.name} Claude Code plugin to get AI-powered tools for managing ad accounts.`,
-    'step': [
-      {
-        '@type': 'HowToStep',
-        'position': 1,
-        'name': 'Install the plugin',
-        'text': `In Claude Code, run: ${tool.data.install}`,
-      },
-      {
-        '@type': 'HowToStep',
-        'position': 2,
-        'name': 'Configure your credentials',
-        'text': 'Run the platform-setup workflow to connect your ad platform API keys and verify access.',
-      },
-    ],
-  });
-}
+const { plugin } = Astro.props;
 ---
 
-<BaseLayout title={`${tool.data.name} — Channel 47`} description={tool.data.description} schema={schema}>
-  <Nav />
-  <main id="main-content">
-    <ToolDetail tool={tool} hubLabel="Plugins" hubHref="/plugins" typeLabel="PLUGIN" related={related}>
-      <Content />
-    </ToolDetail>
-    <Footer />
+<BaseLayout
+  title={`${plugin.name} ${plugin.nameAccent} — channel47`}
+  description={plugin.tagline}
+>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <Nav active="plugins" />
+
+  <main id="main" class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/" class="crumbs__link">channel47</a>
+      <span class="crumbs__sep">/</span>
+      <a href="/plugins" class="crumbs__link">Plugins</a>
+      <span class="crumbs__sep">/</span>
+      <span>{plugin.name} {plugin.nameAccent}</span>
+    </nav>
+
+    <section class="hero">
+      <div class="hero__top">
+        <span class="hero__num">{plugin.idx} · {plugin.season}</span>
+        <span class="hero__live">
+          <span class="hero__live-dot" aria-hidden="true"></span>
+          {plugin.live}
+        </span>
+      </div>
+      <h1 class="hero__name">{plugin.name} <span class="amber">{plugin.nameAccent}</span></h1>
+      <p class="hero__tag">{plugin.tagline}</p>
+      <div class="hero__cta">
+        <button class="btn-primary">Install plugin →</button>
+        <button class="btn-ghost">Watch session live</button>
+        <span class="hero__cta-meta">{plugin.ctaMeta}</span>
+      </div>
+    </section>
+
+    <div class="meta-strip">
+      {plugin.meta.map((m, i) => (
+        <div class={`meta-cell ${i === plugin.meta.length - 1 ? 'is-last' : ''}`}>
+          <div class="meta-cell__label">{m.label}</div>
+          <div class={`meta-cell__value ${m.amber ? 'is-amber' : ''}`}>{m.value}</div>
+        </div>
+      ))}
+    </div>
+
+    <section class="section-pad">
+      <div class="eyebrow section__num">I — What's inside</div>
+      <h2 class="head-mid">
+        A working funnel, not a <span class="amber">template</span>.
+      </h2>
+      <p class="body-mid section__sub">
+        The plugin reads your product brief, picks a funnel pattern, and writes the actual files. You install it once and run it on any new launch.
+      </p>
+
+      <div class="inside-grid">
+        {plugin.inside.map((t) => (
+          <div class="inside-tile">
+            <div class="inside-tile__num">{t.num}</div>
+            <h3 class="inside-tile__title">{t.title}</h3>
+            <p class="inside-tile__desc">{t.desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="section-pad">
+      <div class="eyebrow section__num">II — Sessions</div>
+      <h2 class="head-mid">
+        Three sessions. <span class="amber">One ships</span> the plugin.
+      </h2>
+      <p class="body-mid section__sub">
+        Live inside The Vibe Marketers on Tuesdays. Recordings post the next morning to community members; public cuts go out a week later.
+      </p>
+
+      <ul class="session-list">
+        {plugin.sessions.map((s, i) => (
+          <li class={`session-row ${i === plugin.sessions.length - 1 ? 'is-last' : ''}`}>
+            <span class="session-row__code">{s.code}</span>
+            <h3 class="session-row__title">{s.title}</h3>
+            <span class="session-row__date">{s.date}</span>
+            <span class={`session-row__status session-row__status--${s.kind}`}>
+              {s.kind === 'live' && <span class="session-row__dot" aria-hidden="true"></span>}
+              {s.status}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="section-pad">
+      <div class="eyebrow section__num">III — Install</div>
+      <h2 class="head-mid">
+        One line. Runs <span class="amber">locally</span> with Claude Code.
+      </h2>
+      <p class="body-mid section__sub">
+        Requires Claude Code &gt;= 1.4 and a paid Anthropic key. The plugin manifest, prompts, and example briefs are MIT-licensed.
+      </p>
+      <div class="install" data-copy-block>
+        <div class="install__head">
+          <span>Terminal</span>
+          <button class="install__copy" data-copy-trigger data-copy-target="install-cmd">Copy</button>
+        </div>
+        <div class="install__line">
+          <span class="install__prompt">$</span>
+          <span data-copy-text id="install-cmd">{plugin.installCmd}</span>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <Footer />
 </BaseLayout>
+
+<script>
+  function initCopy() {
+    document.querySelectorAll<HTMLButtonElement>('[data-copy-trigger]').forEach((btn) => {
+      if (btn.hasAttribute('data-initialized')) return;
+      btn.setAttribute('data-initialized', '');
+      btn.addEventListener('click', async () => {
+        const id = btn.dataset.copyTarget;
+        const target = id ? document.getElementById(id) : null;
+        if (!target) return;
+        try {
+          await navigator.clipboard.writeText(target.textContent || '');
+          const original = btn.textContent;
+          btn.textContent = 'Copied';
+          setTimeout(() => { btn.textContent = original; }, 1200);
+        } catch {}
+      });
+    });
+  }
+  document.addEventListener('DOMContentLoaded', initCopy);
+  document.addEventListener('astro:page-load', initCopy);
+</script>
+
+<style>
+  .crumbs {
+    padding: 36px clamp(24px, 5vw, 56px) 0;
+    font-size: 12px;
+    color: var(--color-text-mute);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .crumbs__link { color: var(--color-text-dim); }
+  .crumbs__link:hover { color: var(--color-text); }
+  .crumbs__sep { color: var(--color-line); }
+
+  .hero {
+    padding: 64px clamp(24px, 5vw, 56px) clamp(60px, 8vw, 100px);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .hero__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 56px;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .hero__num {
+    font-size: 13px;
+    color: var(--color-text-mute);
+    letter-spacing: 0.18em;
+  }
+  .hero__live {
+    font-size: 11px;
+    color: var(--color-amber);
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    border: 1px solid var(--color-amber);
+  }
+  .hero__live-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-amber);
+    box-shadow: 0 0 0 4px rgba(245, 181, 68, 0.18);
+    animation: fapulse 1.6s ease-in-out infinite;
+  }
+  .hero__name {
+    font-size: clamp(64px, 12vw, 144px);
+    line-height: 0.92;
+    letter-spacing: -0.055em;
+  }
+  .hero__tag {
+    font-size: clamp(18px, 2vw, 24px);
+    line-height: 1.45;
+    color: var(--color-text-dim);
+    margin-top: 48px;
+    max-width: 760px;
+  }
+  .hero__cta {
+    display: flex;
+    gap: 16px;
+    margin-top: 56px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .hero__cta-meta {
+    font-size: 13px;
+    color: var(--color-text-mute);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-left: 16px;
+  }
+
+  .meta-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .meta-cell {
+    padding: 40px 36px;
+    border-right: 1px solid var(--color-line);
+  }
+  .meta-cell.is-last { border-right: none; }
+  .meta-cell__label {
+    font-size: 11px;
+    color: var(--color-text-mute);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .meta-cell__value {
+    font-size: 20px;
+    color: var(--color-text);
+    letter-spacing: -0.01em;
+  }
+  .meta-cell__value.is-amber {
+    color: var(--color-amber);
+    font-weight: 500;
+  }
+
+  .section__num { margin-bottom: 56px; }
+  .section__sub { margin-top: 40px; }
+
+  .inside-grid {
+    margin-top: 80px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--color-line);
+  }
+  .inside-tile {
+    background: var(--color-bg);
+    padding: 40px 32px;
+    min-height: 200px;
+  }
+  .inside-tile__num {
+    font-size: 12px;
+    color: var(--color-amber);
+    letter-spacing: 0.18em;
+    margin-bottom: 24px;
+  }
+  .inside-tile__title {
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    margin: 0 0 12px;
+  }
+  .inside-tile__desc {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--color-text-dim);
+  }
+
+  .session-list {
+    list-style: none;
+    margin: 80px 0 0;
+    padding: 0;
+  }
+  .session-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 140px 120px;
+    gap: 32px;
+    padding: 36px 0;
+    border-top: 1px solid var(--color-line);
+    align-items: center;
+  }
+  .session-row.is-last { border-bottom: 1px solid var(--color-line); }
+  .session-row__code {
+    font-family: var(--font-family-mono);
+    font-size: 13px;
+    color: var(--color-text-mute);
+    letter-spacing: 0.16em;
+  }
+  .session-row__title {
+    font-size: clamp(18px, 1.8vw, 22px);
+    letter-spacing: -0.015em;
+  }
+  .session-row__date {
+    font-size: 13px;
+    color: var(--color-text-mute);
+    letter-spacing: 0.1em;
+  }
+  .session-row__status {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-align: right;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+  .session-row__status--live { color: var(--color-amber); font-weight: 600; }
+  .session-row__status--aired { color: var(--color-text); }
+  .session-row__status--coming { color: var(--color-text-mute); }
+  .session-row__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .install {
+    margin-top: 64px;
+    border: 1px solid var(--color-line);
+    background: var(--color-surface);
+    font-family: var(--font-family-mono);
+    font-size: 15px;
+    color: var(--color-text);
+  }
+  .install__head {
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--color-line);
+    font-size: 11px;
+    color: var(--color-text-mute);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .install__copy {
+    color: var(--color-amber);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+  }
+  .install__line {
+    padding: 20px 24px;
+    display: flex;
+    gap: 14px;
+  }
+  .install__prompt { color: var(--color-amber); }
+
+  @media (max-width: 720px) {
+    .meta-strip { grid-template-columns: repeat(2, 1fr); }
+    .meta-cell:nth-child(2) { border-right: none; }
+    .meta-cell:nth-child(1), .meta-cell:nth-child(2) { border-bottom: 1px solid var(--color-line); }
+
+    .inside-grid { grid-template-columns: 1fr; }
+
+    .session-row {
+      grid-template-columns: 80px 1fr;
+      gap: 16px;
+      padding: 24px 0;
+    }
+    .session-row__date, .session-row__status {
+      grid-column: 2;
+      justify-self: start;
+      text-align: left;
+    }
+  }
+</style>

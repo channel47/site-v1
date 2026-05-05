@@ -14,21 +14,7 @@ export default defineConfig({
     functionPerRoute: false,
     runtime: 'nodejs20.x'
   }),
-  integrations: [
-    react(),
-    sitemap({
-      filter: (page) =>
-        !page.includes('/ecosystem') &&
-        !page.includes('/build') &&
-        !page.includes('/hire') &&
-        !page.includes('/coming-soon') &&
-        !page.includes('/tools') &&
-        !page.includes('/skills') &&
-        !page.includes('/mcps') &&
-        !page.includes('/plugins/paid-search') &&
-        !page.includes('/plugins/frontend-craft')
-    })
-  ],
+  integrations: [react(), sitemap()],
   vite: {
     plugins: [tailwindcss()]
   }

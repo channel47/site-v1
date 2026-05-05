@@ -1,12 +1,4 @@
 ---
-/**
- * LogoAnimated Component
- *
- * The "47" logo with a character scramble → lock-in animation.
- * Characters cycle through random Unicode blocks before settling
- * into their final form, creating a "tuning into a signal" effect.
- */
-
 interface Props {
   class?: string;
   delay?: number; // Animation start delay in ms
@@ -44,12 +36,20 @@ const { class: className, delay = 0 } = Astro.props;
 </span>
 
 <script>
-  // Run immediately and also on page load for Astro view transitions
+  const GLYPHS = ['█', '▓', '▒', '░', '▀', '▄', '▌', '▐', '■', '□', '▪', '▫', '◼', '◻', '▰', '▱'];
+
+  function randomGlyph(): string {
+    return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+  }
+
+  function getNonSpaceIndices(targets: string[]): number[] {
+    return targets
+      .map((target, index) => (target !== ' ' ? index : -1))
+      .filter((index) => index !== -1);
+  }
+
   function initLogoAnimations() {
     const logos = document.querySelectorAll('[data-logo-animated]');
-
-    // Unicode block characters for scrambling
-    const GLYPHS = ['█', '▓', '▒', '░', '▀', '▄', '▌', '▐', '■', '□', '▪', '▫', '◼', '◻', '▰', '▱'];
 
     logos.forEach((logo) => {
       if (logo.hasAttribute('data-initialized')) return;
@@ -62,12 +62,7 @@ const { class: className, delay = 0 } = Astro.props;
       const targets: string[] = [];
       chars.forEach((char) => {
         targets.push(char.dataset.char || ' ');
-        // Start with random character (or space stays space)
-        if (char.dataset.char !== ' ') {
-          char.textContent = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
-        } else {
-          char.textContent = ' ';
-        }
+        char.textContent = char.dataset.char === ' ' ? ' ' : randomGlyph();
       });
 
       // Animation state
@@ -79,7 +74,7 @@ const { class: className, delay = 0 } = Astro.props;
       function scramble() {
         chars.forEach((char, i) => {
           if (!locked[i] && targets[i] !== ' ') {
-            char.textContent = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+            char.textContent = randomGlyph();
           }
         });
       }
@@ -108,10 +103,7 @@ const { class: className, delay = 0 } = Astro.props;
         baseDelay: number,
         onComplete: () => void
       ): number[] {
-        const nonSpaceIndices = targets
-          .map((t, i) => (t !== ' ' ? i : -1))
-          .filter((i) => i !== -1);
-        const shuffled = [...nonSpaceIndices].sort(() => Math.random() - 0.5);
+        const shuffled = getNonSpaceIndices(targets).sort(() => Math.random() - 0.5);
         const timeouts: number[] = [];
 
         shuffled.forEach((charIndex, i) => {
@@ -207,16 +199,16 @@ const { class: className, delay = 0 } = Astro.props;
 
 <style>
   .logo-animated {
-    --logo-glow: rgba(231, 229, 228, 0.3);
+    --logo-glow: rgba(242, 238, 229, 0.3);
 
     position: relative;
     display: inline-flex;
     flex-direction: column;
     font-family: var(--font-family-mono);
-    font-size: 11px;
+    font-size: 22px;
     line-height: 1;
-    font-weight: normal;
-    color: var(--color-bone);
+    font-weight: 700;
+    color: var(--color-text);
     white-space: pre;
     user-select: none;
     letter-spacing: -0.08em;

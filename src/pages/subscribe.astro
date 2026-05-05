@@ -1,61 +1,185 @@
 ---
-/**
- * /subscribe — Newsletter signup
- * The Void. Logo, accent bar, pitch, form. Nothing else.
- */
 import BaseLayout from '../layouts/BaseLayout.astro';
-import LogoAnimated from '../components/LogoAnimated.astro';
-import EmailSignup from '../components/EmailSignup.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const tiles = [
+  { num: '01', title: 'A plugin drop', desc: 'Either the next plugin or a working snippet from the current session. Install link, working files, the prompt I used.' },
+  { num: '02', title: 'Session notes', desc: 'What worked, what didn’t, where the agent got stuck. The dirty version, before it gets edited into a video.' },
+  { num: '03', title: 'One thing to read', desc: 'A teardown of a brand, a campaign, or a system worth stealing from. Always linked, never paywalled.' },
+];
+
+const issues = [
+  { num: 'No. 047', date: 'Apr 9, 2026', title: 'Funnel Architect — what I learned scoping a plugin from a brief' },
+  { num: 'No. 046', date: 'Mar 26, 2026', title: 'Three patterns for hooking a paid-social ad with Claude' },
+  { num: 'No. 045', date: 'Mar 12, 2026', title: 'Why I write a public spec for every client engagement' },
+  { num: 'No. 044', date: 'Feb 27, 2026', title: 'Klaviyo flows, generated — what works and what to throw out' },
+  { num: 'No. 043', date: 'Feb 13, 2026', title: 'Reading the account: how Media Buyer reads pacing reports' },
+  { num: 'No. 042', date: 'Jan 30, 2026', title: 'A reading list for marketers shipping with agents' },
+];
 ---
 
 <BaseLayout
-  title="Subscribe to Build Notes — Channel 47"
-  description="Weekly workflow breakdowns, plugin updates, and build process from managing 25+ ad accounts. One email a week."
+  title="Subscribe — channel47"
+  description="Plugin drops, session notes, and the occasional teardown. Roughly twice a month. No filler, no roundups."
 >
-  <main id="main-content" class="min-h-dvh flex items-center">
-    <div class="w-full max-w-[1060px] mx-auto px-[clamp(24px,5vw,64px)] py-[clamp(24px,5vw,64px)]">
-    <div class="flex flex-col items-start max-w-[480px] w-full">
-      <a href="/" class="mb-8" aria-label="Back to Channel 47">
-        <LogoAnimated />
-      </a>
-      <div class="void-page__bar w-0 h-0.5 bg-signal mb-6" aria-hidden="true"></div>
-      <p class="label mb-4 void-page__label">BUILD NOTES</p>
-      <h1 class="font-display text-[clamp(1.5rem,3vw,2rem)] font-semibold tracking-tight leading-[1.1] text-chalk mb-3 void-page__headline">One workflow breakdown a week.</h1>
-      <p class="font-mono text-sm leading-relaxed text-dust max-w-[38ch] mb-3 void-page__pitch">How the tools get built, what broke along the way, and the workflows behind 25+ ad accounts.</p>
-      <p class="font-mono text-[12px] text-stone tracking-wide mb-12 void-page__pitch">Join 500+ marketers and builders.</p>
-      <div class="w-full void-page__form">
-        <EmailSignup
-          placeholder="you@domain.com"
-          tag="subscribe"
-          submitText="Get Build Notes"
-          variant="prominent"
-        />
+  <a href="#main" class="skip-link">Skip to content</a>
+  <Nav active="subscribe" />
+
+  <main id="main" class="wrap">
+    <section class="hero">
+      <div class="eyebrow hero__eyebrow">The newsletter · roughly twice a month</div>
+      <h1 class="head-hero-xl">
+        Get the next plugin <span class="amber">before</span> the session.
+      </h1>
+      <p class="hero__sub">
+        Plugin drops, session notes, the occasional teardown. Written the night before each Tuesday. No filler, no roundups.
+      </p>
+      <form class="nl-form hero__form" data-kit-form data-tag="newsletter">
+        <input type="email" name="email" placeholder="you@studio.com" required aria-label="Email address" />
+        <button type="submit">Subscribe →</button>
+      </form>
+      <div class="hero__meta">4,812 subscribers · 47 issues · zero spam</div>
+    </section>
+
+    <section class="section-pad">
+      <div class="eyebrow section__num">I — What you get</div>
+      <h2 class="head-mid">
+        Three things in <span class="amber">every issue</span>.
+      </h2>
+
+      <div class="what-grid">
+        {tiles.map((t) => (
+          <div class="what-tile">
+            <div class="what-tile__num">{t.num}</div>
+            <h3 class="what-tile__title">{t.title}</h3>
+            <p class="what-tile__desc">{t.desc}</p>
+          </div>
+        ))}
       </div>
-    </div>
-    </div>
+    </section>
+
+    <section class="section-pad">
+      <div class="eyebrow section__num">II — Past issues</div>
+      <h2 class="head-mid">
+        Forty-seven issues. <span class="amber">All free</span>, all open.
+      </h2>
+
+      <ul class="archive">
+        {issues.map((it, i) => (
+          <li class={`issue-row ${i === issues.length - 1 ? 'is-last' : ''}`}>
+            <span class="issue-row__num">{it.num}</span>
+            <span class="issue-row__date">{it.date}</span>
+            <h3 class="issue-row__title">{it.title}</h3>
+            <span class="issue-row__arrow">Read →</span>
+          </li>
+        ))}
+      </ul>
+    </section>
   </main>
+
+  <Footer />
 </BaseLayout>
 
-<script>
-  const params = new URLSearchParams(window.location.search);
-  if (params.get('ref') === 'build') {
-    const form = document.querySelector('[data-signup-form]') as HTMLElement;
-    if (form) {
-      form.dataset.tag = 'build';
-
-      const role = params.get('role');
-      const task = params.get('task');
-      const tool = params.get('tool');
-      const fields: Record<string, string> = {};
-      if (role) fields.build_role = role;
-      if (task) fields.build_task = task;
-      if (tool) fields.build_tool = tool;
-
-      if (Object.keys(fields).length > 0) {
-        form.dataset.fields = JSON.stringify(fields);
-      }
-    }
-
-    window.history.replaceState({}, '', '/subscribe');
+<style>
+  .hero {
+    padding: clamp(100px, 14vw, 160px) clamp(24px, 5vw, 56px) clamp(80px, 12vw, 120px);
+    border-bottom: 1px solid var(--color-line);
   }
-</script>
+  .hero__eyebrow { margin-bottom: 56px; }
+  .hero__sub {
+    font-size: clamp(20px, 2.2vw, 24px);
+    line-height: 1.5;
+    color: var(--color-text-dim);
+    margin-top: 64px;
+    max-width: 720px;
+  }
+  .hero__form { margin-top: 64px; max-width: 640px; padding-bottom: 16px; }
+  .hero__form input { font-size: clamp(22px, 2.4vw, 28px); }
+  .hero__meta {
+    font-size: 13px;
+    color: var(--color-text-mute);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-top: 32px;
+  }
+
+  .section__num { margin-bottom: 56px; }
+
+  .what-grid {
+    margin-top: 80px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--color-line);
+  }
+  .what-tile {
+    background: var(--color-bg);
+    padding: 40px 32px;
+    min-height: 220px;
+  }
+  .what-tile__num {
+    font-size: 12px;
+    color: var(--color-amber);
+    letter-spacing: 0.18em;
+    margin-bottom: 24px;
+  }
+  .what-tile__title {
+    font-size: 22px;
+    letter-spacing: -0.015em;
+    margin: 0 0 12px;
+  }
+  .what-tile__desc {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--color-text-dim);
+  }
+
+  .archive {
+    list-style: none;
+    margin: 80px 0 0;
+    padding: 0;
+  }
+  .issue-row {
+    display: grid;
+    grid-template-columns: 120px 100px 1fr 100px;
+    gap: 32px;
+    padding: 28px 0;
+    border-top: 1px solid var(--color-line);
+    align-items: center;
+    cursor: pointer;
+    transition: opacity var(--dur-instant);
+  }
+  .issue-row:hover { opacity: 0.85; }
+  .issue-row.is-last { border-bottom: 1px solid var(--color-line); }
+  .issue-row__num {
+    font-family: var(--font-family-mono);
+    font-size: 13px;
+    color: var(--color-text-mute);
+    letter-spacing: 0.1em;
+  }
+  .issue-row__date {
+    font-size: 12px;
+    color: var(--color-text-mute);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .issue-row__title {
+    font-size: 19px;
+    letter-spacing: -0.01em;
+  }
+  .issue-row__arrow {
+    font-size: 14px;
+    color: var(--color-amber);
+    text-align: right;
+  }
+
+  @media (max-width: 900px) {
+    .what-grid { grid-template-columns: 1fr; }
+    .issue-row {
+      grid-template-columns: 100px 1fr 60px;
+      gap: 16px;
+    }
+    .issue-row__date { display: none; }
+  }
+</style>

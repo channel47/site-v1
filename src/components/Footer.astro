@@ -1,74 +1,39 @@
 ---
-/**
- * Footer — Notes + Privacy left, attribution right.
- */
+const year = new Date().getFullYear();
 ---
 
-<footer class="footer">
-  <div class="footer__inner">
-    <div class="footer__left">
-      <a href="/plugins" class="footer__link">Plugins</a>
-      <span class="footer__pipe" aria-hidden="true"></span>
-      <a href="/guides" class="footer__link">Guides</a>
-      <span class="footer__pipe" aria-hidden="true"></span>
-      <a href="/notes" class="footer__link">Notes</a>
-      <span class="footer__pipe" aria-hidden="true"></span>
-      <a href="/privacy" class="footer__link">Privacy</a>
-    </div>
-    <span class="footer__attr">Built by <a href="https://x.com/ctrlswing" target="_blank" rel="noopener noreferrer" class="footer__link">ctrlswing</a></span>
+<footer class="footer wrap">
+  <span class="footer__copy">© {year} channel47</span>
+  <div class="footer__links">
+    <a href="https://x.com/ctrlswing" target="_blank" rel="noopener noreferrer" class="footer__link">X</a>
+    <a href="https://linkedin.com/in/ctrlswing" target="_blank" rel="noopener noreferrer" class="footer__link">LinkedIn</a>
+    <a href="https://github.com/ctrlswing" target="_blank" rel="noopener noreferrer" class="footer__link">GitHub</a>
   </div>
 </footer>
 
 <style>
   .footer {
-    border-top: 1px solid var(--color-smoke);
-    padding: 40px 0 calc(40px + env(safe-area-inset-bottom, 0px));
-  }
-  .footer__inner {
-    max-width: 1060px;
-    margin: 0 auto;
-    padding: 0 clamp(24px, 5vw, 64px);
+    padding: 48px clamp(24px, 5vw, 56px) calc(48px + env(safe-area-inset-bottom, 0px));
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-size: 12px;
+    color: var(--color-text-mute);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    border-top: 1px solid var(--color-line);
   }
-  .footer__left {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-  .footer__pipe {
-    width: 1px;
-    height: 12px;
-    background: var(--color-ash);
-  }
+  .footer__links { display: flex; gap: 28px; }
   .footer__link {
-    font-family: var(--font-family-mono);
-    font-size: 12px;
-    color: var(--color-stone);
-    letter-spacing: 0.04em;
-    text-decoration: none;
-    transition: color 0.1s;
+    color: var(--color-text-mute);
+    transition: color var(--dur-instant);
   }
-  .footer__link:hover {
-    color: var(--color-signal);
-  }
-  .footer__link:focus-visible {
-    outline: 2px solid var(--color-signal);
-    outline-offset: 2px;
-    border-radius: var(--radius-tight);
-  }
-  .footer__attr {
-    font-family: var(--font-family-mono);
-    font-size: 12px;
-    color: var(--color-stone);
-    letter-spacing: 0.04em;
-  }
+  .footer__link:hover { color: var(--color-text); }
 
   @media (max-width: 480px) {
-    .footer__inner {
+    .footer {
       flex-direction: column;
-      gap: 16px;
+      gap: 24px;
       align-items: flex-start;
     }
   }

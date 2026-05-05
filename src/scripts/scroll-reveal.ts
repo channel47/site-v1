@@ -16,7 +16,6 @@ export function initScrollReveal(): void {
     document.querySelectorAll('[data-reveal-child]').forEach(el => el.classList.add('is-visible'));
     document.querySelectorAll('[data-reveal-stagger]').forEach(el => el.classList.add('is-visible'));
     document.querySelectorAll('.hero').forEach(el => el.classList.add('is-visible'));
-    document.querySelectorAll('.rupture').forEach(el => el.classList.add('is-visible'));
     // Legacy support
     document.querySelectorAll('[data-section]').forEach(el => el.classList.add('is-visible'));
     document.querySelectorAll('[data-animate]').forEach(el => el.classList.add('is-visible'));
@@ -44,7 +43,7 @@ export function initScrollReveal(): void {
     { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
   );
 
-  document.querySelectorAll('[data-reveal], .rupture').forEach(el => {
+  document.querySelectorAll('[data-reveal]').forEach(el => {
     revealObserver.observe(el);
   });
 

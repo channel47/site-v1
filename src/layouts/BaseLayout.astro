@@ -16,7 +16,7 @@ interface Props {
 
 const {
   title,
-  description = 'Free, open-source Claude plugins for paid media — Google Ads, Microsoft Ads, and Meta Ads. Practitioner-built workflows for morning briefs, waste detection, and search term analysis. Read-only by design.',
+  description = 'Channel 47.',
   image = '/og-image.png',
   schema,
   noindex = false,
@@ -36,10 +36,9 @@ const ogImage = Astro.site
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#0C0A09" />
+    <meta name="theme-color" content="#0A0A0A" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="alternate" type="application/rss+xml" title="Build Notes — Channel 47" href="/rss.xml" />
 
     <!-- Primary Meta Tags -->
     <title>{title}</title>
@@ -69,7 +68,7 @@ const ogImage = Astro.site
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
 
@@ -86,17 +85,19 @@ const ogImage = Astro.site
     <Analytics />
   </head>
   <body>
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-signal focus:text-void focus:rounded-tight focus:text-sm focus:font-mono">Skip to content</a>
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <div class="noise-overlay" aria-hidden="true"></div>
     <slot />
 
-    <!-- Scroll Reveal + Nav Scroll -->
     <script>
       import { initScrollReveal } from '../scripts/scroll-reveal';
       import { initNavScroll } from '../scripts/nav-scroll';
+      import { initSubscribeForms } from '../scripts/subscribe-form';
 
       function init() {
         initScrollReveal();
         initNavScroll();
+        initSubscribeForms();
       }
 
       if (document.readyState === 'loading') {

@@ -1,783 +1,250 @@
 @import "tailwindcss";
-@import "tw-animate-css";
 
 /* ═══════════════════════════════════════════
-   DESIGN TOKENS — CH47 Design System
-   Named surfaces, signal accent, type families
+   DESIGN TOKENS — channel47
+   Pure dark, single amber, Geist sans
    ═══════════════════════════════════════════ */
 
 @theme {
-  /* ── Named Surfaces (void → chalk) ── */
-  --color-void: #0C0A09;
-  --color-soot: #1C1917;
-  --color-smoke: #292524;
-  --color-ash: #44403C;
-  --color-stone: #78716C;
-  --color-dust: #A8A29E;
-  --color-bone: #E7E5E4;
-  --color-chalk: #F5F0EB;
+  --color-bg: #0A0A0A;
+  --color-surface: #0E0E0D;
+  --color-text: #F2EEE5;
+  --color-text-dim: #9A9690;
+  --color-text-mute: #5A5752;
+  --color-line: #1C1C1B;
+  --color-line-soft: #141413;
+  --color-amber: #F5B544;
 
-  /* ── Light Surfaces (rupture / callout) ── */
-  --color-canvas: #FAF7F2;
-  --color-paper: #F0EBE3;
-  --color-ink: #1C1917;
-  --color-light-border: #D6D3CD;
+  /* shadcn/ui semantic aliases */
+  --color-background: #0A0A0A;
+  --color-foreground: #F2EEE5;
+  --color-ring: #F5B544;
 
-  /* ── Signal Accent ── */
-  --color-signal: #F59E0B;
-  --color-signal-hover: #FBBF24;
-  --color-signal-dim: #B45309;
-  --color-signal-wash: #451A03;
+  --font-family-sans: 'Geist', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-family-mono: 'Geist Mono', 'SF Mono', 'Cascadia Code', monospace;
 
-  /* ── State Colors ── */
-  --color-destructive: #ef4444;
-  --color-success: #22c55e;
-
-  /* ── Font Families ── */
-  --font-family-mono: 'JetBrains Mono', 'SF Mono', 'Cascadia Code', monospace;
-  --font-family-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
-  --font-family-serif: 'Source Serif 4', Georgia, serif;
-
-  /* ── Radius ── */
   --radius-tight: 2px;
-
-  /* ── Animation ── */
-  --animate-fade-up: fade-up 0.4s var(--ease-out) forwards;
-  --animate-fade-in: fade-in 0.4s var(--ease-out) forwards;
 }
 
-/* ── Custom properties (can't go in @theme) ── */
 :root {
-  /* Easing */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-sharp: cubic-bezier(0.33, 1, 0.68, 1);
-
-  /* Timing */
   --dur-instant: 100ms;
   --dur-quick: 200ms;
-  --dur-measured: 400ms;
-
-  /* Alpha variants */
-  --signal-dim-alpha: rgba(245, 158, 11, 0.12);
-
-  /* Z-index */
-  --z-progress: 9999;
 }
 
 /* ═══════════════════════════════════════════
-   BASE STYLES
+   BASE
    ═══════════════════════════════════════════ */
 
 @layer base {
   html {
     color-scheme: dark;
-    scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
   }
 
   body {
-    background: var(--color-void);
-    color: var(--color-bone);
-    font-family: var(--font-family-mono);
-    font-size: 14px;
-    line-height: 1.6;
-    letter-spacing: 0.02em;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-family-sans);
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+    min-height: 100dvh;
+    position: relative;
+    overflow-x: hidden;
   }
 
-  h1, h2, h3 { text-wrap: balance; }
-  h2, h3 { scroll-margin-top: 5rem; }
+  /* Atmospheric background — radial washes + grain */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      radial-gradient(900px 720px at 12% 8%, rgba(245, 181, 68, 0.07), rgba(245, 181, 68, 0) 70%),
+      radial-gradient(1100px 900px at 92% 42%, rgba(180, 200, 230, 0.035), rgba(180, 200, 230, 0) 70%),
+      radial-gradient(800px 600px at 8% 92%, rgba(245, 181, 68, 0.045), rgba(245, 181, 68, 0) 70%),
+      repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.012) 0 1px, transparent 1px 3px);
+  }
+
+  body > * { position: relative; z-index: 1; }
+
+  h1, h2, h3, h4 {
+    font-weight: 400;
+    margin: 0;
+    text-wrap: balance;
+    letter-spacing: -0.04em;
+  }
+
+  p { margin: 0; text-wrap: pretty; }
+
   a { color: inherit; text-decoration: none; }
 
   ::selection {
-    background: rgba(245, 158, 11, 0.25);
-    color: var(--color-chalk);
+    background: rgba(245, 181, 68, 0.25);
+    color: var(--color-text);
   }
+
+  *:focus-visible {
+    outline: 2px solid var(--color-amber);
+    outline-offset: 2px;
+    border-radius: var(--radius-tight);
+  }
+
+  button, input { font-family: inherit; }
 }
 
 /* ═══════════════════════════════════════════
-   SHARED COMPONENT PATTERNS
+   SHARED PATTERNS
    ═══════════════════════════════════════════ */
 
 @layer components {
 
-  /* ── Broadcast Label ── */
-  .label {
-    font-family: var(--font-family-mono);
-    font-size: 11px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--color-signal);
+  .wrap {
+    max-width: 1280px;
+    margin-inline: auto;
   }
 
-  /* ── Section Headline ── */
-  .section-headline {
-    font-family: var(--font-family-display);
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    line-height: 1.1;
-    color: var(--color-chalk);
-  }
-
-  /* ── Content Widths ── */
-  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 clamp(24px, 5vw, 64px); }
-  .wrap-narrow { max-width: 672px; margin: 0 auto; padding: 0 clamp(24px, 5vw, 64px); }
-
-
-  /* ── Hero (LOW density) ── */
-  .hero {
-    min-height: 100vh;
-    min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding-top: 80px;
-    padding-bottom: clamp(80px, 12vh, 140px);
-    position: relative;
-  }
-  .hero__inner {
-    max-width: 1060px;
-    margin: 0 auto;
-    width: 100%;
-    padding: 0 clamp(24px, 5vw, 64px);
-    display: flex;
-    flex-direction: column;
-  }
-  .hero__bar {
-    width: 0;
-    height: 2px;
-    background: var(--color-signal);
-    margin-bottom: 24px;
-  }
-  .hero.is-visible .hero__bar {
-    animation: draw-h 600ms var(--ease-out) 200ms forwards;
-  }
-  .hero__label {
-    opacity: 0;
-    margin-bottom: 20px;
-  }
-  .hero.is-visible .hero__label {
-    animation: fade-in 200ms var(--ease-out) 400ms forwards;
-  }
-  .hero__headline {
-    font-family: var(--font-family-display);
-    font-size: clamp(3rem, 8vw, 6.5rem);
-    font-weight: 700;
-    letter-spacing: -0.04em;
-    line-height: 1.0;
-    color: var(--color-chalk);
-    max-width: 14ch;
-    opacity: 0;
-    clip-path: inset(0 50% 0 50%);
-  }
-  .hero.is-visible .hero__headline {
-    animation: clip-reveal 600ms var(--ease-out) 500ms forwards;
-  }
-  .hero__sub {
-    font-size: 15px;
-    line-height: 1.7;
-    color: var(--color-dust);
-    max-width: 44ch;
-    margin-top: 32px;
-    opacity: 0;
-  }
-  .hero.is-visible .hero__sub {
-    animation: fade-up 400ms var(--ease-out) 800ms forwards;
-  }
-  .hero__cta {
-    margin-top: 40px;
-    opacity: 0;
-  }
-  .hero.is-visible .hero__cta {
-    animation: fade-up 400ms var(--ease-out) 1000ms forwards;
-  }
-
-  /* ── Hero Compact (sub-page hubs) ── */
-  .hero--compact {
-    min-height: auto;
-    padding-top: clamp(100px, 16vh, 180px);
-    padding-bottom: clamp(32px, 4vh, 48px);
-  }
-
-
-  /* ── Directory Row (compact homepage variant) ── */
-  .directory-row {
-    border-bottom: 1px solid var(--color-smoke);
-  }
-  .directory-row:first-child { border-top: 1px solid var(--color-smoke); }
-  .directory-row__link {
-    position: relative;
-    display: grid;
-    grid-template-columns: 3rem 1fr auto;
-    align-items: center;
-    gap: 16px;
-    padding: 20px 12px;
-    cursor: pointer;
-    transition: background-color 150ms var(--ease-out);
-  }
-  .directory-row__link::before {
-    content: '';
+  /* Skip link for a11y */
+  .skip-link {
     position: absolute;
-    left: 0;
-    top: 4px;
-    bottom: 4px;
-    width: 2px;
-    background: var(--color-signal);
-    transform: scaleY(0);
-    transform-origin: top;
-    transition: transform 100ms var(--ease-sharp);
-  }
-  .directory-row__link:hover {
-    background-color: rgba(245, 158, 11, 0.03);
-  }
-  .directory-row__link:hover::before {
-    transform: scaleY(1);
-  }
-  .directory-row__link:focus-visible {
-    outline: 2px solid var(--color-signal);
-    outline-offset: -2px;
-    border-radius: var(--radius-tight);
-  }
-  .directory-row__idx {
-    font-family: var(--font-family-mono);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    color: var(--color-ash);
-    transition: color 100ms var(--ease-sharp);
-  }
-  .directory-row__link:hover .directory-row__idx {
-    color: var(--color-signal);
-  }
-  .directory-row__name {
-    font-family: var(--font-family-mono);
-    font-size: 14px;
-    color: var(--color-bone);
-    transition: color 100ms var(--ease-sharp) 80ms;
-  }
-  .directory-row__link:hover .directory-row__name {
-    color: var(--color-chalk);
-  }
-  .directory-row__type {
-    padding: 3px 8px;
-    border: 1px solid var(--color-ash);
-    border-radius: var(--radius-tight);
-    font-family: var(--font-family-mono);
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-dust);
-  }
-  .directory-row__desc {
-    font-family: var(--font-family-mono);
-    font-size: 14px;
-    line-height: 1.7;
-    letter-spacing: 0.02em;
-    color: var(--color-dust);
-    margin-top: 4px;
-    transition: color 100ms var(--ease-sharp) 80ms;
-  }
-  .directory-row__link:hover .directory-row__desc {
-    color: var(--color-bone);
-  }
-
-  /* Full-width variant (hub pages — includes description) */
-  .directory-row__link--full {
-    grid-template-columns: 1fr auto;
-    align-items: start;
-    gap: 16px;
-  }
-  .directory-row__main {
-    display: flex;
-    align-items: start;
-    gap: 12px;
-    min-width: 0;
-  }
-  .directory-row__main .directory-row__idx {
-    margin-top: 3px;
-  }
-
-  /* ── Directory Row — static variant (non-link rows) ── */
-  .directory-row--static {
-    display: flex;
-    align-items: baseline;
-    gap: 16px;
-    padding: 20px 0;
-  }
-
-  /* ── Directory Row Badges ── */
-  .directory-row__badge {
-    padding: 3px 8px;
-    border-radius: var(--radius-tight);
-    font-family: var(--font-family-mono);
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-  .directory-row__badge--live {
-    background: var(--color-signal);
-    color: var(--color-void);
-  }
-  .directory-row__badge--dev {
-    border: 1px solid var(--color-ash);
-    color: var(--color-dust);
-  }
-  .directory-row__badge--soon {
-    border: 1px solid var(--color-smoke);
-    color: var(--color-stone);
-  }
-
-  /* ── Rupture (light surface inversion) ── */
-  .rupture {
-    background: var(--color-canvas);
-    padding: clamp(80px, 16vh, 160px) 0;
-    position: relative;
-  }
-
-
-  /* ── CTA Void (LOW density) ── */
-  .cta {
-    padding: clamp(100px, 18vh, 200px) clamp(24px, 5vw, 64px);
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .cta__headline {
-    font-family: var(--font-family-display);
-    font-size: clamp(1.75rem, 4vw, 3rem);
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    color: var(--color-chalk);
-    margin-bottom: 40px;
-    position: relative;
-    display: inline-block;
-  }
-  .cta__headline:focus-visible { outline: 2px solid var(--color-signal); outline-offset: 4px; border-radius: var(--radius-tight); }
-  .cta__headline::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -8px;
-    width: 100%;
-    height: 2px;
-    background: var(--color-signal);
-    transform-origin: left;
-    transition: transform 250ms var(--ease-out);
-  }
-  .cta__headline:hover::after {
-    transform: scaleX(0);
-    transform-origin: right;
-  }
-
-  /* ── Signal Button ── */
-  .btn-signal {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    height: 48px;
-    padding: 0 32px;
-    font-family: var(--font-family-mono);
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--color-void);
-    background: var(--color-signal);
-    border: none;
-    border-radius: var(--radius-tight);
-    cursor: pointer;
-    white-space: nowrap;
-    transition: background var(--dur-quick) var(--ease-out),
-                box-shadow var(--dur-quick) var(--ease-out),
-                transform var(--dur-instant) var(--ease-sharp);
-  }
-  .btn-signal:hover {
-    background: var(--color-signal-hover);
-    box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
-    transform: translateY(-1px);
-  }
-  .btn-signal:active { transform: translateY(0); }
-  .btn-signal:focus-visible { outline: 2px solid var(--color-signal); outline-offset: 3px; }
-
-  /* ── Accent Bars ── */
-  .accent-bar {
-    width: 0;
-    height: 2px;
-    background: var(--color-signal);
-    margin-bottom: 24px;
-  }
-  .is-visible > .accent-bar,
-  .is-visible .accent-bar {
-    animation: draw-h 400ms var(--ease-out) 200ms forwards;
-  }
-  .accent-bar-v {
-    width: 2px;
-    height: 0; /* animated via draw-v */
-    background: var(--color-signal);
-    position: absolute;
+    left: -9999px;
     top: 0;
-    left: 0;
-  }
-  .is-visible .accent-bar-v {
-    animation: draw-v 600ms var(--ease-out) 200ms forwards;
-  }
-
-
-  /* ── Email Signup (shared base) ── */
-  .email-signup__input {
-    width: 100%;
-    background: var(--color-soot);
-    border: 1px solid var(--color-smoke);
-    border-radius: var(--radius-tight);
-    padding: 0 16px;
-    height: 48px;
-    font-family: var(--font-family-mono);
-    font-size: 16px; /* prevent iOS zoom */
-    letter-spacing: 0.02em;
-    color: var(--color-bone);
-    outline: none;
-    transition: border-color var(--dur-quick) var(--ease-out),
-                background-color var(--dur-quick) var(--ease-out),
-                box-shadow var(--dur-quick) var(--ease-out);
-  }
-  .email-signup__input::placeholder { color: var(--color-stone); }
-  .email-signup__input:hover { border-color: var(--color-ash); }
-  .email-signup__input:focus {
-    border-color: var(--color-signal);
-    background: var(--color-void);
-    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15);
-  }
-
-  .email-signup__submit {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    background: var(--color-signal);
-    color: var(--color-void);
-    border: none;
-    border-radius: var(--radius-tight);
-    padding: 0 20px;
-    height: 48px;
-    font-family: var(--font-family-mono);
-    font-size: 11px;
+    background: var(--color-amber);
+    color: var(--color-bg);
+    padding: 8px 12px;
+    font-size: 13px;
     font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: background var(--dur-quick) var(--ease-out),
-                box-shadow var(--dur-quick) var(--ease-out),
-                transform var(--dur-instant) var(--ease-sharp);
   }
-  .email-signup__submit:hover {
-    background: var(--color-signal-hover);
-    box-shadow: 0 2px 12px rgba(245, 158, 11, 0.25);
-    transform: translateY(-1px);
-  }
-  .email-signup__submit:active { transform: translateY(0); }
-  .email-signup__submit:focus-visible { outline: 2px solid var(--color-bone); outline-offset: 2px; }
-  .email-signup__submit:disabled { opacity: 0.7; cursor: default; }
+  .skip-link:focus { left: 16px; top: 16px; }
 
-  /* ── Email Form — inline variant (hero) ── */
-  .email-form { display: flex; gap: 0; max-width: 440px; }
-  .email-form .email-signup__input,
-  .email-form__input {
-    flex: 1;
-    background: transparent;
-    border: 1px solid var(--color-ash);
-    border-right: none;
-    border-radius: var(--radius-tight) 0 0 var(--radius-tight);
-    height: 48px;
-    padding: 0 14px;
-  }
-  .email-form .email-signup__input::placeholder,
-  .email-form__input::placeholder { color: var(--color-stone); }
-  .email-form .email-signup__input:focus,
-  .email-form__input:focus { border-color: var(--color-signal); box-shadow: none; background: transparent; }
-  .email-form .email-signup__submit,
-  .email-form__btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--color-signal);
-    color: var(--color-void);
-    border: 1px solid var(--color-signal);
-    border-radius: 0 var(--radius-tight) var(--radius-tight) 0;
-    padding: 0 24px;
-    height: 48px;
-    font-family: var(--font-family-mono);
+  /* Eyebrow / section number — small amber caps */
+  .eyebrow {
     font-size: 12px;
-    font-weight: 600;
+    color: var(--color-amber);
+    letter-spacing: 0.32em;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+  }
+
+  /* Inline amber accent on a single word */
+  .amber { color: var(--color-amber); font-weight: 400; }
+
+  /* Buttons */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    background: var(--color-amber);
+    color: var(--color-bg);
+    border: none;
     cursor: pointer;
-    white-space: nowrap;
-    transition: background var(--dur-quick) var(--ease-out),
-                box-shadow var(--dur-quick) var(--ease-out);
-  }
-  .email-form .email-signup__submit:hover,
-  .email-form__btn:hover {
-    background: var(--color-signal-hover);
-    box-shadow: 0 2px 12px rgba(245, 158, 11, 0.3);
-    transform: none;
-  }
-
-  /* ── Email Form — default variant (stacked mobile, connected row desktop) ── */
-  .email-signup--default {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    width: 100%;
-    max-width: 520px;
-  }
-  .email-signup--default .email-signup__submit {
-    width: 100%;
-  }
-  @media (min-width: 640px) {
-    .email-signup--default {
-      flex-direction: row;
-      gap: 0;
-    }
-    .email-signup--default .email-signup__input {
-      flex: 1;
-      border-right: none;
-      border-radius: var(--radius-tight) 0 0 var(--radius-tight);
-    }
-    .email-signup--default .email-signup__submit {
-      width: auto;
-      flex-shrink: 0;
-      border-radius: 0 var(--radius-tight) var(--radius-tight) 0;
-    }
-  }
-
-  /* ── Email Form — prominent variant (subscribe page, connected row desktop) ── */
-  .email-signup--prominent {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    width: 100%;
-    max-width: 560px;
-  }
-  .email-signup--prominent .email-signup__input { height: 52px; }
-  .email-signup--prominent .email-signup__submit {
-    width: 100%;
-    height: 52px;
-  }
-  @media (min-width: 640px) {
-    .email-signup--prominent {
-      flex-direction: row;
-      gap: 0;
-    }
-    .email-signup--prominent .email-signup__input {
-      flex: 1;
-      border-right: none;
-      border-radius: var(--radius-tight) 0 0 var(--radius-tight);
-    }
-    .email-signup--prominent .email-signup__submit {
-      width: auto;
-      flex-shrink: 0;
-      border-radius: 0 var(--radius-tight) var(--radius-tight) 0;
-    }
-  }
-
-  /* ── Content Card Title ── */
-  .content-card__title {
-    font-family: var(--font-family-display);
-    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    padding: 16px 26px;
+    font-size: 14px;
     font-weight: 600;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-    color: var(--color-chalk);
-    transition: color 100ms var(--ease-out);
+    transition: background var(--dur-instant);
   }
-  .content-card:hover .content-card__title,
-  .group:hover .content-card__title { color: var(--color-signal); }
+  .btn-primary:hover { background: #FFC65A; }
 
-  /* ── Void Page (subscribe, coming-soon) ── */
-  .void-page__bar {
-    opacity: 0;
-    animation: draw-h 500ms var(--ease-out) 150ms forwards,
-               breathing-glow 3s ease-in-out 700ms infinite;
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    background: transparent;
+    color: var(--color-text);
+    border: none;
+    cursor: pointer;
+    padding: 16px 4px;
+    font-size: 14px;
+    font-weight: 500;
+    border-bottom: 1px solid var(--color-text);
+    transition: color var(--dur-instant), border-color var(--dur-instant);
   }
-  .void-page__label {
-    opacity: 0;
-    animation: fade-in 400ms var(--ease-out) 450ms forwards;
+  .btn-ghost:hover { color: var(--color-amber); border-color: var(--color-amber); }
+
+  /* Hero / section heads — used across all pages */
+  .head-hero {
+    font-size: clamp(48px, 9vw, 116px);
+    line-height: 0.98;
+    letter-spacing: -0.05em;
+    max-width: 1140px;
   }
-  .void-page__headline {
-    opacity: 0;
-    animation: fade-in 400ms var(--ease-out) 550ms forwards;
+  .head-hero-xl {
+    font-size: clamp(56px, 10vw, 132px);
+    line-height: 0.95;
+    letter-spacing: -0.05em;
+    max-width: 1140px;
   }
-  .void-page__pitch {
-    opacity: 0;
-    animation: fade-in 400ms var(--ease-out) 650ms forwards;
+  .head-section {
+    font-size: clamp(36px, 5.5vw, 72px);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    max-width: 1000px;
   }
-  .void-page__form {
-    opacity: 0;
-    animation: fade-up 500ms var(--ease-out) 850ms forwards;
-  }
-
-
-  .rupture .email-signup__input {
-    background: var(--color-paper);
-    border-color: var(--color-light-border);
-    color: var(--color-ink);
-  }
-  .rupture .email-signup__input::placeholder { color: var(--color-stone); }
-  .rupture .email-signup__input:focus {
-    background: var(--color-canvas);
-    border-color: var(--color-signal);
-    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15);
-  }
-}
-
-/* ═══════════════════════════════════════════
-   KEYFRAMES
-   ═══════════════════════════════════════════ */
-
-@keyframes fade-up {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes draw-h {
-  from { width: 0; }
-  to { width: 40px; }
-}
-
-@keyframes draw-v {
-  from { height: 0; }
-  to { height: 100%; }
-}
-
-@keyframes clip-reveal {
-  from { opacity: 0; clip-path: inset(0 50% 0 50%); }
-  to { opacity: 1; clip-path: inset(0 0 0 0); }
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-@keyframes error-shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-3px); }
-  75% { transform: translateX(3px); }
-}
-
-@keyframes breathing-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
-  50% { box-shadow: 0 0 16px 2px rgba(245, 158, 11, 0.15); }
-}
-
-/* ═══════════════════════════════════════════
-   SCROLL REVEAL SYSTEM
-   ═══════════════════════════════════════════ */
-
-/* Single-element reveals + stagger children */
-[data-reveal],
-[data-reveal-child] {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity var(--dur-measured) var(--ease-out),
-              transform var(--dur-measured) var(--ease-out);
-}
-[data-reveal].is-visible,
-[data-reveal-child].is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Stagger delays */
-[data-stagger="1"] { transition-delay: 0ms; }
-[data-stagger="2"] { transition-delay: 80ms; }
-[data-stagger="3"] { transition-delay: 160ms; }
-[data-stagger="4"] { transition-delay: 240ms; }
-[data-stagger="5"] { transition-delay: 320ms; }
-[data-stagger="6"] { transition-delay: 400ms; }
-[data-stagger="7"] { transition-delay: 480ms; }
-[data-stagger="8"] { transition-delay: 560ms; }
-[data-stagger="9"] { transition-delay: 640ms; }
-
-/* Legacy data-section support */
-[data-section] {
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 400ms var(--ease-out), transform 400ms var(--ease-out);
-}
-[data-section].is-visible { opacity: 1; transform: translateY(0); }
-[data-section="hero"] { opacity: 1; transform: none; }
-
-/* Legacy data-animate support */
-[data-animate] {
-  opacity: 0;
-  transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
-}
-[data-animate="fade-up"] { transform: translateY(16px); }
-[data-animate].is-visible { opacity: 1; transform: translateY(0); }
-
-/* ═══════════════════════════════════════════
-   RESPONSIVE
-   ═══════════════════════════════════════════ */
-
-@media (max-width: 768px) {
-  .directory-row__link:not(.directory-row__link--full) { grid-template-columns: 2.5rem 1fr auto; }
-  .directory-row__link:not(.directory-row__link--full) .directory-row__type { display: none; }
-  .email-form {
-    flex-direction: column;
-    gap: 8px;
-  }
-  .email-form .email-signup__input,
-  .email-form__input {
-    flex: none;
-    border-right: 1px solid var(--color-ash);
-    border-radius: var(--radius-tight);
-    height: 48px;
-  }
-  .email-form .email-signup__submit,
-  .email-form__btn { border-radius: var(--radius-tight); }
-}
-
-@media (max-width: 480px) {
-  .directory-row__link:not(.directory-row__link--full) {
-    grid-template-columns: 1fr auto;
-  }
-  .directory-row__link:not(.directory-row__link--full) .directory-row__idx { display: none; }
-}
-
-/* ═══════════════════════════════════════════
-   REDUCED MOTION
-   ═══════════════════════════════════════════ */
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+  .head-mid {
+    font-size: clamp(32px, 4.5vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    max-width: 900px;
   }
 
-  [data-reveal],
-  [data-reveal-child],
-  [data-section],
-  [data-animate],
-  .hero__bar, .hero__label, .hero__headline,
-  .hero__sub, .hero__cta,
-  .rupture__bar,
-  .void-page__bar, .void-page__label,
-  .void-page__headline, .void-page__pitch,
-  .void-page__form {
-    opacity: 1 !important;
-    transform: none !important;
-    clip-path: none !important;
+  .body-lead {
+    font-size: clamp(18px, 1.8vw, 22px);
+    line-height: 1.5;
+    color: var(--color-text-dim);
+    max-width: 660px;
   }
-  .void-page__bar { width: 40px !important; }
+  .body-mid {
+    font-size: clamp(17px, 1.6vw, 19px);
+    line-height: 1.6;
+    color: var(--color-text-dim);
+    max-width: 720px;
+  }
+
+  /* Section padding presets */
+  .section-pad {
+    padding: clamp(80px, 12vw, 180px) clamp(24px, 5vw, 56px);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .hero-pad {
+    padding: clamp(80px, 10vw, 120px) clamp(24px, 5vw, 56px) clamp(120px, 14vw, 200px);
+    border-bottom: 1px solid var(--color-line);
+  }
+}
+
+/* Newsletter signup form — shared across home / studio / subscribe */
+.nl-form {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--color-text);
+  padding-bottom: 12px;
+}
+.nl-form input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--color-text);
+  font-size: clamp(18px, 1.8vw, 22px);
+  padding: 8px 0;
+  font-weight: 300;
+}
+.nl-form input::placeholder { color: var(--color-text-mute); }
+.nl-form button {
+  background: transparent;
+  color: var(--color-amber);
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.nl-form.is-loading { opacity: 0.6; pointer-events: none; }
+.nl-form.is-success input { color: var(--color-amber); }
+.nl-form.is-success button { display: none; }
+
+@keyframes fapulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
 }
