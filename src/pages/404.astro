@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout
+  title="404 — channel47"
+  description="This page doesn't broadcast. Tune back to the homepage."
+  noindex={true}
+>
+  <Nav />
+
+  <main id="main" class="wrap">
+    <section class="lost" data-reveal-stagger>
+      <div class="eyebrow lost__eyebrow" data-reveal-child style="--stagger: 0">Signal lost</div>
+      <h1 class="head-hero lost__head" data-reveal-child style="--stagger: 1">
+        <span class="amber">404</span> — this channel doesn't broadcast.
+      </h1>
+      <p class="body-lead lost__sub" data-reveal-child style="--stagger: 2">
+        The page you're after moved, never existed, or got cut in an edit. Everything that does air is one click away.
+      </p>
+      <div class="lost__ctas" data-reveal-child style="--stagger: 3">
+        <a href="/" class="btn-primary">Back to the homepage →</a>
+        <a href="/plugins" class="btn-ghost">Browse the plugins</a>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .lost {
+    padding: clamp(100px, 16vw, 200px) clamp(24px, 5vw, 56px) clamp(140px, 20vw, 240px);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .lost__eyebrow { margin-bottom: 56px; }
+  .lost__sub { margin-top: 48px; }
+  .lost__ctas {
+    display: flex;
+    gap: 16px;
+    margin-top: 56px;
+    flex-wrap: wrap;
+  }
+</style>

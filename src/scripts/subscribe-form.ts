@@ -17,14 +17,23 @@ export function initSubscribeForms() {
     const tag = form.dataset.tag || 'general';
     const originalText = button.textContent;
 
+    // Visually-hidden live region so screen readers hear the result
+    const status = document.createElement('span');
+    status.className = 'visually-hidden';
+    status.setAttribute('role', 'status');
+    status.setAttribute('aria-live', 'polite');
+    form.appendChild(status);
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const email = input.value.trim();
       if (!email) return;
 
       form.classList.remove('is-error', 'is-success');
+      input.removeAttribute('aria-invalid');
       form.classList.add('is-loading');
       button.textContent = 'Sending…';
+      status.textContent = '';
 
       try {
         const res = await fetch('/api/subscribe', {
@@ -40,19 +49,25 @@ export function initSubscribeForms() {
           input.value = '';
           input.placeholder = 'Subscribed.';
           button.textContent = '✓ Sent';
+          status.textContent = 'Subscribed. Check your inbox to confirm.';
         } else {
           form.classList.add('is-error');
+          input.setAttribute('aria-invalid', 'true');
           button.textContent = originalText;
           const data = await res.json().catch(() => ({}));
-          input.placeholder = data?.message || 'Something broke. Try again.';
+          const message = data?.message || 'Something broke. Try again.';
+          input.placeholder = message;
           input.value = '';
+          status.textContent = message;
         }
       } catch {
         form.classList.remove('is-loading');
         form.classList.add('is-error');
+        input.setAttribute('aria-invalid', 'true');
         button.textContent = originalText;
         input.placeholder = 'Network error. Try again.';
         input.value = '';
+        status.textContent = 'Network error. Try again.';
       }
     });
   });

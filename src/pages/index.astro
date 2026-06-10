@@ -16,45 +16,64 @@ const services = [
   { idx: '03', name: 'Performance creative & ads', desc: 'Hook research, creative production, and account ops on Meta and Google.' },
   { idx: '04', name: 'Agent-powered retainers', desc: 'Ongoing build with Claude Code. Weekly drops, written specs, real ownership.' },
 ];
+
+const schema = [
+  {
+    '@type': 'WebSite',
+    name: 'channel47',
+    url: 'https://channel47.dev/',
+  },
+  {
+    '@type': 'Organization',
+    name: 'channel47',
+    url: 'https://channel47.dev/',
+    logo: 'https://channel47.dev/logo-square.png',
+    sameAs: [
+      'https://x.com/ctrlswing',
+      'https://github.com/ctrlswing',
+      'https://linkedin.com/in/ctrlswing',
+    ],
+  },
+];
 ---
 
 <BaseLayout
   title="channel47 — A small studio publishing plugins, sessions, and playbooks"
   description="Plugins, sessions, and playbooks built alongside The Vibe Marketers — a 3,200-member community of marketers shipping with Claude."
+  schema={schema}
 >
-  <a href="#main" class="skip-link">Skip to content</a>
   <Nav active="home" />
 
   <main id="main" class="wrap">
 
-    <section class="hero">
-      <div class="eyebrow hero__eyebrow">channel47 — est. 2024</div>
-      <h1 class="head-hero">
+    <section class="hero" data-reveal-stagger>
+      <div class="eyebrow hero__eyebrow" data-reveal-child style="--stagger: 0">channel47 — est. 2024</div>
+      <h1 class="head-hero" data-reveal-child style="--stagger: 1">
         A small studio publishing the plugins, sessions, and playbooks I run with the people building <span class="amber">alongside</span> me.
       </h1>
-      <p class="body-lead hero__body">
+      <p class="body-lead hero__body" data-reveal-child style="--stagger: 2">
         Every plugin comes out of a live session inside The Vibe Marketers — a 3,200-member community of marketers shipping with Claude.
       </p>
-      <div class="hero__ctas">
+      <div class="hero__ctas" data-reveal-child style="--stagger: 3">
         <a href="/community" class="btn-primary">Join the community →</a>
         <a href="/plugins" class="btn-ghost">See the plugins</a>
       </div>
     </section>
 
     <section class="section-pad">
-      <div class="eyebrow section__num">I — Plugins</div>
-      <h2 class="head-section">
+      <div class="eyebrow section__num" data-reveal>I — Plugins</div>
+      <h2 class="head-section" data-reveal>
         Tools I'm <span class="amber">actually</span> using.
       </h2>
-      <p class="body-mid section__sub">
+      <p class="body-mid section__sub" data-reveal>
         Each plugin comes out of a live session. Use them yourself, or watch them get built.
       </p>
 
-      <ul class="plugin-list">
+      <ul class="plugin-list" data-reveal-stagger>
         {plugins.map((p, i) => {
           const href = p.slug === 'funnel-architect' ? `/plugins/${p.slug}` : '/plugins';
           return (
-            <li class={`plugin-row ${i === plugins.length - 1 ? 'is-last' : ''}`}>
+            <li class={`plugin-row ${i === plugins.length - 1 ? 'is-last' : ''}`} data-reveal-child style={`--stagger: ${i}`}>
               <a href={href} class="plugin-row__link">
                 <span class="plugin-row__idx">{p.idx}</span>
                 <div class="plugin-row__body">
@@ -72,31 +91,31 @@ const services = [
       </ul>
     </section>
 
-    <section class="section-pad community">
-      <div class="eyebrow community__num">II — Community</div>
-      <div class="community__stat">
+    <section class="section-pad community" data-reveal-stagger>
+      <div class="eyebrow community__num" data-reveal-child style="--stagger: 0">II — Community</div>
+      <div class="community__stat" data-reveal-child style="--stagger: 1">
         3,<span class="amber">217</span>
       </div>
-      <div class="community__stat-label">The Vibe Marketers</div>
-      <p class="community__copy">
+      <div class="community__stat-label" data-reveal-child style="--stagger: 2">The Vibe Marketers</div>
+      <p class="community__copy" data-reveal-child style="--stagger: 3">
         A Skool community led by James Dickerson where I mentor inside, run live sessions, and ship every plugin alongside them. It's where almost everything here starts.
       </p>
-      <a href="/community" class="btn-primary">Join on Skool →</a>
-      <div class="community__lead">James Dickerson · @boringmarketer</div>
+      <a href="/community" class="btn-primary" data-reveal-child style="--stagger: 4">Join on Skool →</a>
+      <div class="community__lead" data-reveal-child style="--stagger: 5">James Dickerson · @boringmarketer</div>
     </section>
 
     <section class="section-pad">
-      <div class="eyebrow section__num">III — Studio</div>
-      <h2 class="head-section">
+      <div class="eyebrow section__num" data-reveal>III — Studio</div>
+      <h2 class="head-section" data-reveal>
         Off the channel, I build <span class="amber">marketing systems</span> for small businesses.
       </h2>
-      <p class="body-mid section__sub">
+      <p class="body-mid section__sub" data-reveal>
         Built with Claude Code. Biased toward Shopify and physical-goods brands — open to anything I can ship cleanly.
       </p>
 
-      <ul class="studio-list">
+      <ul class="studio-list" data-reveal-stagger>
         {services.map((s, i) => (
-          <li class={`studio-row ${i === services.length - 1 ? 'is-last' : ''}`}>
+          <li class={`studio-row ${i === services.length - 1 ? 'is-last' : ''}`} data-reveal-child style={`--stagger: ${i}`}>
             <span class="studio-row__idx">{s.idx}</span>
             <h3 class="studio-row__name">{s.name}</h3>
             <p class="studio-row__desc">{s.desc}</p>
@@ -105,15 +124,15 @@ const services = [
       </ul>
     </section>
 
-    <section class="signoff">
-      <div class="eyebrow signoff__eyebrow">IV — Subscribe</div>
-      <h2 class="head-section signoff__head">
+    <section class="signoff" data-reveal-stagger>
+      <div class="eyebrow signoff__eyebrow" data-reveal-child style="--stagger: 0">IV — Subscribe</div>
+      <h2 class="head-section signoff__head" data-reveal-child style="--stagger: 1">
         Get the next plugin <span class="amber">before</span> the session.
       </h2>
-      <p class="body-mid signoff__sub">
+      <p class="body-mid signoff__sub" data-reveal-child style="--stagger: 2">
         Roughly twice a month. Plugin drops, session notes, the occasional teardown. No filler.
       </p>
-      <form class="nl-form signoff__form" data-kit-form data-tag="home">
+      <form class="nl-form signoff__form" data-reveal-child style="--stagger: 3" data-kit-form data-tag="home">
         <input type="email" name="email" placeholder="you@studio.com" required aria-label="Email address" />
         <button type="submit">Subscribe →</button>
       </form>
@@ -152,14 +171,29 @@ const services = [
     border-bottom: 1px solid var(--color-line);
   }
   .plugin-row__link {
+    position: relative;
     display: grid;
     grid-template-columns: 60px 1fr 180px;
     gap: 48px;
     padding: 56px 0;
     align-items: baseline;
-    transition: opacity var(--dur-instant);
+    transition: background var(--dur-quick);
   }
-  .plugin-row__link:hover { opacity: 0.85; }
+  .plugin-row__link::before {
+    content: '';
+    position: absolute;
+    left: -24px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--color-amber);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform var(--dur-quick) var(--ease-out);
+  }
+  .plugin-row__link:hover { background: rgba(245, 181, 68, 0.025); }
+  .plugin-row__link:hover::before { transform: scaleY(1); }
+  .plugin-row__link:hover .plugin-row__name { color: var(--color-amber); }
   .plugin-row__idx {
     font-size: 13px;
     color: var(--color-text-mute);
@@ -170,6 +204,7 @@ const services = [
     margin: 0 0 16px;
     line-height: 1.05;
     letter-spacing: -0.03em;
+    transition: color var(--dur-quick);
   }
   .plugin-row__desc {
     font-size: 17px;

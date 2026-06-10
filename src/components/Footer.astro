@@ -1,9 +1,21 @@
 ---
 const year = new Date().getFullYear();
+
+const siteLinks = [
+  { label: 'Plugins', href: '/plugins' },
+  { label: 'Community', href: '/community' },
+  { label: 'Studio', href: '/studio' },
+  { label: 'Subscribe', href: '/subscribe' },
+];
 ---
 
 <footer class="footer wrap">
   <span class="footer__copy">© {year} channel47</span>
+  <nav class="footer__links" aria-label="Footer">
+    {siteLinks.map((l) => (
+      <a href={l.href} class="footer__link">{l.label}</a>
+    ))}
+  </nav>
   <div class="footer__links">
     <a href="https://x.com/ctrlswing" target="_blank" rel="noopener noreferrer" class="footer__link">X</a>
     <a href="https://linkedin.com/in/ctrlswing" target="_blank" rel="noopener noreferrer" class="footer__link">LinkedIn</a>
@@ -17,24 +29,26 @@ const year = new Date().getFullYear();
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
     font-size: 12px;
     color: var(--color-text-mute);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     border-top: 1px solid var(--color-line);
   }
-  .footer__links { display: flex; gap: 28px; }
+  .footer__links { display: flex; gap: 28px; flex-wrap: wrap; }
   .footer__link {
     color: var(--color-text-mute);
     transition: color var(--dur-instant);
   }
   .footer__link:hover { color: var(--color-text); }
 
-  @media (max-width: 480px) {
+  @media (max-width: 640px) {
     .footer {
       flex-direction: column;
-      gap: 24px;
       align-items: flex-start;
     }
+    .footer__links { gap: 20px; }
   }
 </style>

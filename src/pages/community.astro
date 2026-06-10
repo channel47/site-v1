@@ -32,28 +32,27 @@ const members = [
   title="Community — channel47"
   description="The Vibe Marketers — a 3,200-member Skool community where every channel47 plugin gets built live."
 >
-  <a href="#main" class="skip-link">Skip to content</a>
   <Nav active="community" />
 
   <main id="main" class="wrap">
-    <section class="hero">
-      <div class="eyebrow hero__eyebrow">The Vibe Marketers · led by James Dickerson</div>
-      <h1 class="head-hero">
+    <section class="hero" data-reveal-stagger>
+      <div class="eyebrow hero__eyebrow" data-reveal-child style="--stagger: 0">The Vibe Marketers · led by James Dickerson</div>
+      <h1 class="head-hero" data-reveal-child style="--stagger: 1">
         The room where every plugin <span class="amber">actually</span> gets built.
       </h1>
-      <p class="body-lead hero__sub">
+      <p class="body-lead hero__sub" data-reveal-child style="--stagger: 2">
         A 3,200-member Skool community of marketers shipping with Claude. I mentor inside, run live sessions every Tuesday, and ship every plugin alongside the room.
       </p>
-      <div class="hero__cta">
+      <div class="hero__cta" data-reveal-child style="--stagger: 3">
         <a href="https://www.skool.com/the-vibe-marketers" target="_blank" rel="noopener noreferrer" class="btn-primary">Join on Skool →</a>
-        <button class="btn-ghost">See a sample session</button>
+        <a href="/plugins/funnel-architect" class="btn-ghost">See a sample session</a>
         <span class="hero__cta-meta">$49/mo · cancel anytime</span>
       </div>
     </section>
 
-    <div class="stats">
+    <div class="stats" data-reveal-stagger>
       {stats.map((s, i) => (
-        <div class={`stat-cell ${i === stats.length - 1 ? 'is-last' : ''}`}>
+        <div class={`stat-cell ${i === stats.length - 1 ? 'is-last' : ''}`} data-reveal-child style={`--stagger: ${i}`}>
           <div class={`stat-cell__value ${s.amber ? 'is-amber' : ''}`}>{s.v}</div>
           <div class="stat-cell__label">{s.label}</div>
         </div>
@@ -61,38 +60,43 @@ const members = [
     </div>
 
     <section class="section-pad">
-      <div class="eyebrow section__num">I — Sessions calendar</div>
-      <h2 class="head-mid">
+      <div class="eyebrow section__num" data-reveal>I — Sessions calendar</div>
+      <h2 class="head-mid" data-reveal>
         Tuesdays at <span class="amber">14:00 PT</span>. Two hours, no filler.
       </h2>
-      <p class="body-mid section__sub">
-        One plugin per season, three sessions per plugin, plus open office hours. Recordings post next morning.
+      <p class="body-mid section__sub" data-reveal>
+        One plugin per season, three sessions per plugin, plus open office hours. Recordings post next morning. Sessions run live on Skool — RSVP from inside the community.
       </p>
 
-      <ul class="calendar">
+      <ul class="calendar" data-reveal-stagger>
         {calendar.map((c, i) => (
-          <li class={`cal-row ${i === calendar.length - 1 ? 'is-last' : ''}`}>
+          <li class={`cal-row ${i === calendar.length - 1 ? 'is-last' : ''}`} data-reveal-child style={`--stagger: ${i}`}>
             <span class="cal-row__date">{c.date}</span>
             <span class="cal-row__day">{c.day}</span>
             <h3 class="cal-row__title">{c.title}</h3>
             <span class="cal-row__plugin">{c.plugin}</span>
-            <button class={`cal-row__rsvp ${c.kind === 'now' ? 'is-now' : ''}`}>
+            <a
+              href="https://www.skool.com/the-vibe-marketers"
+              target="_blank"
+              rel="noopener noreferrer"
+              class={`cal-row__rsvp ${c.kind === 'now' ? 'is-now' : ''}`}
+            >
               {c.kind === 'now' ? 'Live now →' : 'RSVP →'}
-            </button>
+            </a>
           </li>
         ))}
       </ul>
     </section>
 
     <section class="section-pad">
-      <div class="eyebrow section__num">II — Inside the room</div>
-      <h2 class="head-mid">
+      <div class="eyebrow section__num" data-reveal>II — Inside the room</div>
+      <h2 class="head-mid" data-reveal>
         Mostly operators. Some <span class="amber">founders</span>. A few escapees from holdco agencies.
       </h2>
 
-      <div class="members-grid">
-        {members.map((m) => (
-          <figure class="member-card">
+      <div class="members-grid" data-reveal-stagger>
+        {members.map((m, i) => (
+          <figure class="member-card" data-reveal-child style={`--stagger: ${i % 6}`}>
             <blockquote class="member-card__quote">&ldquo;{m.quote}&rdquo;</blockquote>
             <figcaption class="member-card__meta">
               <span class="member-card__name">{m.name}</span> · {m.role}
@@ -102,7 +106,7 @@ const members = [
       </div>
     </section>
 
-    <section class="lead-block">
+    <section class="lead-block" data-reveal>
       <div>
         <div class="eyebrow">The room is led by</div>
         <h2 class="lead-block__name">James <span class="amber">Dickerson</span></h2>
@@ -212,6 +216,7 @@ const members = [
     padding: 8px 14px;
     background: transparent;
     cursor: pointer;
+    text-align: center;
     transition: background var(--dur-instant);
   }
   .cal-row__rsvp:hover { background: rgba(245, 181, 68, 0.1); }

@@ -13,22 +13,35 @@ const plugins = [
   { idx: '07', slug: 'review-miner', name: 'Review Miner', desc: 'Pulls voice-of-customer language out of Amazon, Trustpilot, and YouTube transcripts.', status: 'On deck', kind: 'ondeck', season: 'S3', episodes: 0, installs: '—' },
   { idx: '08', slug: 'pitch-a-plugin', name: 'Pitch a plugin', desc: 'The next season is open. Pitch a plugin worth building — the best ideas come from inside the room.', status: 'Open call', kind: 'open', season: '—', episodes: 0, installs: '—' },
 ];
+
+const schema = {
+  '@type': 'ItemList',
+  name: 'channel47 plugins',
+  itemListElement: plugins
+    .filter((p) => p.kind !== 'open')
+    .map((p, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: p.name,
+      url: p.slug === 'funnel-architect' ? `https://channel47.dev/plugins/${p.slug}` : 'https://channel47.dev/plugins',
+    })),
+};
 ---
 
 <BaseLayout
   title="Plugins — channel47"
   description="Eight Claude Code plugins built live in The Vibe Marketers. Install them, or watch the session that produced them."
+  schema={schema}
 >
-  <a href="#main" class="skip-link">Skip to content</a>
   <Nav active="plugins" />
 
   <main id="main" class="wrap">
-    <section class="hero">
-      <div class="eyebrow hero__eyebrow">Plugins — the library</div>
-      <h1 class="head-hero">
+    <section class="hero" data-reveal-stagger>
+      <div class="eyebrow hero__eyebrow" data-reveal-child style="--stagger: 0">Plugins — the library</div>
+      <h1 class="head-hero" data-reveal-child style="--stagger: 1">
         Eight plugins so far. Each one came out of a <span class="amber">live session</span>.
       </h1>
-      <p class="body-lead hero__sub">
+      <p class="body-lead hero__sub" data-reveal-child style="--stagger: 2">
         Install any of them, or watch the session that produced it. Members of The Vibe Marketers get the working files; everyone else gets the public build.
       </p>
     </section>
@@ -44,12 +57,16 @@ const plugins = [
       <div class="filter-row__count" data-filter-count>{plugins.length} plugins</div>
     </div>
 
-    <div class="grid">
-      {plugins.map((p) => {
-        const Tag = p.slug === 'funnel-architect' ? 'a' : 'div';
-        const tagProps = p.slug === 'funnel-architect' ? { href: `/plugins/${p.slug}` } : {};
+    <div class="grid" data-reveal-stagger>
+      {plugins.map((p, i) => {
+        const href =
+          p.slug === 'funnel-architect' ? `/plugins/${p.slug}`
+          : p.kind === 'open' ? '/community'
+          : null;
+        const Tag = href ? 'a' : 'div';
+        const tagProps = href ? { href } : {};
         return (
-          <Tag class="card" data-kind={p.kind} {...tagProps}>
+          <Tag class="card" data-kind={p.kind} data-reveal-child style={`--stagger: ${i % 6}`} {...tagProps}>
             <div class="card__top">
               <span class="card__idx">{p.idx}</span>
               <span class={`card__status card__status--${p.kind}`}>
@@ -61,7 +78,7 @@ const plugins = [
             <p class="card__desc">{p.desc}</p>
             <div class="card__meta">
               <span>{p.season} · {p.episodes} {p.episodes === 1 ? 'session' : 'sessions'} · {p.installs} installs</span>
-              {p.slug === 'funnel-architect' && <span class="card__arrow">→</span>}
+              {(p.slug === 'funnel-architect' || p.kind === 'open') && <span class="card__arrow">→</span>}
             </div>
           </Tag>
         );
@@ -119,7 +136,7 @@ const plugins = [
     padding: 36px clamp(24px, 5vw, 56px);
     border-bottom: 1px solid var(--color-line);
     position: sticky;
-    top: 0;
+    top: var(--nav-h);
     background: rgba(10, 10, 10, 0.85);
     backdrop-filter: blur(12px);
     z-index: 5;
@@ -170,7 +187,8 @@ const plugins = [
     flex-direction: column;
     transition: background var(--dur-quick);
   }
-  .card:hover { background: var(--color-line-soft); }
+  /* Hover affordance only on cards that actually link somewhere */
+  a.card:hover { background: var(--color-line-soft); }
   .card__top {
     display: flex;
     justify-content: space-between;

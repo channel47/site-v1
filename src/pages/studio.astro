@@ -29,33 +29,32 @@ const process = [
   title="Studio — channel47"
   description="Marketing systems for small businesses, built with agents. Site, email, ads, automation — scoped, built, handed off."
 >
-  <a href="#main" class="skip-link">Skip to content</a>
   <Nav active="studio" />
 
   <main id="main" class="wrap">
-    <section class="hero">
-      <div class="eyebrow hero__eyebrow">channel47 studio · client work</div>
-      <h1 class="head-hero">
+    <section class="hero" data-reveal-stagger>
+      <div class="eyebrow hero__eyebrow" data-reveal-child style="--stagger: 0">channel47 studio · client work</div>
+      <h1 class="head-hero" data-reveal-child style="--stagger: 1">
         Marketing systems for small businesses, built with <span class="amber">agents</span>.
       </h1>
-      <p class="body-lead hero__sub">
+      <p class="body-lead hero__sub" data-reveal-child style="--stagger: 2">
         A small client roster, three to five engagements at a time. Biased toward Shopify and physical-goods brands — open to anything I can ship cleanly.
       </p>
-      <div class="hero__cta">
+      <div class="hero__cta" data-reveal-child style="--stagger: 3">
         <a href="#contact" class="btn-primary">Book an intro call →</a>
         <a href="#cases" class="btn-ghost">See recent work</a>
       </div>
     </section>
 
     <section class="section-pad">
-      <div class="eyebrow section__num">I — Services</div>
-      <h2 class="head-mid">
+      <div class="eyebrow section__num" data-reveal>I — Services</div>
+      <h2 class="head-mid" data-reveal>
         Four ways to <span class="amber">work together</span>.
       </h2>
 
-      <ul class="services">
+      <ul class="services" data-reveal-stagger>
         {services.map((s, i) => (
-          <li class={`service-row ${i === services.length - 1 ? 'is-last' : ''}`}>
+          <li class={`service-row ${i === services.length - 1 ? 'is-last' : ''}`} data-reveal-child style={`--stagger: ${i}`}>
             <span class="service-row__idx">{s.idx}</span>
             <h3 class="service-row__name">{s.name}</h3>
             <p class="service-row__desc">{s.desc}</p>
@@ -66,14 +65,14 @@ const process = [
     </section>
 
     <section class="section-pad" id="cases">
-      <div class="eyebrow section__num">II — Recent work</div>
-      <h2 class="head-mid">
+      <div class="eyebrow section__num" data-reveal>II — Recent work</div>
+      <h2 class="head-mid" data-reveal>
         Four engagements, <span class="amber">shipped</span>.
       </h2>
 
-      <div class="case-grid">
-        {cases.map((c) => (
-          <article class="case-card">
+      <div class="case-grid" data-reveal-stagger>
+        {cases.map((c, i) => (
+          <article class="case-card" data-reveal-child style={`--stagger: ${i}`}>
             <div class="case-card__tag">{c.tag}</div>
             <h3 class="case-card__client">{c.client}</h3>
             <p class="case-card__desc">{c.desc}</p>
@@ -91,14 +90,14 @@ const process = [
     </section>
 
     <section class="section-pad">
-      <div class="eyebrow section__num">III — How it works</div>
-      <h2 class="head-mid">
+      <div class="eyebrow section__num" data-reveal>III — How it works</div>
+      <h2 class="head-mid" data-reveal>
         Scope to ship in <span class="amber">four steps</span>.
       </h2>
 
-      <div class="process">
-        {process.map((p) => (
-          <div class="process-step">
+      <div class="process" data-reveal-stagger>
+        {process.map((p, i) => (
+          <div class="process-step" data-reveal-child style={`--stagger: ${i}`}>
             <div class="process-step__num">{p.num}</div>
             <h3 class="process-step__title">{p.title}</h3>
             <p class="process-step__desc">{p.desc}</p>
@@ -108,14 +107,14 @@ const process = [
     </section>
 
     <section class="contact" id="contact">
-      <div class="eyebrow contact__eyebrow">IV — Get in touch</div>
-      <h2 class="contact__head">
+      <div class="eyebrow contact__eyebrow" data-reveal>IV — Get in touch</div>
+      <h2 class="contact__head" data-reveal>
         One slot opens up roughly every <span class="amber">six weeks</span>.
       </h2>
-      <p class="contact__sub">
+      <p class="contact__sub" data-reveal>
         Drop your email and a sentence about what you're building. I read everything; I reply within a day.
       </p>
-      <form class="nl-form contact__form" data-kit-form data-tag="studio">
+      <form class="nl-form contact__form" data-reveal data-kit-form data-tag="studio">
         <input type="email" name="email" placeholder="you@studio.com" required aria-label="Email address" />
         <button type="submit">Send →</button>
       </form>

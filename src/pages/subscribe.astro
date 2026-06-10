@@ -23,34 +23,33 @@ const issues = [
   title="Subscribe — channel47"
   description="Plugin drops, session notes, and the occasional teardown. Roughly twice a month. No filler, no roundups."
 >
-  <a href="#main" class="skip-link">Skip to content</a>
   <Nav active="subscribe" />
 
   <main id="main" class="wrap">
-    <section class="hero">
-      <div class="eyebrow hero__eyebrow">The newsletter · roughly twice a month</div>
-      <h1 class="head-hero-xl">
+    <section class="hero" data-reveal-stagger>
+      <div class="eyebrow hero__eyebrow" data-reveal-child style="--stagger: 0">The newsletter · roughly twice a month</div>
+      <h1 class="head-hero-xl" data-reveal-child style="--stagger: 1">
         Get the next plugin <span class="amber">before</span> the session.
       </h1>
-      <p class="hero__sub">
+      <p class="hero__sub" data-reveal-child style="--stagger: 2">
         Plugin drops, session notes, the occasional teardown. Written the night before each Tuesday. No filler, no roundups.
       </p>
-      <form class="nl-form hero__form" data-kit-form data-tag="newsletter">
+      <form class="nl-form hero__form" data-reveal-child style="--stagger: 3" data-kit-form data-tag="newsletter">
         <input type="email" name="email" placeholder="you@studio.com" required aria-label="Email address" />
         <button type="submit">Subscribe →</button>
       </form>
-      <div class="hero__meta">4,812 subscribers · 47 issues · zero spam</div>
+      <div class="hero__meta" data-reveal-child style="--stagger: 4">4,812 subscribers · 47 issues · zero spam</div>
     </section>
 
     <section class="section-pad">
-      <div class="eyebrow section__num">I — What you get</div>
-      <h2 class="head-mid">
+      <div class="eyebrow section__num" data-reveal>I — What you get</div>
+      <h2 class="head-mid" data-reveal>
         Three things in <span class="amber">every issue</span>.
       </h2>
 
-      <div class="what-grid">
-        {tiles.map((t) => (
-          <div class="what-tile">
+      <div class="what-grid" data-reveal-stagger>
+        {tiles.map((t, i) => (
+          <div class="what-tile" data-reveal-child style={`--stagger: ${i}`}>
             <div class="what-tile__num">{t.num}</div>
             <h3 class="what-tile__title">{t.title}</h3>
             <p class="what-tile__desc">{t.desc}</p>
@@ -60,18 +59,20 @@ const issues = [
     </section>
 
     <section class="section-pad">
-      <div class="eyebrow section__num">II — Past issues</div>
-      <h2 class="head-mid">
+      <div class="eyebrow section__num" data-reveal>II — Past issues</div>
+      <h2 class="head-mid" data-reveal>
         Forty-seven issues. <span class="amber">All free</span>, all open.
       </h2>
+      <p class="body-mid section__sub" data-reveal>
+        The archive lands in your inbox — subscribe above and reply to any issue to ask for a back number.
+      </p>
 
-      <ul class="archive">
+      <ul class="archive" data-reveal-stagger>
         {issues.map((it, i) => (
-          <li class={`issue-row ${i === issues.length - 1 ? 'is-last' : ''}`}>
+          <li class={`issue-row ${i === issues.length - 1 ? 'is-last' : ''}`} data-reveal-child style={`--stagger: ${i % 6}`}>
             <span class="issue-row__num">{it.num}</span>
             <span class="issue-row__date">{it.date}</span>
             <h3 class="issue-row__title">{it.title}</h3>
-            <span class="issue-row__arrow">Read →</span>
           </li>
         ))}
       </ul>
@@ -105,6 +106,7 @@ const issues = [
   }
 
   .section__num { margin-bottom: 56px; }
+  .section__sub { margin-top: 40px; }
 
   .what-grid {
     margin-top: 80px;
@@ -142,15 +144,12 @@ const issues = [
   }
   .issue-row {
     display: grid;
-    grid-template-columns: 120px 100px 1fr 100px;
+    grid-template-columns: 120px 100px 1fr;
     gap: 32px;
     padding: 28px 0;
     border-top: 1px solid var(--color-line);
     align-items: center;
-    cursor: pointer;
-    transition: opacity var(--dur-instant);
   }
-  .issue-row:hover { opacity: 0.85; }
   .issue-row.is-last { border-bottom: 1px solid var(--color-line); }
   .issue-row__num {
     font-family: var(--font-family-mono);
@@ -168,16 +167,10 @@ const issues = [
     font-size: 19px;
     letter-spacing: -0.01em;
   }
-  .issue-row__arrow {
-    font-size: 14px;
-    color: var(--color-amber);
-    text-align: right;
-  }
-
   @media (max-width: 900px) {
     .what-grid { grid-template-columns: 1fr; }
     .issue-row {
-      grid-template-columns: 100px 1fr 60px;
+      grid-template-columns: 100px 1fr;
       gap: 16px;
     }
     .issue-row__date { display: none; }

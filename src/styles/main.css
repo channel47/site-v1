@@ -14,6 +14,7 @@
   --color-line: #1C1C1B;
   --color-line-soft: #141413;
   --color-amber: #F5B544;
+  --color-destructive: #EF4444;
 
   /* shadcn/ui semantic aliases */
   --color-background: #0A0A0A;
@@ -30,6 +31,8 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --dur-instant: 100ms;
   --dur-quick: 200ms;
+  --dur-measured: 400ms;
+  --nav-h: 76px;
 }
 
 /* ═══════════════════════════════════════════
@@ -41,7 +44,10 @@
     color-scheme: dark;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
   }
 
   body {
@@ -52,9 +58,13 @@
     line-height: 1.5;
     margin: 0;
     min-height: 100dvh;
+    padding-top: var(--nav-h);
     position: relative;
     overflow-x: hidden;
   }
+
+  /* Anchor targets land below the fixed nav */
+  [id] { scroll-margin-top: calc(var(--nav-h) + 24px); }
 
   /* Atmospheric background — radial washes + grain */
   body::before {
@@ -110,9 +120,10 @@
 
   /* Skip link for a11y */
   .skip-link {
-    position: absolute;
+    position: fixed;
     left: -9999px;
     top: 0;
+    z-index: 100;
     background: var(--color-amber);
     color: var(--color-bg);
     padding: 8px 12px;
@@ -120,6 +131,19 @@
     font-weight: 600;
   }
   .skip-link:focus { left: 16px; top: 16px; }
+
+  /* Screen-reader-only text (form status announcements) */
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
 
   /* Eyebrow / section number — small amber caps */
   .eyebrow {
@@ -243,6 +267,45 @@
 .nl-form.is-loading { opacity: 0.6; pointer-events: none; }
 .nl-form.is-success input { color: var(--color-amber); }
 .nl-form.is-success button { display: none; }
+.nl-form.is-error { border-bottom-color: var(--color-destructive); }
+.nl-form.is-error input::placeholder { color: var(--color-destructive); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .nl-form.is-error { animation: formshake 300ms var(--ease-out); }
+}
+
+@keyframes formshake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+  75% { transform: translateX(-3px); }
+}
+
+/* ═══════════════════════════════════════════
+   SCROLL REVEAL
+   Hidden states only apply when JS is running
+   (html.js set inline in BaseLayout) so content
+   stays visible if JavaScript fails.
+   ═══════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: no-preference) {
+  html.js [data-reveal],
+  html.js [data-reveal-child] {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 600ms var(--ease-out),
+      transform 600ms var(--ease-out);
+  }
+  html.js [data-reveal-child] {
+    transition-delay: calc(min(var(--stagger, 0), 5) * 70ms);
+  }
+  html.js [data-reveal].is-visible,
+  html.js [data-reveal-child].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
 
 @keyframes fapulse {
   0%, 100% { opacity: 1; }

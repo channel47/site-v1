@@ -7,6 +7,7 @@ import react from '@astrojs/react';
 export default defineConfig({
   site: 'https://channel47.dev',
   output: 'static',
+  prefetch: { prefetchAll: true },
   adapter: vercel({
     webAnalytics: {
       enabled: true

@@ -45,13 +45,23 @@ export function getStaticPaths() {
 }
 
 const { plugin } = Astro.props;
+
+const schema = {
+  '@type': 'SoftwareApplication',
+  name: `${plugin.name} ${plugin.nameAccent}`,
+  description: plugin.tagline,
+  applicationCategory: 'DeveloperApplication',
+  operatingSystem: 'Claude Code',
+  url: `https://channel47.dev${Astro.url.pathname}`,
+  author: { '@type': 'Organization', name: 'channel47', url: 'https://channel47.dev/' },
+};
 ---
 
 <BaseLayout
   title={`${plugin.name} ${plugin.nameAccent} — channel47`}
   description={plugin.tagline}
+  schema={schema}
 >
-  <a href="#main" class="skip-link">Skip to content</a>
   <Nav active="plugins" />
 
   <main id="main" class="wrap">
@@ -63,26 +73,26 @@ const { plugin } = Astro.props;
       <span>{plugin.name} {plugin.nameAccent}</span>
     </nav>
 
-    <section class="hero">
-      <div class="hero__top">
+    <section class="hero" data-reveal-stagger>
+      <div class="hero__top" data-reveal-child style="--stagger: 0">
         <span class="hero__num">{plugin.idx} · {plugin.season}</span>
         <span class="hero__live">
           <span class="hero__live-dot" aria-hidden="true"></span>
           {plugin.live}
         </span>
       </div>
-      <h1 class="hero__name">{plugin.name} <span class="amber">{plugin.nameAccent}</span></h1>
-      <p class="hero__tag">{plugin.tagline}</p>
-      <div class="hero__cta">
-        <button class="btn-primary">Install plugin →</button>
-        <button class="btn-ghost">Watch session live</button>
+      <h1 class="hero__name" data-reveal-child style="--stagger: 1">{plugin.name} <span class="amber">{plugin.nameAccent}</span></h1>
+      <p class="hero__tag" data-reveal-child style="--stagger: 2">{plugin.tagline}</p>
+      <div class="hero__cta" data-reveal-child style="--stagger: 3">
+        <a href="#install" class="btn-primary">Install plugin →</a>
+        <a href="/community" class="btn-ghost">Watch session live</a>
         <span class="hero__cta-meta">{plugin.ctaMeta}</span>
       </div>
     </section>
 
-    <div class="meta-strip">
+    <div class="meta-strip" data-reveal-stagger>
       {plugin.meta.map((m, i) => (
-        <div class={`meta-cell ${i === plugin.meta.length - 1 ? 'is-last' : ''}`}>
+        <div class={`meta-cell ${i === plugin.meta.length - 1 ? 'is-last' : ''}`} data-reveal-child style={`--stagger: ${i}`}>
           <div class="meta-cell__label">{m.label}</div>
           <div class={`meta-cell__value ${m.amber ? 'is-amber' : ''}`}>{m.value}</div>
         </div>
@@ -90,17 +100,17 @@ const { plugin } = Astro.props;
     </div>
 
     <section class="section-pad">
-      <div class="eyebrow section__num">I — What's inside</div>
-      <h2 class="head-mid">
+      <div class="eyebrow section__num" data-reveal>I — What's inside</div>
+      <h2 class="head-mid" data-reveal>
         A working funnel, not a <span class="amber">template</span>.
       </h2>
-      <p class="body-mid section__sub">
+      <p class="body-mid section__sub" data-reveal>
         The plugin reads your product brief, picks a funnel pattern, and writes the actual files. You install it once and run it on any new launch.
       </p>
 
-      <div class="inside-grid">
-        {plugin.inside.map((t) => (
-          <div class="inside-tile">
+      <div class="inside-grid" data-reveal-stagger>
+        {plugin.inside.map((t, i) => (
+          <div class="inside-tile" data-reveal-child style={`--stagger: ${i}`}>
             <div class="inside-tile__num">{t.num}</div>
             <h3 class="inside-tile__title">{t.title}</h3>
             <p class="inside-tile__desc">{t.desc}</p>
@@ -110,17 +120,17 @@ const { plugin } = Astro.props;
     </section>
 
     <section class="section-pad">
-      <div class="eyebrow section__num">II — Sessions</div>
-      <h2 class="head-mid">
+      <div class="eyebrow section__num" data-reveal>II — Sessions</div>
+      <h2 class="head-mid" data-reveal>
         Three sessions. <span class="amber">One ships</span> the plugin.
       </h2>
-      <p class="body-mid section__sub">
+      <p class="body-mid section__sub" data-reveal>
         Live inside The Vibe Marketers on Tuesdays. Recordings post the next morning to community members; public cuts go out a week later.
       </p>
 
-      <ul class="session-list">
+      <ul class="session-list" data-reveal-stagger>
         {plugin.sessions.map((s, i) => (
-          <li class={`session-row ${i === plugin.sessions.length - 1 ? 'is-last' : ''}`}>
+          <li class={`session-row ${i === plugin.sessions.length - 1 ? 'is-last' : ''}`} data-reveal-child style={`--stagger: ${i}`}>
             <span class="session-row__code">{s.code}</span>
             <h3 class="session-row__title">{s.title}</h3>
             <span class="session-row__date">{s.date}</span>
@@ -133,15 +143,15 @@ const { plugin } = Astro.props;
       </ul>
     </section>
 
-    <section class="section-pad">
-      <div class="eyebrow section__num">III — Install</div>
-      <h2 class="head-mid">
+    <section class="section-pad" id="install">
+      <div class="eyebrow section__num" data-reveal>III — Install</div>
+      <h2 class="head-mid" data-reveal>
         One line. Runs <span class="amber">locally</span> with Claude Code.
       </h2>
-      <p class="body-mid section__sub">
+      <p class="body-mid section__sub" data-reveal>
         Requires Claude Code &gt;= 1.4 and a paid Anthropic key. The plugin manifest, prompts, and example briefs are MIT-licensed.
       </p>
-      <div class="install" data-copy-block>
+      <div class="install" data-reveal data-copy-block>
         <div class="install__head">
           <span>Terminal</span>
           <button class="install__copy" data-copy-trigger data-copy-target="install-cmd">Copy</button>
