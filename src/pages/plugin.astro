@@ -1,0 +1,419 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { SKOOL_URL, PLUGIN_INSTALL } from '../consts';
+
+const meta = [
+  { label: 'Status', value: 'Live', amber: true },
+  { label: 'Skills shipped', value: '3 of 6' },
+  { label: 'Built with', value: 'Claude Code' },
+  { label: 'Updated', value: 'Jun 11, 2026' },
+];
+
+// Each skill is small on purpose: one job, done well. They chain —
+// the output of one is the input to the next, from raw customer truth
+// to a landing page you can run traffic to.
+const skills = [
+  {
+    num: '01',
+    name: 'Customer Research',
+    desc: 'Pulls real voice-of-customer language and objections from reviews, transcripts, and forums. What customers actually say — not what you assume.',
+    status: 'Shipped',
+    kind: 'shipped',
+  },
+  {
+    num: '02',
+    name: 'Persona Generator',
+    desc: 'Turns that research into one sharp, usable persona: the problem, the stakes, the words they use, and what they have already tried.',
+    status: 'Shipped',
+    kind: 'shipped',
+  },
+  {
+    num: '03',
+    name: 'Angle Generator',
+    desc: 'Produces a set of distinct positioning angles from the persona — each with a hook, a promise, and the proof it needs to land.',
+    status: 'Shipped',
+    kind: 'shipped',
+  },
+  {
+    num: '04',
+    name: 'Page Writer',
+    desc: 'Takes the winning angle and persona and writes the full landing page — hero, value props, objection-handling FAQ, one clear CTA. Copy, structured by section.',
+    status: 'Next lab',
+    kind: 'next',
+  },
+  {
+    num: '05',
+    name: 'Section Builder',
+    desc: 'Ships the page as real code: a Shopify section (Liquid + schema) or a Next.js component (React + Tailwind). Pick your stack, paste it in.',
+    status: 'Next lab',
+    kind: 'next',
+  },
+  {
+    num: '06',
+    name: 'Convert Check',
+    desc: 'Reviews the draft against a conversion checklist — one job per page, proof above the fold, a CTA that repeats. Flags what is weak before you spend on traffic.',
+    status: 'Next lab',
+    kind: 'next',
+  },
+];
+
+const pipeline = [
+  { num: '01', title: 'Research', desc: 'Customer Research reads the source material and returns the language, objections, and desires in the customer\'s own words.' },
+  { num: '02', title: 'Position', desc: 'Persona Generator and Angle Generator turn that raw truth into one persona and a short list of angles worth testing.' },
+  { num: '03', title: 'Build', desc: 'Page Writer drafts the page; Section Builder emits it as a Shopify section or a Next.js component. (Built live in the next lab.)' },
+  { num: '04', title: 'Ship', desc: 'Convert Check scores the draft against a conversion checklist so you ship a page that earns its traffic — not a pretty template.' },
+];
+
+const schema = {
+  '@type': 'SoftwareApplication',
+  name: 'channel47 Field Kit',
+  description:
+    'A Claude Code plugin of small, chainable marketing skills — customer research, persona, angle, and the landing page they feed. Built live in the skills labs.',
+  applicationCategory: 'DeveloperApplication',
+  operatingSystem: 'Claude Code',
+  url: 'https://channel47.dev/plugin',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  author: { '@type': 'Organization', name: 'channel47', url: 'https://channel47.dev/' },
+};
+---
+
+<BaseLayout
+  title="Field Kit — the channel47 plugin"
+  description="A Claude Code plugin of small, chainable marketing skills: customer research, persona, angle — and the landing page they feed. Built live in the skills labs."
+  schema={schema}
+>
+  <Nav active="plugin" />
+
+  <main id="main" class="wrap">
+    <section class="hero" data-reveal-stagger>
+      <div class="hero__top" data-reveal-child style="--stagger: 0">
+        <span class="hero__num">The plugin · Field Kit</span>
+        <span class="hero__live">
+          <span class="hero__live-dot" aria-hidden="true"></span>
+          3 skills live · 3 in the next lab
+        </span>
+      </div>
+      <h1 class="hero__name" data-reveal-child style="--stagger: 1">Field <span class="amber">Kit</span></h1>
+      <p class="hero__tag" data-reveal-child style="--stagger: 2">
+        Small, sharp marketing skills that chain together — from raw customer research to a landing page you can run traffic to. Each one gets built live in a skills lab, then dropped into the kit.
+      </p>
+      <div class="hero__cta" data-reveal-child style="--stagger: 3">
+        <a href="#install" class="btn-primary">Install the plugin →</a>
+        <a href={SKOOL_URL} target="_blank" rel="noopener noreferrer" class="btn-ghost">Build the next skill live</a>
+        <span class="hero__cta-meta">Free · MIT-licensed</span>
+      </div>
+    </section>
+
+    <div class="meta-strip" data-reveal-stagger>
+      {meta.map((m, i) => (
+        <div class={`meta-cell ${i === meta.length - 1 ? 'is-last' : ''}`} data-reveal-child style={`--stagger: ${i}`}>
+          <div class="meta-cell__label">{m.label}</div>
+          <div class={`meta-cell__value ${m.amber ? 'is-amber' : ''}`}>{m.value}</div>
+        </div>
+      ))}
+    </div>
+
+    <section class="section-pad">
+      <div class="eyebrow section__num" data-reveal>I — The skills</div>
+      <h2 class="head-mid" data-reveal>
+        Six small skills, <span class="amber">one job each</span>.
+      </h2>
+      <p class="body-mid section__sub" data-reveal>
+        Run them on their own or end to end. The first three are live now; the next three — the ones that turn the research into a page that converts — get built in the next lab.
+      </p>
+
+      <ul class="skill-list" data-reveal-stagger>
+        {skills.map((s, i) => (
+          <li class={`skill-row ${i === skills.length - 1 ? 'is-last' : ''}`} data-reveal-child style={`--stagger: ${i}`}>
+            <span class="skill-row__num">{s.num}</span>
+            <div class="skill-row__body">
+              <h3 class="skill-row__name">{s.name}</h3>
+              <p class="skill-row__desc">{s.desc}</p>
+            </div>
+            <span class={`skill-row__status skill-row__status--${s.kind}`}>
+              <span class="skill-row__dot" aria-hidden="true"></span>
+              {s.status}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="section-pad">
+      <div class="eyebrow section__num" data-reveal>II — How it chains</div>
+      <h2 class="head-mid" data-reveal>
+        Customer truth in. A <span class="amber">page that converts</span> out.
+      </h2>
+      <p class="body-mid section__sub" data-reveal>
+        Each skill hands its output to the next. You can stop at any step, or run the whole pipeline on a single product or URL.
+      </p>
+
+      <div class="pipeline" data-reveal-stagger>
+        {pipeline.map((p, i) => (
+          <div class="pipeline-step" data-reveal-child style={`--stagger: ${i}`}>
+            <div class="pipeline-step__num">{p.num}</div>
+            <h3 class="pipeline-step__title">{p.title}</h3>
+            <p class="pipeline-step__desc">{p.desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="section-pad" id="install">
+      <div class="eyebrow section__num" data-reveal>III — Install</div>
+      <h2 class="head-mid" data-reveal>
+        One line. Runs <span class="amber">locally</span> with Claude Code.
+      </h2>
+      <p class="body-mid section__sub" data-reveal>
+        Requires Claude Code and an Anthropic key. The skills, prompts, and example inputs are MIT-licensed — fork them, change them, ship them.
+      </p>
+      <div class="install" data-reveal>
+        <div class="install__head">
+          <span>Terminal</span>
+          <button class="install__copy" data-install={PLUGIN_INSTALL} aria-label="Copy install command">Copy</button>
+        </div>
+        <div class="install__line">
+          <span class="install__prompt">$</span>
+          <span>{PLUGIN_INSTALL}</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="join" data-reveal>
+      <div class="eyebrow join__eyebrow">Next lab</div>
+      <h2 class="head-section join__head">
+        The next three skills get built <span class="amber">live</span>.
+      </h2>
+      <p class="body-mid join__sub">
+        Page Writer, Section Builder, and Convert Check are built in the open inside the skills labs. Join the room and help scope the skill you actually need.
+      </p>
+      <a href={SKOOL_URL} target="_blank" rel="noopener noreferrer" class="btn-primary">Join the labs on Skool →</a>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<script>
+  import { initCopyButtons } from '../scripts/copy-to-clipboard';
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCopyButtons);
+  } else {
+    initCopyButtons();
+  }
+  document.addEventListener('astro:page-load', initCopyButtons);
+</script>
+
+<style>
+  .hero {
+    padding: 64px clamp(24px, 5vw, 56px) clamp(60px, 8vw, 100px);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .hero__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 56px;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .hero__num {
+    font-size: 13px;
+    color: var(--color-text-mute);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .hero__live {
+    font-size: 11px;
+    color: var(--color-amber);
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    border: 1px solid var(--color-amber);
+  }
+  .hero__live-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-amber);
+    box-shadow: 0 0 0 4px rgba(245, 181, 68, 0.18);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero__live-dot { animation: fapulse 1.6s ease-in-out infinite; }
+  }
+  .hero__name {
+    font-size: clamp(64px, 12vw, 144px);
+    line-height: 0.92;
+    letter-spacing: -0.055em;
+  }
+  .hero__tag {
+    font-size: clamp(18px, 2vw, 24px);
+    line-height: 1.45;
+    color: var(--color-text-dim);
+    margin-top: 48px;
+    max-width: 760px;
+  }
+  .hero__cta {
+    display: flex;
+    gap: 16px;
+    margin-top: 56px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .hero__cta-meta {
+    font-size: 13px;
+    color: var(--color-text-mute);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-left: 16px;
+  }
+
+  .meta-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .meta-cell {
+    padding: 40px 36px;
+    border-right: 1px solid var(--color-line);
+  }
+  .meta-cell.is-last { border-right: none; }
+  .meta-cell__label {
+    font-size: 11px;
+    color: var(--color-text-mute);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .meta-cell__value {
+    font-size: 20px;
+    color: var(--color-text);
+    letter-spacing: -0.01em;
+  }
+  .meta-cell__value.is-amber { color: var(--color-amber); font-weight: 500; }
+
+  .section__num { margin-bottom: 56px; }
+  .section__sub { margin-top: 40px; }
+
+  .skill-list { list-style: none; margin: 80px 0 0; padding: 0; }
+  .skill-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 60px 1fr 140px;
+    gap: 48px;
+    padding: 44px 0;
+    border-top: 1px solid var(--color-line);
+    align-items: baseline;
+  }
+  .skill-row.is-last { border-bottom: 1px solid var(--color-line); }
+  .skill-row__num {
+    font-family: var(--font-family-mono);
+    font-size: 13px;
+    color: var(--color-text-mute);
+    letter-spacing: 0.12em;
+  }
+  .skill-row__name {
+    font-size: clamp(24px, 3vw, 34px);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin: 0 0 14px;
+  }
+  .skill-row__desc {
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--color-text-dim);
+    max-width: 620px;
+  }
+  .skill-row__status {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: right;
+    justify-self: end;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .skill-row__status--shipped { color: var(--color-amber); font-weight: 600; }
+  .skill-row__status--next { color: var(--color-text-mute); }
+  .skill-row__dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+  .pipeline {
+    margin-top: 80px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--color-line);
+  }
+  .pipeline-step { background: var(--color-bg); padding: 40px 32px; min-height: 220px; }
+  .pipeline-step__num {
+    font-family: var(--font-family-mono);
+    font-size: 14px;
+    color: var(--color-amber);
+    letter-spacing: 0.18em;
+    margin-bottom: 24px;
+  }
+  .pipeline-step__title { font-size: 22px; letter-spacing: -0.015em; margin: 0 0 16px; }
+  .pipeline-step__desc { font-size: 14px; line-height: 1.55; color: var(--color-text-dim); }
+
+  .install {
+    margin-top: 64px;
+    border: 1px solid var(--color-line);
+    background: var(--color-surface);
+    font-family: var(--font-family-mono);
+    font-size: 15px;
+    color: var(--color-text);
+  }
+  .install__head {
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--color-line);
+    font-size: 11px;
+    color: var(--color-text-mute);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .install__copy {
+    color: var(--color-amber);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+  }
+  .install__line { padding: 20px 24px; display: flex; gap: 14px; }
+  .install__prompt { color: var(--color-amber); }
+
+  .join {
+    padding: clamp(100px, 14vw, 160px) clamp(24px, 5vw, 56px) clamp(120px, 18vw, 200px);
+    text-align: center;
+    border-bottom: 1px solid var(--color-line);
+  }
+  .join__eyebrow { margin-bottom: 48px; }
+  .join__head { margin-inline: auto; max-width: 820px; }
+  .join__sub { margin: 36px auto 56px; max-width: 560px; }
+
+  @media (max-width: 720px) {
+    .meta-strip { grid-template-columns: repeat(2, 1fr); }
+    .meta-cell:nth-child(2) { border-right: none; }
+    .meta-cell:nth-child(1), .meta-cell:nth-child(2) { border-bottom: 1px solid var(--color-line); }
+
+    .skill-row {
+      grid-template-columns: 40px 1fr;
+      gap: 20px;
+      padding: 32px 0;
+    }
+    .skill-row__status { grid-column: 2; justify-self: start; text-align: left; margin-top: 8px; }
+
+    .pipeline { grid-template-columns: 1fr; }
+  }
+</style>
