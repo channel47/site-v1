@@ -2,7 +2,9 @@
 
 Astro 5 → channel47.dev via Vercel. Static output + one serverless endpoint (`api/subscribe.ts`).
 
-**State:** Plugins-focused site. Home, plugins library + one detail page, community, studio, subscribe, 404. Link prefetching enabled (`prefetch.prefetchAll`).
+**State:** Single-plugin site. Five pages: simple home (4 doors), one plugin page (Field Kit), community (Skool join), subscribe (email capture), contact (solicit work), plus 404. Link prefetching enabled (`prefetch.prefetchAll`).
+
+**Story:** channel47 builds small marketing skills live in the "skills labs" (inside The Vibe Marketers on Skool), then ships them as one Claude Code plugin — **Field Kit**. Skills chain: Customer Research → Persona → Angle (all live) → Page Writer → Section Builder → Convert Check (next lab; output landing pages for Shopify or Next.js).
 
 ## Commands
 
@@ -18,12 +20,11 @@ npm run preview
 
 ## Pages
 
-- `/` — home: hero, plugin list, community stat, studio services, subscribe signoff
-- `/plugins` — filterable plugin library (8 cards; only `funnel-architect` has a detail page)
-- `/plugins/funnel-architect` — plugin detail: meta strip, what's inside, sessions, install block
-- `/community` — The Vibe Marketers: stats, sessions calendar (RSVPs link to Skool), member quotes
-- `/studio` — client services, case studies, process, contact form
-- `/subscribe` — newsletter page with issue archive (titles only — no issue pages exist)
+- `/` — home: one-line pitch + four "doors" (plugin, labs/Skool, newsletter, contact)
+- `/plugin` — Field Kit: hero + install, meta strip, 6 skill rows (3 live / 3 next lab), pipeline, install block, join CTA
+- `/community` — Skool join page: hero, stats, what-you-get, member quotes, join CTA. All join CTAs use `SKOOL_URL`
+- `/subscribe` — email capture: hero form + "three things in every issue"
+- `/contact` — solicit work: services list + project-brief form (email, brief, budget → `/api/subscribe`)
 - `/404` — "signal lost" page
 - `/api/subscribe` — POST, proxies to Kit API
 
@@ -31,11 +32,12 @@ npm run preview
 
 ```
 src/
+├── consts.ts                   # SKOOL_URL (affiliate — see Gotchas), PLUGIN_INSTALL, SOCIALS. Single source for links
 ├── layouts/
 │   └── BaseLayout.astro        # Root layout — meta, fonts, JSON-LD schema, skip link, html.js flag, init scripts
 ├── components/
 │   ├── Nav.astro               # Fixed glass nav (blur + hairline). Height = --nav-h; body padding-top offsets it
-│   ├── Footer.astro            # Internal links + socials, ctrlswing attribution
+│   ├── Footer.astro            # Internal links + socials (from consts), ctrlswing attribution
 │   ├── LogoAnimated.astro      # Animated channel47 logo
 │   └── Analytics/Analytics.astro
 ├── styles/
@@ -43,8 +45,8 @@ src/
 └── scripts/
     ├── scroll-reveal.ts        # IntersectionObserver scroll reveal
     ├── nav-scroll.ts           # Nav hide-on-scroll (currently inert — no .nav--hidden styles defined)
-    ├── subscribe-form.ts       # Enhances [data-kit-form] forms; aria-live status announcements
-    └── copy-to-clipboard.ts    # Copy button utility
+    ├── subscribe-form.ts       # Enhances [data-kit-form] forms; sends extra named controls as `fields`; status via [data-form-status] or live region
+    └── copy-to-clipboard.ts    # Copy button utility ([data-install] → clipboard)
 ```
 
 `DESIGN.md` at repo root is the canonical design system spec.
@@ -91,4 +93,5 @@ Tailwind CSS v4 via `@tailwindcss/vite`. Single entry: `src/styles/main.css`.
 - **`:global()` required** for cross-component ancestor selectors in scoped styles
 - **Scroll reveal hides content by default** — `[data-reveal-child]` and `[data-reveal]` start at `opacity: 0`. Content only appears after IntersectionObserver fires `.is-visible`. If a section looks blank, it's the reveal system, not missing data.
 - **Footer attribution** — `ctrlswing`, not `jackson`. Link: `https://x.com/ctrlswing`.
+- **Skool affiliate link** — `SKOOL_URL` in `src/consts.ts` ships with a `YOUR_AFFILIATE_REF` placeholder. It MUST be replaced with the real affiliate ref before launch or community signups won't be attributed. Every join CTA reads from this one constant.
 - **DataForSEO MCP available** — Use `mcp__dataforseo__*` tools for keyword research.

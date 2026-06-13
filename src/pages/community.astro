@@ -2,35 +2,39 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import { SKOOL_URL } from '../consts';
 
 const stats = [
   { v: '3,217', label: 'Members', amber: true },
-  { v: '142', label: 'Sessions to date' },
-  { v: '8', label: 'Plugins shipped from sessions' },
+  { v: '142', label: 'Labs run to date' },
+  { v: '3', label: 'Skills shipped so far' },
   { v: 'Tue', label: 'Live, every week' },
 ];
 
-const calendar = [
-  { date: 'Apr 16', day: 'Tue · 14:00', title: 'Funnel Architect — landing page from copy to code', plugin: 'S2 · E02', kind: 'now' },
-  { date: 'Apr 23', day: 'Tue · 14:00', title: 'Funnel Architect — email sequence + Klaviyo handoff', plugin: 'S2 · E03', kind: 'next' },
-  { date: 'Apr 30', day: 'Tue · 14:00', title: 'Office hours — bring your account, leave with a plan', plugin: 'Open', kind: 'next' },
-  { date: 'May 7', day: 'Tue · 14:00', title: 'Media Buyer — pacing model walkthrough', plugin: 'S1 · Replay', kind: 'next' },
-  { date: 'May 14', day: 'Tue · 14:00', title: 'Klaviyo Operator — kickoff (S3)', plugin: 'S3 · E01', kind: 'next' },
+const gets = [
+  { num: '01', title: 'Build the skills live', desc: 'Every skill in the Field Kit gets built in a live lab. Watch it get scoped, prompted, and tested — then walk away with the working files.' },
+  { num: '02', title: 'Scope the next one', desc: 'The next lab builds the landing-page skills. Members vote on scope and bring the use case they actually need solved.' },
+  { num: '03', title: 'The room', desc: 'Operators, founders, and a few agency escapees shipping with Claude. Ask questions, share accounts, leave with a plan.' },
 ];
 
 const members = [
-  { quote: 'Cut my brief-to-launch from three weeks to four days. The Funnel Architect plugin is doing my job better than I did.', name: 'Maya R.', role: 'Growth lead · DTC apparel' },
-  { quote: 'I sit in every session. Even when I don’t need the plugin, I learn how Brandon scopes the prompt.', name: 'Daniel V.', role: 'Solo founder · B2B SaaS' },
-  { quote: 'The community matters more than the plugins. Honestly. The plugins are the excuse to be in the room.', name: 'Priya K.', role: 'Performance creative · Agency' },
-  { quote: 'I came for ad creative. I left with a working email sequence and a Shopify cleanup pass I never would have shipped alone.', name: 'Tom A.', role: 'Brand owner · Coffee' },
-  { quote: 'Tuesdays are now my favorite work meeting and I’m not even in marketing.', name: 'Alex S.', role: 'PM · Fintech' },
-  { quote: 'The pitch slot is wild — my plugin idea got picked for S3. They’re building it for me. Live.', name: 'Jordan H.', role: 'CMO · Climate hardware' },
+  { quote: 'I came for the plugin. I stayed because watching the skill get built taught me more than the skill itself.', name: 'Maya R.', role: 'Growth lead · DTC apparel' },
+  { quote: 'The pitch slot is wild — my use case got picked for the next lab. They\'re building it with me, live.', name: 'Jordan H.', role: 'CMO · Climate hardware' },
+  { quote: 'Tuesdays are now my favorite work meeting and I\'m not even technical.', name: 'Alex S.', role: 'PM · Fintech' },
 ];
+
+const schema = {
+  '@type': 'Organization',
+  name: 'The Vibe Marketers',
+  description: 'A Skool community of marketers shipping with Claude, where every channel47 skill gets built live.',
+  url: SKOOL_URL,
+};
 ---
 
 <BaseLayout
-  title="Community — channel47"
-  description="The Vibe Marketers — a 3,200-member Skool community where every channel47 plugin gets built live."
+  title="Community — join the skills labs"
+  description="The Vibe Marketers: a Skool community where every channel47 skill gets built live. Join the labs, scope the next skill, and ship with Claude."
+  schema={schema}
 >
   <Nav active="community" />
 
@@ -38,14 +42,14 @@ const members = [
     <section class="hero" data-reveal-stagger>
       <div class="eyebrow hero__eyebrow" data-reveal-child style="--stagger: 0">The Vibe Marketers · led by James Dickerson</div>
       <h1 class="head-hero" data-reveal-child style="--stagger: 1">
-        The room where every plugin <span class="amber">actually</span> gets built.
+        Join the room where every skill <span class="amber">actually</span> gets built.
       </h1>
       <p class="body-lead hero__sub" data-reveal-child style="--stagger: 2">
-        A 3,200-member Skool community of marketers shipping with Claude. I mentor inside, run live sessions every Tuesday, and ship every plugin alongside the room.
+        A Skool community of marketers shipping with Claude. Every skill in the Field Kit is built live in a weekly lab — and members decide what gets built next.
       </p>
       <div class="hero__cta" data-reveal-child style="--stagger: 3">
-        <a href="https://www.skool.com/the-vibe-marketers" target="_blank" rel="noopener noreferrer" class="btn-primary">Join on Skool →</a>
-        <a href="/plugins/funnel-architect" class="btn-ghost">See a sample session</a>
+        <a href={SKOOL_URL} target="_blank" rel="noopener noreferrer" class="btn-primary">Join on Skool →</a>
+        <a href="/plugin" class="btn-ghost">See what we've shipped</a>
         <span class="hero__cta-meta">$49/mo · cancel anytime</span>
       </div>
     </section>
@@ -60,32 +64,20 @@ const members = [
     </div>
 
     <section class="section-pad">
-      <div class="eyebrow section__num" data-reveal>I — Sessions calendar</div>
+      <div class="eyebrow section__num" data-reveal>I — What you get</div>
       <h2 class="head-mid" data-reveal>
-        Tuesdays at <span class="amber">14:00 PT</span>. Two hours, no filler.
+        You don't just get the skill. You see it <span class="amber">get built</span>.
       </h2>
-      <p class="body-mid section__sub" data-reveal>
-        One plugin per season, three sessions per plugin, plus open office hours. Recordings post next morning. Sessions run live on Skool — RSVP from inside the community.
-      </p>
 
-      <ul class="calendar" data-reveal-stagger>
-        {calendar.map((c, i) => (
-          <li class={`cal-row ${i === calendar.length - 1 ? 'is-last' : ''}`} data-reveal-child style={`--stagger: ${i}`}>
-            <span class="cal-row__date">{c.date}</span>
-            <span class="cal-row__day">{c.day}</span>
-            <h3 class="cal-row__title">{c.title}</h3>
-            <span class="cal-row__plugin">{c.plugin}</span>
-            <a
-              href="https://www.skool.com/the-vibe-marketers"
-              target="_blank"
-              rel="noopener noreferrer"
-              class={`cal-row__rsvp ${c.kind === 'now' ? 'is-now' : ''}`}
-            >
-              {c.kind === 'now' ? 'Live now →' : 'RSVP →'}
-            </a>
-          </li>
+      <div class="gets-grid" data-reveal-stagger>
+        {gets.map((g, i) => (
+          <div class="get-tile" data-reveal-child style={`--stagger: ${i}`}>
+            <div class="get-tile__num">{g.num}</div>
+            <h3 class="get-tile__title">{g.title}</h3>
+            <p class="get-tile__desc">{g.desc}</p>
+          </div>
         ))}
-      </ul>
+      </div>
     </section>
 
     <section class="section-pad">
@@ -96,7 +88,7 @@ const members = [
 
       <div class="members-grid" data-reveal-stagger>
         {members.map((m, i) => (
-          <figure class="member-card" data-reveal-child style={`--stagger: ${i % 6}`}>
+          <figure class="member-card" data-reveal-child style={`--stagger: ${i}`}>
             <blockquote class="member-card__quote">&ldquo;{m.quote}&rdquo;</blockquote>
             <figcaption class="member-card__meta">
               <span class="member-card__name">{m.name}</span> · {m.role}
@@ -106,15 +98,16 @@ const members = [
       </div>
     </section>
 
-    <section class="lead-block" data-reveal>
-      <div>
-        <div class="eyebrow">The room is led by</div>
-        <h2 class="lead-block__name">James <span class="amber">Dickerson</span></h2>
-        <div class="lead-block__handle">@boringmarketer · Skool host</div>
-      </div>
-      <p class="lead-block__copy">
-        James runs the day-to-day inside The Vibe Marketers — moderates the room, books the calendar, keeps the standard high. I bring the plugins; James brings the community. The two of us make the sessions happen, every Tuesday.
+    <section class="join" data-reveal>
+      <div class="eyebrow join__eyebrow">Join the labs</div>
+      <h2 class="head-section join__head">
+        The next lab builds the <span class="amber">landing-page</span> skills.
+      </h2>
+      <p class="body-mid join__sub">
+        Page Writer, Section Builder, and Convert Check — built live, scoped by the room. Bring the page you need to ship.
       </p>
+      <a href={SKOOL_URL} target="_blank" rel="noopener noreferrer" class="btn-primary">Join on Skool →</a>
+      <div class="join__lead">Led by James Dickerson · @boringmarketer</div>
     </section>
   </main>
 
@@ -148,10 +141,7 @@ const members = [
     grid-template-columns: repeat(4, 1fr);
     border-bottom: 1px solid var(--color-line);
   }
-  .stat-cell {
-    padding: 56px 36px;
-    border-right: 1px solid var(--color-line);
-  }
+  .stat-cell { padding: 56px 36px; border-right: 1px solid var(--color-line); }
   .stat-cell.is-last { border-right: none; }
   .stat-cell__value {
     font-size: clamp(36px, 5vw, 56px);
@@ -169,58 +159,24 @@ const members = [
   }
 
   .section__num { margin-bottom: 56px; }
-  .section__sub { margin-top: 40px; }
 
-  .calendar {
-    list-style: none;
-    margin: 80px 0 0;
-    padding: 0;
-  }
-  .cal-row {
+  .gets-grid {
+    margin-top: 80px;
     display: grid;
-    grid-template-columns: 120px 80px 1fr 160px 120px;
-    gap: 32px;
-    padding: 32px 0;
-    border-top: 1px solid var(--color-line);
-    align-items: center;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--color-line);
   }
-  .cal-row.is-last { border-bottom: 1px solid var(--color-line); }
-  .cal-row__date {
+  .get-tile { background: var(--color-bg); padding: 40px 32px; min-height: 240px; }
+  .get-tile__num {
     font-family: var(--font-family-mono);
     font-size: 14px;
-    color: var(--color-text);
-    letter-spacing: 0.04em;
-  }
-  .cal-row__day {
-    font-size: 12px;
-    color: var(--color-text-mute);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-  }
-  .cal-row__title {
-    font-size: 19px;
-    letter-spacing: -0.01em;
-  }
-  .cal-row__plugin {
-    font-size: 12px;
-    color: var(--color-text-mute);
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-  }
-  .cal-row__rsvp {
-    font-size: 12px;
     color: var(--color-amber);
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    border: 1px solid var(--color-amber);
-    padding: 8px 14px;
-    background: transparent;
-    cursor: pointer;
-    text-align: center;
-    transition: background var(--dur-instant);
+    letter-spacing: 0.18em;
+    margin-bottom: 24px;
   }
-  .cal-row__rsvp:hover { background: rgba(245, 181, 68, 0.1); }
-  .cal-row__rsvp.is-now { background: rgba(245, 181, 68, 0.12); }
+  .get-tile__title { font-size: 22px; letter-spacing: -0.015em; margin: 0 0 16px; }
+  .get-tile__desc { font-size: 15px; line-height: 1.55; color: var(--color-text-dim); }
 
   .members-grid {
     margin-top: 80px;
@@ -254,54 +210,27 @@ const members = [
   }
   .member-card__name { color: var(--color-text); }
 
-  .lead-block {
+  .join {
     padding: clamp(100px, 14vw, 160px) clamp(24px, 5vw, 56px) clamp(120px, 18vw, 200px);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
+    text-align: center;
     border-bottom: 1px solid var(--color-line);
   }
-  .lead-block__name {
-    font-size: clamp(56px, 8vw, 88px);
-    line-height: 0.95;
-    letter-spacing: -0.045em;
-    margin-top: 24px;
-  }
-  .lead-block__handle {
-    font-size: 14px;
+  .join__eyebrow { margin-bottom: 48px; }
+  .join__head { margin-inline: auto; max-width: 820px; }
+  .join__sub { margin: 36px auto 56px; max-width: 560px; }
+  .join__lead {
+    font-size: 13px;
     color: var(--color-text-mute);
-    letter-spacing: 0.16em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    margin-top: 24px;
-  }
-  .lead-block__copy {
-    font-size: clamp(17px, 1.6vw, 19px);
-    line-height: 1.6;
-    color: var(--color-text-dim);
+    margin-top: 40px;
   }
 
   @media (max-width: 900px) {
     .stats { grid-template-columns: repeat(2, 1fr); }
     .stat-cell:nth-child(2) { border-right: none; }
     .stat-cell:nth-child(1), .stat-cell:nth-child(2) { border-bottom: 1px solid var(--color-line); }
-
-    .cal-row {
-      grid-template-columns: 100px 1fr;
-      gap: 16px;
-      padding: 24px 0;
-    }
-    .cal-row__day, .cal-row__plugin, .cal-row__rsvp {
-      grid-column: 2;
-      justify-self: start;
-    }
-    .cal-row__rsvp { margin-top: 8px; }
-
+    .gets-grid { grid-template-columns: 1fr; }
     .members-grid { grid-template-columns: 1fr; }
-
-    .lead-block {
-      grid-template-columns: 1fr;
-      gap: 40px;
-    }
   }
 </style>

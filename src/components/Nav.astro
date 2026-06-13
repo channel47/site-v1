@@ -2,15 +2,15 @@
 import LogoAnimated from './LogoAnimated.astro';
 
 interface Props {
-  active?: 'home' | 'plugins' | 'community' | 'studio' | 'subscribe';
+  active?: 'home' | 'plugin' | 'community' | 'contact' | 'subscribe';
 }
 
 const { active = 'home' } = Astro.props;
 
 const links = [
-  { key: 'plugins', label: 'Plugins', href: '/plugins' },
+  { key: 'plugin', label: 'Plugin', href: '/plugin' },
   { key: 'community', label: 'Community', href: '/community' },
-  { key: 'studio', label: 'Studio', href: '/studio' },
+  { key: 'contact', label: 'Contact', href: '/contact' },
 ] as const;
 ---
 

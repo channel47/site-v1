@@ -1,0 +1,192 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+// Scope is intentionally broad — the form captures the brief.
+const services = [
+  { idx: '01', name: 'Marketing systems, end-to-end', desc: 'Site, email, ads, automation — scoped, built, and handed off as a system you can run yourself.' },
+  { idx: '02', name: 'Landing pages that convert', desc: 'From customer research to a live page on Shopify or Next.js. The Field Kit pipeline, run for you.' },
+  { idx: '03', name: 'Shopify & Klaviyo builds', desc: 'Themes, checkouts, and lifecycle flows for brands moving real product.' },
+  { idx: '04', name: 'Agent-powered retainers', desc: 'Ongoing build with Claude Code. Weekly drops, written specs, real ownership.' },
+];
+
+const budgets = ['Under $5k', '$5k–$15k', '$15k–$40k', '$40k+', 'Not sure yet'];
+
+const schema = {
+  '@type': 'ProfessionalService',
+  name: 'channel47 studio',
+  description: 'Marketing systems and converting landing pages built with Claude Code, for Shopify and Next.js brands.',
+  url: 'https://channel47.dev/contact',
+};
+---
+
+<BaseLayout
+  title="Contact — work with channel47"
+  description="Need the system built for you? Marketing systems and converting landing pages, built with Claude Code for Shopify and Next.js brands. Tell me what you're shipping."
+  schema={schema}
+>
+  <Nav active="contact" />
+
+  <main id="main" class="wrap">
+    <section class="hero" data-reveal-stagger>
+      <div class="eyebrow hero__eyebrow" data-reveal-child style="--stagger: 0">channel47 studio · client work</div>
+      <h1 class="head-hero" data-reveal-child style="--stagger: 1">
+        Need it built <span class="amber">for you</span>? Tell me what you're shipping.
+      </h1>
+      <p class="body-lead hero__sub" data-reveal-child style="--stagger: 2">
+        Same skills, run for you end to end. A small roster — three to five engagements at a time, biased toward Shopify and physical-goods brands, open to anything I can ship cleanly.
+      </p>
+    </section>
+
+    <section class="section-pad">
+      <div class="eyebrow section__num" data-reveal>I — What I build</div>
+      <h2 class="head-mid" data-reveal>
+        Four ways to <span class="amber">work together</span>.
+      </h2>
+
+      <ul class="services" data-reveal-stagger>
+        {services.map((s, i) => (
+          <li class={`service-row ${i === services.length - 1 ? 'is-last' : ''}`} data-reveal-child style={`--stagger: ${i}`}>
+            <span class="service-row__idx">{s.idx}</span>
+            <h3 class="service-row__name">{s.name}</h3>
+            <p class="service-row__desc">{s.desc}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="contact" id="start">
+      <div class="contact__inner">
+        <div class="eyebrow contact__eyebrow" data-reveal>II — Start a project</div>
+        <h2 class="head-mid contact__head" data-reveal>
+          One slot opens roughly every <span class="amber">six weeks</span>.
+        </h2>
+        <p class="body-mid contact__sub" data-reveal>
+          Tell me what you're building and your rough budget. I read everything and reply within a day — even if it's a no.
+        </p>
+
+        <form class="contact-form" data-reveal data-kit-form data-tag="contact">
+          <div class="contact-form__field">
+            <label for="cf-email">Email</label>
+            <input id="cf-email" type="email" name="email" placeholder="you@company.com" required autocomplete="email" />
+          </div>
+
+          <div class="contact-form__field">
+            <label for="cf-brief">What are you building?</label>
+            <textarea id="cf-brief" name="brief" rows="4" placeholder="One or two sentences — the product, the goal, and what's in the way." required></textarea>
+          </div>
+
+          <div class="contact-form__field">
+            <label for="cf-budget">Rough budget</label>
+            <select id="cf-budget" name="budget">
+              {budgets.map((b) => <option value={b}>{b}</option>)}
+            </select>
+          </div>
+
+          <div class="contact-form__actions">
+            <button type="submit" class="btn-primary">Send the brief →</button>
+            <span class="contact-form__status" data-form-status aria-live="polite"></span>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .hero {
+    padding: clamp(80px, 10vw, 120px) clamp(24px, 5vw, 56px) clamp(60px, 8vw, 100px);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .hero__eyebrow { margin-bottom: 56px; }
+  .hero__sub { margin-top: 56px; }
+
+  .section__num { margin-bottom: 56px; }
+
+  .services { list-style: none; margin: 80px 0 0; padding: 0; }
+  .service-row {
+    display: grid;
+    grid-template-columns: 60px 1fr 1fr;
+    gap: 48px;
+    padding: 40px 0;
+    border-top: 1px solid var(--color-line);
+    align-items: baseline;
+  }
+  .service-row.is-last { border-bottom: 1px solid var(--color-line); }
+  .service-row__idx {
+    font-family: var(--font-family-mono);
+    font-size: 13px;
+    color: var(--color-text-mute);
+    letter-spacing: 0.12em;
+  }
+  .service-row__name { font-size: clamp(22px, 2.4vw, 28px); line-height: 1.15; letter-spacing: -0.025em; }
+  .service-row__desc { font-size: 16px; line-height: 1.55; color: var(--color-text-dim); }
+
+  .contact {
+    padding: clamp(100px, 14vw, 160px) clamp(24px, 5vw, 56px) clamp(120px, 18vw, 200px);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .contact__inner { max-width: 672px; margin-inline: auto; text-align: center; }
+  .contact__eyebrow { margin-bottom: 40px; }
+  .contact__head { margin-inline: auto; }
+  .contact__sub { margin: 32px auto 56px; }
+
+  .contact-form { text-align: left; display: grid; gap: 28px; }
+  .contact-form__field { display: grid; gap: 12px; }
+  .contact-form__field label {
+    font-family: var(--font-family-mono);
+    font-size: 11px;
+    color: var(--color-text-mute);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .contact-form__field input,
+  .contact-form__field textarea,
+  .contact-form__field select {
+    width: 100%;
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-tight);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 16px;
+    padding: 14px 16px;
+    transition: border-color var(--dur-quick);
+  }
+  .contact-form__field textarea { resize: vertical; line-height: 1.55; }
+  .contact-form__field input:focus,
+  .contact-form__field textarea:focus,
+  .contact-form__field select:focus {
+    outline: none;
+    border-color: var(--color-amber);
+  }
+  .contact-form__field input::placeholder,
+  .contact-form__field textarea::placeholder { color: var(--color-text-mute); }
+
+  .contact-form__actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .contact-form__status {
+    font-size: 13px;
+    color: var(--color-text-dim);
+    letter-spacing: 0.04em;
+  }
+  .contact-form.is-success .contact-form__status { color: var(--color-amber); }
+  .contact-form.is-error .contact-form__status { color: var(--color-destructive); }
+  .contact-form.is-loading { opacity: 0.6; pointer-events: none; }
+
+  @media (max-width: 720px) {
+    .service-row {
+      grid-template-columns: 40px 1fr;
+      gap: 16px;
+      padding: 32px 0;
+    }
+    .service-row__desc { grid-column: 2; }
+  }
+</style>

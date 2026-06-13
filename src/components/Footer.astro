@@ -1,11 +1,13 @@
 ---
+import { SOCIALS } from '../consts';
+
 const year = new Date().getFullYear();
 
 const siteLinks = [
-  { label: 'Plugins', href: '/plugins' },
+  { label: 'Plugin', href: '/plugin' },
   { label: 'Community', href: '/community' },
-  { label: 'Studio', href: '/studio' },
   { label: 'Subscribe', href: '/subscribe' },
+  { label: 'Contact', href: '/contact' },
 ];
 ---
 
@@ -17,9 +19,9 @@ const siteLinks = [
     ))}
   </nav>
   <div class="footer__links">
-    <a href="https://x.com/ctrlswing" target="_blank" rel="noopener noreferrer" class="footer__link">X</a>
-    <a href="https://linkedin.com/in/ctrlswing" target="_blank" rel="noopener noreferrer" class="footer__link">LinkedIn</a>
-    <a href="https://github.com/ctrlswing" target="_blank" rel="noopener noreferrer" class="footer__link">GitHub</a>
+    <a href={SOCIALS.x} target="_blank" rel="noopener noreferrer" class="footer__link">X</a>
+    <a href={SOCIALS.linkedin} target="_blank" rel="noopener noreferrer" class="footer__link">LinkedIn</a>
+    <a href={SOCIALS.github} target="_blank" rel="noopener noreferrer" class="footer__link">GitHub</a>
   </div>
 </footer>
 

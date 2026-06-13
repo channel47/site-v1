@@ -2,141 +2,64 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import { SKOOL_URL } from '../consts';
 
-const plugins = [
-  { idx: '01', slug: 'creative-strategist', name: 'Creative Strategist', desc: 'Hook libraries, angle generation, ad-test plans for performance briefs.', status: 'Shipped', kind: 'shipped' },
-  { idx: '02', slug: 'funnel-architect', name: 'Funnel Architect', desc: 'Landing pages and email sequences, scoped from a single product brief.', status: 'In session', kind: 'live' },
-  { idx: '03', slug: 'media-buyer', name: 'Media Buyer', desc: 'Pacing, creative rotation, and reporting commentary across Meta and Google.', status: 'Shipped', kind: 'shipped' },
-  { idx: '04', slug: 'klaviyo-operator', name: 'Klaviyo Operator', desc: 'Lifecycle flows from a Shopify catalog — segments, copy, send-time map.', status: 'On deck', kind: 'ondeck' },
-];
-
-const services = [
-  { idx: '01', name: 'Marketing systems, end-to-end', desc: 'Site, email, ads, automation. Scoped, built, handed off as a system you can run yourself.' },
-  { idx: '02', name: 'Shopify storefronts & flows', desc: 'Themes, checkouts, and Klaviyo flows for brands moving real product.' },
-  { idx: '03', name: 'Performance creative & ads', desc: 'Hook research, creative production, and account ops on Meta and Google.' },
-  { idx: '04', name: 'Agent-powered retainers', desc: 'Ongoing build with Claude Code. Weekly drops, written specs, real ownership.' },
+// The whole site in four doors. Each row is one clear next step.
+const paths = [
+  { idx: '01', name: 'The plugin', desc: 'Field Kit — small marketing skills that chain from customer research to a landing page.', href: '/plugin', cta: 'See the skills', external: false },
+  { idx: '02', name: 'The labs', desc: 'Join The Vibe Marketers on Skool and help build the next skill live.', href: SKOOL_URL, cta: 'Join on Skool', external: true },
+  { idx: '03', name: 'The newsletter', desc: 'Plugin drops and session notes. Roughly twice a month, no filler.', href: '/subscribe', cta: 'Subscribe', external: false },
+  { idx: '04', name: 'Work with me', desc: 'Need the system built for you? Tell me what you\'re shipping.', href: '/contact', cta: 'Get in touch', external: false },
 ];
 
 const schema = [
-  {
-    '@type': 'WebSite',
-    name: 'channel47',
-    url: 'https://channel47.dev/',
-  },
+  { '@type': 'WebSite', name: 'channel47', url: 'https://channel47.dev/' },
   {
     '@type': 'Organization',
     name: 'channel47',
     url: 'https://channel47.dev/',
     logo: 'https://channel47.dev/logo-square.png',
-    sameAs: [
-      'https://x.com/ctrlswing',
-      'https://github.com/ctrlswing',
-      'https://linkedin.com/in/ctrlswing',
-    ],
+    sameAs: ['https://x.com/ctrlswing', 'https://github.com/ctrlswing', 'https://linkedin.com/in/ctrlswing'],
   },
 ];
 ---
 
 <BaseLayout
-  title="channel47 — A small studio publishing plugins, sessions, and playbooks"
-  description="Plugins, sessions, and playbooks built alongside The Vibe Marketers — a 3,200-member community of marketers shipping with Claude."
+  title="channel47 — marketing skills, built live, shipped as one plugin"
+  description="channel47 builds small, sharp marketing skills live in the skills labs and ships them as one Claude Code plugin: customer research, personas, angles, and the landing page they feed."
   schema={schema}
 >
   <Nav active="home" />
 
   <main id="main" class="wrap">
-
     <section class="hero" data-reveal-stagger>
       <div class="eyebrow hero__eyebrow" data-reveal-child style="--stagger: 0">channel47 — est. 2024</div>
       <h1 class="head-hero" data-reveal-child style="--stagger: 1">
-        A small studio publishing the plugins, sessions, and playbooks I run with the people building <span class="amber">alongside</span> me.
+        Marketing skills, built <span class="amber">live</span>, shipped as one plugin.
       </h1>
       <p class="body-lead hero__body" data-reveal-child style="--stagger: 2">
-        Every plugin comes out of a live session inside The Vibe Marketers — a 3,200-member community of marketers shipping with Claude.
+        Each skill gets built in the open inside a live lab, then dropped into the Field Kit plugin — customer research, personas, angles, and the landing page they feed.
       </p>
-      <div class="hero__ctas" data-reveal-child style="--stagger: 3">
-        <a href="/community" class="btn-primary">Join the community →</a>
-        <a href="/plugins" class="btn-ghost">See the plugins</a>
-      </div>
     </section>
 
-    <section class="section-pad">
-      <div class="eyebrow section__num" data-reveal>I — Plugins</div>
-      <h2 class="head-section" data-reveal>
-        Tools I'm <span class="amber">actually</span> using.
-      </h2>
-      <p class="body-mid section__sub" data-reveal>
-        Each plugin comes out of a live session. Use them yourself, or watch them get built.
-      </p>
-
-      <ul class="plugin-list" data-reveal-stagger>
-        {plugins.map((p, i) => {
-          const href = p.slug === 'funnel-architect' ? `/plugins/${p.slug}` : '/plugins';
-          return (
-            <li class={`plugin-row ${i === plugins.length - 1 ? 'is-last' : ''}`} data-reveal-child style={`--stagger: ${i}`}>
-              <a href={href} class="plugin-row__link">
-                <span class="plugin-row__idx">{p.idx}</span>
-                <div class="plugin-row__body">
-                  <h3 class="plugin-row__name">{p.name}</h3>
-                  <p class="plugin-row__desc">{p.desc}</p>
-                </div>
-                <span class={`plugin-row__status plugin-row__status--${p.kind}`}>
-                  <span class="plugin-row__dot" aria-hidden="true"></span>
-                  {p.status}
-                </span>
-              </a>
-            </li>
-          );
-        })}
-      </ul>
-    </section>
-
-    <section class="section-pad community" data-reveal-stagger>
-      <div class="eyebrow community__num" data-reveal-child style="--stagger: 0">II — Community</div>
-      <div class="community__stat" data-reveal-child style="--stagger: 1">
-        3,<span class="amber">217</span>
-      </div>
-      <div class="community__stat-label" data-reveal-child style="--stagger: 2">The Vibe Marketers</div>
-      <p class="community__copy" data-reveal-child style="--stagger: 3">
-        A Skool community led by James Dickerson where I mentor inside, run live sessions, and ship every plugin alongside them. It's where almost everything here starts.
-      </p>
-      <a href="/community" class="btn-primary" data-reveal-child style="--stagger: 4">Join on Skool →</a>
-      <div class="community__lead" data-reveal-child style="--stagger: 5">James Dickerson · @boringmarketer</div>
-    </section>
-
-    <section class="section-pad">
-      <div class="eyebrow section__num" data-reveal>III — Studio</div>
-      <h2 class="head-section" data-reveal>
-        Off the channel, I build <span class="amber">marketing systems</span> for small businesses.
-      </h2>
-      <p class="body-mid section__sub" data-reveal>
-        Built with Claude Code. Biased toward Shopify and physical-goods brands — open to anything I can ship cleanly.
-      </p>
-
-      <ul class="studio-list" data-reveal-stagger>
-        {services.map((s, i) => (
-          <li class={`studio-row ${i === services.length - 1 ? 'is-last' : ''}`} data-reveal-child style={`--stagger: ${i}`}>
-            <span class="studio-row__idx">{s.idx}</span>
-            <h3 class="studio-row__name">{s.name}</h3>
-            <p class="studio-row__desc">{s.desc}</p>
-          </li>
-        ))}
-      </ul>
-    </section>
-
-    <section class="signoff" data-reveal-stagger>
-      <div class="eyebrow signoff__eyebrow" data-reveal-child style="--stagger: 0">IV — Subscribe</div>
-      <h2 class="head-section signoff__head" data-reveal-child style="--stagger: 1">
-        Get the next plugin <span class="amber">before</span> the session.
-      </h2>
-      <p class="body-mid signoff__sub" data-reveal-child style="--stagger: 2">
-        Roughly twice a month. Plugin drops, session notes, the occasional teardown. No filler.
-      </p>
-      <form class="nl-form signoff__form" data-reveal-child style="--stagger: 3" data-kit-form data-tag="home">
-        <input type="email" name="email" placeholder="you@studio.com" required aria-label="Email address" />
-        <button type="submit">Subscribe →</button>
-      </form>
-    </section>
+    <ul class="paths" data-reveal-stagger>
+      {paths.map((p, i) => (
+        <li class={`path-row ${i === paths.length - 1 ? 'is-last' : ''}`} data-reveal-child style={`--stagger: ${i}`}>
+          <a
+            href={p.href}
+            class="path-row__link"
+            {...(p.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+          >
+            <span class="path-row__idx">{p.idx}</span>
+            <div class="path-row__body">
+              <h2 class="path-row__name">{p.name}</h2>
+              <p class="path-row__desc">{p.desc}</p>
+            </div>
+            <span class="path-row__cta">{p.cta} →</span>
+          </a>
+        </li>
+      ))}
+    </ul>
   </main>
 
   <Footer />
@@ -144,45 +67,27 @@ const schema = [
 
 <style>
   .hero {
-    padding: clamp(80px, 10vw, 120px) clamp(24px, 5vw, 56px) clamp(120px, 14vw, 200px);
+    padding: clamp(72px, 9vw, 120px) clamp(24px, 5vw, 56px) clamp(72px, 9vw, 120px);
     border-bottom: 1px solid var(--color-line);
   }
-  .hero__eyebrow { margin-bottom: 64px; }
-  .hero__body { margin-top: 64px; }
-  .hero__ctas {
-    display: flex;
-    gap: 16px;
-    margin-top: 56px;
-    flex-wrap: wrap;
-  }
+  .hero__eyebrow { margin-bottom: 48px; }
+  .hero__body { margin-top: 48px; }
 
-  .section__num { margin-bottom: 80px; }
-  .section__sub { margin-top: 40px; }
-
-  .plugin-list {
-    list-style: none;
-    margin: 120px 0 0;
-    padding: 0;
-  }
-  .plugin-row {
-    border-top: 1px solid var(--color-line);
-  }
-  .plugin-row.is-last {
-    border-bottom: 1px solid var(--color-line);
-  }
-  .plugin-row__link {
+  .paths { list-style: none; margin: 0; padding: 0; }
+  .path-row { border-bottom: 1px solid var(--color-line); }
+  .path-row__link {
     position: relative;
     display: grid;
-    grid-template-columns: 60px 1fr 180px;
-    gap: 48px;
-    padding: 56px 0;
+    grid-template-columns: 56px 1fr 180px;
+    gap: 40px;
+    padding: 48px clamp(24px, 5vw, 56px);
     align-items: baseline;
     transition: background var(--dur-quick);
   }
-  .plugin-row__link::before {
+  .path-row__link::before {
     content: '';
     position: absolute;
-    left: -24px;
+    left: 0;
     top: 0;
     bottom: 0;
     width: 2px;
@@ -191,135 +96,43 @@ const schema = [
     transform-origin: top;
     transition: transform var(--dur-quick) var(--ease-out);
   }
-  .plugin-row__link:hover { background: rgba(245, 181, 68, 0.025); }
-  .plugin-row__link:hover::before { transform: scaleY(1); }
-  .plugin-row__link:hover .plugin-row__name { color: var(--color-amber); }
-  .plugin-row__idx {
+  .path-row__link:hover { background: rgba(245, 181, 68, 0.025); }
+  .path-row__link:hover::before { transform: scaleY(1); }
+  .path-row__link:hover .path-row__name { color: var(--color-amber); }
+  .path-row__idx {
+    font-family: var(--font-family-mono);
     font-size: 13px;
     color: var(--color-text-mute);
     letter-spacing: 0.12em;
   }
-  .plugin-row__name {
-    font-size: clamp(28px, 3.6vw, 44px);
-    margin: 0 0 16px;
+  .path-row__name {
+    font-size: clamp(28px, 4vw, 48px);
     line-height: 1.05;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.035em;
+    margin: 0 0 14px;
     transition: color var(--dur-quick);
   }
-  .plugin-row__desc {
-    font-size: 17px;
-    line-height: 1.55;
-    color: var(--color-text-dim);
-    max-width: 600px;
-  }
-  .plugin-row__status {
-    font-size: 12px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    text-align: right;
-    justify-self: end;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .plugin-row__status--live { color: var(--color-amber); font-weight: 600; }
-  .plugin-row__status--shipped { color: var(--color-text); }
-  .plugin-row__status--ondeck { color: var(--color-text-mute); }
-  .plugin-row__dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: currentColor;
-  }
-
-  .community { text-align: center; padding-block: clamp(120px, 14vw, 200px); }
-  .community__num { margin-bottom: 48px; }
-  .community__stat {
-    font-size: clamp(120px, 22vw, 280px);
-    line-height: 0.9;
-    font-weight: 300;
-    letter-spacing: -0.06em;
-  }
-  .community__stat-label {
-    font-size: 13px;
-    color: var(--color-text-mute);
-    letter-spacing: 0.32em;
-    text-transform: uppercase;
-    margin-top: 32px;
-  }
-  .community__copy {
-    font-size: clamp(18px, 1.8vw, 20px);
-    line-height: 1.55;
-    color: var(--color-text-dim);
-    margin: 80px auto 56px;
-    max-width: 640px;
-  }
-  .community__lead {
-    font-size: 13px;
-    color: var(--color-text-mute);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    margin-top: 32px;
-  }
-
-  .studio-list {
-    list-style: none;
-    margin: 120px 0 0;
-    padding: 0;
-  }
-  .studio-row {
-    display: grid;
-    grid-template-columns: 60px 1fr 1fr;
-    gap: 48px;
-    padding: 48px 0;
-    border-top: 1px solid var(--color-line);
-    align-items: baseline;
-  }
-  .studio-row.is-last { border-bottom: 1px solid var(--color-line); }
-  .studio-row__idx {
-    font-size: 13px;
-    color: var(--color-text-mute);
-    letter-spacing: 0.12em;
-  }
-  .studio-row__name {
-    font-size: clamp(22px, 2.4vw, 28px);
-    line-height: 1.15;
-    letter-spacing: -0.025em;
-  }
-  .studio-row__desc {
+  .path-row__desc {
     font-size: 16px;
     line-height: 1.55;
     color: var(--color-text-dim);
-    max-width: 460px;
+    max-width: 520px;
   }
-
-  .signoff {
-    padding: clamp(120px, 18vw, 200px) clamp(24px, 5vw, 56px) clamp(140px, 20vw, 220px);
-    text-align: center;
-    border-bottom: 1px solid var(--color-line);
+  .path-row__cta {
+    font-size: 12px;
+    color: var(--color-amber);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-align: right;
+    justify-self: end;
   }
-  .signoff__eyebrow { margin-bottom: 56px; }
-  .signoff__head { margin-inline: auto; max-width: 880px; }
-  .signoff__sub { margin: 40px auto 72px; max-width: 480px; text-align: center; }
-  .signoff__form { max-width: 540px; margin: 0 auto; }
 
   @media (max-width: 720px) {
-    .plugin-row__link {
-      grid-template-columns: 40px 1fr;
-      gap: 24px;
-      padding: 40px 0;
+    .path-row__link {
+      grid-template-columns: 36px 1fr;
+      gap: 20px;
+      padding: 36px 24px;
     }
-    .plugin-row__status {
-      grid-column: 2;
-      justify-self: start;
-      text-align: left;
-      margin-top: 8px;
-    }
-    .studio-row {
-      grid-template-columns: 40px 1fr;
-      gap: 24px;
-      padding: 32px 0;
-    }
-    .studio-row__desc { grid-column: 2; max-width: none; }
+    .path-row__cta { grid-column: 2; justify-self: start; text-align: left; margin-top: 12px; }
   }
 </style>
