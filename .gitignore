@@ -1,14 +1,34 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files
+.env*
+!.env.example
+
+# vercel
 .vercel
 
-# Generated files (regenerated on build)
-src/data/tools.generated.json
+# typescript
+*.tsbuildinfo
+next-env.d.ts
 
-# Astro build cache
-.astro/
-
-# Build output
-dist/
-
-# Local Claude settings
+# local Claude settings
 .claude/
-node_modules/
+
+# macOS
+.DS_Store
