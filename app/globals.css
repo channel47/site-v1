@@ -48,93 +48,120 @@
 
 .logo47 {
   --logo-glow: color-mix(in srgb, var(--foreground) 30%, transparent);
+  --logo-width: 74px;
   position: relative;
   display: inline-flex;
-  flex-direction: column;
+  flex: 0 0 auto;
+  width: var(--logo-width);
+  aspect-ratio: 120 / 62;
   color: var(--foreground);
   cursor: default;
-  font-family: var(--font-mono);
-  font-size: 13px;
-  font-weight: 400;
-  letter-spacing: -0.08em;
-  line-height: 1;
   user-select: none;
-  white-space: pre;
 }
 
 .logo47--lg {
-  font-size: 64px;
+  --logo-width: 360px;
 }
 
 .logo47__glyph {
-  display: flex;
-  flex-direction: column;
   position: relative;
   z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
-.logo47__line {
-  display: flex;
-  height: 1.1em;
-}
-
-.logo47__char {
-  display: inline-block;
-  min-width: 0.55em;
-  opacity: 0.28;
-  text-align: center;
+.logo47__piece {
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+  width: var(--w);
+  height: var(--h);
+  opacity: 0.32;
   transition:
     opacity 100ms ease-out,
-    text-shadow 100ms ease-out,
+    filter 100ms ease-out,
     transform 100ms ease-out;
 }
 
-.logo47.is-animating .logo47__char:not(.is-locked) {
+.logo47.is-animating .logo47__piece:not(.is-locked) {
   opacity: 0.5;
 }
 
-.logo47__char.is-locked {
+.logo47__piece.is-locked {
   opacity: 1;
 }
 
-.logo47__char.is-flashing {
-  text-shadow:
-    0 0 6px var(--logo-glow),
-    0 0 12px color-mix(in srgb, var(--foreground) 25%, transparent);
+.logo47__fill {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background: currentColor;
+}
+
+.logo47__piece[data-shape="top"] .logo47__fill {
+  bottom: 50%;
+}
+
+.logo47__piece[data-shape="bottom"] .logo47__fill {
+  top: 50%;
+}
+
+.logo47__piece[data-shape="left"] .logo47__fill {
+  right: 50%;
+}
+
+.logo47__piece[data-shape="right"] .logo47__fill {
+  left: 50%;
+}
+
+.logo47__piece[data-shape="small"] .logo47__fill {
+  inset: 27%;
+}
+
+.logo47__piece[data-shape="outline"] .logo47__fill {
+  background: transparent;
+  box-shadow: inset 0 0 0 max(1px, calc(var(--logo-width) * 0.012)) currentColor;
+}
+
+.logo47__piece.is-flashing {
+  filter:
+    drop-shadow(0 0 6px var(--logo-glow))
+    drop-shadow(0 0 12px color-mix(in srgb, var(--foreground) 25%, transparent));
   transform: translateY(-0.03em);
 }
 
 .logo47.is-complete .logo47__glyph {
   animation: logo47-breathe 4s ease-in-out 1s infinite;
-  text-shadow:
-    0 0 1px var(--logo-glow),
-    0 0 8px var(--logo-glow);
+  filter:
+    drop-shadow(0 0 1px var(--logo-glow))
+    drop-shadow(0 0 8px var(--logo-glow));
 }
 
 @keyframes logo47-breathe {
   0%,
   100% {
-    text-shadow:
-      0 0 1px var(--logo-glow),
-      0 0 8px var(--logo-glow);
+    filter:
+      drop-shadow(0 0 1px var(--logo-glow))
+      drop-shadow(0 0 8px var(--logo-glow));
   }
 
   50% {
-    text-shadow:
-      0 0 2px var(--logo-glow),
-      0 0 12px var(--logo-glow),
-      0 0 20px color-mix(in srgb, var(--foreground) 18%, transparent);
+    filter:
+      drop-shadow(0 0 2px var(--logo-glow))
+      drop-shadow(0 0 12px var(--logo-glow))
+      drop-shadow(0 0 20px color-mix(in srgb, var(--foreground) 18%, transparent));
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .logo47__char {
+  .logo47__piece {
     opacity: 1;
     transition: none;
   }
 
-  .logo47__char.is-flashing {
-    text-shadow: none;
+  .logo47__piece.is-flashing {
+    filter: none;
     transform: none;
   }
 

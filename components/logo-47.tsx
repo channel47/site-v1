@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useRef, useState } from "react"
+import { type CSSProperties, useCallback, useEffect, useRef, useState } from "react"
 
 type Logo47Props = {
   className?: string
@@ -8,43 +8,71 @@ type Logo47Props = {
   size?: "sm" | "lg"
 }
 
-const GLYPHS = ["█", "▓", "▒", "░", "▀", "▄", "▌", "▐", "■", "□", "▪", "▫", "◼", "◻", "▰", "▱"]
+type ScatterShape = "full" | "top" | "bottom" | "left" | "right" | "small" | "outline"
 
-const LINES = [
-  ["█", " ", "█", " ", "▀", "▀", "█"],
-  ["▀", "▀", "█", " ", " ", "█"],
-] as const
+type LogoPiece = {
+  h: number
+  w: number
+  x: number
+  y: number
+}
 
-const TARGETS = LINES.flat()
-const INITIAL_LOCKED = TARGETS.map((char) => char === " ")
-const NON_SPACE_INDICES = TARGETS.map((char, index) => (char === " " ? -1 : index)).filter((index) => index !== -1)
+type PieceStyle = CSSProperties & {
+  "--h": string
+  "--w": string
+  "--x": string
+  "--y": string
+}
 
-function randomGlyph() {
-  return GLYPHS[Math.floor(Math.random() * GLYPHS.length)]
+const LOGO_WIDTH = 120
+const LOGO_HEIGHT = 62
+
+const PIECES: LogoPiece[] = [
+  { x: 0, y: 0, w: 18, h: 46 },
+  { x: 37, y: 0, w: 18, h: 62 },
+  { x: 0, y: 31, w: 55, h: 15 },
+  { x: 65, y: 0, w: 55, h: 15 },
+  { x: 102, y: 0, w: 18, h: 31 },
+  { x: 84, y: 31, w: 18, h: 31 },
+]
+
+const SCATTER_SHAPES: ScatterShape[] = ["full", "top", "bottom", "left", "right", "small", "outline"]
+
+function randomShape() {
+  return SCATTER_SHAPES[Math.floor(Math.random() * SCATTER_SHAPES.length)]
 }
 
 function randomState() {
-  return TARGETS.map((char) => (char === " " ? " " : randomGlyph()))
+  return PIECES.map(() => randomShape())
 }
 
-function shuffledIndices() {
-  return [...NON_SPACE_INDICES].sort(() => Math.random() - 0.5)
+function shuffledPieceIndices() {
+  return PIECES.map((_, index) => index).sort(() => Math.random() - 0.5)
 }
 
 function getReducedMotionPreference() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches
 }
 
+function pieceStyle(piece: LogoPiece): PieceStyle {
+  return {
+    "--h": `${(piece.h / LOGO_HEIGHT) * 100}%`,
+    "--w": `${(piece.w / LOGO_WIDTH) * 100}%`,
+    "--x": `${(piece.x / LOGO_WIDTH) * 100}%`,
+    "--y": `${(piece.y / LOGO_HEIGHT) * 100}%`,
+  }
+}
+
 export function Logo47({ className, delay = 0, size = "sm" }: Logo47Props) {
-  const [displayChars, setDisplayChars] = useState<string[]>(() => [...TARGETS])
-  const [lockedChars, setLockedChars] = useState(() => TARGETS.map(() => true))
-  const [flashingChars, setFlashingChars] = useState(() => TARGETS.map(() => false))
+  const [shapes, setShapes] = useState<ScatterShape[]>(() => PIECES.map(() => "full"))
+  const [lockedPieces, setLockedPieces] = useState(() => PIECES.map(() => true))
+  const [flashingPieces, setFlashingPieces] = useState(() => PIECES.map(() => false))
   const [phase, setPhase] = useState<"idle" | "animating" | "complete">("idle")
 
   const elementRef = useRef<HTMLSpanElement>(null)
   const intervalRef = useRef<number | null>(null)
   const timeoutsRef = useRef<number[]>([])
-  const lockedRef = useRef([...INITIAL_LOCKED])
+  const lockedRef = useRef(PIECES.map(() => false))
   const hasAnimatedRef = useRef(false)
   const isReplayingRef = useRef(false)
 
@@ -64,31 +92,31 @@ export function Logo47({ className, delay = 0, size = "sm" }: Logo47Props) {
       intervalRef.current = null
     }
 
-    setDisplayChars([...TARGETS])
-    setLockedChars(TARGETS.map(() => true))
+    setShapes(PIECES.map(() => "full"))
+    setLockedPieces(PIECES.map(() => true))
     setPhase("complete")
     isReplayingRef.current = false
   }, [])
 
-  const lockChar = useCallback((index: number) => {
+  const lockPiece = useCallback((index: number) => {
     lockedRef.current[index] = true
 
-    setDisplayChars((chars) => {
-      const next = [...chars]
-      next[index] = TARGETS[index]
+    setShapes((currentShapes) => {
+      const next = [...currentShapes]
+      next[index] = "full"
       return next
     })
 
-    setLockedChars([...lockedRef.current])
-    setFlashingChars((chars) => {
-      const next = [...chars]
+    setLockedPieces([...lockedRef.current])
+    setFlashingPieces((pieces) => {
+      const next = [...pieces]
       next[index] = true
       return next
     })
 
     const flashTimeout = window.setTimeout(() => {
-      setFlashingChars((chars) => {
-        const next = [...chars]
+      setFlashingPieces((pieces) => {
+        const next = [...pieces]
         next[index] = false
         return next
       })
@@ -101,45 +129,39 @@ export function Logo47({ className, delay = 0, size = "sm" }: Logo47Props) {
     (mode: "initial" | "replay") => {
       if (getReducedMotionPreference()) {
         clearTimers()
-        lockedRef.current = TARGETS.map(() => true)
-        setDisplayChars([...TARGETS])
-        setLockedChars(TARGETS.map(() => true))
-        setFlashingChars(TARGETS.map(() => false))
+        lockedRef.current = PIECES.map(() => true)
+        setShapes(PIECES.map(() => "full"))
+        setLockedPieces(PIECES.map(() => true))
+        setFlashingPieces(PIECES.map(() => false))
         setPhase("complete")
         isReplayingRef.current = false
         return
       }
 
       clearTimers()
-      lockedRef.current = [...INITIAL_LOCKED]
-      setDisplayChars(randomState())
-      setLockedChars([...INITIAL_LOCKED])
-      setFlashingChars(TARGETS.map(() => false))
+      lockedRef.current = PIECES.map(() => false)
+      setShapes(randomState())
+      setLockedPieces(PIECES.map(() => false))
+      setFlashingPieces(PIECES.map(() => false))
       setPhase("animating")
 
       intervalRef.current = window.setInterval(() => {
-        setDisplayChars((chars) =>
-          chars.map((char, index) => {
-            if (TARGETS[index] === " " || lockedRef.current[index]) {
-              return TARGETS[index]
-            }
-
-            return randomGlyph()
-          }),
+        setShapes((currentShapes) =>
+          currentShapes.map((shape, index) => (lockedRef.current[index] ? "full" : randomShape())),
         )
       }, 50)
 
-      const indices = shuffledIndices()
+      const indices = shuffledPieceIndices()
       const baseDelay = mode === "initial" ? 300 : 100
       const lockDuration = mode === "initial" ? 800 : 400
 
-      indices.forEach((charIndex, index) => {
+      indices.forEach((pieceIndex, index) => {
         const progress = index / indices.length
         const easeOut = 1 - Math.pow(1 - progress, 2)
         const lockTime = baseDelay + easeOut * lockDuration
 
         const timeout = window.setTimeout(() => {
-          lockChar(charIndex)
+          lockPiece(pieceIndex)
 
           if (index === indices.length - 1) {
             const completeTimeout = window.setTimeout(completeAnimation, mode === "initial" ? 150 : 100)
@@ -150,7 +172,7 @@ export function Logo47({ className, delay = 0, size = "sm" }: Logo47Props) {
         timeoutsRef.current.push(timeout)
       })
     },
-    [clearTimers, completeAnimation, lockChar],
+    [clearTimers, completeAnimation, lockPiece],
   )
 
   useEffect(() => {
@@ -217,32 +239,22 @@ export function Logo47({ className, delay = 0, size = "sm" }: Logo47Props) {
       role="img"
     >
       <span aria-hidden="true" className="logo47__glyph">
-        {LINES.map((line, lineIndex) => {
-          const offset = LINES.slice(0, lineIndex).reduce((total, currentLine) => total + currentLine.length, 0)
-
-          return (
-            <span className="logo47__line" key={lineIndex}>
-              {line.map((_, charIndex) => {
-                const index = offset + charIndex
-
-                return (
-                  <span
-                    className={[
-                      "logo47__char",
-                      lockedChars[index] && "is-locked",
-                      flashingChars[index] && "is-flashing",
-                    ]
-                      .filter(Boolean)
-                      .join(" ")}
-                    key={`${lineIndex}-${charIndex}`}
-                  >
-                    {displayChars[index]}
-                  </span>
-                )
-              })}
-            </span>
-          )
-        })}
+        {PIECES.map((piece, index) => (
+          <span
+            className={[
+              "logo47__piece",
+              lockedPieces[index] && "is-locked",
+              flashingPieces[index] && "is-flashing",
+            ]
+              .filter(Boolean)
+              .join(" ")}
+            data-shape={shapes[index]}
+            key={`${piece.x}-${piece.y}-${index}`}
+            style={pieceStyle(piece)}
+          >
+            <span className="logo47__fill" />
+          </span>
+        ))}
       </span>
     </span>
   )
