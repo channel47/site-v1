@@ -16,6 +16,7 @@
 @theme inline {
   --font-sans: "IBM Plex Sans", "IBM Plex Sans Fallback", sans-serif;
   --font-mono: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace;
+  --font-display: var(--font-dm-sans), "DM Sans", "IBM Plex Sans", sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-muted-foreground: var(--muted-foreground);
@@ -49,6 +50,79 @@
   a,
   button {
     @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background;
+  }
+}
+
+/* ── Editorial motion (Direction A — Quiet Signal) ──────────────────────────
+   Movement is limited to type reveal, one highlight sweep, and a rule grow. */
+
+.reveal-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.04em;
+}
+
+.reveal-line > span {
+  display: block;
+  animation: line-rise 820ms var(--motion-ease) both;
+}
+
+.reveal-line:nth-child(2) > span {
+  animation-delay: 80ms;
+}
+
+.reveal-line:nth-child(3) > span {
+  animation-delay: 160ms;
+}
+
+@keyframes line-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 110%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.mark {
+  color: var(--foreground);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  background: linear-gradient(transparent 58%, color-mix(in srgb, var(--accent) 32%, transparent) 58%) 0 0 / 0 100%
+    no-repeat;
+  animation: mark-in 720ms var(--motion-ease) 620ms both;
+}
+
+@keyframes mark-in {
+  to {
+    background-size: 100% 100%;
+  }
+}
+
+.rule-grow {
+  transform-origin: left center;
+  animation: rule-grow 900ms var(--motion-ease) 400ms both;
+}
+
+@keyframes rule-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-line > span,
+  .rule-grow {
+    animation: none;
+  }
+  .mark {
+    animation: none;
+    background-size: 100% 100%;
   }
 }
 

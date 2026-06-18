@@ -1,6 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google"
+import { IBM_Plex_Sans, IBM_Plex_Mono, DM_Sans } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
@@ -13,6 +13,12 @@ const ibmPlexMono = IBM_Plex_Mono({
   weight: ["400", "500"],
   subsets: ["latin"],
   variable: "--font-ibm-plex-mono",
+})
+// Direction A display face — typography is the product.
+const dmSans = DM_Sans({
+  weight: ["500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-dm-sans",
 })
 
 export const metadata: Metadata = {
@@ -44,7 +50,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-background">
-      <body className={`${ibmPlexSans.variable} ${ibmPlexMono.variable} font-sans antialiased overflow-x-hidden`}>
+      <body
+        className={`${ibmPlexSans.variable} ${ibmPlexMono.variable} ${dmSans.variable} font-sans antialiased overflow-x-hidden`}
+      >
         {children}
         <Analytics />
       </body>
