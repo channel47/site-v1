@@ -1,14 +1,16 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:is(.dark *));
-
 :root {
-  --background: #181715;
-  --foreground: #f3f0ea;
-  --muted-foreground: #9b968d;
-  --border: #2d2a26;
-  --accent: #f3f0ea;
-  --ring: #f3f0ea;
+  --background: #171614;
+  --foreground: #f4f0e8;
+  --muted-foreground: #9f988c;
+  --border: #302c26;
+  --accent: #d8ff6a;
+  --ring: #f4f0e8;
+  --page-max: 72rem;
+  --page-gutter: clamp(1.25rem, 3vw, 2rem);
+  --motion-duration: 480ms;
+  --motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @theme inline {
@@ -30,13 +32,17 @@
   html {
     min-height: 100%;
     background: var(--background);
+    text-rendering: geometricprecision;
   }
 
   body {
     min-height: 100%;
-    background:
-      radial-gradient(circle at 50% 0%, rgba(243, 240, 234, 0.06), transparent 34rem),
-      var(--background);
+    background: var(--background);
+    color: var(--foreground);
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--accent) 24%, transparent);
     color: var(--foreground);
   }
 
@@ -47,7 +53,7 @@
 }
 
 .logo47 {
-  --logo-glow: color-mix(in srgb, var(--foreground) 30%, transparent);
+  --logo-glow: color-mix(in srgb, var(--foreground) 26%, transparent);
   --logo-width: 74px;
   position: relative;
   display: inline-flex;
@@ -132,7 +138,7 @@
 }
 
 .logo47.is-complete .logo47__glyph {
-  animation: logo47-breathe 4s ease-in-out 1s infinite;
+  animation: logo47-breathe 4s var(--motion-ease) 1s infinite;
   filter:
     drop-shadow(0 0 1px var(--logo-glow))
     drop-shadow(0 0 8px var(--logo-glow));

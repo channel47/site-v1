@@ -18,7 +18,6 @@ const ibmPlexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   title: "channel47",
   description: "Practical AI workflows and creative strategy systems for ecommerce marketers.",
-  generator: "v0.app",
   icons: {
     icon: [
       {
@@ -44,10 +43,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="dark bg-background">
-      <body
-        className={`${ibmPlexSans.variable} ${ibmPlexMono.variable} font-sans antialiased overflow-x-hidden`}
-      >
+    <html lang="en" className="bg-background">
+      <body className={`${ibmPlexSans.variable} ${ibmPlexMono.variable} font-sans antialiased overflow-x-hidden`}>
         {children}
         <Analytics />
       </body>

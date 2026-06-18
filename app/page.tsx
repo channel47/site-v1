@@ -3,27 +3,27 @@ import { Logo47 } from "@/components/logo-47"
 export default function Page() {
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-5 py-5 sm:px-8">
+      <header className="mx-auto flex w-full max-w-[var(--page-max)] items-center justify-between px-[var(--page-gutter)] py-5">
         <a href="/" className="group flex items-center gap-3" aria-label="channel47 home">
           <Logo47 delay={120} />
-          <span className="font-mono text-[11px] uppercase tracking-[0.24em] text-muted-foreground transition-colors group-hover:text-foreground">
+          <span className="font-mono text-[11px] uppercase text-muted-foreground transition-colors group-hover:text-foreground">
             channel47
           </span>
         </a>
 
-        <nav className="flex items-center gap-5 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+        <nav className="flex items-center gap-5 font-mono text-[11px] uppercase text-muted-foreground">
           <a className="transition-colors hover:text-foreground" href="mailto:jackson@channel47.dev">
             Contact
           </a>
         </nav>
       </header>
 
-      <section className="mx-auto grid min-h-[calc(100vh-84px)] w-full max-w-6xl items-center gap-12 px-5 py-16 sm:px-8 lg:grid-cols-[minmax(0,0.82fr)_280px]">
+      <section className="mx-auto grid min-h-[calc(100vh-84px)] w-full max-w-[var(--page-max)] items-center gap-12 px-[var(--page-gutter)] py-16 lg:grid-cols-[minmax(0,0.82fr)_280px]">
         <div>
-          <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-muted-foreground">
+          <p className="font-mono text-[11px] uppercase text-muted-foreground">
             New site in progress
           </p>
-          <h1 className="mt-6 max-w-3xl text-balance text-5xl font-medium leading-[0.98] tracking-[-0.04em] sm:text-7xl lg:text-8xl">
+          <h1 className="mt-6 max-w-3xl text-balance text-5xl font-medium leading-[0.98] sm:text-7xl lg:text-8xl">
             Clean slate. Same signal.
           </h1>
           <p className="mt-8 max-w-xl text-pretty font-mono text-sm leading-7 text-muted-foreground">
