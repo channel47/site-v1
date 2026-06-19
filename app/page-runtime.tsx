@@ -297,6 +297,34 @@ export function PageRuntime() {
       let active = 0
       const pad = (n: number) => String(n + 1).padStart(2, "0")
 
+      // Autoplay: advance every AUTOPLAY_MS, but skip a tick while the user is
+      // hovering/dragging, the carousel is off-screen, the tab is hidden, or
+      // reduced motion is requested. Manual nav calls restartAuto() to reset the
+      // countdown so it never jumps right after an interaction.
+      const AUTOPLAY_MS = 4500
+      let autoTimer: ReturnType<typeof setInterval> | null = null
+      let hoverPaused = false
+      let dragPaused = false
+      let offscreenPaused = false
+      function tick() {
+        if (reduceMotion || hoverPaused || dragPaused || offscreenPaused || document.hidden) return
+        stepBy(1)
+      }
+      function stopAuto() {
+        if (autoTimer) {
+          clearInterval(autoTimer)
+          autoTimer = null
+        }
+      }
+      function startAuto() {
+        if (reduceMotion) return
+        stopAuto()
+        autoTimer = setInterval(tick, AUTOPLAY_MS)
+      }
+      function restartAuto() {
+        startAuto()
+      }
+
       // Clone the full set fore & aft so scroll loops seamlessly.
       const cloneSet = () =>
         orig.map((c) => {
@@ -322,7 +350,10 @@ export function PageRuntime() {
           b.setAttribute("aria-label", "Go to page " + (i + 1))
           b.style.cssText =
             "width:7px;height:7px;border-radius:100px;border:none;padding:0;cursor:pointer;background:rgba(255,255,255,0.2);transition:width .4s cubic-bezier(.2,.7,.2,1),background .25s"
-          b.addEventListener("click", () => goToLogical(i))
+          b.addEventListener("click", () => {
+            goToLogical(i)
+            restartAuto()
+          })
           dotsWrap.appendChild(b)
         })
       }
@@ -452,6 +483,7 @@ export function PageRuntime() {
       let downCard: HTMLElement | null = null
       let dragMoved = false
       const onPointerDown = (e: PointerEvent) => {
+        dragPaused = true
         if (e.pointerType !== "mouse" || e.button !== 0) return
         down = true
         moved = false
@@ -470,6 +502,9 @@ export function PageRuntime() {
         track.scrollLeft = sl - dx
       }
       const endDrag = (e: PointerEvent) => {
+        // Reset the autoplay pause on every pointer release (mouse + touch).
+        dragPaused = false
+        restartAuto()
         if (!down) return
         down = false
         track.classList.remove("dragging")
@@ -498,10 +533,37 @@ export function PageRuntime() {
 
       const prevBtn = document.getElementById("livePrev")
       const nextBtn = document.getElementById("liveNext")
-      const onPrev = () => stepBy(-1)
-      const onNext = () => stepBy(1)
+      const onPrev = () => {
+        stepBy(-1)
+        restartAuto()
+      }
+      const onNext = () => {
+        stepBy(1)
+        restartAuto()
+      }
       prevBtn?.addEventListener("click", onPrev)
       nextBtn?.addEventListener("click", onNext)
+
+      // Pause autoplay on hover (mouse over the whole carousel region), and on
+      // visibility changes / scrolling off-screen.
+      const region = track.parentElement
+      const onEnter = () => {
+        hoverPaused = true
+      }
+      const onLeave = () => {
+        hoverPaused = false
+      }
+      region?.addEventListener("pointerenter", onEnter)
+      region?.addEventListener("pointerleave", onLeave)
+      const onVis = () => {
+        if (!document.hidden) restartAuto()
+      }
+      document.addEventListener("visibilitychange", onVis)
+      let io: IntersectionObserver | null = null
+      if ("IntersectionObserver" in window) {
+        io = new IntersectionObserver(([e]) => { offscreenPaused = !e.isIntersecting }, { threshold: 0.12 })
+        io.observe(track)
+      }
 
       // Start centered on the first real card (the middle copy).
       track.scrollLeft = centerLeftFor(N)
@@ -509,6 +571,7 @@ export function PageRuntime() {
         update()
         syncUI()
       })
+      startAuto()
 
       cleanups.push(() => {
         track.removeEventListener("scroll", onScroll)
@@ -520,6 +583,11 @@ export function PageRuntime() {
         track.removeEventListener("click", onClickCapture, true)
         prevBtn?.removeEventListener("click", onPrev)
         nextBtn?.removeEventListener("click", onNext)
+        region?.removeEventListener("pointerenter", onEnter)
+        region?.removeEventListener("pointerleave", onLeave)
+        document.removeEventListener("visibilitychange", onVis)
+        io?.disconnect()
+        stopAuto()
         if (rafScroll) cancelAnimationFrame(rafScroll)
         if (tweenRaf) cancelAnimationFrame(tweenRaf)
         track.querySelectorAll(".live-card[data-clone]").forEach((n) => n.remove())
