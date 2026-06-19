@@ -69,7 +69,7 @@ export function AdvertorialContent() {
             h("a", { href: "#pricing", style: {"background": "#cdfb45", "color": "#0b0b0c", "fontWeight": "700", "fontSize": "17px", "padding": "16px 30px", "borderRadius": "11px", "display": "inline-flex", "alignItems": "center", "gap": "9px", "transition": "transform .25s cubic-bezier(.2,.7,.2,1),background .2s,box-shadow .25s cubic-bezier(.2,.7,.2,1)"}, "style-hover": "background:#dbff6e;transform:translateY(-2px);box-shadow:0 12px 26px -10px rgba(205,251,69,0.55)" },
               "Start an advertorial \u2192"
             ),
-            h("a", { href: "mailto:jackson@channel47.dev?subject=Book%20a%2015-min%20call", style: {"background": "transparent", "color": "#f4f4ef", "fontWeight": "600", "fontSize": "17px", "padding": "16px 26px", "borderRadius": "11px", "border": "1px solid rgba(255,255,255,0.14)", "display": "inline-flex", "alignItems": "center", "gap": "9px", "transition": "transform .25s cubic-bezier(.2,.7,.2,1),border-color .2s"}, "style-hover": "border-color:rgba(255,255,255,0.3);transform:translateY(-2px)" },
+            h("a", { href: "mailto:jackson@channel47.dev?subject=Book%20a%2015-min%20call", "data-open-booking": "1", style: {"background": "transparent", "color": "#f4f4ef", "fontWeight": "600", "fontSize": "17px", "padding": "16px 26px", "borderRadius": "11px", "border": "1px solid rgba(255,255,255,0.14)", "display": "inline-flex", "alignItems": "center", "gap": "9px", "transition": "transform .25s cubic-bezier(.2,.7,.2,1),border-color .2s"}, "style-hover": "border-color:rgba(255,255,255,0.3);transform:translateY(-2px)" },
               h("span", { style: {"width": "6px", "height": "6px", "borderRadius": "50%", "background": "#cdfb45", "display": "inline-block", "flex": "none"} }),
               "Book a 15-min call"
             )
@@ -706,60 +706,105 @@ export function AdvertorialContent() {
           h("p", { style: {"fontSize": "18px", "color": "#b6b6b0", "marginBottom": "48px"} },
             "Flat rate. No proposals, no haggling. You own everything."
           ),
-          h("div", { id: "pricing-grid", style: {"maxWidth": "600px", "margin": "0 auto"} },
-            h("div", { style: {"border": "1.5px solid #cdfb45", "borderRadius": "20px", "padding": "38px", "background": "linear-gradient(180deg,rgba(205,251,69,0.05),transparent 40%)", "transition": "transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s cubic-bezier(.2,.7,.2,1)"}, "style-hover": "transform:translateY(-4px);box-shadow:0 18px 40px -18px rgba(205,251,69,0.4)" },
-              h("div", { style: {"fontFamily": "var(--font-mono),monospace", "fontSize": "13px", "letterSpacing": "0.1em", "textTransform": "uppercase", "color": "#cdfb45", "marginBottom": "18px"} },
+          h("div", { id: "pricing-grid", style: {"maxWidth": "1000px", "margin": "0 auto", "border": "1.5px solid #cdfb45", "borderRadius": "24px", "overflow": "hidden", "background": "#0d0d0f", "display": "grid", "gridTemplateColumns": "0.92fr 1.08fr", "transition": "box-shadow .3s cubic-bezier(.2,.7,.2,1)"}, "style-hover": "box-shadow:0 26px 60px -28px rgba(205,251,69,0.42)" },
+            h("div", { id: "pricing-left", style: {"padding": "44px 40px", "background": "linear-gradient(165deg,rgba(205,251,69,0.10),transparent 62%)", "borderRight": "1px solid rgba(205,251,69,0.18)", "display": "flex", "flexDirection": "column"} },
+              h("div", { style: {"fontFamily": "var(--font-mono),monospace", "fontSize": "12.5px", "letterSpacing": "0.12em", "textTransform": "uppercase", "color": "#cdfb45", "marginBottom": "24px"} },
                 "One advertorial"
               ),
-              h("div", { style: {"display": "flex", "alignItems": "baseline", "gap": "8px", "marginBottom": "8px"} },
-                h("span", { style: {"fontSize": "52px", "fontWeight": "700", "letterSpacing": "-0.03em"} },
+              h("div", { style: {"display": "flex", "alignItems": "baseline", "gap": "10px", "marginBottom": "6px"} },
+                h("span", { style: {"fontSize": "64px", "fontWeight": "700", "letterSpacing": "-0.035em", "lineHeight": "1"} },
                   "$2,950"
                 )
               ),
-              h("p", { style: {"fontSize": "15px", "color": "#9d9d97", "marginBottom": "28px"} },
-                "One page. Research, copy, build-ready handoff, and three ad creatives. Done in a week."
+              h("div", { style: {"fontSize": "14px", "color": "#9d9d97", "marginBottom": "24px"} },
+                "Flat rate, per page. No proposals, no retainer."
               ),
-              h("a", { href: "mailto:jackson@channel47.dev?subject=Start%20an%20advertorial", style: {"display": "block", "textAlign": "center", "background": "#cdfb45", "color": "#0b0b0c", "padding": "15px", "borderRadius": "11px", "fontWeight": "700", "fontSize": "16px", "marginBottom": "28px"}, "style-hover": "background:#dbff6e" },
+              h("div", { style: {"display": "inline-flex", "alignItems": "center", "gap": "9px", "alignSelf": "flex-start", "fontFamily": "var(--font-mono),monospace", "fontSize": "12px", "letterSpacing": "0.04em", "color": "#cdfb45", "border": "1px solid rgba(205,251,69,0.3)", "borderRadius": "100px", "padding": "7px 13px", "marginBottom": "28px"} },
+                h("span", { style: {"width": "5px", "height": "5px", "borderRadius": "50%", "background": "#cdfb45", "display": "inline-block"} }),
+                "Live in ~5 working days"
+              ),
+              h("a", { href: "mailto:jackson@channel47.dev?subject=Start%20an%20advertorial", style: {"display": "block", "textAlign": "center", "background": "#cdfb45", "color": "#0b0b0c", "padding": "16px", "borderRadius": "12px", "fontWeight": "700", "fontSize": "16px", "transition": "background .2s,transform .25s cubic-bezier(.2,.7,.2,1)"}, "style-hover": "background:#dbff6e;transform:translateY(-2px)" },
                 "Start an advertorial \u2192"
               ),
-              h("div", { style: {"display": "flex", "flexDirection": "column", "gap": "13px", "fontSize": "15px", "color": "#c8c8c2"} },
-                h("div", { style: {"display": "flex", "gap": "11px"} },
-                  h("span", { style: {"color": "#cdfb45", "flex": "none"} },
+              h("div", { style: {"marginTop": "16px", "fontSize": "13px", "color": "#74746e", "textAlign": "center"} },
+                "No deposit to scope it. You only pay once the bet is locked."
+              )
+            ),
+            h("div", { id: "pricing-right", style: {"padding": "44px 40px", "display": "flex", "flexDirection": "column"} },
+              h("div", { style: {"fontFamily": "var(--font-mono),monospace", "fontSize": "12px", "letterSpacing": "0.1em", "textTransform": "uppercase", "color": "#74746e", "marginBottom": "22px"} },
+                "Everything in the box"
+              ),
+              h("div", { style: {"display": "flex", "flexDirection": "column", "gap": "18px", "flex": "1"} },
+                h("div", { style: {"display": "flex", "gap": "13px"} },
+                  h("span", { style: {"color": "#cdfb45", "flex": "none", "fontSize": "15px"} },
                     "\u2713"
                   ),
-                  "Research doc + ranked angles"
+                  h("div", null,
+                    h("div", { style: {"fontSize": "15.5px", "fontWeight": "600", "color": "#f4f4ef", "marginBottom": "2px"} },
+                      "Research doc + ranked angles"
+                    ),
+                    h("div", { style: {"fontSize": "13.5px", "color": "#9d9d97", "lineHeight": "1.5"} },
+                      "Personas, objections, and the angles scored before a word is written."
+                    )
+                  )
                 ),
-                h("div", { style: {"display": "flex", "gap": "11px"} },
-                  h("span", { style: {"color": "#cdfb45", "flex": "none"} },
+                h("div", { style: {"display": "flex", "gap": "13px"} },
+                  h("span", { style: {"color": "#cdfb45", "flex": "none", "fontSize": "15px"} },
                     "\u2713"
                   ),
-                  "Written + build-ready page"
+                  h("div", null,
+                    h("div", { style: {"fontSize": "15.5px", "fontWeight": "600", "color": "#f4f4ef", "marginBottom": "2px"} },
+                      "Written + build-ready page"
+                    ),
+                    h("div", { style: {"fontSize": "13.5px", "color": "#9d9d97", "lineHeight": "1.5"} },
+                      "The full advertorial, copy and structure, ready to ship to your stack."
+                    )
+                  )
                 ),
-                h("div", { style: {"display": "flex", "gap": "11px"} },
-                  h("span", { style: {"color": "#cdfb45", "flex": "none"} },
+                h("div", { style: {"display": "flex", "gap": "13px"} },
+                  h("span", { style: {"color": "#cdfb45", "flex": "none", "fontSize": "15px"} },
                     "\u2713"
                   ),
-                  "3 static ad creatives"
+                  h("div", null,
+                    h("div", { style: {"fontSize": "15.5px", "fontWeight": "600", "color": "#f4f4ef", "marginBottom": "2px"} },
+                      "3 static ad creatives"
+                    ),
+                    h("div", { style: {"fontSize": "13.5px", "color": "#9d9d97", "lineHeight": "1.5"} },
+                      "Matched to the page so the click and the read tell one story."
+                    )
+                  )
                 ),
-                h("div", { style: {"display": "flex", "gap": "11px"} },
-                  h("span", { style: {"color": "#cdfb45", "flex": "none"} },
+                h("div", { style: {"display": "flex", "gap": "13px"} },
+                  h("span", { style: {"color": "#cdfb45", "flex": "none", "fontSize": "15px"} },
                     "\u2713"
                   ),
-                  "1 revision round"
+                  h("div", null,
+                    h("div", { style: {"fontSize": "15.5px", "fontWeight": "600", "color": "#f4f4ef", "marginBottom": "2px"} },
+                      "1 revision round"
+                    ),
+                    h("div", { style: {"fontSize": "13.5px", "color": "#9d9d97", "lineHeight": "1.5"} },
+                      "One structured pass, turned around same-day where possible."
+                    )
+                  )
+                )
+              ),
+              h("div", { style: {"marginTop": "24px", "paddingTop": "20px", "borderTop": "1px solid rgba(255,255,255,0.1)", "display": "flex", "alignItems": "center", "gap": "11px"} },
+                h("span", { style: {"color": "#cdfb45", "flex": "none", "fontSize": "15px"} },
+                  "\u2713"
                 ),
-                h("div", { style: {"display": "flex", "gap": "11px"} },
-                  h("span", { style: {"color": "#cdfb45", "flex": "none"} },
-                    "\u2713"
-                  ),
-                  "You own everything"
+                h("span", { style: {"fontSize": "15px", "fontWeight": "600", "color": "#f4f4ef"} },
+                  "You own everything that ships"
+                ),
+                h("span", { style: {"fontSize": "13px", "color": "#74746e"} },
+                  "\u2014 page, research, and creative."
                 )
               )
             )
           ),
-          h("div", { id: "pricing-notice", style: {"maxWidth": "600px", "margin": "18px auto 0", "border": "1px dashed rgba(255,255,255,0.14)", "borderRadius": "16px", "padding": "22px 26px", "display": "flex", "alignItems": "center", "justifyContent": "space-between", "gap": "20px", "flexWrap": "wrap"}, "data-comment-anchor": "3056db7e2a-div" },
+          h("div", { id: "pricing-notice", style: {"maxWidth": "1000px", "margin": "18px auto 0", "border": "1px dashed rgba(255,255,255,0.14)", "borderRadius": "16px", "padding": "22px 26px", "display": "flex", "alignItems": "center", "justifyContent": "space-between", "gap": "20px", "flexWrap": "wrap"}, "data-comment-anchor": "3056db7e2a-div" },
             h("div", { style: {"fontSize": "14px", "color": "#9d9d97", "lineHeight": "1.5"} },
               "Want to talk it through first? ",
-              h("a", { href: "mailto:jackson@channel47.dev?subject=Book%20a%2015-min%20call", style: {"color": "#f4f4ef", "fontWeight": "600", "borderBottom": "1px solid rgba(255,255,255,0.2)"}, "style-hover": "border-color:#cdfb45;color:#cdfb45" },
+              h("a", { href: "mailto:jackson@channel47.dev?subject=Book%20a%2015-min%20call", "data-open-booking": "1", style: {"color": "#f4f4ef", "fontWeight": "600", "borderBottom": "1px solid rgba(255,255,255,0.2)"}, "style-hover": "border-color:#cdfb45;color:#cdfb45" },
                 "Book a 15-min call \u2192"
               ),
               " \u2014 no pitch, just funnel."
@@ -854,7 +899,7 @@ export function AdvertorialContent() {
               h("a", { href: "#pricing", style: {"background": "#0b0b0c", "color": "#f4f4ef", "fontWeight": "700", "fontSize": "17px", "padding": "16px 32px", "borderRadius": "11px", "transition": "transform .25s cubic-bezier(.2,.7,.2,1),background .2s,box-shadow .25s cubic-bezier(.2,.7,.2,1)"}, "style-hover": "background:#000;transform:translateY(-2px);box-shadow:0 12px 26px -10px rgba(11,11,12,0.45)" },
                 "See plans \u2192"
               ),
-              h("a", { href: "mailto:jackson@channel47.dev?subject=Book%20a%2015-min%20call", style: {"background": "transparent", "color": "#0b0b0c", "fontWeight": "700", "fontSize": "17px", "padding": "16px 30px", "borderRadius": "11px", "border": "1.5px solid rgba(11,11,12,0.25)", "transition": "transform .25s cubic-bezier(.2,.7,.2,1),border-color .2s"}, "style-hover": "border-color:#0b0b0c;transform:translateY(-2px)" },
+              h("a", { href: "mailto:jackson@channel47.dev?subject=Book%20a%2015-min%20call", "data-open-booking": "1", style: {"background": "transparent", "color": "#0b0b0c", "fontWeight": "700", "fontSize": "17px", "padding": "16px 30px", "borderRadius": "11px", "border": "1.5px solid rgba(11,11,12,0.25)", "transition": "transform .25s cubic-bezier(.2,.7,.2,1),border-color .2s"}, "style-hover": "border-color:#0b0b0c;transform:translateY(-2px)" },
                 "Book a 15-min call"
               )
             )
@@ -924,6 +969,91 @@ export function AdvertorialContent() {
             "&",
             " Sharethrough, Native Ad Effectiveness Study, 2013 \u2014 ipglab.com",
             "3. CXL, Maintaining Scent / Message Match (documented case studies) \u2014 cxl.com\n  "
+          )
+        ),
+        h("div", { id: "book-modal-overlay", style: {"display": "none", "position": "fixed", "inset": "0", "zIndex": "9000", "background": "rgba(6,6,7,0.74)", "backdropFilter": "blur(8px)", "WebkitBackdropFilter": "blur(8px)", "alignItems": "center", "justifyContent": "center", "padding": "28px"} },
+          h("div", { id: "book-modal-card", style: {"position": "relative", "width": "100%", "maxWidth": "1000px", "maxHeight": "92vh", "overflowY": "auto", "background": "#0d0d0f", "border": "1px solid rgba(255,255,255,0.12)", "borderRadius": "22px", "boxShadow": "0 50px 110px -30px rgba(0,0,0,0.85)"} },
+            h("button", { id: "close-modal", type: "button", "aria-label": "Close", style: {"position": "absolute", "top": "18px", "right": "18px", "zIndex": "5", "width": "42px", "height": "42px", "borderRadius": "50%", "background": "rgba(255,255,255,0.06)", "border": "1px solid rgba(255,255,255,0.14)", "color": "#f4f4ef", "fontSize": "18px", "cursor": "pointer", "display": "flex", "alignItems": "center", "justifyContent": "center", "lineHeight": "1", "fontFamily": "inherit", "transition": "background .2s,border-color .2s"}, "style-hover": "background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.28)" },
+              "\u2715"
+            ),
+            h("div", { id: "book-modal-grid", style: {"display": "grid", "gridTemplateColumns": "0.78fr 1.22fr", "alignItems": "stretch"} },
+              h("div", { id: "book-modal-rail", style: {"padding": "34px 30px", "borderRight": "1px solid rgba(255,255,255,0.08)", "background": "linear-gradient(180deg,rgba(205,251,69,0.04),transparent 50%)", "display": "flex", "flexDirection": "column"} },
+                h("div", { style: {"display": "inline-flex", "alignItems": "center", "gap": "8px", "fontFamily": "var(--font-mono),monospace", "fontSize": "11px", "letterSpacing": "0.13em", "textTransform": "uppercase", "color": "#cdfb45", "border": "1px solid rgba(205,251,69,0.32)", "padding": "6px 11px", "borderRadius": "100px", "marginBottom": "24px", "alignSelf": "flex-start"} },
+                  h("span", { style: {"width": "5px", "height": "5px", "borderRadius": "50%", "background": "#cdfb45", "display": "inline-block", "animation": "pulseDot 2.6s ease-out infinite"} }),
+                  "15-min call\n        "
+                ),
+                h("h3", { style: {"fontSize": "30px", "lineHeight": "1.02", "fontWeight": "700", "letterSpacing": "-0.03em", "marginBottom": "14px", "textWrap": "balance"} },
+                  "Fifteen minutes on your funnel."
+                ),
+                h("p", { style: {"fontSize": "14.5px", "lineHeight": "1.55", "color": "#9d9d97", "marginBottom": "24px", "textWrap": "pretty"} },
+                  "No pitch. We find where cold traffic falls off between your ad and your checkout \u2014 and whether an advertorial is the fix."
+                ),
+                h("div", { style: {"display": "flex", "flexDirection": "column", "gap": "11px", "marginBottom": "24px"} },
+                  h("span", { style: {"display": "inline-flex", "alignItems": "center", "gap": "9px", "fontSize": "13.5px", "color": "#c8c8c2"} },
+                    h("span", { style: {"color": "#cdfb45", "width": "16px", "flex": "none"} },
+                      "\u25f7"
+                    ),
+                    "15 minutes"
+                  ),
+                  h("span", { style: {"display": "inline-flex", "alignItems": "center", "gap": "9px", "fontSize": "13.5px", "color": "#c8c8c2"} },
+                    h("span", { style: {"color": "#cdfb45", "width": "16px", "flex": "none"} },
+                      "\u25a3"
+                    ),
+                    "Google Meet"
+                  ),
+                  h("span", { style: {"display": "inline-flex", "alignItems": "center", "gap": "9px", "fontSize": "13.5px", "color": "#c8c8c2"} },
+                    h("span", { style: {"color": "#cdfb45", "width": "16px", "flex": "none"} },
+                      "$"
+                    ),
+                    "Free, no pitch"
+                  )
+                ),
+                h("div", { style: {"borderTop": "1px solid rgba(255,255,255,0.1)", "paddingTop": "18px", "marginTop": "auto"} },
+                  h("div", { style: {"display": "flex", "alignItems": "center", "gap": "11px"} },
+                    h("div", { role: "img", "aria-label": "Jackson Dean", style: {"width": "42px", "height": "42px", "borderRadius": "50%", "flex": "none", "border": "1px solid rgba(255,255,255,0.1)", "background": "linear-gradient(135deg,#cdfb45,#9ec24a)", "color": "#0b0b0c", "display": "flex", "alignItems": "center", "justifyContent": "center", "fontFamily": "var(--font-display)", "fontWeight": "800", "fontSize": "14px", "letterSpacing": "0.04em"} },
+                      "JD"
+                    ),
+                    h("div", null,
+                      h("div", { style: {"fontSize": "14px", "fontWeight": "600"} },
+                        "Jackson Dean"
+                      ),
+                      h("div", { style: {"fontFamily": "var(--font-mono),monospace", "fontSize": "11.5px", "color": "#9d9d97"} },
+                        "$3M+ managed \u00b7 ",
+                        h("span", { style: {"color": "#e0a52e"} },
+                          "\u2605"
+                        ),
+                        " 5.0"
+                      )
+                    )
+                  )
+                )
+              ),
+              h("div", { style: {"padding": "22px", "position": "relative", "minHeight": "560px"} },
+                h("div", { style: {"display": "flex", "alignItems": "center", "gap": "9px", "padding": "6px 4px 16px"} },
+                  h("span", { style: {"width": "8px", "height": "8px", "borderRadius": "50%", "background": "#cdfb45", "display": "inline-block", "flex": "none", "boxShadow": "0 0 0 4px rgba(205,251,69,0.14)"} }),
+                  h("span", { style: {"fontFamily": "var(--font-mono),monospace", "fontSize": "12px", "letterSpacing": "0.05em", "color": "#c8c8c2"} },
+                    "Pick a time \u00b7 Tue ",
+                    "&",
+                    " Thu, 2\u20134pm PT \u00b7 your local time"
+                  )
+                ),
+                h("div", { id: "cal-embed" }),
+                h("div", { id: "cal-skeleton", style: {"position": "absolute", "inset": "22px", "top": "54px", "borderRadius": "12px", "background": "#0b0b0c", "display": "flex", "flexDirection": "column", "alignItems": "center", "justifyContent": "center", "gap": "16px", "pointerEvents": "none"} },
+                  h("div", { style: {"display": "flex", "gap": "7px"} },
+                    h("span", { style: {"width": "8px", "height": "8px", "borderRadius": "50%", "background": "#cdfb45", "display": "inline-block", "animation": "pulseDot 1.4s ease-out infinite"} }),
+                    h("span", { style: {"width": "8px", "height": "8px", "borderRadius": "50%", "background": "rgba(205,251,69,0.4)", "display": "inline-block", "animation": "pulseDot 1.4s ease-out infinite .2s"} }),
+                    h("span", { style: {"width": "8px", "height": "8px", "borderRadius": "50%", "background": "rgba(205,251,69,0.2)", "display": "inline-block", "animation": "pulseDot 1.4s ease-out infinite .4s"} })
+                  ),
+                  h("div", { style: {"fontFamily": "var(--font-mono),monospace", "fontSize": "12px", "color": "#74746e", "textAlign": "center", "padding": "0 30px", "lineHeight": "1.6"} },
+                    "Loading the calendar\u2026",
+                    h("br", null),
+                    h("span", { style: {"color": "#5a5a56"} },
+                      "connected to Jackson's Google Calendar"
+                    )
+                  )
+                )
+              )
+            )
           )
         )
       )

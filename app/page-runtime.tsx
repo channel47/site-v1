@@ -10,6 +10,7 @@ import { useEffect } from "react"
  *  - carousel     : full-bleed coverflow live-work slider — cloned card sets for
  *                   seamless infinite loop, drag/swipe, arrows, dots, counter
  *  - gallery      : click a phone card -> full scrollable lightbox
+ *  - booking      : [data-open-booking] CTAs open the cal.com modal (lazy-loaded)
  *  - date         : fills "first advertorial by {date}" with the next 5 business days
  *
  * The markup is static (server-rendered) and never re-renders, so wiring the DOM
@@ -595,8 +596,150 @@ export function PageRuntime() {
       })
     }
 
+    // ── booking modal + cal.com inline embed ─────────────────────────────────
+    // Every [data-open-booking] CTA opens the in-page modal that hosts a cal.com
+    // inline embed. The calendar is loaded lazily on first open (no cal.com JS on
+    // page load), themed to match the design. Close on ✕, click-outside, or Esc.
+    type CalApi = ((...args: unknown[]) => void) & {
+      loaded?: boolean
+      ns?: Record<string, CalApi>
+      q?: unknown[][]
+    }
+    const calWindow = window as unknown as { Cal?: CalApi; document: Document }
+    const CAL_LINK = "ctrlswing/15min"
+    let calStarted = false
+    let bkPrevOverflow: string | undefined
+
+    const hideCalSkeleton = () => {
+      const sk = document.getElementById("cal-skeleton")
+      if (sk && sk.style.display !== "none") {
+        sk.style.transition = "opacity .4s ease"
+        sk.style.opacity = "0"
+        setTimeout(() => {
+          if (sk) sk.style.display = "none"
+        }, 420)
+      }
+    }
+
+    // Official cal.com inline-embed loader: stubs window.Cal as a command queue
+    // and injects embed.js on first call (the real script drains the queue).
+    const loadCalEmbed = () => {
+      if (calWindow.Cal) return
+      const w = calWindow
+      const push = (a: CalApi, ar: unknown[]) => {
+        a.q!.push(ar)
+      }
+      w.Cal = function (...ar: unknown[]) {
+        const cal = w.Cal as CalApi
+        if (!cal.loaded) {
+          cal.ns = {}
+          cal.q = cal.q || []
+          const s = w.document.createElement("script")
+          s.src = "https://app.cal.com/embed/embed.js"
+          w.document.head.appendChild(s)
+          cal.loaded = true
+        }
+        if (ar[0] === "init") {
+          const api = function (...a: unknown[]) {
+            push(api as unknown as CalApi, a)
+          } as unknown as CalApi
+          const namespace = ar[1]
+          api.q = api.q || []
+          if (typeof namespace === "string") {
+            cal.ns![namespace] = cal.ns![namespace] || api
+            push(cal.ns![namespace], ar)
+            push(cal, ["initNamespace", namespace])
+          } else {
+            push(cal, ar)
+          }
+          return
+        }
+        push(cal, ar)
+      } as CalApi
+    }
+
+    const initCal = () => {
+      const el = document.getElementById("cal-embed")
+      if (!el || calStarted) return
+      loadCalEmbed()
+      const Cal = calWindow.Cal
+      if (!Cal) return
+      calStarted = true
+      el.replaceChildren() // clear without innerHTML
+      Cal("init", { origin: "https://app.cal.com" })
+      Cal("inline", { elementOrSelector: "#cal-embed", calLink: CAL_LINK, layout: "month_view", config: { theme: "dark" } })
+      Cal("ui", {
+        theme: "dark",
+        hideEventTypeDetails: false,
+        cssVarsPerTheme: {
+          dark: { "cal-brand": "#cdfb45", "cal-bg": "#0b0b0c", "cal-bg-emphasis": "#141416", "cal-bg-muted": "#0f0f11" },
+        },
+      })
+      Cal("on", { action: "*", callback: () => hideCalSkeleton() })
+      setTimeout(hideCalSkeleton, 4500)
+    }
+
+    const closeBooking = () => {
+      const ov = document.getElementById("book-modal-overlay")
+      if (ov) ov.style.display = "none"
+      document.body.style.overflow = bkPrevOverflow ?? ""
+    }
+    const openBooking = () => {
+      const ov = document.getElementById("book-modal-overlay")
+      if (!ov) return
+      ov.style.display = "flex"
+      ov.style.animation = "none"
+      void ov.offsetWidth // force reflow so the entrance animation replays
+      ov.style.animation = "ovIn .3s ease both"
+      const card = document.getElementById("book-modal-card")
+      if (card) {
+        card.style.animation = "none"
+        void card.offsetWidth
+        card.style.animation = "mdIn .42s cubic-bezier(.2,.7,.2,1) both"
+        card.scrollTop = 0
+      }
+      bkPrevOverflow = document.body.style.overflow
+      document.body.style.overflow = "hidden"
+      initCal()
+    }
+
+    const setupBooking = () => {
+      document.querySelectorAll<HTMLElement>("[data-open-booking]").forEach((t) => {
+        const onClick = (e: Event) => {
+          e.preventDefault()
+          openBooking()
+        }
+        t.addEventListener("click", onClick)
+        cleanups.push(() => t.removeEventListener("click", onClick))
+      })
+      const ov = document.getElementById("book-modal-overlay")
+      if (ov) {
+        const onOverlay = (e: MouseEvent) => {
+          if (e.target === ov) closeBooking()
+        }
+        ov.addEventListener("click", onOverlay)
+        cleanups.push(() => ov.removeEventListener("click", onOverlay))
+      }
+      const close = document.getElementById("close-modal")
+      if (close) {
+        const onClose = () => closeBooking()
+        close.addEventListener("click", onClose)
+        cleanups.push(() => close.removeEventListener("click", onClose))
+      }
+      const onEsc = (e: KeyboardEvent) => {
+        if (e.key === "Escape") closeBooking()
+      }
+      document.addEventListener("keydown", onEsc)
+      cleanups.push(() => {
+        document.removeEventListener("keydown", onEsc)
+        // restore scroll if we unmount while the modal is open
+        if (bkPrevOverflow !== undefined) document.body.style.overflow = bkPrevOverflow
+      })
+    }
+
     setupGallery()
     setupCarousel()
+    setupBooking()
 
     // ── computed "first advertorial by {date}" ───────────────────────────────
     const firstAdvertorialDate = () => {

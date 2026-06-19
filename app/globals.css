@@ -25,6 +25,19 @@ a{color:inherit;text-decoration:none}
 @keyframes milestonePulse{0%{box-shadow:0 0 0 3px rgba(11,11,12,0.22),0 0 0 0 rgba(11,11,12,0.30)}70%{box-shadow:0 0 0 3px rgba(11,11,12,0.22),0 0 0 9px rgba(11,11,12,0)}100%{box-shadow:0 0 0 3px rgba(11,11,12,0.22),0 0 0 9px rgba(11,11,12,0)}}
 @keyframes trackFlow{0%{background-position:-90px 0}100%{background-position:calc(100% + 90px) 0}}
 
+/* booking modal + cal.com embed */
+@keyframes ovIn{from{opacity:0}to{opacity:1}}
+@keyframes mdIn{from{opacity:0;transform:translateY(26px) scale(.985)}to{opacity:1;transform:none}}
+#cal-embed{width:100%;min-height:560px}
+#cal-embed iframe{border-radius:12px!important}
+#book-modal-card{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.18) transparent}
+#book-modal-card::-webkit-scrollbar{width:8px}
+#book-modal-card::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.16);border-radius:8px}
+@media (max-width:780px){
+  #book-modal-grid{grid-template-columns:1fr!important}
+  #book-modal-rail{display:none!important}
+}
+
 /* faq toggle icon */
 details summary span{transition:transform .28s cubic-bezier(.2,.7,.2,1)}
 details[open] summary span{transform:rotate(45deg)}
