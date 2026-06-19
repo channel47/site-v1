@@ -205,114 +205,130 @@ export function AdvertorialContent() {
             )
           ),
           h("div", { style: {"fontFamily": "var(--font-mono),monospace", "fontSize": "12px", "letterSpacing": "0.1em", "textTransform": "uppercase", "color": "#74746e", "marginBottom": "24px"} },
-            "Live work \u2014 real pages, tap any to read"
+            "Live work \u2014 drag to explore, tap any to read"
           ),
-          h("div", { style: {"display": "grid", "gridTemplateColumns": "repeat(3,1fr)", "gap": "24px"}, "data-comment-anchor": "cef021cfe7-div" },
-            h("div", { "data-shot": "/uploads/work-cookware.png", "data-cap": "Cookware \u00b7 Us-vs-Them", style: {"cursor": "pointer"} },
-              h("div", { style: {"display": "flex", "alignItems": "center", "justifyContent": "space-between", "marginBottom": "13px", "fontFamily": "var(--font-mono),monospace", "fontSize": "11.5px"} },
-                h("span", { style: {"color": "#9d9d97"} },
-                  "Cookware"
+          h("div", { "data-comment-anchor": "cef021cfe7-div", style: {"position": "relative", "width": "100vw", "marginLeft": "calc(50% - 50vw)"} },
+            h("div", { id: "liveTrack", style: {"display": "flex", "alignItems": "flex-start", "gap": "30px", "overflowX": "auto", "overflowY": "hidden", "scrollSnapType": "x proximity", "paddingTop": "16px", "paddingBottom": "8px", "paddingLeft": "calc(50% - 150px)", "paddingRight": "calc(50% - 150px)", "cursor": "grab", "WebkitOverflowScrolling": "touch", "WebkitMaskImage": "linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%)", "maskImage": "linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%)"} },
+              h("div", { className: "live-card", "data-shot": "/uploads/work-cookware.png", "data-cap": "Cookware \u00b7 Us-vs-Them", style: {"flex": "none", "width": "300px", "scrollSnapAlign": "center", "cursor": "pointer", "transformOrigin": "center 62%", "transition": "transform .5s cubic-bezier(.2,.7,.2,1),opacity .5s cubic-bezier(.2,.7,.2,1)", "willChange": "transform,opacity"} },
+                h("div", { style: {"display": "flex", "alignItems": "center", "justifyContent": "space-between", "marginBottom": "14px", "fontFamily": "var(--font-mono),monospace", "fontSize": "11.5px"} },
+                  h("span", { style: {"color": "#9d9d97"} },
+                    "Cookware"
+                  ),
+                  h("span", { style: {"color": "#cdfb45"} },
+                    "Us-vs-Them \u2192"
+                  )
                 ),
-                h("span", { style: {"color": "#cdfb45"} },
-                  "Us-vs-Them \u2192"
+                h("div", { style: {"position": "relative", "WebkitMaskImage": "linear-gradient(180deg,#000 72%,transparent 99%)", "maskImage": "linear-gradient(180deg,#000 72%,transparent 99%)"} },
+                  h("div", { className: "phone-shell", style: {"position": "relative", "background": "#0b0b0c", "border": "1px solid rgba(255,255,255,0.14)", "borderBottom": "none", "borderRadius": "34px 34px 0 0", "padding": "8px 8px 0", "transition": "box-shadow .5s cubic-bezier(.2,.7,.2,1)"} },
+                    h("div", { style: {"position": "absolute", "top": "15px", "left": "50%", "transform": "translateX(-50%)", "width": "80px", "height": "18px", "background": "#0b0b0c", "borderRadius": "0 0 13px 13px", "zIndex": "3"} }),
+                    h("div", { style: {"position": "relative", "height": "466px", "borderRadius": "28px 28px 0 0", "overflow": "hidden", "background": "#fff"} },
+                      h("img", { src: "/uploads/work-cookware.png", alt: "Cookware advertorial", loading: "lazy", style: {"width": "100%", "display": "block"}, "data-comment-anchor": "8f12c48fc9-img" })
+                    )
+                  )
                 )
               ),
-              h("div", { style: {"position": "relative", "transition": "transform .3s cubic-bezier(.2,.7,.2,1)", "WebkitMaskImage": "linear-gradient(180deg,#000 58%,transparent 98%)", "maskImage": "linear-gradient(180deg,#000 58%,transparent 98%)"}, "style-hover": "transform:translateY(-6px)" },
-                h("div", { style: {"position": "relative", "background": "#0b0b0c", "border": "1px solid rgba(255,255,255,0.12)", "borderBottom": "none", "borderRadius": "32px 32px 0 0", "padding": "7px 7px 0"} },
-                  h("div", { style: {"position": "absolute", "top": "14px", "left": "50%", "transform": "translateX(-50%)", "width": "74px", "height": "17px", "background": "#0b0b0c", "borderRadius": "0 0 12px 12px", "zIndex": "3"} }),
-                  h("div", { style: {"position": "relative", "height": "340px", "borderRadius": "26px 26px 0 0", "overflow": "hidden", "background": "#fff"} },
-                    h("img", { src: "/uploads/work-cookware.png", alt: "Cookware advertorial", loading: "lazy", style: {"width": "100%", "display": "block"}, "data-comment-anchor": "8f12c48fc9-img" })
+              h("div", { className: "live-card", "data-shot": "/uploads/work-wellness.png", "data-cap": "Wellness \u00b7 Myth-Busting", style: {"flex": "none", "width": "300px", "scrollSnapAlign": "center", "cursor": "pointer", "transformOrigin": "center 62%", "transition": "transform .5s cubic-bezier(.2,.7,.2,1),opacity .5s cubic-bezier(.2,.7,.2,1)", "willChange": "transform,opacity"} },
+                h("div", { style: {"display": "flex", "alignItems": "center", "justifyContent": "space-between", "marginBottom": "14px", "fontFamily": "var(--font-mono),monospace", "fontSize": "11.5px"} },
+                  h("span", { style: {"color": "#9d9d97"} },
+                    "Wellness"
+                  ),
+                  h("span", { style: {"color": "#cdfb45"} },
+                    "Myth-Busting \u2192"
+                  )
+                ),
+                h("div", { style: {"position": "relative", "WebkitMaskImage": "linear-gradient(180deg,#000 72%,transparent 99%)", "maskImage": "linear-gradient(180deg,#000 72%,transparent 99%)"} },
+                  h("div", { className: "phone-shell", style: {"position": "relative", "background": "#0b0b0c", "border": "1px solid rgba(255,255,255,0.14)", "borderBottom": "none", "borderRadius": "34px 34px 0 0", "padding": "8px 8px 0", "transition": "box-shadow .5s cubic-bezier(.2,.7,.2,1)"} },
+                    h("div", { style: {"position": "absolute", "top": "15px", "left": "50%", "transform": "translateX(-50%)", "width": "80px", "height": "18px", "background": "#0b0b0c", "borderRadius": "0 0 13px 13px", "zIndex": "3"} }),
+                    h("div", { style: {"position": "relative", "height": "466px", "borderRadius": "28px 28px 0 0", "overflow": "hidden", "background": "#fff"} },
+                      h("img", { src: "/uploads/work-wellness.png", alt: "Wellness advertorial", loading: "lazy", style: {"width": "100%", "display": "block"}, "data-comment-anchor": "88c3c919d1-img" })
+                    )
+                  )
+                )
+              ),
+              h("div", { className: "live-card", "data-shot": "/uploads/work-coaching.png", "data-cap": "Coaching \u00b7 The Listicle", style: {"flex": "none", "width": "300px", "scrollSnapAlign": "center", "cursor": "pointer", "transformOrigin": "center 62%", "transition": "transform .5s cubic-bezier(.2,.7,.2,1),opacity .5s cubic-bezier(.2,.7,.2,1)", "willChange": "transform,opacity"} },
+                h("div", { style: {"display": "flex", "alignItems": "center", "justifyContent": "space-between", "marginBottom": "14px", "fontFamily": "var(--font-mono),monospace", "fontSize": "11.5px"} },
+                  h("span", { style: {"color": "#9d9d97"} },
+                    "Coaching"
+                  ),
+                  h("span", { style: {"color": "#cdfb45"} },
+                    "The Listicle \u2192"
+                  )
+                ),
+                h("div", { style: {"position": "relative", "WebkitMaskImage": "linear-gradient(180deg,#000 72%,transparent 99%)", "maskImage": "linear-gradient(180deg,#000 72%,transparent 99%)"} },
+                  h("div", { className: "phone-shell", style: {"position": "relative", "background": "#0b0b0c", "border": "1px solid rgba(255,255,255,0.14)", "borderBottom": "none", "borderRadius": "34px 34px 0 0", "padding": "8px 8px 0", "transition": "box-shadow .5s cubic-bezier(.2,.7,.2,1)"} },
+                    h("div", { style: {"position": "absolute", "top": "15px", "left": "50%", "transform": "translateX(-50%)", "width": "80px", "height": "18px", "background": "#0b0b0c", "borderRadius": "0 0 13px 13px", "zIndex": "3"} }),
+                    h("div", { style: {"position": "relative", "height": "466px", "borderRadius": "28px 28px 0 0", "overflow": "hidden", "background": "#fff"} },
+                      h("img", { src: "/uploads/work-coaching.png", alt: "Coaching advertorial", loading: "lazy", style: {"width": "100%", "display": "block"} })
+                    )
+                  )
+                )
+              ),
+              h("div", { className: "live-card", "data-shot": "/uploads/work-hearing.png", "data-cap": "Hearing \u00b7 The Listicle", style: {"flex": "none", "width": "300px", "scrollSnapAlign": "center", "cursor": "pointer", "transformOrigin": "center 62%", "transition": "transform .5s cubic-bezier(.2,.7,.2,1),opacity .5s cubic-bezier(.2,.7,.2,1)", "willChange": "transform,opacity"} },
+                h("div", { style: {"display": "flex", "alignItems": "center", "justifyContent": "space-between", "marginBottom": "14px", "fontFamily": "var(--font-mono),monospace", "fontSize": "11.5px"} },
+                  h("span", { style: {"color": "#9d9d97"} },
+                    "Hearing"
+                  ),
+                  h("span", { style: {"color": "#cdfb45"} },
+                    "The Listicle \u2192"
+                  )
+                ),
+                h("div", { style: {"position": "relative", "WebkitMaskImage": "linear-gradient(180deg,#000 72%,transparent 99%)", "maskImage": "linear-gradient(180deg,#000 72%,transparent 99%)"} },
+                  h("div", { className: "phone-shell", style: {"position": "relative", "background": "#0b0b0c", "border": "1px solid rgba(255,255,255,0.14)", "borderBottom": "none", "borderRadius": "34px 34px 0 0", "padding": "8px 8px 0", "transition": "box-shadow .5s cubic-bezier(.2,.7,.2,1)"} },
+                    h("div", { style: {"position": "absolute", "top": "15px", "left": "50%", "transform": "translateX(-50%)", "width": "80px", "height": "18px", "background": "#0b0b0c", "borderRadius": "0 0 13px 13px", "zIndex": "3"} }),
+                    h("div", { style: {"position": "relative", "height": "466px", "borderRadius": "28px 28px 0 0", "overflow": "hidden", "background": "#fff"} },
+                      h("img", { src: "/uploads/work-hearing.png", alt: "Hearing aid advertorial", loading: "lazy", style: {"width": "100%", "display": "block"} })
+                    )
+                  )
+                )
+              ),
+              h("div", { className: "live-card", "data-shot": "/uploads/work-pet.png", "data-cap": "Pet \u00b7 Founder Story", style: {"flex": "none", "width": "300px", "scrollSnapAlign": "center", "cursor": "pointer", "transformOrigin": "center 62%", "transition": "transform .5s cubic-bezier(.2,.7,.2,1),opacity .5s cubic-bezier(.2,.7,.2,1)", "willChange": "transform,opacity"} },
+                h("div", { style: {"display": "flex", "alignItems": "center", "justifyContent": "space-between", "marginBottom": "14px", "fontFamily": "var(--font-mono),monospace", "fontSize": "11.5px"} },
+                  h("span", { style: {"color": "#9d9d97"} },
+                    "Pet"
+                  ),
+                  h("span", { style: {"color": "#cdfb45"} },
+                    "Founder Story \u2192"
+                  )
+                ),
+                h("div", { style: {"position": "relative", "WebkitMaskImage": "linear-gradient(180deg,#000 72%,transparent 99%)", "maskImage": "linear-gradient(180deg,#000 72%,transparent 99%)"} },
+                  h("div", { className: "phone-shell", style: {"position": "relative", "background": "#0b0b0c", "border": "1px solid rgba(255,255,255,0.14)", "borderBottom": "none", "borderRadius": "34px 34px 0 0", "padding": "8px 8px 0", "transition": "box-shadow .5s cubic-bezier(.2,.7,.2,1)"} },
+                    h("div", { style: {"position": "absolute", "top": "15px", "left": "50%", "transform": "translateX(-50%)", "width": "80px", "height": "18px", "background": "#0b0b0c", "borderRadius": "0 0 13px 13px", "zIndex": "3"} }),
+                    h("div", { style: {"position": "relative", "height": "466px", "borderRadius": "28px 28px 0 0", "overflow": "hidden", "background": "#fff"} },
+                      h("img", { src: "/uploads/work-pet.png", alt: "Pet advertorial", loading: "lazy", style: {"width": "100%", "display": "block"} })
+                    )
+                  )
+                )
+              ),
+              h("div", { className: "live-card", "data-shot": "/uploads/work-beauty.png", "data-cap": "Beauty \u00b7 The Honest Review", style: {"flex": "none", "width": "300px", "scrollSnapAlign": "center", "cursor": "pointer", "transformOrigin": "center 62%", "transition": "transform .5s cubic-bezier(.2,.7,.2,1),opacity .5s cubic-bezier(.2,.7,.2,1)", "willChange": "transform,opacity"} },
+                h("div", { style: {"display": "flex", "alignItems": "center", "justifyContent": "space-between", "marginBottom": "14px", "fontFamily": "var(--font-mono),monospace", "fontSize": "11.5px"} },
+                  h("span", { style: {"color": "#9d9d97"} },
+                    "Beauty"
+                  ),
+                  h("span", { style: {"color": "#cdfb45"} },
+                    "The Honest Review \u2192"
+                  )
+                ),
+                h("div", { style: {"position": "relative", "WebkitMaskImage": "linear-gradient(180deg,#000 72%,transparent 99%)", "maskImage": "linear-gradient(180deg,#000 72%,transparent 99%)"} },
+                  h("div", { className: "phone-shell", style: {"position": "relative", "background": "#0b0b0c", "border": "1px solid rgba(255,255,255,0.14)", "borderBottom": "none", "borderRadius": "34px 34px 0 0", "padding": "8px 8px 0", "transition": "box-shadow .5s cubic-bezier(.2,.7,.2,1)"} },
+                    h("div", { style: {"position": "absolute", "top": "15px", "left": "50%", "transform": "translateX(-50%)", "width": "80px", "height": "18px", "background": "#0b0b0c", "borderRadius": "0 0 13px 13px", "zIndex": "3"} }),
+                    h("div", { style: {"position": "relative", "height": "466px", "borderRadius": "28px 28px 0 0", "overflow": "hidden", "background": "#fff"} },
+                      h("img", { src: "/uploads/work-beauty.png", alt: "Beauty advertorial", loading: "lazy", style: {"width": "100%", "display": "block"} })
+                    )
                   )
                 )
               )
             ),
-            h("div", { "data-shot": "/uploads/work-wellness.png", "data-cap": "Wellness \u00b7 Myth-Busting", style: {"cursor": "pointer"} },
-              h("div", { style: {"display": "flex", "alignItems": "center", "justifyContent": "space-between", "marginBottom": "13px", "fontFamily": "var(--font-mono),monospace", "fontSize": "11.5px"} },
-                h("span", { style: {"color": "#9d9d97"} },
-                  "Wellness"
-                ),
-                h("span", { style: {"color": "#cdfb45"} },
-                  "Myth-Busting \u2192"
-                )
+            h("div", { style: {"display": "flex", "alignItems": "center", "justifyContent": "space-between", "gap": "20px", "maxWidth": "1240px", "margin": "30px auto 0", "padding": "0 44px"} },
+              h("div", { id: "liveCounter", style: {"fontFamily": "var(--font-mono),monospace", "fontSize": "12.5px", "letterSpacing": "0.08em", "color": "#9d9d97", "flex": "none", "minWidth": "64px"} },
+                "01 / 06"
               ),
-              h("div", { style: {"position": "relative", "transition": "transform .3s cubic-bezier(.2,.7,.2,1)", "WebkitMaskImage": "linear-gradient(180deg,#000 58%,transparent 98%)", "maskImage": "linear-gradient(180deg,#000 58%,transparent 98%)"}, "style-hover": "transform:translateY(-6px)" },
-                h("div", { style: {"position": "relative", "background": "#0b0b0c", "border": "1px solid rgba(255,255,255,0.12)", "borderBottom": "none", "borderRadius": "32px 32px 0 0", "padding": "7px 7px 0"} },
-                  h("div", { style: {"position": "absolute", "top": "14px", "left": "50%", "transform": "translateX(-50%)", "width": "74px", "height": "17px", "background": "#0b0b0c", "borderRadius": "0 0 12px 12px", "zIndex": "3"} }),
-                  h("div", { style: {"position": "relative", "height": "340px", "borderRadius": "26px 26px 0 0", "overflow": "hidden", "background": "#fff"} },
-                    h("img", { src: "/uploads/work-wellness.png", alt: "Wellness advertorial", loading: "lazy", style: {"width": "100%", "display": "block"}, "data-comment-anchor": "88c3c919d1-img" })
-                  )
-                )
-              )
-            ),
-            h("div", { "data-shot": "/uploads/work-coaching.png", "data-cap": "Coaching \u00b7 The Listicle", style: {"cursor": "pointer"} },
-              h("div", { style: {"display": "flex", "alignItems": "center", "justifyContent": "space-between", "marginBottom": "13px", "fontFamily": "var(--font-mono),monospace", "fontSize": "11.5px"} },
-                h("span", { style: {"color": "#9d9d97"} },
-                  "Coaching"
+              h("div", { id: "liveDots", style: {"display": "flex", "alignItems": "center", "gap": "8px", "justifyContent": "center", "flex": "1"} }),
+              h("div", { id: "liveArrows", style: {"display": "flex", "gap": "10px", "flex": "none"} },
+                h("button", { id: "livePrev", type: "button", "aria-label": "Previous page", style: {"width": "42px", "height": "42px", "borderRadius": "50%", "background": "transparent", "border": "1px solid rgba(255,255,255,0.16)", "color": "#f4f4ef", "cursor": "pointer", "display": "flex", "alignItems": "center", "justifyContent": "center", "fontSize": "19px", "lineHeight": "1", "paddingBottom": "2px", "transition": "border-color .2s,color .2s,transform .25s cubic-bezier(.2,.7,.2,1)"}, "style-hover": "border-color:#cdfb45;color:#cdfb45;transform:translateY(-2px)" },
+                  "\u2039"
                 ),
-                h("span", { style: {"color": "#cdfb45"} },
-                  "The Listicle \u2192"
-                )
-              ),
-              h("div", { style: {"position": "relative", "transition": "transform .3s cubic-bezier(.2,.7,.2,1)", "WebkitMaskImage": "linear-gradient(180deg,#000 58%,transparent 98%)", "maskImage": "linear-gradient(180deg,#000 58%,transparent 98%)"}, "style-hover": "transform:translateY(-6px)" },
-                h("div", { style: {"position": "relative", "background": "#0b0b0c", "border": "1px solid rgba(255,255,255,0.12)", "borderBottom": "none", "borderRadius": "32px 32px 0 0", "padding": "7px 7px 0"} },
-                  h("div", { style: {"position": "absolute", "top": "14px", "left": "50%", "transform": "translateX(-50%)", "width": "74px", "height": "17px", "background": "#0b0b0c", "borderRadius": "0 0 12px 12px", "zIndex": "3"} }),
-                  h("div", { style: {"position": "relative", "height": "340px", "borderRadius": "26px 26px 0 0", "overflow": "hidden", "background": "#fff"} },
-                    h("img", { src: "/uploads/work-coaching.png", alt: "Coaching advertorial", loading: "lazy", style: {"width": "100%", "display": "block"} })
-                  )
-                )
-              )
-            ),
-            h("div", { "data-shot": "/uploads/work-hearing.png", "data-cap": "Hearing \u00b7 The Listicle", style: {"cursor": "pointer"} },
-              h("div", { style: {"display": "flex", "alignItems": "center", "justifyContent": "space-between", "marginBottom": "13px", "fontFamily": "var(--font-mono),monospace", "fontSize": "11.5px"} },
-                h("span", { style: {"color": "#9d9d97"} },
-                  "Hearing"
-                ),
-                h("span", { style: {"color": "#cdfb45"} },
-                  "The Listicle \u2192"
-                )
-              ),
-              h("div", { style: {"position": "relative", "transition": "transform .3s cubic-bezier(.2,.7,.2,1)", "WebkitMaskImage": "linear-gradient(180deg,#000 58%,transparent 98%)", "maskImage": "linear-gradient(180deg,#000 58%,transparent 98%)"}, "style-hover": "transform:translateY(-6px)" },
-                h("div", { style: {"position": "relative", "background": "#0b0b0c", "border": "1px solid rgba(255,255,255,0.12)", "borderBottom": "none", "borderRadius": "32px 32px 0 0", "padding": "7px 7px 0"} },
-                  h("div", { style: {"position": "absolute", "top": "14px", "left": "50%", "transform": "translateX(-50%)", "width": "74px", "height": "17px", "background": "#0b0b0c", "borderRadius": "0 0 12px 12px", "zIndex": "3"} }),
-                  h("div", { style: {"position": "relative", "height": "340px", "borderRadius": "26px 26px 0 0", "overflow": "hidden", "background": "#fff"} },
-                    h("img", { src: "/uploads/work-hearing.png", alt: "Hearing aid advertorial", loading: "lazy", style: {"width": "100%", "display": "block"} })
-                  )
-                )
-              )
-            ),
-            h("div", { "data-shot": "/uploads/work-pet.png", "data-cap": "Pet \u00b7 Founder Story", style: {"cursor": "pointer"} },
-              h("div", { style: {"display": "flex", "alignItems": "center", "justifyContent": "space-between", "marginBottom": "13px", "fontFamily": "var(--font-mono),monospace", "fontSize": "11.5px"} },
-                h("span", { style: {"color": "#9d9d97"} },
-                  "Pet"
-                ),
-                h("span", { style: {"color": "#cdfb45"} },
-                  "Founder Story \u2192"
-                )
-              ),
-              h("div", { style: {"position": "relative", "transition": "transform .3s cubic-bezier(.2,.7,.2,1)", "WebkitMaskImage": "linear-gradient(180deg,#000 58%,transparent 98%)", "maskImage": "linear-gradient(180deg,#000 58%,transparent 98%)"}, "style-hover": "transform:translateY(-6px)" },
-                h("div", { style: {"position": "relative", "background": "#0b0b0c", "border": "1px solid rgba(255,255,255,0.12)", "borderBottom": "none", "borderRadius": "32px 32px 0 0", "padding": "7px 7px 0"} },
-                  h("div", { style: {"position": "absolute", "top": "14px", "left": "50%", "transform": "translateX(-50%)", "width": "74px", "height": "17px", "background": "#0b0b0c", "borderRadius": "0 0 12px 12px", "zIndex": "3"} }),
-                  h("div", { style: {"position": "relative", "height": "340px", "borderRadius": "26px 26px 0 0", "overflow": "hidden", "background": "#fff"} },
-                    h("img", { src: "/uploads/work-pet.png", alt: "Pet advertorial", loading: "lazy", style: {"width": "100%", "display": "block"} })
-                  )
-                )
-              )
-            ),
-            h("div", { "data-shot": "/uploads/work-beauty.png", "data-cap": "Beauty \u00b7 The Honest Review", style: {"cursor": "pointer"} },
-              h("div", { style: {"display": "flex", "alignItems": "center", "justifyContent": "space-between", "marginBottom": "13px", "fontFamily": "var(--font-mono),monospace", "fontSize": "11.5px"} },
-                h("span", { style: {"color": "#9d9d97"} },
-                  "Beauty"
-                ),
-                h("span", { style: {"color": "#cdfb45"} },
-                  "The Honest Review \u2192"
-                )
-              ),
-              h("div", { style: {"position": "relative", "transition": "transform .3s cubic-bezier(.2,.7,.2,1)", "WebkitMaskImage": "linear-gradient(180deg,#000 58%,transparent 98%)", "maskImage": "linear-gradient(180deg,#000 58%,transparent 98%)"}, "style-hover": "transform:translateY(-6px)" },
-                h("div", { style: {"position": "relative", "background": "#0b0b0c", "border": "1px solid rgba(255,255,255,0.12)", "borderBottom": "none", "borderRadius": "32px 32px 0 0", "padding": "7px 7px 0"} },
-                  h("div", { style: {"position": "absolute", "top": "14px", "left": "50%", "transform": "translateX(-50%)", "width": "74px", "height": "17px", "background": "#0b0b0c", "borderRadius": "0 0 12px 12px", "zIndex": "3"} }),
-                  h("div", { style: {"position": "relative", "height": "340px", "borderRadius": "26px 26px 0 0", "overflow": "hidden", "background": "#fff"} },
-                    h("img", { src: "/uploads/work-beauty.png", alt: "Beauty advertorial", loading: "lazy", style: {"width": "100%", "display": "block"} })
-                  )
+                h("button", { id: "liveNext", type: "button", "aria-label": "Next page", style: {"width": "42px", "height": "42px", "borderRadius": "50%", "background": "transparent", "border": "1px solid rgba(255,255,255,0.16)", "color": "#f4f4ef", "cursor": "pointer", "display": "flex", "alignItems": "center", "justifyContent": "center", "fontSize": "19px", "lineHeight": "1", "paddingBottom": "2px", "transition": "border-color .2s,color .2s,transform .25s cubic-bezier(.2,.7,.2,1)"}, "style-hover": "border-color:#cdfb45;color:#cdfb45;transform:translateY(-2px)" },
+                  "\u203a"
                 )
               )
             )

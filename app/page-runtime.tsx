@@ -7,7 +7,9 @@ import { useEffect } from "react"
  *  - style-hover  : applies the hover style declarations on mouseenter/leave
  *  - brandmark    : SVG bar-scramble on load + on hover (nav + footer marks)
  *  - scroll reveal: IntersectionObserver fades sections/cards up (matches CSS .r-in)
- *  - gallery      : click a phone thumbnail -> full scrollable lightbox
+ *  - carousel     : full-bleed coverflow live-work slider — cloned card sets for
+ *                   seamless infinite loop, drag/swipe, arrows, dots, counter
+ *  - gallery      : click a phone card -> full scrollable lightbox
  *  - date         : fills "first advertorial by {date}" with the next 5 business days
  *
  * The markup is static (server-rendered) and never re-renders, so wiring the DOM
@@ -263,12 +265,270 @@ export function PageRuntime() {
       prevOverflow = document.body.style.overflow
       document.body.style.overflow = "hidden"
     }
-    document.querySelectorAll<HTMLElement>("[data-shot]").forEach((el) => {
-      const onClick = () => openLightbox(el.getAttribute("data-shot") || "", el.getAttribute("data-cap") || "")
-      el.addEventListener("click", onClick)
-      cleanups.push(() => el.removeEventListener("click", onClick))
-    })
     cleanups.push(closeLightbox)
+
+    // Wire click-to-open on every [data-shot] card (originals + carousel clones).
+    // Guarded so re-running after cloning never double-wires the originals.
+    const galleryWired = new WeakSet<Element>()
+    const setupGallery = () => {
+      document.querySelectorAll<HTMLElement>("[data-shot]").forEach((el) => {
+        if (galleryWired.has(el)) return
+        galleryWired.add(el)
+        const onClick = () => openLightbox(el.getAttribute("data-shot") || "", el.getAttribute("data-cap") || "")
+        el.addEventListener("click", onClick)
+        cleanups.push(() => el.removeEventListener("click", onClick))
+      })
+    }
+
+    // ── live-work coverflow carousel ─────────────────────────────────────────
+    const setupCarousel = () => {
+      const track = document.getElementById("liveTrack")
+      if (!track) return
+      // Idempotent (StrictMode / HMR): clear any prior clones + dots first.
+      track.querySelectorAll(".live-card[data-clone]").forEach((n) => n.remove())
+      const dotsWrap = document.getElementById("liveDots")
+      dotsWrap?.replaceChildren()
+      const counter = document.getElementById("liveCounter")
+
+      const orig = Array.from(track.querySelectorAll<HTMLElement>(".live-card"))
+      const N = orig.length
+      if (!N) return
+      const GAP = 30
+      let active = 0
+      const pad = (n: number) => String(n + 1).padStart(2, "0")
+
+      // Clone the full set fore & aft so scroll loops seamlessly.
+      const cloneSet = () =>
+        orig.map((c) => {
+          const n = c.cloneNode(true) as HTMLElement
+          n.setAttribute("data-clone", "1")
+          n.removeAttribute("data-comment-anchor")
+          n.querySelectorAll("[data-comment-anchor]").forEach((e) => e.removeAttribute("data-comment-anchor"))
+          return n
+        })
+      cloneSet().forEach((n) => track.insertBefore(n, orig[0]))
+      cloneSet().forEach((n) => track.appendChild(n))
+      const all = Array.from(track.querySelectorAll<HTMLElement>(".live-card"))
+      setupGallery() // wire click-to-open on the clones too
+      const stride = orig[0].offsetWidth + GAP
+      const period = N * stride
+
+      const centerLeftFor = (idx: number) => all[idx].offsetLeft - (track.clientWidth - all[idx].offsetWidth) / 2
+
+      if (dotsWrap) {
+        orig.forEach((_, i) => {
+          const b = document.createElement("button")
+          b.type = "button"
+          b.setAttribute("aria-label", "Go to page " + (i + 1))
+          b.style.cssText =
+            "width:7px;height:7px;border-radius:100px;border:none;padding:0;cursor:pointer;background:rgba(255,255,255,0.2);transition:width .4s cubic-bezier(.2,.7,.2,1),background .25s"
+          b.addEventListener("click", () => goToLogical(i))
+          dotsWrap.appendChild(b)
+        })
+      }
+
+      const syncUI = () => {
+        if (counter) counter.textContent = pad(active) + " / " + pad(N - 1)
+        if (dotsWrap)
+          Array.from(dotsWrap.children).forEach((d, i) => {
+            const el = d as HTMLElement
+            el.style.width = i === active ? "24px" : "7px"
+            el.style.background = i === active ? "#cdfb45" : "rgba(255,255,255,0.2)"
+          })
+      }
+
+      const update = () => {
+        const tc = track.scrollLeft + track.clientWidth / 2
+        let best = 0
+        let bestD = Infinity
+        all.forEach((c, i) => {
+          const cc = c.offsetLeft + c.offsetWidth / 2
+          const dd = Math.abs(cc - tc)
+          const norm = Math.min(dd / (c.offsetWidth + GAP), 1.25)
+          c.style.transform = "scale(" + (1 - norm * 0.17).toFixed(3) + ")"
+          c.style.opacity = (1 - norm * 0.52).toFixed(3)
+          c.style.zIndex = String(100 - Math.round(norm * 100))
+          const shell = c.querySelector<HTMLElement>(".phone-shell")
+          if (shell)
+            shell.style.boxShadow = "0 28px 56px -22px rgba(0,0,0," + (0.62 * (1 - Math.min(norm, 1))).toFixed(2) + ")"
+          if (dd < bestD) {
+            bestD = dd
+            best = i
+          }
+        })
+        const logical = ((best % N) + N) % N
+        if (logical !== active) {
+          active = logical
+          syncUI()
+        }
+      }
+
+      // Keep scrollLeft inside the middle copy — jumping by one period is invisible.
+      const wrapScroll = () => {
+        const a = all[0].offsetLeft
+        const lo = a + period * 0.5
+        const hi = a + period * 1.5
+        if (track.scrollLeft < lo) track.scrollLeft += period
+        else if (track.scrollLeft >= hi) track.scrollLeft -= period
+      }
+
+      let tweenRaf: number | null = null
+      const tweenTo = (target: number) => {
+        if (reduceMotion) {
+          track.scrollLeft = target
+          update()
+          return
+        }
+        if (tweenRaf) cancelAnimationFrame(tweenRaf)
+        const start = track.scrollLeft
+        const delta = target - start
+        if (Math.abs(delta) < 1) return
+        const dur = Math.min(620, 260 + Math.abs(delta) * 0.5)
+        const t0 = performance.now()
+        const ease = (p: number) => 1 - Math.pow(1 - p, 3)
+        const step = (now: number) => {
+          const p = Math.min(1, (now - t0) / dur)
+          track.scrollLeft = start + delta * ease(p)
+          if (p < 1) tweenRaf = requestAnimationFrame(step)
+          else {
+            tweenRaf = null
+            wrapScroll()
+            update()
+          }
+        }
+        tweenRaf = requestAnimationFrame(step)
+      }
+
+      const currentBest = () => {
+        const tc = track.scrollLeft + track.clientWidth / 2
+        let b = 0
+        let bd = Infinity
+        all.forEach((c, i) => {
+          const dd = Math.abs(c.offsetLeft + c.offsetWidth / 2 - tc)
+          if (dd < bd) {
+            bd = dd
+            b = i
+          }
+        })
+        return b
+      }
+      const stepBy = (dir: number) => {
+        const t = currentBest() + dir
+        if (t < 0 || t >= all.length) return
+        tweenTo(centerLeftFor(t))
+      }
+      function goToLogical(logical: number) {
+        const tc = track!.scrollLeft + track!.clientWidth / 2
+        let idx = -1
+        let bd = Infinity
+        all.forEach((c, i) => {
+          if (i % N !== logical) return
+          const dd = Math.abs(c.offsetLeft + c.offsetWidth / 2 - tc)
+          if (dd < bd) {
+            bd = dd
+            idx = i
+          }
+        })
+        if (idx >= 0) tweenTo(centerLeftFor(idx))
+      }
+
+      let rafScroll: number | null = null
+      const onScroll = () => {
+        if (rafScroll) return
+        rafScroll = requestAnimationFrame(() => {
+          rafScroll = null
+          if (!tweenRaf) wrapScroll()
+          update()
+        })
+      }
+      track.addEventListener("scroll", onScroll, { passive: true })
+      window.addEventListener("resize", onScroll)
+
+      // Mouse drag-to-scroll (touch uses native scroll + native click).
+      let down = false
+      let sx = 0
+      let sl = 0
+      let moved = false
+      let downCard: HTMLElement | null = null
+      let dragMoved = false
+      const onPointerDown = (e: PointerEvent) => {
+        if (e.pointerType !== "mouse" || e.button !== 0) return
+        down = true
+        moved = false
+        sx = e.clientX
+        sl = track.scrollLeft
+        downCard = (e.target as HTMLElement).closest?.(".live-card") as HTMLElement | null
+        track.classList.add("dragging")
+        try {
+          track.setPointerCapture(e.pointerId)
+        } catch {}
+      }
+      const onPointerMove = (e: PointerEvent) => {
+        if (!down) return
+        const dx = e.clientX - sx
+        if (Math.abs(dx) > 5) moved = true
+        track.scrollLeft = sl - dx
+      }
+      const endDrag = (e: PointerEvent) => {
+        if (!down) return
+        down = false
+        track.classList.remove("dragging")
+        try {
+          track.releasePointerCapture(e.pointerId)
+        } catch {}
+        // Pointer capture eats the native click, so drive the lightbox on a clean click.
+        dragMoved = true
+        setTimeout(() => {
+          dragMoved = false
+        }, 120)
+        if (!moved && downCard) openLightbox(downCard.getAttribute("data-shot") || "", downCard.getAttribute("data-cap") || "")
+        downCard = null
+      }
+      const onClickCapture = (e: MouseEvent) => {
+        if (dragMoved) {
+          e.stopPropagation()
+          e.preventDefault()
+        }
+      }
+      track.addEventListener("pointerdown", onPointerDown)
+      track.addEventListener("pointermove", onPointerMove)
+      track.addEventListener("pointerup", endDrag)
+      track.addEventListener("pointercancel", endDrag)
+      track.addEventListener("click", onClickCapture, true)
+
+      const prevBtn = document.getElementById("livePrev")
+      const nextBtn = document.getElementById("liveNext")
+      const onPrev = () => stepBy(-1)
+      const onNext = () => stepBy(1)
+      prevBtn?.addEventListener("click", onPrev)
+      nextBtn?.addEventListener("click", onNext)
+
+      // Start centered on the first real card (the middle copy).
+      track.scrollLeft = centerLeftFor(N)
+      requestAnimationFrame(() => {
+        update()
+        syncUI()
+      })
+
+      cleanups.push(() => {
+        track.removeEventListener("scroll", onScroll)
+        window.removeEventListener("resize", onScroll)
+        track.removeEventListener("pointerdown", onPointerDown)
+        track.removeEventListener("pointermove", onPointerMove)
+        track.removeEventListener("pointerup", endDrag)
+        track.removeEventListener("pointercancel", endDrag)
+        track.removeEventListener("click", onClickCapture, true)
+        prevBtn?.removeEventListener("click", onPrev)
+        nextBtn?.removeEventListener("click", onNext)
+        if (rafScroll) cancelAnimationFrame(rafScroll)
+        if (tweenRaf) cancelAnimationFrame(tweenRaf)
+        track.querySelectorAll(".live-card[data-clone]").forEach((n) => n.remove())
+        dotsWrap?.replaceChildren()
+      })
+    }
+
+    setupGallery()
+    setupCarousel()
 
     // ── computed "first advertorial by {date}" ───────────────────────────────
     const firstAdvertorialDate = () => {
