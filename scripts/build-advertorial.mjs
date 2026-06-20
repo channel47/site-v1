@@ -1,10 +1,10 @@
-// Regenerates app/advertorial/advertorial-content.tsx from the Claude Design
+// Regenerates app/_offer/advertorial-content.tsx from the Claude Design
 // source at design-import/Advertorials on Tap.dc.html.
 //
 // The design ships as static HTML with inline styles + a behavior script. We
 // render its markup verbatim (server-side, fully crawlable) via
 // dangerouslySetInnerHTML, with a handful of deterministic rewrites so it runs
-// inside the Next app. Interactivity stays in page-runtime.tsx (a 1:1 port of
+// inside the Next app. Interactivity stays in advertorial-runtime.tsx (a 1:1 port of
 // the design's support.js). Re-run after pulling a new design version:
 //
 //   node scripts/build-advertorial.mjs
@@ -15,7 +15,7 @@ import { fileURLToPath } from "node:url"
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 const SRC = join(ROOT, "design-import", "Advertorials on Tap.dc.html")
-const OUT = join(ROOT, "app", "advertorial", "advertorial-content.tsx")
+const OUT = join(ROOT, "app", "_offer", "advertorial-content.tsx")
 
 // Headshot pulled from the design project via DesignSync get_file (base64 JSON).
 const HEADSHOT_JSON =

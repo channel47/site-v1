@@ -37,9 +37,9 @@ html = html.replace(/<sc-if[^>]*>/g, "").replace(/<\/sc-if>/g, "") // showTopBan
 html = html.replace(/\{\{[^}]*\}\}/g, "") // strip any stray templating tokens
 
 // 4. Make CTAs real: booking opens cal.com directly (same as the advertorial),
-//    and the studio links point at the live /advertorial route.
+//    and the studio links point at the canonical home `/` where the offer lives.
 html = html.split('href="Book a Call.dc.html"').join('href="https://cal.com/ctrlswing/15min"')
-html = html.split("Advertorials on Tap.dc.html").join("/advertorial")
+html = html.split("Advertorials on Tap.dc.html").join("/")
 
 // ── emit ─────────────────────────────────────────────────────────────────────
 const file = `// AUTO-GENERATED from design-import/Vibe Members.dc.html by
