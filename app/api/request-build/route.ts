@@ -1,3 +1,6 @@
+// Done-for-you build intake. Validated, deduped into Kit (tag: "work-request"),
+// and always logged so a high-value lead is never lost. Not currently wired to a
+// UI form — kept as the endpoint for the DFY intake when that surface ships.
 import { type NextRequest, NextResponse } from "next/server"
 import { isKitConfigured, isSameOrigin, sanitizeFields, subscribeToKit } from "@/lib/kit"
 
