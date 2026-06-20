@@ -5,7 +5,7 @@ import { useEffect } from "react"
 /**
  * Client-side behaviors ported 1:1 from the Claude Design "support.js" (DCLogic):
  *  - style-hover  : applies the hover style declarations on mouseenter/leave
- *  - brandmark    : SVG bar-scramble on load + on hover (nav + footer marks)
+ *  - brandmark    : SVG "build up" bar-scramble on load + on hover (nav + footer marks)
  *  - scroll reveal: IntersectionObserver fades sections/cards up (matches CSS .r-in)
  *  - carousel     : full-bleed coverflow live-work slider — cloned card sets for
  *                   seamless infinite loop, drag/swipe, arrows, dots, counter
@@ -47,19 +47,18 @@ export function PageRuntime() {
     const origRects = new WeakMap<SVGRectElement, { x: number; y: number; w: number; h: number }>()
     const cancelers = new WeakMap<SVGSVGElement, () => void>()
 
+    // "Build up" scramble (the design's default scrambleStyle): each bar grows
+    // up from its baseline, staggered left-to-right by the bar's x position, so
+    // the mark assembles itself one column at a time.
     const scramble = (svg: SVGSVGElement) => {
       const rects = Array.from(svg.querySelectorAll("rect"))
       if (!rects.length) return
       cancelers.get(svg)?.()
-      const VW = 46
-      const VH = 24
-      const reseed = (s: { rh: number; ry: number; rw: number; rx: number }) => {
-        s.rh = 3 + Math.random() * (VH - 3)
-        s.ry = Math.random() * (VH - s.rh)
-        s.rw = 3 + Math.random() * 11
-        s.rx = Math.random() * (VW - s.rw)
-      }
-      const specs = rects.map((r, i) => {
+      const clamp01 = (v: number) => Math.max(0, Math.min(1, v))
+      const easeOut = (t: number) => 1 - Math.pow(1 - t, 3)
+      const ANIM = 420 // per-bar growth time (ms)
+      const STAGGER = 260 // spread of start delays across the mark's width (ms)
+      const specs = rects.map((r) => {
         let o = origRects.get(r)
         if (!o) {
           o = {
@@ -70,11 +69,15 @@ export function PageRuntime() {
           }
           origRects.set(r, o)
         }
-        const s = { r, o, reseedAt: 0, dur: 760 + i * 150 + Math.random() * 220, rh: 0, ry: 0, rw: 0, rx: 0 }
-        reseed(s)
-        return s
+        return { r, o, delay: 0, dur: 0 }
       })
-      const easeOut = (t: number) => 1 - Math.pow(1 - t, 4)
+      const xs = specs.map((s) => s.o.x)
+      const minX = Math.min(...xs)
+      const spanX = Math.max(...xs) - minX || 1
+      for (const s of specs) {
+        s.delay = ((s.o.x - minX) / spanX) * STAGGER
+        s.dur = s.delay + ANIM
+      }
       const restore = () =>
         specs.forEach((s) => {
           s.r.setAttribute("x", String(s.o.x))
@@ -94,9 +97,9 @@ export function PageRuntime() {
       cancelers.set(svg, cancel)
       const tick = (now: number) => {
         if (!running) return
+        const t = now - t0
         let done = 0
         for (const s of specs) {
-          const t = now - t0
           if (t >= s.dur) {
             s.r.setAttribute("x", String(s.o.x))
             s.r.setAttribute("y", String(s.o.y))
@@ -105,15 +108,12 @@ export function PageRuntime() {
             done++
             continue
           }
-          const p = easeOut(t / s.dur)
-          if (now - s.reseedAt > 48 + Math.random() * 34) {
-            s.reseedAt = now
-            reseed(s)
-          }
-          s.r.setAttribute("width", (s.rw + (s.o.w - s.rw) * p).toFixed(2))
-          s.r.setAttribute("height", (s.rh + (s.o.h - s.rh) * p).toFixed(2))
-          s.r.setAttribute("x", (s.rx + (s.o.x - s.rx) * p).toFixed(2))
-          s.r.setAttribute("y", (s.ry + (s.o.y - s.ry) * p).toFixed(2))
+          const p = easeOut(clamp01((t - s.delay) / ANIM))
+          const h = s.o.h * p
+          s.r.setAttribute("x", String(s.o.x))
+          s.r.setAttribute("width", String(s.o.w))
+          s.r.setAttribute("height", h.toFixed(2))
+          s.r.setAttribute("y", (s.o.y + s.o.h - h).toFixed(2))
         }
         if (done === specs.length) {
           restore()

@@ -342,39 +342,47 @@
       .direction-a {
         --bg: #171614;
         --fg: #f4f0e8;
-        --accent: #d8ff6a;
+        --accent: #7dd3c7;
         --headline-font: var(--dm);
         --headline-weight: 600;
-        --headline-leading: 0.88;
-        --copy-width: 1120px;
+        --headline-leading: 0.94;
+        --copy-width: 980px;
       }
 
       .direction-a .mock {
+        padding: clamp(42px, 5.2vw, 86px);
         background:
-          linear-gradient(90deg, transparent 0 69%, rgba(216, 255, 106, 0.12) 69% calc(69% + 1px), transparent calc(69% + 1px)),
+          linear-gradient(90deg, transparent 0 76%, color-mix(in srgb, var(--accent) 12%, transparent) 76% calc(76% + 1px), transparent calc(76% + 1px)),
           var(--bg);
       }
 
       .direction-a .hero {
-        grid-template-columns: minmax(0, 1fr) minmax(220px, 360px);
-        align-items: end;
+        grid-template-columns: minmax(0, 980px);
+        align-content: center;
+        align-items: start;
+        gap: clamp(32px, 4.8vw, 64px);
       }
 
       .direction-a .lede {
-        grid-column: 2;
-        max-width: 360px;
-        margin-bottom: 0.2em;
-        font-size: clamp(18px, 1.45vw, 24px);
-        line-height: 1.48;
+        grid-column: 1;
+        max-width: 720px;
+        margin-bottom: 0;
+        border-left: 2px solid var(--accent);
+        padding-left: clamp(20px, 2.1vw, 32px);
+        font-size: clamp(21px, 1.75vw, 28px);
+        line-height: 1.5;
       }
 
       .direction-a .bottom-note {
+        grid-template-columns: minmax(0, 720px);
+        gap: 24px;
         font-family: var(--mono);
         font-size: 12px;
       }
 
       .direction-a .headline {
-        font-size: clamp(62px, 8.8vw, 136px);
+        max-width: 980px;
+        font-size: clamp(62px, 7.5vw, 118px);
       }
 
       .direction-b {

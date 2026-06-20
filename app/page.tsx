@@ -1,15 +1,8 @@
-import { AdvertorialContent } from "./advertorial-content"
-import { PageRuntime } from "./page-runtime"
+import { redirect } from "next/navigation"
 
-// AdvertorialContent is the design markup compiled to a server-rendered React
-// tree (fully crawlable). PageRuntime wires the interactive behaviors:
-// brandmark scramble, scroll reveal, the click-to-open screenshot lightbox,
-// style-hover effects, and the computed "first advertorial by {date}" line.
+// The studio home was scratched — it was a wireframe transcription, not a crafted
+// composition. For now `/` lands on the advertorial offer page. When the real
+// home is designed, replace this redirect with the home route.
 export default function Page() {
-  return (
-    <>
-      <AdvertorialContent />
-      <PageRuntime />
-    </>
-  )
+  redirect("/advertorial")
 }
