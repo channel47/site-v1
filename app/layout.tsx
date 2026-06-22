@@ -1,11 +1,19 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Space_Grotesk, Space_Mono } from "next/font/google"
-import Script from "next/script"
+import { Playfair_Display, Inter, Space_Grotesk, Space_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
-// Matches the Claude Design "Neo-grotesk — Space" font system (the design's default).
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+  display: "swap",
+})
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+})
 const spaceGrotesk = Space_Grotesk({
   weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
@@ -21,15 +29,15 @@ const spaceMono = Space_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://channel47.dev"),
-  title: "Advertorials, on tap. — channel47",
+  title: "Channel 47 — Agentic systems for performance marketers",
   description:
-    "The editorial presell page that closes the gap between your ad and your checkout — so cold traffic lands already sold. Productized advertorials by channel47.",
+    "A living library of agentic systems, MCP connectors, walkthroughs, and tools for performance marketers. Built by an operator who's spent $3M+ on paid acquisition.",
   openGraph: {
-    title: "Advertorials, on tap. — channel47",
+    title: "Channel 47 — Agentic systems for performance marketers",
     description:
-      "The editorial presell page that closes the gap between your ad and your checkout — so cold traffic lands already sold.",
+      "A living library of agentic systems and tools for performance marketers. One payment, lifetime access.",
     url: "https://channel47.dev",
-    siteName: "channel47",
+    siteName: "Channel 47",
     type: "website",
   },
   icons: {
@@ -48,13 +56,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${spaceGrotesk.variable} ${spaceMono.variable}`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${playfair.variable} ${inter.variable} ${spaceGrotesk.variable} ${spaceMono.variable}`}
+    >
       <body>
-        {/* Flag JS before paint so scroll-reveal targets start hidden (html.jsr).
-            No-JS or reduced-motion keeps them visible. */}
-        <Script id="jsr-flag" strategy="beforeInteractive">
-          {`try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('jsr')}catch(e){}`}
-        </Script>
         {children}
         <Analytics />
       </body>
