@@ -1,51 +1,45 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { IBM_Plex_Sans, IBM_Plex_Mono, Bebas_Neue, Space_Grotesk, Space_Mono } from "next/font/google"
+import { Newsreader, Space_Grotesk, Space_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
-import { SmoothScroll } from "@/components/smooth-scroll"
 import "./globals.css"
 
-const ibmPlexSans = IBM_Plex_Sans({
-  weight: ["400", "500", "600", "700"],
+const newsreader = Newsreader({
   subsets: ["latin"],
-  variable: "--font-ibm-plex-sans",
+  variable: "--font-newsreader",
+  style: ["normal", "italic"],
+  weight: ["400", "500", "600"],
 })
-const ibmPlexMono = IBM_Plex_Mono({
-  weight: ["400", "500"],
+
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-ibm-plex-mono",
+  variable: "--font-space-grotesk",
 })
-const bebasNeue = Bebas_Neue({ weight: "400", subsets: ["latin"], variable: "--font-bebas" })
-const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space-grotesk" })
-const spaceMono = Space_Mono({ weight: ["400", "700"], subsets: ["latin"], variable: "--font-space-mono" })
+
+const spaceMono = Space_Mono({
+  weight: ["400", "700"],
+  subsets: ["latin"],
+  variable: "--font-space-mono",
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://channel47.dev"),
-  title: "channel47 — Turn customer research into landing pages that ship",
+  title: "Channel 47 — Agentic systems for performance marketers",
   description:
-    "A practical Skills Lab for ecommerce marketers. Use AI skills to move from customer research, personas, and angles into swipe files, page strategy, and production-ready landing page drafts.",
+    "A living library of agentic systems and tools for performance marketers. Built by an operator who's deployed them across $3M+ in ad spend.",
   openGraph: {
-    title: "channel47 — Turn customer research into landing pages that ship",
+    title: "Channel 47 — Agentic systems for performance marketers",
     description:
-      "A practical Skills Lab for ecommerce marketers. Use AI skills to move from customer research, personas, and angles into swipe files, page strategy, and production-ready landing page drafts.",
+      "A living library of agentic systems and tools for performance marketers.",
     url: "https://channel47.dev",
     siteName: "Channel 47",
     type: "website",
   },
   icons: {
     icon: [
-      {
-        url: "/icon-light-32x32.png",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/icon-dark-32x32.png",
-        media: "(prefers-color-scheme: dark)",
-      },
-      {
-        url: "/icon.svg",
-        type: "image/svg+xml",
-      },
+      { url: "/icon-light-32x32.png", media: "(prefers-color-scheme: light)" },
+      { url: "/icon-dark-32x32.png", media: "(prefers-color-scheme: dark)" },
+      { url: "/icon.svg", type: "image/svg+xml" },
     ],
     apple: "/apple-icon.png",
   },
@@ -57,12 +51,12 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="dark bg-background">
-      <body
-        className={`${ibmPlexSans.variable} ${bebasNeue.variable} ${ibmPlexMono.variable} ${spaceGrotesk.variable} ${spaceMono.variable} font-sans antialiased overflow-x-hidden`}
-      >
-        <div className="noise-overlay" aria-hidden="true" />
-        <SmoothScroll>{children}</SmoothScroll>
+    <html
+      lang="en"
+      className={`${newsreader.variable} ${spaceGrotesk.variable} ${spaceMono.variable}`}
+    >
+      <body>
+        {children}
         <Analytics />
       </body>
     </html>
