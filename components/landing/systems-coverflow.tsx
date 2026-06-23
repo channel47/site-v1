@@ -1,7 +1,52 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
+import type { ReactNode } from "react"
 import { PART_DOT_CLASS, SYSTEMS } from "@/lib/landing-content"
+
+/**
+ * Full-bleed line icons drawn on each system card, keyed by `System.icon`.
+ * Stroke-only on a 24-unit grid so they scale cleanly to the ~210px crop.
+ */
+const ICONS: Record<string, ReactNode> = {
+  user: (
+    <>
+      <circle cx="12" cy="8" r="4" />
+      <path d="M5 20c0-3.9 3.1-6.5 7-6.5s7 2.6 7 6.5" />
+    </>
+  ),
+  target: (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <circle cx="12" cy="12" r="4.5" />
+      <circle cx="12" cy="12" r="1" />
+    </>
+  ),
+  article: (
+    <>
+      <rect x="5" y="3.5" width="14" height="17" rx="2" />
+      <path d="M8.5 8.5h7M8.5 12h7M8.5 15.5h4" />
+    </>
+  ),
+  dollar: (
+    <>
+      <path d="M12 2.5v19" />
+      <path d="M16.5 6.8c0-1.9-2-3-4.5-3s-4.5 1.2-4.5 3.2c0 4.6 9 2.2 9 6.8 0 2-2 3.2-4.5 3.2s-4.5-1.1-4.5-3" />
+    </>
+  ),
+  sparkles: (
+    <>
+      <path d="M12 3l1.7 5.1L19 10l-5.3 1.9L12 17l-1.7-5.1L5 10l5.3-1.9z" />
+      <path d="M18 13.5l.6 1.9 1.9.6-1.9.6-.6 1.9-.6-1.9-1.9-.6 1.9-.6z" />
+    </>
+  ),
+  mail: (
+    <>
+      <rect x="3" y="5" width="18" height="14" rx="2.2" />
+      <path d="M3.5 7.5l8.5 5.5 8.5-5.5" />
+    </>
+  ),
+}
 
 /**
  * The systems shelf: a full-bleed coverflow whose cards scale and fade by
@@ -232,7 +277,9 @@ export function SystemsCoverflow() {
                     height: 300,
                     border: "1px solid oklch(0.215 0.007 78 / 0.1)",
                     borderRadius: 18,
-                    background: "var(--surface)",
+                    background: s.image
+                      ? "var(--surface)"
+                      : `var(--${s.accent})`,
                     position: "relative",
                     overflow: "hidden",
                     boxShadow: "0 26px 50px -28px oklch(0.215 0.007 78 / 0.45)",
@@ -252,30 +299,24 @@ export function SystemsCoverflow() {
                         objectFit: "cover",
                       }}
                     />
-                  ) : null}
-                </div>
-                <div
-                  className="cf-cap"
-                  style={{
-                    display: "flex",
-                    alignItems: "baseline",
-                    justifyContent: "space-between",
-                    gap: 12,
-                  }}
-                >
-                  <h3
-                    className="serif cf-title"
-                    style={{
-                      fontSize: 20,
-                      fontWeight: 500,
-                      letterSpacing: "-0.01em",
-                      lineHeight: 1.12,
-                      color: "var(--ink-strong)",
-                      transition: "color .2s ease",
-                    }}
-                  >
-                    {s.name}
-                  </h3>
+                  ) : (
+                    <>
+                      <span className="cf-ic" aria-hidden>
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth={1.4}
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          {ICONS[s.icon]}
+                        </svg>
+                      </span>
+                      <span className="cf-grain" aria-hidden />
+                    </>
+                  )}
+                  <h3 className="serif cf-name">{s.name}</h3>
                 </div>
               </div>
             ))}

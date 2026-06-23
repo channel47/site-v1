@@ -67,60 +67,47 @@ export function CategoryStack() {
             className={`hstack-card ${c.accent} ${depthClass(i)}`}
             onClick={() => pick(i)}
           >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: 10,
-              }}
-            >
-              <span
-                className="mono stk-k"
-                style={{ fontSize: 10, letterSpacing: "0.16em" }}
-              >
-                {c.kicker}
-              </span>
-              <span
-                className="mono stk-tag"
+            <span className="hs-blob b1" aria-hidden />
+            <span className="hs-blob b2" aria-hidden />
+            <span className="hs-blob b3" aria-hidden />
+            <span className="hs-grain" aria-hidden />
+            <div className="hs-cap">
+              <div>
+                <span
+                  className="mono stk-tag"
+                  style={{
+                    fontSize: 9,
+                    borderRadius: 100,
+                    padding: "3px 9px",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {c.tag}
+                </span>
+              </div>
+              <h3
+                className="serif stk-title"
                 style={{
-                  fontSize: 9,
-                  borderRadius: 100,
-                  padding: "3px 9px",
-                  whiteSpace: "nowrap",
+                  fontSize: 32,
+                  fontWeight: 500,
+                  letterSpacing: "-0.015em",
+                  lineHeight: 1.04,
+                  marginTop: "auto",
                 }}
               >
-                {c.tag}
-              </span>
-            </div>
-            <h3
-              className="serif stk-title"
-              style={{
-                fontSize: 32,
-                fontWeight: 500,
-                letterSpacing: "-0.015em",
-                lineHeight: 1.04,
-                marginTop: "auto",
-              }}
-            >
-              {c.title}
-            </h3>
-            <p
-              className="stk-desc"
-              style={{
-                fontSize: 13.5,
-                lineHeight: 1.5,
-                marginTop: 9,
-                maxWidth: 400,
-              }}
-            >
-              {c.body}
-            </p>
-            <div
-              className="mono stk-go"
-              style={{ fontSize: 10.5, marginTop: 15, letterSpacing: "0.02em" }}
-            >
-              in the library →
+                {c.title}
+              </h3>
+              <p
+                className="stk-desc"
+                style={{
+                  fontSize: 13.5,
+                  lineHeight: 1.5,
+                  marginTop: 9,
+                  maxWidth: 400,
+                }}
+              >
+                {c.body}
+              </p>
             </div>
           </div>
         ))}

@@ -55,7 +55,11 @@ export interface System {
   bullets: string[]
   /** Components that make up the system. */
   parts: SystemPart[]
-  /** Optional artifact preview image (none yet — empty slots in the shelf). */
+  /** Accent token name (e.g. "cat-orange") that colours the card. */
+  accent: string
+  /** Icon key (see ICONS in systems-coverflow) drawn full-bleed on the card. */
+  icon: string
+  /** Optional artifact preview image; when set it overrides the colour+icon. */
   image?: string
 }
 
@@ -64,6 +68,8 @@ export const SYSTEMS: System[] = [
     slug: "research-personas",
     kicker: "PERSONA ENGINE",
     name: "Research & Personas",
+    accent: "cat-orange",
+    icon: "user",
     price: "$190",
     live: true,
     blurb:
@@ -82,6 +88,8 @@ export const SYSTEMS: System[] = [
     slug: "angle-generator",
     kicker: "RANKED ANGLES",
     name: "Angle Generator",
+    accent: "cat-gold",
+    icon: "target",
     price: "$150",
     live: true,
     blurb:
@@ -97,6 +105,8 @@ export const SYSTEMS: System[] = [
     slug: "advertorial-builder",
     kicker: "PRE-SELL PAGE",
     name: "Advertorial Builder",
+    accent: "cat-teal",
+    icon: "article",
     price: "$290",
     live: true,
     blurb:
@@ -112,6 +122,8 @@ export const SYSTEMS: System[] = [
     slug: "paid-search",
     kicker: "CONNECTOR",
     name: "Paid Search System",
+    accent: "cat-indigo",
+    icon: "dollar",
     price: "$240",
     live: true,
     blurb:
@@ -130,6 +142,8 @@ export const SYSTEMS: System[] = [
     slug: "ad-creative",
     kicker: "IN THE LAB",
     name: "Ad Creative Generator",
+    accent: "cat-green",
+    icon: "sparkles",
     price: "Soon",
     live: false,
     blurb:
@@ -144,6 +158,8 @@ export const SYSTEMS: System[] = [
     slug: "email-flows",
     kicker: "IN THE LAB",
     name: "Email Flows",
+    accent: "cat-rose",
+    icon: "mail",
     price: "Soon",
     live: false,
     blurb:
