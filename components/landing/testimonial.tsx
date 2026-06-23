@@ -1,0 +1,57 @@
+import type { Testimonial as TestimonialData } from "@/lib/landing-content"
+
+/** Centered pull-quote with avatar, attribution. */
+export function Testimonial({ quote, name, role }: TestimonialData) {
+  return (
+    <section
+      style={{
+        padding: "64px 0 0",
+        maxWidth: 460,
+        margin: "0 auto",
+        textAlign: "center",
+      }}
+    >
+      <blockquote
+        className="serif"
+        style={{
+          fontSize: 27,
+          lineHeight: 1.34,
+          letterSpacing: "-0.01em",
+          fontStyle: "italic",
+          color: "#1b1916",
+          textWrap: "pretty",
+        }}
+      >
+        “{quote}”
+      </blockquote>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 12,
+          marginTop: 20,
+        }}
+      >
+        <div
+          style={{
+            width: 38,
+            height: 38,
+            borderRadius: "50%",
+            background: "#e3ddcf",
+            border: "1px solid rgba(0,0,0,0.1)",
+            flex: "none",
+          }}
+        />
+        <div>
+          <div style={{ fontSize: 13.5, fontWeight: 600, color: "#1b1916" }}>
+            {name}
+          </div>
+          <div className="mono" style={{ fontSize: 10.5, color: "#9a9485" }}>
+            {role}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}

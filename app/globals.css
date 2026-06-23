@@ -1,46 +1,613 @@
-@import "tailwindcss";
+/* ============================================================
+   Channel 47 — landing styles
+   Plain CSS, no framework. Values transcribed from the design
+   so the page is pixel-faithful. Tokens up top; component
+   styles grouped by section below.
+   ============================================================ */
 
-@layer base {
-  html {
-    overflow-x: hidden;
-    max-width: 100vw;
-    scrollbar-width: thin;
-    scrollbar-color: #c4bfb4 #ebe7df;
+:root {
+  --bg: #ebe7df;
+  --ink: #252119;
+  --ink-soft: #37332b;
+  --ink-strong: #1b1916;
+  --muted: #9a9485;
+  --accent: #cc4b1e;
+  --paper: #faf8f1;
+  --cream: #f1ede4;
+  --font-serif: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-space-grotesk), system-ui, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100vw;
+  scrollbar-width: thin;
+  scrollbar-color: #c4bfb4 var(--bg);
+}
+
+html::-webkit-scrollbar {
+  width: 8px;
+}
+html::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+html::-webkit-scrollbar-thumb {
+  background: #c4bfb4;
+  border-radius: 4px;
+}
+html::-webkit-scrollbar-thumb:hover {
+  background: #a8a296;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-serif);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 500;
+  /* Balance headline line lengths so the last line is never a lone orphan. */
+  text-wrap: balance;
+}
+
+/* Pretty-wrap body copy to avoid single-word last lines. */
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--cream);
+}
+
+.serif {
+  font-family: var(--font-serif);
+}
+.sans,
+.mono {
+  font-family: var(--font-sans);
+}
+/* Mono carries codes, labels and prices — tabular figures keep digits aligned
+   and prevent width shift if any value updates. */
+.mono {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- keyframes -------------------------------------------------- */
+@keyframes blip {
+  0%,
+  100% {
+    opacity: 1;
   }
-  body {
-    background-color: #ebe7df;
-    color: #37332b;
-    font-family: var(--font-newsreader), Georgia, "Times New Roman", serif;
-    font-size: 17px;
-    line-height: 1.62;
-    overflow-x: hidden;
-    max-width: 100vw;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  50% {
+    opacity: 0.3;
   }
-  ::selection {
-    background: #cc4b1e;
-    color: #f1ede4;
+}
+@keyframes scram {
+  0% {
+    transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0.7);
+    fill: var(--ca);
+    opacity: 0;
   }
-  html::-webkit-scrollbar {
-    width: 8px;
+  18% {
+    opacity: 1;
+    fill: var(--ca);
   }
-  html::-webkit-scrollbar-track {
-    background: #ebe7df;
+  50% {
+    fill: var(--cb);
   }
-  html::-webkit-scrollbar-thumb {
-    background: #c4bfb4;
-    border-radius: 4px;
+  72% {
+    transform: translate(0, 0) rotate(0) scale(1);
+    fill: var(--cb);
   }
-  html::-webkit-scrollbar-thumb:hover {
-    background: #a8a296;
+  100% {
+    transform: translate(0, 0) rotate(0) scale(1);
+    fill: #252119;
+    opacity: 1;
   }
 }
 
-.coverflow-shelf {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+/* Staggered entrance — content rises and fades in on load. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
-.coverflow-shelf::-webkit-scrollbar {
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+/* Exits stay subtle — a small fixed drift, softer than the enter. */
+@keyframes modalOut {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(8px) scale(0.99);
+  }
+}
+
+.rise {
+  animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* ---- member unlock ---------------------------------------------- */
+/* The root gets `.member-on` once a valid code is applied; CSS handles
+   every member/non-member swap from there. */
+.p-mem {
   display: none;
+}
+.member-on .p-mem {
+  display: inline;
+}
+.member-on .p-list {
+  display: none;
+}
+.codebar {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+.member-on .codebar {
+  max-height: 64px;
+}
+
+/* ---- hero category card stack ----------------------------------- */
+.hstack-card {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 262px;
+  border-radius: 22px;
+  padding: 17px 26px 24px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  background: var(--paper);
+  border: 1px solid rgba(27, 25, 22, 0.13);
+  color: var(--ink-strong);
+  box-shadow: 0 24px 50px -32px rgba(27, 25, 22, 0.55);
+  transform-origin: bottom center;
+  transition:
+    transform 0.62s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.5s ease,
+    opacity 0.55s ease,
+    background 0.45s ease,
+    border-color 0.45s ease;
+  will-change: transform, opacity;
+}
+.hstack-card.d0 {
+  transform: translateY(0) scale(1);
+  z-index: 50;
+  opacity: 1;
+}
+.hstack-card.d1 {
+  transform: translateY(-22px) scale(0.96);
+  z-index: 49;
+  opacity: 0.97;
+}
+.hstack-card.d2 {
+  transform: translateY(-44px) scale(0.92);
+  z-index: 48;
+  opacity: 0.88;
+}
+.hstack-card.d3 {
+  transform: translateY(-66px) scale(0.88);
+  z-index: 47;
+  opacity: 0.78;
+}
+.hstack-card.d4 {
+  transform: translateY(-88px) scale(0.84);
+  z-index: 46;
+  opacity: 0.7;
+}
+.hstack-card.is-front {
+  color: #f6f1e7;
+  box-shadow: 0 30px 60px -28px rgba(31, 28, 23, 0.5);
+}
+.hstack-card.acc0.is-front {
+  background: #cc4b1e;
+  border-color: #cc4b1e;
+}
+.hstack-card.acc1.is-front {
+  background: #1e7d8c;
+  border-color: #1e7d8c;
+}
+.hstack-card.acc2.is-front {
+  background: #b07d24;
+  border-color: #b07d24;
+}
+.hstack-card.acc3.is-front {
+  background: #50539e;
+  border-color: #50539e;
+}
+.hstack-card.acc4.is-front {
+  background: #3f7a52;
+  border-color: #3f7a52;
+}
+.stk-k {
+  color: var(--muted);
+}
+.is-front .stk-k {
+  color: rgba(246, 241, 231, 0.82);
+}
+.stk-tag {
+  color: var(--muted);
+  border: 1px solid rgba(27, 25, 22, 0.2);
+}
+.is-front .stk-tag {
+  color: #f6f1e7;
+  border-color: rgba(246, 241, 231, 0.45);
+}
+.stk-title {
+  color: var(--ink-strong);
+}
+.is-front .stk-title {
+  color: #f6f1e7;
+}
+.stk-desc {
+  color: var(--ink-soft);
+}
+.is-front .stk-desc {
+  color: rgba(246, 241, 231, 0.92);
+}
+.stk-go {
+  color: var(--accent);
+}
+.is-front .stk-go {
+  color: #f6f1e7;
+}
+
+/* category dots */
+.cs-dot {
+  position: relative;
+  height: 6px;
+  width: 6px;
+  border-radius: 99px;
+  background: rgba(35, 31, 26, 0.2);
+  cursor: pointer;
+  transition:
+    width 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+    background 0.35s;
+  border: none;
+  padding: 0;
+  display: block;
+}
+/* Invisible 40px-tall hit target; horizontal padding stops just short of the
+   8px gap so adjacent dots' hit areas never overlap. */
+.cs-dot::before {
+  content: "";
+  position: absolute;
+  inset: -17px -4px;
+}
+.cs-dot.on {
+  width: 20px;
+  background: var(--ink);
+}
+.cs-dot:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 5px;
+}
+
+/* part marker dots */
+.ptdot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex: none;
+  background: var(--muted);
+}
+.ptdot.pt-skill {
+  background: #cc4b1e;
+}
+.ptdot.pt-connector {
+  background: #1e7d8c;
+}
+.ptdot.pt-agent {
+  background: #50539e;
+}
+
+/* ---- systems coverflow ------------------------------------------ */
+.cf-track::-webkit-scrollbar {
+  display: none;
+}
+.cf-track {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.cf-cell:hover .cf-title {
+  color: var(--accent);
+}
+/* Subtle pure-black edge so artwork reads with consistent depth on the cream
+   surface (never a tinted neutral, which looks like dirt on the image edge). */
+.cf-card img {
+  outline: 1px solid rgba(0, 0, 0, 0.1);
+  outline-offset: -1px;
+}
+.lift {
+  transition:
+    transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1),
+    background 0.25s,
+    border-color 0.25s,
+    color 0.2s;
+}
+.lift:hover {
+  transform: translateY(-2px);
+}
+.cf-arrow {
+  position: absolute;
+  top: 46%;
+  transform: translateY(-50%);
+  z-index: 20;
+  height: 42px;
+  width: 42px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 1px solid rgba(35, 31, 26, 0.16);
+  color: var(--ink);
+  font-size: 17px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 22px -12px rgba(31, 28, 23, 0.5);
+  transition:
+    border-color 0.2s,
+    color 0.2s,
+    transform 0.2s;
+}
+.cf-arrow:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.cf-arrow:active {
+  transform: translateY(-50%) scale(0.96);
+}
+.cf-prev {
+  left: 12px;
+}
+.cf-next {
+  right: 12px;
+}
+@media (max-width: 680px) {
+  .cf-arrow {
+    display: none;
+  }
+}
+
+/* ---- inline links ----------------------------------------------- */
+.ul:hover {
+  color: var(--accent);
+}
+
+/* ---- faq -------------------------------------------------------- */
+.faq .faq-head {
+  cursor: pointer;
+}
+.faq-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.faq.open .faq-body {
+  max-height: 420px;
+}
+.faq .fchev {
+  transition: transform 0.38s;
+}
+.faq.open .fchev {
+  transform: rotate(45deg);
+}
+
+/* ---- glitch logo ------------------------------------------------ */
+/* Chromatic "47" mark that scatters its blocks in on load + on click,
+   cycling brand colours before settling to ink. */
+.gl-logo {
+  position: relative;
+  display: inline-block;
+  height: 24px;
+  width: 46px;
+}
+.gl-logo .gl {
+  position: absolute;
+  inset: 0;
+  height: 24px;
+  width: 46px;
+  display: block;
+}
+.gl-base {
+  color: var(--ink);
+}
+.gl-base rect {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.gl-logo.gl-play .gl-base rect {
+  animation: scram 0.62s cubic-bezier(0.2, 0.8, 0.25, 1) both;
+}
+.gl-logo.gl-play .gl-base rect:nth-child(1) {
+  --tx: -11px;
+  --ty: -7px;
+  --rot: -22deg;
+  --ca: #cc4b1e;
+  --cb: #b07d24;
+  animation-delay: 0ms;
+}
+.gl-logo.gl-play .gl-base rect:nth-child(2) {
+  --tx: 8px;
+  --ty: 9px;
+  --rot: 16deg;
+  --ca: #1e93b0;
+  --cb: #3f7a52;
+  animation-delay: 55ms;
+}
+.gl-logo.gl-play .gl-base rect:nth-child(3) {
+  --tx: -7px;
+  --ty: 10px;
+  --rot: 20deg;
+  --ca: #50539e;
+  --cb: #1e93b0;
+  animation-delay: 30ms;
+}
+.gl-logo.gl-play .gl-base rect:nth-child(4) {
+  --tx: 12px;
+  --ty: -8px;
+  --rot: -15deg;
+  --ca: #b07d24;
+  --cb: #cc4b1e;
+  animation-delay: 90ms;
+}
+.gl-logo.gl-play .gl-base rect:nth-child(5) {
+  --tx: -9px;
+  --ty: -10px;
+  --rot: 24deg;
+  --ca: #3f7a52;
+  --cb: #50539e;
+  animation-delay: 120ms;
+}
+.gl-logo.gl-play .gl-base rect:nth-child(6) {
+  --tx: 9px;
+  --ty: 8px;
+  --rot: -20deg;
+  --ca: #cc4b1e;
+  --cb: #1e93b0;
+  animation-delay: 70ms;
+}
+
+/* ---- system modal ----------------------------------------------- */
+.sysmodal {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.sysmodal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.sysmodal-panel {
+  transform: translateY(14px) scale(0.985);
+  transition: transform 0.32s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.sysmodal.open .sysmodal-panel {
+  transform: none;
+}
+
+/* ---- generic hover helpers (replacing the design's style-hover) -- */
+.btn-invert {
+  transition:
+    background 0.2s,
+    color 0.2s,
+    scale 0.18s cubic-bezier(0.2, 0, 0, 1);
+}
+.btn-invert:hover {
+  background: #ffffff !important;
+  color: #14110d !important;
+}
+.btn-invert:active {
+  scale: 0.96;
+}
+.login-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  transition:
+    border-color 0.2s,
+    color 0.2s,
+    background 0.2s,
+    scale 0.18s cubic-bezier(0.2, 0, 0, 1);
+}
+/* Extend the small pill to a ~40px-tall hit target without growing its look. */
+.login-pill::before {
+  content: "";
+  position: absolute;
+  inset: -8px -4px;
+}
+.login-pill:hover {
+  border-color: #231f1a;
+  background: #231f1a;
+  color: var(--cream);
+}
+.login-pill:active {
+  scale: 0.96;
+}
+
+/* Respect users who ask for less motion — collapse animations and transitions
+   to near-instant so every element settles on its final, visible state. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Tactile press for buttons without their own transition (e.g. modal close). */
+.press {
+  transition: scale 0.18s cubic-bezier(0.2, 0, 0, 1);
+}
+.press:active {
+  scale: 0.96;
+}
+
+/* Keyboard focus ring — visible for tab users, invisible on mouse click. */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
 }

@@ -1,6 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Newsreader, Space_Grotesk, Space_Mono } from "next/font/google"
+import { Newsreader, Space_Grotesk } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
@@ -8,18 +8,13 @@ const newsreader = Newsreader({
   subsets: ["latin"],
   variable: "--font-newsreader",
   style: ["normal", "italic"],
-  weight: ["400", "500", "600"],
+  weight: ["300", "400", "500", "600"],
 })
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-space-grotesk",
-})
-
-const spaceMono = Space_Mono({
-  weight: ["400", "700"],
-  subsets: ["latin"],
-  variable: "--font-space-mono",
+  weight: ["400", "500", "600", "700"],
 })
 
 export const metadata: Metadata = {
@@ -53,7 +48,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${newsreader.variable} ${spaceGrotesk.variable} ${spaceMono.variable}`}
+      className={`${newsreader.variable} ${spaceGrotesk.variable}`}
     >
       <body>
         {children}
