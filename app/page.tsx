@@ -13,12 +13,12 @@ import { SiteFooter } from "@/components/landing/site-footer"
 const bodyText = {
   fontSize: 17,
   lineHeight: 1.62,
-  color: "#37332b",
+  color: "var(--ink-soft)",
 } as const
 
 const linkStyle = {
-  color: "#cc4b1e",
-  borderBottom: "1px solid rgba(204,75,30,0.4)",
+  color: "var(--accent-ink)",
+  borderBottom: "1px solid oklch(0.52 0.145 38 / 0.4)",
 } as const
 
 export default function Page() {
@@ -41,9 +41,9 @@ export default function Page() {
           </p>
           <p style={{ ...bodyText, marginTop: 18 }}>
             But more importantly, I learned about the underlying{" "}
-            <span style={{ color: "#1b1916", fontWeight: 600 }}>systems</span> it
+            <span style={{ color: "var(--ink-strong)", fontWeight: 600 }}>systems</span> it
             takes to drive{" "}
-            <span style={{ color: "#1b1916", fontWeight: 600 }}>effective</span>{" "}
+            <span style={{ color: "var(--ink-strong)", fontWeight: 600 }}>effective</span>{" "}
             traffic — the kind that doesn&apos;t just hit KPI targets, but beats
             them.
           </p>
@@ -56,7 +56,7 @@ export default function Page() {
             style={{
               fontSize: 17,
               lineHeight: 1.6,
-              color: "#1b1916",
+              color: "var(--ink-strong)",
               marginTop: 18,
               fontWeight: 600,
             }}
@@ -113,7 +113,7 @@ export default function Page() {
             control over the stack I run every day. The patterns that actually
             win are repeatable, so I encoded them.
           </p>
-          <p style={{ fontSize: 15.5, lineHeight: 1.62, color: "#37332b", marginTop: 22 }}>
+          <p style={{ fontSize: 15.5, lineHeight: 1.62, color: "var(--ink-soft)", marginTop: 22 }}>
             I teach all of it live, every month, as a mentor inside the Vibe
             Marketers —{" "}
             <a

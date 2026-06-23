@@ -13,7 +13,7 @@ export function AccessSection() {
   return (
     <section id="access" style={{ padding: "64px 0 0", scrollMarginTop: 80 }}>
       <SectionHeading>Access</SectionHeading>
-      <p style={{ fontSize: 17, lineHeight: 1.62, color: "#37332b" }}>
+      <p style={{ fontSize: 17, lineHeight: 1.62, color: "var(--ink-soft)" }}>
         One payment gets you the entire library — every system, every MCP
         connector, every walkthrough and principle — plus everything I add from
         here on. No subscription, no seat fees. You buy in once and it&apos;s
@@ -36,8 +36,8 @@ export function AccessSection() {
             display: "inline-flex",
             alignItems: "center",
             gap: 10,
-            background: "#14110d",
-            color: "#f1ede4",
+            background: "var(--near-black)",
+            color: "var(--cream)",
             borderRadius: 12,
             padding: "15px 24px",
             fontWeight: 700,
@@ -56,13 +56,13 @@ export function AccessSection() {
             className="mono p-list"
             style={{
               fontSize: 12,
-              color: "#7a7468",
+              color: "var(--muted)",
               textDecoration: "line-through",
             }}
           >
             {ACCESS_SEPARATE_PRICE} separately
           </span>
-          <span className="mono p-mem" style={{ fontSize: 12, color: "#cc4b1e" }}>
+          <span className="mono p-mem" style={{ fontSize: 12, color: "var(--accent-ink)" }}>
             unlocked with {MEMBER_CODE}
           </span>
           <span
@@ -71,7 +71,7 @@ export function AccessSection() {
               fontSize: 10.5,
               letterSpacing: "0.07em",
               textTransform: "uppercase",
-              color: "#9a9485",
+              color: "var(--muted)",
             }}
           >
             One payment · yours forever

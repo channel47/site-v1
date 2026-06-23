@@ -28,7 +28,7 @@ export function Nav() {
           style={{
             fontSize: 11,
             letterSpacing: "0.04em",
-            border: "1px solid rgba(35,31,26,0.25)",
+            border: "1px solid oklch(0.242 0.011 73 / 0.25)",
             borderRadius: 12,
             padding: "8px 15px",
           }}

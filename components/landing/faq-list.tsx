@@ -15,7 +15,7 @@ export function FaqList() {
           <div
             key={f.question}
             className={`faq${isOpen ? " open" : ""}`}
-            style={{ borderBottom: "1px solid rgba(27,25,22,0.1)" }}
+            style={{ borderBottom: "1px solid oklch(0.215 0.007 78 / 0.1)" }}
           >
             <button
               type="button"
@@ -36,13 +36,13 @@ export function FaqList() {
               }}
             >
               <span
-                style={{ fontSize: 16, fontWeight: 600, color: "#1b1916" }}
+                style={{ fontSize: 16, fontWeight: 600, color: "var(--ink-strong)" }}
               >
                 {f.question}
               </span>
               <span
                 className="fchev serif"
-                style={{ fontSize: 20, color: "#cc4b1e", flex: "none" }}
+                style={{ fontSize: 20, color: "var(--accent)", flex: "none" }}
               >
                 +
               </span>
@@ -53,7 +53,7 @@ export function FaqList() {
                   style={{
                     fontSize: 14.5,
                     lineHeight: 1.6,
-                    color: "#37332b",
+                    color: "var(--ink-soft)",
                     padding: `0 2px ${f.cta ? 14 : 20}px`,
                     maxWidth: 560,
                   }}
@@ -70,8 +70,8 @@ export function FaqList() {
                       className="mono btn-invert"
                       style={{
                         display: "inline-block",
-                        background: "#16140f",
-                        color: "#f1ede4",
+                        background: "var(--near-black)",
+                        color: "var(--cream)",
                         borderRadius: 12,
                         padding: "11px 18px",
                         fontSize: 12.5,

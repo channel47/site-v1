@@ -6,14 +6,45 @@
    ============================================================ */
 
 :root {
-  --bg: #ebe7df;
-  --ink: #252119;
-  --ink-soft: #37332b;
-  --ink-strong: #1b1916;
-  --muted: #9a9485;
-  --accent: #cc4b1e;
-  --paper: #faf8f1;
-  --cream: #f1ede4;
+  /* ----------------------------------------------------------------
+     Colour system — OKLCH. Two families, each internally consistent:
+
+     1. Warm neutrals share a single hue (85°) so every cream, paper and
+        ink reads as the same temperature; lightness defines the ramp and
+        chroma tapers gently toward the extremes.
+     2. Brand + category accents share one lightness (0.565) and one
+        chroma budget (≈72% of each hue's sRGB max) so they look like a
+        family rather than five hand-picked colours.
+
+     L = perceptual lightness, C = chroma, H = hue angle. Contrast is
+     tuned on L; every text/background pair clears APCA Lc 60.
+     ---------------------------------------------------------------- */
+
+  /* warm neutral ramp — light → dark, hue locked at 85° */
+  --paper: oklch(0.979 0.011 85);
+  --cream: oklch(0.952 0.013 85);
+  --bg: oklch(0.929 0.014 85);
+  --surface: oklch(0.91 0.016 85);
+  --surface-2: oklch(0.897 0.017 85);
+  --hair: oklch(0.865 0.018 85);
+  --n-400: oklch(0.806 0.018 85);
+  --n-450: oklch(0.714 0.019 85);
+  --muted: oklch(0.54 0.018 85);
+  --ink-faint: oklch(0.526 0.016 85);
+  --ink-soft: oklch(0.323 0.015 85);
+  --ink: oklch(0.245 0.013 85);
+  --ink-strong: oklch(0.205 0.011 85);
+  --near-black: oklch(0.18 0.009 85);
+
+  /* brand + category accents — equal L (0.565), equal chroma budget */
+  --accent: oklch(0.565 0.133 38); /* terracotta — brand + decorative */
+  --accent-ink: oklch(0.52 0.145 38); /* deeper rust — links / small text on light */
+  --cat-orange: oklch(0.565 0.133 38);
+  --cat-teal: oklch(0.565 0.07 210);
+  --cat-gold: oklch(0.565 0.085 76);
+  --cat-indigo: oklch(0.565 0.176 279);
+  --cat-green: oklch(0.565 0.105 153);
+
   --font-serif: var(--font-newsreader), Georgia, "Times New Roman", serif;
   --font-sans: var(--font-space-grotesk), system-ui, sans-serif;
 }
@@ -29,7 +60,7 @@ html {
   overflow-x: hidden;
   max-width: 100vw;
   scrollbar-width: thin;
-  scrollbar-color: #c4bfb4 var(--bg);
+  scrollbar-color: var(--n-400) var(--bg);
 }
 
 html::-webkit-scrollbar {
@@ -39,11 +70,11 @@ html::-webkit-scrollbar-track {
   background: var(--bg);
 }
 html::-webkit-scrollbar-thumb {
-  background: #c4bfb4;
+  background: var(--n-400);
   border-radius: 4px;
 }
 html::-webkit-scrollbar-thumb:hover {
-  background: #a8a296;
+  background: var(--n-450);
 }
 
 body {
@@ -122,7 +153,7 @@ a {
   }
   100% {
     transform: translate(0, 0) rotate(0) scale(1);
-    fill: #252119;
+    fill: var(--ink);
     opacity: 1;
   }
 }
@@ -214,9 +245,9 @@ a {
   flex-direction: column;
   cursor: pointer;
   background: var(--paper);
-  border: 1px solid rgba(27, 25, 22, 0.13);
+  border: 1px solid oklch(0.215 0.007 78 / 0.13);
   color: var(--ink-strong);
-  box-shadow: 0 24px 50px -32px rgba(27, 25, 22, 0.55);
+  box-shadow: 0 24px 50px -32px oklch(0.215 0.007 78 / 0.55);
   transform-origin: bottom center;
   transition:
     transform 0.62s cubic-bezier(0.22, 1, 0.36, 1),
@@ -252,60 +283,60 @@ a {
   opacity: 0.7;
 }
 .hstack-card.is-front {
-  color: #f6f1e7;
-  box-shadow: 0 30px 60px -28px rgba(31, 28, 23, 0.5);
+  color: var(--cream);
+  box-shadow: 0 30px 60px -28px oklch(0.228 0.01 81 / 0.5);
 }
 .hstack-card.acc0.is-front {
-  background: #cc4b1e;
-  border-color: #cc4b1e;
+  background: var(--cat-orange);
+  border-color: var(--cat-orange);
 }
 .hstack-card.acc1.is-front {
-  background: #1e7d8c;
-  border-color: #1e7d8c;
+  background: var(--cat-teal);
+  border-color: var(--cat-teal);
 }
 .hstack-card.acc2.is-front {
-  background: #b07d24;
-  border-color: #b07d24;
+  background: var(--cat-gold);
+  border-color: var(--cat-gold);
 }
 .hstack-card.acc3.is-front {
-  background: #50539e;
-  border-color: #50539e;
+  background: var(--cat-indigo);
+  border-color: var(--cat-indigo);
 }
 .hstack-card.acc4.is-front {
-  background: #3f7a52;
-  border-color: #3f7a52;
+  background: var(--cat-green);
+  border-color: var(--cat-green);
 }
 .stk-k {
   color: var(--muted);
 }
 .is-front .stk-k {
-  color: rgba(246, 241, 231, 0.82);
+  color: oklch(0.952 0.013 85 / 0.82);
 }
 .stk-tag {
   color: var(--muted);
-  border: 1px solid rgba(27, 25, 22, 0.2);
+  border: 1px solid oklch(0.215 0.007 78 / 0.2);
 }
 .is-front .stk-tag {
-  color: #f6f1e7;
-  border-color: rgba(246, 241, 231, 0.45);
+  color: var(--cream);
+  border-color: oklch(0.952 0.013 85 / 0.45);
 }
 .stk-title {
   color: var(--ink-strong);
 }
 .is-front .stk-title {
-  color: #f6f1e7;
+  color: var(--cream);
 }
 .stk-desc {
   color: var(--ink-soft);
 }
 .is-front .stk-desc {
-  color: rgba(246, 241, 231, 0.92);
+  color: oklch(0.952 0.013 85 / 0.92);
 }
 .stk-go {
   color: var(--accent);
 }
 .is-front .stk-go {
-  color: #f6f1e7;
+  color: var(--cream);
 }
 
 /* category dots */
@@ -314,7 +345,7 @@ a {
   height: 6px;
   width: 6px;
   border-radius: 99px;
-  background: rgba(35, 31, 26, 0.2);
+  background: oklch(0.242 0.011 73 / 0.2);
   cursor: pointer;
   transition:
     width 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
@@ -348,13 +379,13 @@ a {
   background: var(--muted);
 }
 .ptdot.pt-skill {
-  background: #cc4b1e;
+  background: var(--cat-orange);
 }
 .ptdot.pt-connector {
-  background: #1e7d8c;
+  background: var(--cat-teal);
 }
 .ptdot.pt-agent {
-  background: #50539e;
+  background: var(--cat-indigo);
 }
 
 /* ---- systems coverflow ------------------------------------------ */
@@ -371,7 +402,7 @@ a {
 /* Subtle pure-black edge so artwork reads with consistent depth on the cream
    surface (never a tinted neutral, which looks like dirt on the image edge). */
 .cf-card img {
-  outline: 1px solid rgba(0, 0, 0, 0.1);
+  outline: 1px solid oklch(0 0 0 / 0.1);
   outline-offset: -1px;
 }
 .lift {
@@ -393,7 +424,7 @@ a {
   width: 42px;
   border-radius: 50%;
   background: var(--paper);
-  border: 1px solid rgba(35, 31, 26, 0.16);
+  border: 1px solid oklch(0.242 0.011 73 / 0.16);
   color: var(--ink);
   font-size: 17px;
   line-height: 1;
@@ -401,7 +432,7 @@ a {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 8px 22px -12px rgba(31, 28, 23, 0.5);
+  box-shadow: 0 8px 22px -12px oklch(0.228 0.01 81 / 0.5);
   transition:
     border-color 0.2s,
     color 0.2s,
@@ -480,48 +511,48 @@ a {
   --tx: -11px;
   --ty: -7px;
   --rot: -22deg;
-  --ca: #cc4b1e;
-  --cb: #b07d24;
+  --ca: var(--cat-orange);
+  --cb: var(--cat-gold);
   animation-delay: 0ms;
 }
 .gl-logo.gl-play .gl-base rect:nth-child(2) {
   --tx: 8px;
   --ty: 9px;
   --rot: 16deg;
-  --ca: #1e93b0;
-  --cb: #3f7a52;
+  --ca: var(--cat-teal);
+  --cb: var(--cat-green);
   animation-delay: 55ms;
 }
 .gl-logo.gl-play .gl-base rect:nth-child(3) {
   --tx: -7px;
   --ty: 10px;
   --rot: 20deg;
-  --ca: #50539e;
-  --cb: #1e93b0;
+  --ca: var(--cat-indigo);
+  --cb: var(--cat-teal);
   animation-delay: 30ms;
 }
 .gl-logo.gl-play .gl-base rect:nth-child(4) {
   --tx: 12px;
   --ty: -8px;
   --rot: -15deg;
-  --ca: #b07d24;
-  --cb: #cc4b1e;
+  --ca: var(--cat-gold);
+  --cb: var(--cat-orange);
   animation-delay: 90ms;
 }
 .gl-logo.gl-play .gl-base rect:nth-child(5) {
   --tx: -9px;
   --ty: -10px;
   --rot: 24deg;
-  --ca: #3f7a52;
-  --cb: #50539e;
+  --ca: var(--cat-green);
+  --cb: var(--cat-indigo);
   animation-delay: 120ms;
 }
 .gl-logo.gl-play .gl-base rect:nth-child(6) {
   --tx: 9px;
   --ty: 8px;
   --rot: -20deg;
-  --ca: #cc4b1e;
-  --cb: #1e93b0;
+  --ca: var(--cat-orange);
+  --cb: var(--cat-teal);
   animation-delay: 70ms;
 }
 
@@ -551,8 +582,8 @@ a {
     scale 0.18s cubic-bezier(0.2, 0, 0, 1);
 }
 .btn-invert:hover {
-  background: #ffffff !important;
-  color: #14110d !important;
+  background: oklch(1 0 0) !important;
+  color: var(--near-black) !important;
 }
 .btn-invert:active {
   scale: 0.96;
@@ -574,8 +605,8 @@ a {
   inset: -8px -4px;
 }
 .login-pill:hover {
-  border-color: #231f1a;
-  background: #231f1a;
+  border-color: var(--ink);
+  background: var(--ink);
   color: var(--cream);
 }
 .login-pill:active {

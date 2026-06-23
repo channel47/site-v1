@@ -42,7 +42,7 @@ export function CategoryStack() {
           fontSize: 41,
           lineHeight: 1.08,
           letterSpacing: "-0.02em",
-          color: "#231f1a",
+          color: "var(--ink)",
           maxWidth: 600,
           textWrap: "balance",
           fontWeight: 400,

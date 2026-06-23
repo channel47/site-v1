@@ -18,7 +18,7 @@ export function Testimonial({ quote, name, role }: TestimonialData) {
           lineHeight: 1.34,
           letterSpacing: "-0.01em",
           fontStyle: "italic",
-          color: "#1b1916",
+          color: "var(--ink-strong)",
           textWrap: "pretty",
         }}
       >
@@ -38,16 +38,16 @@ export function Testimonial({ quote, name, role }: TestimonialData) {
             width: 38,
             height: 38,
             borderRadius: "50%",
-            background: "#e3ddcf",
-            border: "1px solid rgba(0,0,0,0.1)",
+            background: "var(--surface-2)",
+            border: "1px solid oklch(0 0 0 / 0.1)",
             flex: "none",
           }}
         />
         <div>
-          <div style={{ fontSize: 13.5, fontWeight: 600, color: "#1b1916" }}>
+          <div style={{ fontSize: 13.5, fontWeight: 600, color: "var(--ink-strong)" }}>
             {name}
           </div>
-          <div className="mono" style={{ fontSize: 10.5, color: "#9a9485" }}>
+          <div className="mono" style={{ fontSize: 10.5, color: "var(--muted)" }}>
             {role}
           </div>
         </div>

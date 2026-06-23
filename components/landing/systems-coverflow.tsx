@@ -230,12 +230,12 @@ export function SystemsCoverflow() {
                   style={{
                     width: 300,
                     height: 300,
-                    border: "1px solid rgba(27,25,22,0.1)",
+                    border: "1px solid oklch(0.215 0.007 78 / 0.1)",
                     borderRadius: 18,
-                    background: "#e7e1d3",
+                    background: "var(--surface)",
                     position: "relative",
                     overflow: "hidden",
-                    boxShadow: "0 26px 50px -28px rgba(27,25,22,0.45)",
+                    boxShadow: "0 26px 50px -28px oklch(0.215 0.007 78 / 0.45)",
                     willChange: "transform, filter",
                   }}
                 >
@@ -270,7 +270,7 @@ export function SystemsCoverflow() {
                       fontWeight: 500,
                       letterSpacing: "-0.01em",
                       lineHeight: 1.12,
-                      color: "#1b1916",
+                      color: "var(--ink-strong)",
                       transition: "color .2s ease",
                     }}
                   >
@@ -296,7 +296,7 @@ export function SystemsCoverflow() {
             alignItems: "center",
             justifyContent: "center",
             padding: 24,
-            background: "rgba(20,17,13,0.55)",
+            background: "oklch(0.18 0.009 75 / 0.55)",
             animation: `${closing ? "fadeOut" : "fadeIn"} 0.2s ease both`,
           }}
         >
@@ -308,10 +308,10 @@ export function SystemsCoverflow() {
             style={{
               width: "100%",
               maxWidth: 480,
-              background: "#faf8f1",
-              border: "1px solid rgba(27,25,22,0.13)",
+              background: "var(--paper)",
+              border: "1px solid oklch(0.215 0.007 78 / 0.13)",
               borderRadius: 20,
-              boxShadow: "0 40px 90px -30px rgba(20,17,13,0.6)",
+              boxShadow: "0 40px 90px -30px oklch(0.18 0.009 75 / 0.6)",
               padding: "32px 34px 30px",
               maxHeight: "86vh",
               overflowY: "auto",
@@ -333,7 +333,7 @@ export function SystemsCoverflow() {
                 style={{
                   fontSize: 10,
                   letterSpacing: "0.16em",
-                  color: "#9a9485",
+                  color: "var(--muted)",
                 }}
               >
                 {sys.kicker}
@@ -346,7 +346,7 @@ export function SystemsCoverflow() {
                   cursor: "pointer",
                   fontSize: 17,
                   lineHeight: 1,
-                  color: "#9a9485",
+                  color: "var(--muted)",
                   display: "inline-flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -370,7 +370,7 @@ export function SystemsCoverflow() {
                 letterSpacing: "-0.015em",
                 lineHeight: 1.04,
                 marginTop: 13,
-                color: "#1b1916",
+                color: "var(--ink-strong)",
               }}
             >
               {sys.name}
@@ -379,7 +379,7 @@ export function SystemsCoverflow() {
               style={{
                 fontSize: 16,
                 lineHeight: 1.6,
-                color: "#37332b",
+                color: "var(--ink-soft)",
                 marginTop: 13,
               }}
             >
@@ -403,13 +403,13 @@ export function SystemsCoverflow() {
                       width: 6,
                       height: 6,
                       borderRadius: "50%",
-                      background: "#cc4b1e",
+                      background: "var(--accent)",
                       flex: "none",
                       marginTop: 8,
                     }}
                   />
                   <span
-                    style={{ fontSize: 15, lineHeight: 1.5, color: "#37332b" }}
+                    style={{ fontSize: 15, lineHeight: 1.5, color: "var(--ink-soft)" }}
                   >
                     {b}
                   </span>
@@ -436,8 +436,8 @@ export function SystemsCoverflow() {
                     letterSpacing: "0.08em",
                     padding: "6px 11px",
                     borderRadius: 999,
-                    border: "1px solid rgba(27,25,22,0.18)",
-                    color: "#6f6a5f",
+                    border: "1px solid oklch(0.215 0.007 78 / 0.18)",
+                    color: "var(--ink-faint)",
                   }}
                 >
                   <span
@@ -461,7 +461,7 @@ export function SystemsCoverflow() {
                 gap: 14,
                 marginTop: 26,
                 paddingTop: 22,
-                borderTop: "1px solid rgba(27,25,22,0.12)",
+                borderTop: "1px solid oklch(0.215 0.007 78 / 0.12)",
               }}
             >
               <div style={{ display: "flex", flexDirection: "column" }}>
@@ -471,14 +471,14 @@ export function SystemsCoverflow() {
                     fontSize: 10,
                     letterSpacing: "0.1em",
                     textTransform: "uppercase",
-                    color: "#9a9485",
+                    color: "var(--muted)",
                   }}
                 >
                   Price
                 </span>
                 <span
                   className="serif"
-                  style={{ fontSize: 26, fontWeight: 500, color: "#1b1916" }}
+                  style={{ fontSize: 26, fontWeight: 500, color: "var(--ink-strong)" }}
                 >
                   {sys.price}
                 </span>
@@ -491,8 +491,8 @@ export function SystemsCoverflow() {
                   display: "inline-flex",
                   alignItems: "center",
                   gap: 10,
-                  background: "#14110d",
-                  color: "#f1ede4",
+                  background: "var(--near-black)",
+                  color: "var(--cream)",
                   borderRadius: 12,
                   padding: "15px 24px",
                   fontWeight: 700,

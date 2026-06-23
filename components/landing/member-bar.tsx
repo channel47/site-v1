@@ -6,7 +6,7 @@ import { MEMBER_CODE } from "@/lib/landing-content"
  */
 export function MemberBar() {
   return (
-    <div className="codebar" style={{ background: "#16140f", color: "#f1ede4" }}>
+    <div className="codebar" style={{ background: "var(--near-black)", color: "var(--cream)" }}>
       <div>
         <div
           style={{
@@ -23,14 +23,14 @@ export function MemberBar() {
               width: 7,
               height: 7,
               borderRadius: "50%",
-              background: "#cc4b1e",
+              background: "var(--accent)",
               flex: "none",
               animation: "blip 1.8s ease-in-out infinite",
             }}
           />
           <span
             className="mono"
-            style={{ fontSize: 11, letterSpacing: "0.03em", color: "#d8d2c4" }}
+            style={{ fontSize: 11, letterSpacing: "0.03em", color: "var(--hair)" }}
           >
             CODE {MEMBER_CODE} ACTIVE — the whole library is free · studio rate
             discounted
