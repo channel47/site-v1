@@ -443,35 +443,11 @@ a {
   color: oklch(0.952 0.013 85 / 0.92);
 }
 
-/* category dots */
-.cs-dot {
-  position: relative;
-  height: 6px;
-  width: 6px;
-  border-radius: 99px;
-  background: oklch(0.242 0.011 73 / 0.2);
-  cursor: pointer;
-  transition:
-    width 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
-    background 0.35s;
-  border: none;
-  padding: 0;
-  display: block;
-}
-/* Invisible 40px-tall hit target; horizontal padding stops just short of the
-   8px gap so adjacent dots' hit areas never overlap. */
-.cs-dot::before {
-  content: "";
-  position: absolute;
-  inset: -17px -4px;
-}
-.cs-dot.on {
-  width: 20px;
-  background: var(--ink);
-}
-.cs-dot:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 5px;
+/* Hero category cards are keyboard-operable — they carry the navigation the old
+   dot pager used to, so give them a focus ring that reads on every accent field. */
+.hstack-card:focus-visible {
+  outline: 2px solid var(--cream);
+  outline-offset: -5px;
 }
 
 /* part marker dots */
@@ -500,6 +476,36 @@ a {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Shelf cards share the HERO's deep accent fields (acc0–acc4 bases) instead of
+   the bright --cat-* tokens, so "the orange" is one orange across hero and
+   shelf, and the cream name/icon clears WCAG AA (the bright fills did not).
+   Radius matches the hero (22px); image cards keep the neutral surface. */
+.cf-card {
+  border-radius: 22px;
+}
+.cf-img {
+  background: var(--surface);
+}
+.cf-orange {
+  background: oklch(0.5 0.12 40);
+}
+.cf-gold {
+  background: oklch(0.5 0.085 76);
+}
+.cf-teal {
+  background: oklch(0.47 0.07 210);
+}
+.cf-indigo {
+  background: oklch(0.46 0.16 279);
+}
+.cf-green {
+  background: oklch(0.47 0.09 153);
+}
+.cf-rose {
+  background: oklch(0.47 0.135 18);
+}
+
 /* Each system card is one accent colour + grain + a full-bleed icon. */
 .cf-ic {
   position: absolute;
@@ -535,7 +541,8 @@ a {
   background-image: var(--grain-tex);
   background-size: 140px 140px;
   mix-blend-mode: overlay;
-  opacity: 0.6;
+  /* Match the hero's grain register (.hs-grain is 0.5) so both read as one paint. */
+  opacity: 0.5;
   pointer-events: none;
 }
 /* Subtle pure-black edge so artwork reads with consistent depth on the cream

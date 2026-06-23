@@ -66,6 +66,16 @@ export function CategoryStack() {
             key={c.kicker}
             className={`hstack-card ${c.accent} ${depthClass(i)}`}
             onClick={() => pick(i)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault()
+                pick(i)
+              }
+            }}
+            role="button"
+            tabIndex={0}
+            aria-label={`Show ${c.title}`}
+            aria-current={i === active}
           >
             <span className="hs-blob b1" aria-hidden />
             <span className="hs-blob b2" aria-hidden />
@@ -110,27 +120,6 @@ export function CategoryStack() {
               </p>
             </div>
           </div>
-        ))}
-      </div>
-
-      <div
-        className="rise"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: 8,
-          marginTop: 6,
-          animationDelay: "0.2s",
-        }}
-      >
-        {CATEGORIES.map((c, i) => (
-          <button
-            key={c.kicker}
-            className={`cs-dot${i === active ? " on" : ""}`}
-            onClick={() => pick(i)}
-            aria-label={c.title}
-          />
         ))}
       </div>
     </header>

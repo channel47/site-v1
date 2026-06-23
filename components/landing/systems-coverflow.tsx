@@ -271,15 +271,13 @@ export function SystemsCoverflow() {
                 }}
               >
                 <div
-                  className="cf-card lift"
+                  className={`cf-card lift ${
+                    s.image ? "cf-img" : `cf-${s.accent.replace("cat-", "")}`
+                  }`}
                   style={{
                     width: 300,
                     height: 300,
                     border: "1px solid oklch(0.215 0.007 78 / 0.1)",
-                    borderRadius: 18,
-                    background: s.image
-                      ? "var(--surface)"
-                      : `var(--${s.accent})`,
                     position: "relative",
                     overflow: "hidden",
                     boxShadow: "0 26px 50px -28px oklch(0.215 0.007 78 / 0.45)",
