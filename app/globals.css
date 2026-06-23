@@ -134,22 +134,24 @@ a {
     opacity: 0.3;
   }
 }
+/* Each block flies in from a scattered offset and ripples through three
+   brand colours (--ca → --cb → --cc) before settling to ink. The springy
+   timing function (set on the animation) gives the landing a little bounce. */
 @keyframes scram {
   0% {
-    transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0.7);
+    transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0.5);
     fill: var(--ca);
     opacity: 0;
   }
-  18% {
+  12% {
     opacity: 1;
     fill: var(--ca);
   }
-  50% {
+  40% {
     fill: var(--cb);
   }
-  72% {
-    transform: translate(0, 0) rotate(0) scale(1);
-    fill: var(--cb);
+  68% {
+    fill: var(--cc);
   }
   100% {
     transform: translate(0, 0) rotate(0) scale(1);
@@ -482,13 +484,20 @@ a {
 }
 
 /* ---- glitch logo ------------------------------------------------ */
-/* Chromatic "47" mark that scatters its blocks in on load + on click,
-   cycling brand colours before settling to ink. */
+/* Chromatic "47" mark that scatters its blocks in on load and on every
+   click, cycling brand colours before settling to ink. The click is a
+   pure easter-egg replay — it triggers the animation and nothing else. */
 .gl-logo {
   position: relative;
   display: inline-block;
   height: 24px;
   width: 46px;
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 .gl-logo .gl {
   position: absolute;
@@ -505,55 +514,63 @@ a {
   transform-origin: center;
 }
 .gl-logo.gl-play .gl-base rect {
-  animation: scram 0.62s cubic-bezier(0.2, 0.8, 0.25, 1) both;
+  animation: scram 0.72s cubic-bezier(0.34, 1.42, 0.5, 1) both;
 }
+/* Stagger climbs left-to-right across the mark so the "47" assembles as a
+   wave; each block carries its own three-colour ripple. */
 .gl-logo.gl-play .gl-base rect:nth-child(1) {
-  --tx: -11px;
-  --ty: -7px;
-  --rot: -22deg;
+  --tx: -14px;
+  --ty: -9px;
+  --rot: -28deg;
   --ca: var(--cat-orange);
   --cb: var(--cat-gold);
+  --cc: var(--cat-green);
   animation-delay: 0ms;
 }
 .gl-logo.gl-play .gl-base rect:nth-child(2) {
-  --tx: 8px;
-  --ty: 9px;
-  --rot: 16deg;
+  --tx: 11px;
+  --ty: 12px;
+  --rot: 22deg;
   --ca: var(--cat-teal);
   --cb: var(--cat-green);
-  animation-delay: 55ms;
-}
-.gl-logo.gl-play .gl-base rect:nth-child(3) {
-  --tx: -7px;
-  --ty: 10px;
-  --rot: 20deg;
-  --ca: var(--cat-indigo);
-  --cb: var(--cat-teal);
+  --cc: var(--cat-indigo);
   animation-delay: 30ms;
 }
+.gl-logo.gl-play .gl-base rect:nth-child(3) {
+  --tx: -9px;
+  --ty: 13px;
+  --rot: 26deg;
+  --ca: var(--cat-indigo);
+  --cb: var(--cat-teal);
+  --cc: var(--cat-orange);
+  animation-delay: 60ms;
+}
 .gl-logo.gl-play .gl-base rect:nth-child(4) {
-  --tx: 12px;
-  --ty: -8px;
-  --rot: -15deg;
+  --tx: 15px;
+  --ty: -11px;
+  --rot: -20deg;
   --ca: var(--cat-gold);
   --cb: var(--cat-orange);
-  animation-delay: 90ms;
+  --cc: var(--cat-teal);
+  animation-delay: 95ms;
 }
 .gl-logo.gl-play .gl-base rect:nth-child(5) {
-  --tx: -9px;
-  --ty: -10px;
-  --rot: 24deg;
+  --tx: -12px;
+  --ty: -13px;
+  --rot: 30deg;
   --ca: var(--cat-green);
   --cb: var(--cat-indigo);
-  animation-delay: 120ms;
+  --cc: var(--cat-gold);
+  animation-delay: 150ms;
 }
 .gl-logo.gl-play .gl-base rect:nth-child(6) {
-  --tx: 9px;
-  --ty: 8px;
-  --rot: -20deg;
+  --tx: 12px;
+  --ty: 10px;
+  --rot: -26deg;
   --ca: var(--cat-orange);
   --cb: var(--cat-teal);
-  animation-delay: 70ms;
+  --cc: var(--cat-indigo);
+  animation-delay: 120ms;
 }
 
 /* ---- system modal ----------------------------------------------- */

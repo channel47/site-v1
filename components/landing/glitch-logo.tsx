@@ -22,14 +22,16 @@ interface GlitchLogoProps {
 
 /**
  * Channel 47 logo: an SVG "47" whose blocks scatter in and cycle the brand
- * palette before settling to ink. Plays on mount (nav) and on every click.
+ * palette before settling to ink. Plays on mount (nav) and replays on every
+ * click. It's a button, not a link — clicking is a pure easter-egg replay
+ * and intentionally does nothing else (no scroll, no navigation).
  */
 export function GlitchLogo({
   autoPlay = false,
   width = 46,
   className,
 }: GlitchLogoProps) {
-  const ref = useRef<HTMLAnchorElement>(null)
+  const ref = useRef<HTMLButtonElement>(null)
 
   const play = () => {
     const el = ref.current
@@ -47,10 +49,10 @@ export function GlitchLogo({
   }, [autoPlay])
 
   return (
-    <a
+    <button
       ref={ref}
-      href="#top"
-      aria-label="Channel 47"
+      type="button"
+      aria-label="Channel 47 — replay logo animation"
       className={`gl-logo${className ? ` ${className}` : ""}`}
       style={{ width, height: (width * 24) / 46 }}
       onClick={play}
@@ -65,6 +67,6 @@ export function GlitchLogo({
           <rect key={i} x={b.x} y={b.y} width={b.width} height={b.height} />
         ))}
       </svg>
-    </a>
+    </button>
   )
 }
