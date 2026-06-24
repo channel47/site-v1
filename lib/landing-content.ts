@@ -163,7 +163,7 @@ export const SYSTEMS: System[] = [
     price: "Soon",
     live: false,
     blurb:
-      "Welcome, nurture and promo sequences in your brand's exact voice, off the same customer context.",
+      "Welcome, nurture and promo sequences in your brand’s exact voice, off the same customer context.",
     bullets: [
       "Welcome, nurture & promo sequences in your voice",
       "Runs off the same customer context",
@@ -264,12 +264,12 @@ export const FAQS: Faq[] = [
       "No. Every system ships with a short setup walkthrough that gets you running from zero. If you can copy a file and follow a video, you can use them. The walkthroughs and live builds go deeper if you want them.",
   },
   {
-    question: "What's the difference between buying access and hiring you?",
+    question: "What’s the difference between buying access and hiring you?",
     answer:
       "Access gets you the systems to run yourself — yours forever. The Studio gets you the finished output with my angle judgment applied, so you skip the setup and the learning curve. Same engine, your time back.",
   },
   {
-    question: "I'm in the Vibe Marketers — is it really free?",
+    question: "I’m in the Vibe Marketers — is it really free?",
     answer:
       'Yes. Members get the code <span class="mono" style="font-size:13px;color:oklch(0.52 0.145 38)">VIBE47</span>, which unlocks the entire library here for free and discounts the studio rate. I build each system live in the monthly lab — you watch it get made, then take it home. <a href="{joinUrl}" target="_blank" rel="noopener" class="ul" style="color:oklch(0.52 0.145 38)">Join here →</a>',
   },
@@ -281,12 +281,12 @@ export const FAQS: Faq[] = [
   {
     question: "Can I just hire you to run my marketing?",
     answer:
-      "Yes — that's the Studio. I run any of these systems on your business myself, with the angle judgment baked in. Advertorials from $1,950, the Angle Report at $650, or a full funnel build scoped per project.",
+      "Yes — that’s the Studio. I run any of these systems on your business myself, with the angle judgment baked in. Advertorials from $1,950, the Angle Report at $650, or a full funnel build scoped per project.",
     cta: { label: "Book a call →", href: LINKS.book },
   },
   {
     question: "Who is this for?",
     answer:
-      "Founders, marketers and operators running paid acquisition who want the workflow of a senior performance marketer without hiring one. If you're sending cold traffic and want it to convert, you're in the right place.",
+      "Founders, marketers and operators running paid acquisition who want the workflow of a senior performance marketer without hiring one. If you’re sending cold traffic and want it to convert, you’re in the right place.",
   },
 ]

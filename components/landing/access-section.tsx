@@ -16,7 +16,7 @@ export function AccessSection() {
       <p style={{ fontSize: 17, lineHeight: 1.62, color: "var(--ink-soft)" }}>
         One payment gets you the entire library — every system, every MCP
         connector, every walkthrough and principle — plus everything I add from
-        here on. No subscription, no seat fees. You buy in once and it&apos;s
+        here on. No subscription, no seat fees. You buy in once and it’s
         yours.
       </p>
 
