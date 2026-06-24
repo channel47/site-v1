@@ -346,6 +346,12 @@ a {
   border: 1px solid oklch(0.215 0.007 78 / 0.13);
   color: var(--cream);
   overflow: hidden;
+  /* Force WebKit to honour the rounded clip even when the card is promoted to
+     its own layer during transforms — without a mask, the square layer edge
+     leaks past the corners on iOS Safari. A solid mask preserves the shadow
+     (clip-path would crop it). */
+  -webkit-mask-image: -webkit-radial-gradient(white, white);
+  mask-image: radial-gradient(white, white);
   box-shadow: 0 24px 50px -32px oklch(0.215 0.007 78 / 0.55);
   transform-origin: bottom center;
   transition:
@@ -354,7 +360,6 @@ a {
     opacity 0.55s ease,
     background 0.45s ease,
     border-color 0.45s ease;
-  will-change: transform, opacity;
 }
 .hstack-card.d0 {
   transform: translateY(0) scale(1);
@@ -383,6 +388,9 @@ a {
 }
 .hstack-card.is-front {
   box-shadow: 0 30px 60px -28px oklch(0.228 0.01 81 / 0.5);
+  /* Only the front card animates (blobs + grain), so it alone needs promoting.
+     Keeping the static back cards off their own layers lets them clip cleanly. */
+  will-change: transform, opacity;
 }
 
 /* Each shelf is a permanent colour field: a deep base plus three blob hues
