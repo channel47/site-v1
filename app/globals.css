@@ -825,6 +825,9 @@ a {
     max-height: 140px;
     transform: none;
   }
+  /* stacked form — full-width input over a full-width button, with real
+     vertical padding so the button keeps its height once the row's stretch no
+     longer sets it. !important beats the button's inline padding. */
   .ea-formrow {
     flex-direction: column;
     gap: 12px;
@@ -832,6 +835,16 @@ a {
   }
   .ea-formrow > * {
     width: 100%;
+  }
+  .ea-formrow .ufield {
+    padding: 16px 18px !important;
+    font-size: 16px !important; /* ≥16px stops iOS zoom-on-focus */
+    border-radius: 13px !important;
+  }
+  .ea-formrow button {
+    padding: 16px 20px !important;
+    font-size: 14.5px !important;
+    border-radius: 13px !important;
   }
 }
 
