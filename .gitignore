@@ -30,5 +30,9 @@ next-env.d.ts
 # local Claude settings
 .claude/
 
+# local agent skills (skill-manager install dir + lockfile)
+.agents/
+skills-lock.json
+
 # macOS
 .DS_Store
