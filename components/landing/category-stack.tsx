@@ -48,7 +48,7 @@ export function CategoryStack() {
           fontWeight: 400,
         }}
       >
-        A living library of agentic systems and tools for performance marketers.
+        An agentic operating system for performance marketing.
       </p>
 
       <div

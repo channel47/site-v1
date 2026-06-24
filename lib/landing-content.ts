@@ -173,11 +173,11 @@ export const SYSTEMS: System[] = [
   },
 ]
 
-/** A "shelf" in the hero — the four kinds of thing in the library. */
+/** A "shelf" in the hero — the building blocks of the eventual operating system. */
 export interface Category {
-  /** Kicker label, e.g. "SYSTEMS". */
+  /** Kicker label, e.g. "SKILLS". */
   kicker: string
-  /** Pill text, e.g. "skills · connectors · agents". */
+  /** Pill text, e.g. "drop-in". */
   tag: string
   /** Big title on the card. */
   title: string
@@ -189,32 +189,87 @@ export interface Category {
 
 export const CATEGORIES: Category[] = [
   {
-    kicker: "SYSTEMS",
-    tag: "skills · connectors · agents",
-    title: "Systems",
-    body: "Buildable agentic systems — each one a bundle of skills, MCP connectors and sub-agents you run yourself.",
+    kicker: "SKILLS",
+    tag: "drop-in",
+    title: "Skills",
+    body: "Drop-in capabilities your agents load on demand — review miners, angle scorers, pre-sell writers, each a single file.",
     accent: "acc0",
   },
   {
-    kicker: "WALKTHROUGHS",
-    tag: "video",
-    title: "Walkthroughs",
-    body: "Watch every system get built end to end — the setup, the prompts, the gotchas.",
+    kicker: "CONNECTORS",
+    tag: "MCP",
+    title: "Connectors",
+    body: "MCP connectors that wire agents straight into Google, Bing, Klaviyo, Drip and Shopify — the platforms you run every day.",
     accent: "acc1",
   },
   {
-    kicker: "PRINCIPLES",
-    tag: "essays",
-    title: "Principles",
-    body: "The thinking underneath: how I find angles, structure traffic and read accounts.",
+    kicker: "AGENTS",
+    tag: "sub-agents",
+    title: "Agents",
+    body: "Purpose-built sub-agents that do the work — mine personas, find wasted spend, ship the changes once you approve.",
     accent: "acc2",
   },
   {
-    kicker: "AI COLLABORATION",
+    kicker: "PLAYBOOKS",
     tag: "method",
-    title: "Collaboration",
-    body: "How I actually work with Claude Code, Codex and agents every day.",
+    title: "Playbooks",
+    body: "The thinking that ties it together — how I find angles, structure traffic and run the whole stack with agents.",
     accent: "acc3",
+  },
+]
+
+/* -------------------------------------------------------------------------
+   Early-access landing page (the live, email-first page).
+   Copy + card data transcribed from the "CH47 Early Access" Claude Design file.
+   ------------------------------------------------------------------------- */
+
+/** Headline, narrative copy and form helper for the early-access page. */
+export const EARLY_ACCESS = {
+  headline: "An agentic operating system for performance marketers",
+  p1: "Seven years and three million dollars in ad spend taught me the wins were never the clever creative or the lucky audience. Underneath every account that scaled was a system — a repeatable way to find the angle, build the page, and read the numbers.",
+  p2: "For years those systems lived in my head and a sprawl of half-finished docs. Agents changed that. The judgment I used to carry around is now something I can hand over directly — as skills, agents, connectors, and the playbooks that tie them together.",
+  p3: "I'm packaging the whole stack into one operating system, from cold-traffic acquisition through retention. It's almost here — leave your email and you'll be first through the door.",
+  helper: "No spam. One email when the first systems ship.",
+} as const
+
+/**
+ * One card in the early-access fan stack. The colours are baked into the data
+ * because each card is a self-contained dark colour field (a base plus three
+ * blurred blob hues), straight from the design — they don't theme with the page.
+ */
+export interface EAStackCard {
+  title: string
+  desc: string
+  /** Card base colour (OKLCH). */
+  bg: string
+  /** Three blurred blob hues drifting behind the front card. */
+  blobs: [string, string, string]
+}
+
+export const EA_STACK: EAStackCard[] = [
+  {
+    title: "Skills",
+    desc: "Composable skills your agents call to research, write, and optimize.",
+    bg: "oklch(0.47 0.135 45)",
+    blobs: ["oklch(0.66 0.205 55)", "oklch(0.44 0.16 30)", "oklch(0.63 0.12 80)"],
+  },
+  {
+    title: "Agents",
+    desc: "Autonomous sub-agents that run the work end to end, on your approval.",
+    bg: "oklch(0.42 0.11 285)",
+    blobs: ["oklch(0.58 0.165 292)", "oklch(0.40 0.11 268)", "oklch(0.56 0.13 320)"],
+  },
+  {
+    title: "Connectors",
+    desc: "MCP connectors that plug straight into Google, Bing, Klaviyo, and Shopify.",
+    bg: "oklch(0.45 0.085 210)",
+    blobs: ["oklch(0.62 0.11 200)", "oklch(0.42 0.08 232)", "oklch(0.58 0.10 175)"],
+  },
+  {
+    title: "Playbooks",
+    desc: "The thinking underneath — how the angles get found and the accounts get read.",
+    bg: "oklch(0.48 0.10 85)",
+    blobs: ["oklch(0.66 0.14 82)", "oklch(0.44 0.11 60)", "oklch(0.60 0.09 110)"],
   },
 ]
 

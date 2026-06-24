@@ -1,52 +1,8 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
-import type { ReactNode } from "react"
-import { PART_DOT_CLASS, SYSTEMS } from "@/lib/landing-content"
-
-/**
- * Full-bleed line icons drawn on each system card, keyed by `System.icon`.
- * Stroke-only on a 24-unit grid so they scale cleanly to the ~210px crop.
- */
-const ICONS: Record<string, ReactNode> = {
-  user: (
-    <>
-      <circle cx="12" cy="8" r="4" />
-      <path d="M5 20c0-3.9 3.1-6.5 7-6.5s7 2.6 7 6.5" />
-    </>
-  ),
-  target: (
-    <>
-      <circle cx="12" cy="12" r="8.5" />
-      <circle cx="12" cy="12" r="4.5" />
-      <circle cx="12" cy="12" r="1" />
-    </>
-  ),
-  article: (
-    <>
-      <rect x="5" y="3.5" width="14" height="17" rx="2" />
-      <path d="M8.5 8.5h7M8.5 12h7M8.5 15.5h4" />
-    </>
-  ),
-  dollar: (
-    <>
-      <path d="M12 2.5v19" />
-      <path d="M16.5 6.8c0-1.9-2-3-4.5-3s-4.5 1.2-4.5 3.2c0 4.6 9 2.2 9 6.8 0 2-2 3.2-4.5 3.2s-4.5-1.1-4.5-3" />
-    </>
-  ),
-  sparkles: (
-    <>
-      <path d="M12 3l1.7 5.1L19 10l-5.3 1.9L12 17l-1.7-5.1L5 10l5.3-1.9z" />
-      <path d="M18 13.5l.6 1.9 1.9.6-1.9.6-.6 1.9-.6-1.9-1.9-.6 1.9-.6z" />
-    </>
-  ),
-  mail: (
-    <>
-      <rect x="3" y="5" width="18" height="14" rx="2.2" />
-      <path d="M3.5 7.5l8.5 5.5 8.5-5.5" />
-    </>
-  ),
-}
+import { MEMBER_CODE, PART_DOT_CLASS, SYSTEMS } from "@/lib/landing-content"
+import { accentFor, ArtifactBody } from "./system-artifacts"
 
 /**
  * The systems shelf: a full-bleed coverflow whose cards scale and fade by
@@ -271,9 +227,7 @@ export function SystemsCoverflow() {
                 }}
               >
                 <div
-                  className={`cf-card lift ${
-                    s.image ? "cf-img" : `cf-${s.accent.replace("cat-", "")}`
-                  }`}
+                  className="cf-card lift"
                   style={{
                     width: 300,
                     height: 300,
@@ -281,40 +235,46 @@ export function SystemsCoverflow() {
                     position: "relative",
                     overflow: "hidden",
                     boxShadow: "0 26px 50px -28px oklch(0.215 0.007 78 / 0.45)",
-                    willChange: "transform, filter",
+                    background: "var(--paper)",
+                    display: "flex",
+                    flexDirection: "column",
+                    willChange: "transform",
                   }}
                 >
-                  {s.image ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={s.image}
-                      alt={s.name}
+                  <div
+                    style={{
+                      flex: "none",
+                      background: accentFor(s.accent).deep,
+                      padding: "15px 18px 14px",
+                    }}
+                  >
+                    <div
+                      className="mono"
                       style={{
-                        position: "absolute",
-                        inset: 0,
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
+                        fontSize: 9,
+                        letterSpacing: "0.16em",
+                        color: "oklch(0.95 0.013 85 / 0.72)",
                       }}
-                    />
-                  ) : (
-                    <>
-                      <span className="cf-ic" aria-hidden>
-                        <svg
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth={1.4}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          {ICONS[s.icon]}
-                        </svg>
-                      </span>
-                      <span className="cf-grain" aria-hidden />
-                    </>
-                  )}
-                  <h3 className="serif cf-name">{s.name}</h3>
+                    >
+                      {s.kicker}
+                    </div>
+                    <h3
+                      className="serif"
+                      style={{
+                        fontSize: 19,
+                        fontWeight: 500,
+                        lineHeight: 1.08,
+                        letterSpacing: "-0.01em",
+                        color: "var(--cream)",
+                        marginTop: 5,
+                      }}
+                    >
+                      {s.name}
+                    </h3>
+                  </div>
+                  <div style={{ flex: 1, minHeight: 0, padding: 16, overflow: "hidden" }}>
+                    <ArtifactBody system={s} />
+                  </div>
                 </div>
               </div>
             ))}
@@ -345,13 +305,13 @@ export function SystemsCoverflow() {
             aria-label={sys.name}
             onClick={(e) => e.stopPropagation()}
             style={{
+              position: "relative",
               width: "100%",
               maxWidth: 480,
               background: "var(--paper)",
               border: "1px solid oklch(0.215 0.007 78 / 0.13)",
               borderRadius: 20,
               boxShadow: "0 40px 90px -30px oklch(0.18 0.009 75 / 0.6)",
-              padding: "32px 34px 30px",
               maxHeight: "86vh",
               overflowY: "auto",
               animation: `${closing ? "modalOut" : "modalIn"} ${
@@ -359,80 +319,98 @@ export function SystemsCoverflow() {
               } cubic-bezier(0.2, 0.7, 0.2, 1) both`,
             }}
           >
+            {/* Banner — the accent header + a larger view of the artifact, so
+                opening a card reads as opening the document. */}
             <div
               style={{
+                background: accentFor(sys.accent).deep,
+                padding: "20px 24px 18px",
                 display: "flex",
-                alignItems: "center",
+                alignItems: "flex-start",
                 justifyContent: "space-between",
-                gap: 12,
+                gap: 14,
               }}
             >
-              <span
-                className="mono"
-                style={{
-                  fontSize: 10,
-                  letterSpacing: "0.16em",
-                  color: "var(--muted)",
-                }}
-              >
-                {sys.kicker}
-              </span>
+              <div style={{ minWidth: 0 }}>
+                <div
+                  className="mono"
+                  style={{
+                    fontSize: 10,
+                    letterSpacing: "0.16em",
+                    color: "oklch(0.95 0.013 85 / 0.72)",
+                  }}
+                >
+                  {sys.kicker}
+                </div>
+                <h3
+                  className="serif"
+                  style={{
+                    fontSize: 26,
+                    fontWeight: 500,
+                    letterSpacing: "-0.015em",
+                    lineHeight: 1.05,
+                    marginTop: 6,
+                    color: "var(--cream)",
+                  }}
+                >
+                  {sys.name}
+                </h3>
+              </div>
               <button
                 aria-label="Close"
                 className="mono press"
                 onClick={close}
                 style={{
                   cursor: "pointer",
-                  fontSize: 17,
+                  fontSize: 16,
                   lineHeight: 1,
-                  color: "var(--muted)",
+                  color: "oklch(0.95 0.013 85 / 0.8)",
                   display: "inline-flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  height: 40,
-                  width: 40,
-                  marginTop: -8,
-                  marginRight: -10,
+                  height: 32,
+                  width: 32,
+                  marginTop: -4,
+                  marginRight: -8,
                   padding: 0,
                   background: "none",
                   border: "none",
+                  flex: "none",
                 }}
               >
                 ✕
               </button>
             </div>
-            <h3
-              className="serif"
-              style={{
-                fontSize: 32,
-                fontWeight: 500,
-                letterSpacing: "-0.015em",
-                lineHeight: 1.04,
-                marginTop: 13,
-                color: "var(--ink-strong)",
-              }}
-            >
-              {sys.name}
-            </h3>
-            <p
-              style={{
-                fontSize: 16,
-                lineHeight: 1.6,
-                color: "var(--ink-soft)",
-                marginTop: 13,
-              }}
-            >
-              {sys.blurb}
-            </p>
             <div
               style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 11,
-                marginTop: 22,
+                padding: "20px 24px 22px",
+                borderBottom: "1px solid oklch(0.215 0.007 78 / 0.1)",
               }}
             >
-              {sys.bullets.map((b) => (
+              <div style={{ height: 208 }}>
+                <ArtifactBody system={sys} />
+              </div>
+            </div>
+
+            <div style={{ padding: "20px 24px 26px" }}>
+              <p
+                style={{
+                  fontSize: 16,
+                  lineHeight: 1.6,
+                  color: "var(--ink-soft)",
+                }}
+              >
+                {sys.blurb}
+              </p>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 11,
+                  marginTop: 20,
+                }}
+              >
+                {sys.bullets.map((b) => (
                 <div
                   key={b}
                   style={{ display: "flex", gap: 11, alignItems: "flex-start" }}
@@ -503,23 +481,42 @@ export function SystemsCoverflow() {
                 borderTop: "1px solid oklch(0.215 0.007 78 / 0.12)",
               }}
             >
-              <div style={{ display: "flex", flexDirection: "column" }}>
+              <div
+                style={{ display: "flex", alignItems: "center", gap: 10 }}
+              >
+                <span
+                  aria-hidden
+                  style={{
+                    width: 22,
+                    height: 22,
+                    borderRadius: "50%",
+                    background: "var(--accent)",
+                    color: "var(--cream)",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: 12,
+                    lineHeight: 1,
+                    flex: "none",
+                  }}
+                >
+                  ✓
+                </span>
                 <span
                   className="mono"
                   style={{
-                    fontSize: 10,
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    color: "var(--muted)",
+                    fontSize: 12.5,
+                    lineHeight: 1.35,
+                    letterSpacing: "0.01em",
+                    color: "var(--ink-soft)",
                   }}
                 >
-                  Price
-                </span>
-                <span
-                  className="serif"
-                  style={{ fontSize: 26, fontWeight: 500, color: "var(--ink-strong)" }}
-                >
-                  {sys.price}
+                  <span className="p-list">
+                    Included — one price, every system
+                  </span>
+                  <span className="p-mem" style={{ color: "var(--accent-ink)" }}>
+                    Unlocked with {MEMBER_CODE}
+                  </span>
                 </span>
               </div>
               <a
@@ -536,13 +533,16 @@ export function SystemsCoverflow() {
                   padding: "15px 24px",
                   fontWeight: 700,
                   fontSize: 15,
+                  whiteSpace: "nowrap",
                 }}
               >
-                Get lifetime access{" "}
+                <span className="p-list">Get all-access</span>
+                <span className="p-mem">Open library</span>{" "}
                 <span className="serif" style={{ fontSize: 18, lineHeight: 1 }}>
                   →
                 </span>
               </a>
+            </div>
             </div>
           </div>
         </div>

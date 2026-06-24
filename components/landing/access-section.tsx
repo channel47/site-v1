@@ -4,6 +4,7 @@ import {
   MEMBER_CODE,
 } from "@/lib/landing-content"
 import { SectionHeading } from "./section-heading"
+import { UnlockTrigger } from "./unlock-trigger"
 
 /**
  * Lifetime-access pricing block. The list/member variants are both rendered;
@@ -77,6 +78,28 @@ export function AccessSection() {
             One payment · yours forever
           </span>
         </div>
+      </div>
+
+      <div style={{ marginTop: 20 }}>
+        <span className="mono p-list" style={{ fontSize: 12.5, color: "var(--muted)" }}>
+          In the Vibe Marketers? It&apos;s free —{" "}
+          <UnlockTrigger
+            className="ul"
+            style={{
+              padding: 0,
+              fontSize: 12.5,
+              color: "var(--accent-ink)",
+              textDecoration: "underline",
+              textUnderlineOffset: 2,
+            }}
+          >
+            enter your code
+          </UnlockTrigger>
+          .
+        </span>
+        <span className="mono p-mem" style={{ fontSize: 12.5, color: "var(--accent-ink)" }}>
+          {MEMBER_CODE} applied — everything above is unlocked, free.
+        </span>
       </div>
     </section>
   )
