@@ -12,10 +12,10 @@ export function MemberBar() {
           style={{
             maxWidth: 660,
             margin: "0 auto",
-            padding: "11px 28px",
+            padding: "var(--space-3) var(--space-7)",
             display: "flex",
             alignItems: "center",
-            gap: 10,
+            gap: "var(--space-2)",
           }}
         >
           <span

@@ -26,8 +26,8 @@ export function FaqList() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                gap: 14,
-                padding: "20px 2px",
+                gap: "var(--space-3)",
+                padding: "var(--space-5) 2px",
                 width: "100%",
                 background: "none",
                 border: "none",
@@ -52,9 +52,9 @@ export function FaqList() {
                 <p
                   style={{
                     fontSize: "var(--text-sm)",
-                    lineHeight: 1.6,
+                    lineHeight: "var(--leading-body)",
                     color: "var(--ink-soft)",
-                    padding: `0 2px ${f.cta ? 14 : 20}px`,
+                    padding: `0 2px ${f.cta ? "var(--space-3)" : "var(--space-5)"}`,
                     maxWidth: 560,
                   }}
                   dangerouslySetInnerHTML={{
@@ -62,7 +62,7 @@ export function FaqList() {
                   }}
                 />
                 {f.cta ? (
-                  <div style={{ padding: "0 2px 20px" }}>
+                  <div style={{ padding: "0 2px var(--space-5)" }}>
                     <a
                       href={f.cta.href}
                       target="_blank"
@@ -73,7 +73,7 @@ export function FaqList() {
                         background: "var(--near-black)",
                         color: "var(--cream)",
                         borderRadius: 12,
-                        padding: "11px 18px",
+                        padding: "var(--space-3) var(--space-4)",
                         fontSize: "var(--text-2xs)",
                         fontWeight: 700,
                       }}

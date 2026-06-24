@@ -14,7 +14,7 @@ export function Nav() {
       <div
         style={{
           width: "100%",
-          padding: "16px 40px",
+          padding: "var(--space-4) var(--space-10)",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
@@ -30,7 +30,7 @@ export function Nav() {
             letterSpacing: "0.04em",
             border: "1px solid oklch(0.242 0.011 73 / 0.25)",
             borderRadius: 12,
-            padding: "8px 15px",
+            padding: "var(--space-2) var(--space-4)",
           }}
         >
           Login

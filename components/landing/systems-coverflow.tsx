@@ -231,7 +231,7 @@ export function SystemsCoverflow() {
 
   return (
     <>
-      <section style={{ padding: "34px 0 0" }}>
+      <section style={{ padding: "var(--space-8) 0 0" }}>
         <div
           className="cf-wrap"
           style={{
@@ -247,10 +247,10 @@ export function SystemsCoverflow() {
             style={{
               display: "flex",
               alignItems: "stretch",
-              gap: 30,
+              gap: "var(--space-8)",
               overflowX: "auto",
               overflowY: "visible",
-              padding: "34px 0 40px",
+              padding: "var(--space-8) 0 var(--space-10)",
               cursor: "grab",
             }}
           >
@@ -266,7 +266,7 @@ export function SystemsCoverflow() {
                   width: 300,
                   display: "flex",
                   flexDirection: "column",
-                  gap: 15,
+                  gap: "var(--space-4)",
                   cursor: "pointer",
                 }}
               >
@@ -334,7 +334,7 @@ export function SystemsCoverflow() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            padding: 24,
+            padding: "var(--space-6)",
             background: "oklch(0.18 0.009 75 / 0.55)",
             animation: `${closing ? "fadeOut" : "fadeIn"} 0.2s ease both`,
           }}
@@ -351,7 +351,7 @@ export function SystemsCoverflow() {
               border: "1px solid oklch(0.215 0.007 78 / 0.13)",
               borderRadius: 20,
               boxShadow: "0 40px 90px -30px oklch(0.18 0.009 75 / 0.6)",
-              padding: "32px 34px 30px",
+              padding: "var(--space-8) var(--space-8) var(--space-8)",
               maxHeight: "86vh",
               overflowY: "auto",
               animation: `${closing ? "modalOut" : "modalIn"} ${
@@ -364,7 +364,7 @@ export function SystemsCoverflow() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                gap: 12,
+                gap: "var(--space-3)",
               }}
             >
               <span
@@ -384,7 +384,7 @@ export function SystemsCoverflow() {
                 style={{
                   cursor: "pointer",
                   fontSize: "var(--text-base)",
-                  lineHeight: 1,
+                  lineHeight: "var(--leading-none)",
                   color: "var(--muted)",
                   display: "inline-flex",
                   alignItems: "center",
@@ -407,8 +407,8 @@ export function SystemsCoverflow() {
                 fontSize: "var(--text-xl)",
                 fontWeight: 500,
                 letterSpacing: "-0.015em",
-                lineHeight: 1.04,
-                marginTop: 13,
+                lineHeight: "var(--leading-tight)",
+                marginTop: "var(--space-3)",
                 color: "var(--ink-strong)",
               }}
             >
@@ -417,9 +417,9 @@ export function SystemsCoverflow() {
             <p
               style={{
                 fontSize: "var(--text-base)",
-                lineHeight: 1.6,
+                lineHeight: "var(--leading-body)",
                 color: "var(--ink-soft)",
-                marginTop: 13,
+                marginTop: "var(--space-3)",
               }}
             >
               {sys.blurb}
@@ -428,14 +428,14 @@ export function SystemsCoverflow() {
               style={{
                 display: "flex",
                 flexDirection: "column",
-                gap: 11,
-                marginTop: 22,
+                gap: "var(--space-3)",
+                marginTop: "var(--space-6)",
               }}
             >
               {sys.bullets.map((b) => (
                 <div
                   key={b}
-                  style={{ display: "flex", gap: 11, alignItems: "flex-start" }}
+                  style={{ display: "flex", gap: "var(--space-3)", alignItems: "flex-start" }}
                 >
                   <span
                     style={{
@@ -444,11 +444,11 @@ export function SystemsCoverflow() {
                       borderRadius: "50%",
                       background: "var(--accent)",
                       flex: "none",
-                      marginTop: 8,
+                      marginTop: "var(--space-2)",
                     }}
                   />
                   <span
-                    style={{ fontSize: "var(--text-sm)", lineHeight: 1.5, color: "var(--ink-soft)" }}
+                    style={{ fontSize: "var(--text-sm)", lineHeight: "var(--leading-snug)", color: "var(--ink-soft)" }}
                   >
                     {b}
                   </span>
@@ -459,8 +459,8 @@ export function SystemsCoverflow() {
               style={{
                 display: "flex",
                 flexWrap: "wrap",
-                gap: 8,
-                marginTop: 22,
+                gap: "var(--space-2)",
+                marginTop: "var(--space-6)",
               }}
             >
               {sys.parts.map((p) => (
@@ -470,10 +470,10 @@ export function SystemsCoverflow() {
                   style={{
                     display: "inline-flex",
                     alignItems: "center",
-                    gap: 7,
+                    gap: "var(--space-2)",
                     fontSize: "var(--text-3xs)",
                     letterSpacing: "0.08em",
-                    padding: "6px 11px",
+                    padding: "var(--space-2) var(--space-3)",
                     borderRadius: 999,
                     border: "1px solid oklch(0.215 0.007 78 / 0.18)",
                     color: "var(--ink-faint)",
@@ -497,9 +497,9 @@ export function SystemsCoverflow() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                gap: 14,
-                marginTop: 26,
-                paddingTop: 22,
+                gap: "var(--space-3)",
+                marginTop: "var(--space-6)",
+                paddingTop: "var(--space-6)",
                 borderTop: "1px solid oklch(0.215 0.007 78 / 0.12)",
               }}
             >
@@ -529,17 +529,17 @@ export function SystemsCoverflow() {
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
-                  gap: 10,
+                  gap: "var(--space-2)",
                   background: "var(--near-black)",
                   color: "var(--cream)",
                   borderRadius: 12,
-                  padding: "15px 24px",
+                  padding: "var(--space-4) var(--space-6)",
                   fontWeight: 700,
                   fontSize: "var(--text-sm)",
                 }}
               >
                 Get lifetime access{" "}
-                <span className="serif" style={{ fontSize: "var(--text-base)", lineHeight: 1 }}>
+                <span className="serif" style={{ fontSize: "var(--text-base)", lineHeight: "var(--leading-none)" }}>
                   →
                 </span>
               </a>

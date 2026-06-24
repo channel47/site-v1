@@ -3,12 +3,12 @@ import { GlitchLogo } from "./glitch-logo"
 /** Minimal footer — just the mark, matching the design. */
 export function SiteFooter() {
   return (
-    <footer style={{ padding: "72px 0 44px", marginTop: 64 }}>
+    <footer style={{ padding: "var(--space-18) 0 var(--space-12)", marginTop: "var(--space-16)" }}>
       <div
         style={{
           display: "flex",
           justifyContent: "space-between",
-          gap: 48,
+          gap: "var(--space-12)",
           flexWrap: "wrap",
         }}
       >

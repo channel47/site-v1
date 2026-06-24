@@ -11,9 +11,9 @@ import { SectionHeading } from "./section-heading"
  */
 export function AccessSection() {
   return (
-    <section id="access" style={{ padding: "64px 0 0", scrollMarginTop: 80 }}>
+    <section id="access" style={{ padding: "var(--space-16) 0 0", scrollMarginTop: 80 }}>
       <SectionHeading>Access</SectionHeading>
-      <p style={{ fontSize: "var(--text-base)", lineHeight: 1.62, color: "var(--ink-soft)" }}>
+      <p style={{ fontSize: "var(--text-base)", lineHeight: "var(--leading-body)", color: "var(--ink-soft)" }}>
         One payment gets you the entire library — every system, every MCP
         connector, every walkthrough and principle — plus everything I add from
         here on. No subscription, no seat fees. You buy in once and it’s
@@ -24,9 +24,9 @@ export function AccessSection() {
         style={{
           display: "flex",
           alignItems: "center",
-          gap: 20,
+          gap: "var(--space-5)",
           flexWrap: "wrap",
-          marginTop: 26,
+          marginTop: "var(--space-6)",
         }}
       >
         <a
@@ -35,11 +35,11 @@ export function AccessSection() {
           style={{
             display: "inline-flex",
             alignItems: "center",
-            gap: 10,
+            gap: "var(--space-2)",
             background: "var(--near-black)",
             color: "var(--cream)",
             borderRadius: 12,
-            padding: "15px 24px",
+            padding: "var(--space-4) var(--space-6)",
             fontWeight: 700,
             fontSize: "var(--text-sm)",
             fontFamily: "var(--font-sans)",
@@ -47,11 +47,11 @@ export function AccessSection() {
         >
           <span className="p-list">Get lifetime access — {ACCESS_PRICE}</span>
           <span className="p-mem">Unlock everything with {MEMBER_CODE}</span>
-          <span className="serif" style={{ fontSize: "var(--text-base)", lineHeight: 1 }}>
+          <span className="serif" style={{ fontSize: "var(--text-base)", lineHeight: "var(--leading-none)" }}>
             →
           </span>
         </a>
-        <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
           <span
             className="mono p-list"
             style={{

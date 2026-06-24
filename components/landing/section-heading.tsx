@@ -6,18 +6,18 @@ import type { ReactNode } from "react"
  */
 export function SectionHeading({
   children,
-  marginBottom = 22,
+  marginBottom = "var(--space-6)",
 }: {
   children: ReactNode
-  marginBottom?: number
+  marginBottom?: string | number
 }) {
   return (
     <div
       style={{
         display: "flex",
         alignItems: "baseline",
-        gap: 13,
-        paddingBottom: 16,
+        gap: "var(--space-3)",
+        paddingBottom: "var(--space-4)",
         marginBottom,
       }}
     >

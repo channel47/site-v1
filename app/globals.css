@@ -68,6 +68,36 @@
   --text-lg: 27px; /* pull-quotes, feature prices */
   --text-xl: 32px; /* section, card & modal headings */
   --text-2xl: 41px; /* hero display */
+
+  /* ----------------------------------------------------------------
+     Line-height (leading) scale — paired to the role, not the pixel.
+     Display sets tight, running copy sets open, and a single quote
+     value carries the large italic pull-quotes.
+     ---------------------------------------------------------------- */
+  --leading-none: 1; /* single-line UI, buttons, glyphs, big numerals */
+  --leading-tight: 1.1; /* display headings (hero, section, card, modal) */
+  --leading-quote: 1.35; /* large italic pull-quotes */
+  --leading-snug: 1.5; /* dense secondary copy: card & bullet text */
+  --leading-body: 1.6; /* running body copy */
+
+  /* ----------------------------------------------------------------
+     Spacing scale — a single 4px grid that drives margins, padding
+     and gaps, so the page keeps one vertical rhythm instead of dozens
+     of one-off pixel values. (Sub-grid optical nudges of 2px are left
+     as-is; they align text edges and aren't part of the rhythm.)
+     ---------------------------------------------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-18: 72px;
 }
 
 * {
@@ -313,7 +343,7 @@ a {
   bottom: 0;
   height: 262px;
   border-radius: 22px;
-  padding: 17px 26px 24px;
+  padding: var(--space-4) var(--space-6) var(--space-6);
   display: flex;
   flex-direction: column;
   cursor: pointer;
@@ -559,7 +589,7 @@ a {
   right: 18px;
   font-size: var(--text-md);
   font-weight: 500;
-  line-height: 1.12;
+  line-height: var(--leading-tight);
   letter-spacing: -0.01em;
   color: var(--cream);
 }
@@ -602,7 +632,7 @@ a {
   border: 1px solid oklch(0.242 0.011 73 / 0.16);
   color: var(--ink);
   font-size: var(--text-base);
-  line-height: 1;
+  line-height: var(--leading-none);
   display: flex;
   align-items: center;
   justify-content: center;
