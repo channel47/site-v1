@@ -63,9 +63,9 @@
   --text-2xs: 12px; /* small mono UI: nav pill, member bar, struck prices */
   --text-xs: 13.5px; /* small secondary: card descriptions, attributions */
   --text-sm: 15px; /* secondary body & buttons: answers, bullets, CTAs */
-  --text-base: 17px; /* body copy, sub-headings, inline glyphs */
+  --text-base: 18px; /* body copy, sub-headings, inline glyphs */
   --text-md: 21px; /* lead-in display: system card names */
-  --text-lg: 27px; /* pull-quotes, feature prices */
+  --text-lg: 24px; /* pull-quotes, feature prices */
   --text-xl: 32px; /* section, card & modal headings */
   --text-2xl: 41px; /* hero display */
 
