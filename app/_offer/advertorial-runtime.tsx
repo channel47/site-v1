@@ -16,7 +16,7 @@ import { useEffect } from "react"
  * The markup is static (server-rendered) and never re-renders, so wiring the DOM
  * directly here is safe. Everything is torn down on unmount.
  */
-export function PageRuntime() {
+export function AdvertorialRuntime() {
   useEffect(() => {
     const reduceMotion = (() => {
       try {
