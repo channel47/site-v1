@@ -6,24 +6,24 @@ import type { ReactNode } from "react"
  */
 export function SectionHeading({
   children,
-  marginBottom = 22,
+  marginBottom = "var(--space-6)",
 }: {
   children: ReactNode
-  marginBottom?: number
+  marginBottom?: string | number
 }) {
   return (
     <div
       style={{
         display: "flex",
         alignItems: "baseline",
-        gap: 13,
-        paddingBottom: 16,
+        gap: "var(--space-3)",
+        paddingBottom: "var(--space-4)",
         marginBottom,
       }}
     >
       <h2
         className="serif"
-        style={{ fontSize: 32, fontWeight: 500, letterSpacing: "-0.015em" }}
+        style={{ fontSize: "var(--text-xl)", fontWeight: 500, letterSpacing: "-0.015em" }}
       >
         {children}
       </h2>

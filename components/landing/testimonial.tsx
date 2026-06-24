@@ -5,7 +5,7 @@ export function Testimonial({ quote, name, role }: TestimonialData) {
   return (
     <section
       style={{
-        padding: "64px 0 0",
+        padding: "var(--space-16) 0 0",
         maxWidth: 460,
         margin: "0 auto",
         textAlign: "center",
@@ -14,8 +14,8 @@ export function Testimonial({ quote, name, role }: TestimonialData) {
       <blockquote
         className="serif"
         style={{
-          fontSize: 27,
-          lineHeight: 1.34,
+          fontSize: "var(--text-lg)",
+          lineHeight: "var(--leading-quote)",
           letterSpacing: "-0.01em",
           fontStyle: "italic",
           color: "var(--ink-strong)",
@@ -29,8 +29,8 @@ export function Testimonial({ quote, name, role }: TestimonialData) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          gap: 12,
-          marginTop: 20,
+          gap: "var(--space-3)",
+          marginTop: "var(--space-5)",
         }}
       >
         <div
@@ -44,10 +44,10 @@ export function Testimonial({ quote, name, role }: TestimonialData) {
           }}
         />
         <div>
-          <div style={{ fontSize: 13.5, fontWeight: 600, color: "var(--ink-strong)" }}>
+          <div style={{ fontSize: "var(--text-sm)", fontWeight: 600, color: "var(--ink-strong)" }}>
             {name}
           </div>
-          <div className="mono" style={{ fontSize: 10.5, color: "var(--muted)" }}>
+          <div className="mono" style={{ fontSize: "var(--text-xs)", color: "var(--muted)" }}>
             {role}
           </div>
         </div>

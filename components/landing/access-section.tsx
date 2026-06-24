@@ -1,106 +1,36 @@
-import {
-  ACCESS_PRICE,
-  ACCESS_SEPARATE_PRICE,
-  MEMBER_CODE,
-} from "@/lib/landing-content"
 import { SectionHeading } from "./section-heading"
-import { UnlockTrigger } from "./unlock-trigger"
+import { WaitlistForm } from "./waitlist-form"
 
 /**
- * Lifetime-access pricing block. The list/member variants are both rendered;
- * the `member-on` root class (see MemberShell) decides which is shown via CSS.
+ * Pre-launch waitlist block. The library isn't open yet; this collects an email
+ * and reveals the on-the-list bar (see WaitlistForm / MemberShell).
  */
 export function AccessSection() {
   return (
-    <section id="access" style={{ padding: "64px 0 0", scrollMarginTop: 80 }}>
-      <SectionHeading>Access</SectionHeading>
-      <p style={{ fontSize: 17, lineHeight: 1.62, color: "var(--ink-soft)" }}>
-        One payment gets you the entire library — every system, every MCP
-        connector, every walkthrough and principle — plus everything I add from
-        here on. No subscription, no seat fees. You buy in once and it&apos;s
-        yours.
+    <section id="access" style={{ padding: "var(--space-16) 0 0", scrollMarginTop: 80 }}>
+      <SectionHeading>Early access</SectionHeading>
+      <p style={{ fontSize: "var(--text-base)", lineHeight: "var(--leading-body)", color: "var(--ink-soft)", maxWidth: 560 }}>
+        The library isn’t open yet — I’m building it in the open, one system at a
+        time, and shipping each to the list as it’s ready. Leave your email and
+        I’ll send them your way as they land, with the build notes along the way.
+        No drip sequence, no noise — just a note from me when there’s something
+        real to run.
       </p>
 
-      <div
+      <WaitlistForm />
+
+      <p
+        className="mono"
         style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 20,
-          flexWrap: "wrap",
-          marginTop: 26,
+          marginTop: "var(--space-5)",
+          fontSize: "var(--text-xs)",
+          letterSpacing: "0.07em",
+          textTransform: "uppercase",
+          color: "var(--muted)",
         }}
       >
-        <a
-          href="#"
-          className="btn-invert"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 10,
-            background: "var(--near-black)",
-            color: "var(--cream)",
-            borderRadius: 12,
-            padding: "15px 24px",
-            fontWeight: 700,
-            fontSize: 15,
-            fontFamily: "var(--font-sans)",
-          }}
-        >
-          <span className="p-list">Get lifetime access — {ACCESS_PRICE}</span>
-          <span className="p-mem">Unlock everything with {MEMBER_CODE}</span>
-          <span className="serif" style={{ fontSize: 18, lineHeight: 1 }}>
-            →
-          </span>
-        </a>
-        <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-          <span
-            className="mono p-list"
-            style={{
-              fontSize: 12,
-              color: "var(--muted)",
-              textDecoration: "line-through",
-            }}
-          >
-            {ACCESS_SEPARATE_PRICE} separately
-          </span>
-          <span className="mono p-mem" style={{ fontSize: 12, color: "var(--accent-ink)" }}>
-            unlocked with {MEMBER_CODE}
-          </span>
-          <span
-            className="mono"
-            style={{
-              fontSize: 10.5,
-              letterSpacing: "0.07em",
-              textTransform: "uppercase",
-              color: "var(--muted)",
-            }}
-          >
-            One payment · yours forever
-          </span>
-        </div>
-      </div>
-
-      <div style={{ marginTop: 20 }}>
-        <span className="mono p-list" style={{ fontSize: 12.5, color: "var(--muted)" }}>
-          In the Vibe Marketers? It&apos;s free —{" "}
-          <UnlockTrigger
-            className="ul"
-            style={{
-              padding: 0,
-              fontSize: 12.5,
-              color: "var(--accent-ink)",
-              textDecoration: "underline",
-              textUnderlineOffset: 2,
-            }}
-          >
-            enter your code
-          </UnlockTrigger>
-          .
-        </span>
-        <span className="mono p-mem" style={{ fontSize: 12.5, color: "var(--accent-ink)" }}>
-          {MEMBER_CODE} applied — everything above is unlocked, free.
-        </span>
-      </div>
+        Built in the open · the Vibe Marketers get in first
+      </p>
     </section>
   )
 }

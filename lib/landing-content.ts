@@ -16,11 +16,6 @@ export const LINKS = {
   fungus: "https://fungusheadshop.com",
 } as const
 
-export const ACCESS_PRICE = "$249"
-export const ACCESS_SEPARATE_PRICE = "$870+"
-/** Member unlock code referenced in the bar and FAQ. */
-export const MEMBER_CODE = "VIBE47"
-
 /** A coloured marker used in the category stack and the system part chips. */
 export type PartKind = "skill" | "connector" | "agent"
 
@@ -163,7 +158,7 @@ export const SYSTEMS: System[] = [
     price: "Soon",
     live: false,
     blurb:
-      "Welcome, nurture and promo sequences in your brand's exact voice, off the same customer context.",
+      "Welcome, nurture and promo sequences in your brand’s exact voice, off the same customer context.",
     bullets: [
       "Welcome, nurture & promo sequences in your voice",
       "Runs off the same customer context",
@@ -189,31 +184,31 @@ export interface Category {
 
 export const CATEGORIES: Category[] = [
   {
-    kicker: "SKILLS",
-    tag: "drop-in",
-    title: "Skills",
-    body: "Drop-in capabilities your agents load on demand — review miners, angle scorers, pre-sell writers, each a single file.",
+    kicker: "SYSTEMS",
+    tag: "workflows",
+    title: "Systems",
+    body: "Repeatable workflows for research, angles, advertorials, page QA, and campaign review.",
     accent: "acc0",
   },
   {
-    kicker: "CONNECTORS",
-    tag: "MCP",
-    title: "Connectors",
-    body: "MCP connectors that wire agents straight into Google, Bing, Klaviyo, Drip and Shopify — the platforms you run every day.",
+    kicker: "METHOD",
+    tag: "how it works",
+    title: "Method",
+    body: "How the work gets split between the marketer, the model, the source material, and the checks.",
     accent: "acc1",
   },
   {
-    kicker: "AGENTS",
-    tag: "sub-agents",
-    title: "Agents",
-    body: "Purpose-built sub-agents that do the work — mine personas, find wasted spend, ship the changes once you approve.",
+    kicker: "WALKTHROUGHS",
+    tag: "build notes",
+    title: "Walkthroughs",
+    body: "Build notes from systems as they come together.",
     accent: "acc2",
   },
   {
-    kicker: "PLAYBOOKS",
-    tag: "method",
-    title: "Playbooks",
-    body: "The thinking that ties it together — how I find angles, structure traffic and run the whole stack with agents.",
+    kicker: "TOOLS",
+    tag: "skills · connectors · agents · files",
+    title: "Tools",
+    body: "Skills, connectors, agents, and files when something is ready to run.",
     accent: "acc3",
   },
 ]
@@ -325,34 +320,34 @@ export interface Faq {
 
 export const FAQS: Faq[] = [
   {
+    question: "Is any of this for sale yet?",
+    answer:
+      "Not yet. I’m building the library in the open, one system at a time, and shipping each to the list as it’s ready. Join the waitlist and you’ll be first when the early systems go live.",
+  },
+  {
     question: "Do I need to be technical to run these?",
     answer:
-      "No. Every system ships with a short setup walkthrough that gets you running from zero. If you can copy a file and follow a video, you can use them. The walkthroughs and live builds go deeper if you want them.",
+      "No. Every system ships with a short setup walkthrough that gets you running from zero. If you can copy a file and follow a video, you can use them. The walkthroughs go deeper if you want them.",
   },
   {
-    question: "What's the difference between buying access and hiring you?",
+    question: "What will it cost?",
     answer:
-      "Access gets you the systems to run yourself — yours forever. The Studio gets you the finished output with my angle judgment applied, so you skip the setup and the learning curve. Same engine, your time back.",
+      "Still settling that — but it’ll be fair, and it’ll be a one-time thing, not a subscription. The list gets the first and best terms when access opens.",
   },
   {
-    question: "I'm in the Vibe Marketers — is it really free?",
+    question: "I’m in the Vibe Marketers — do I get anything?",
     answer:
-      'Yes. Members get the code <span class="mono" style="font-size:13px;color:oklch(0.52 0.145 38)">VIBE47</span>, which unlocks the entire library here for free and discounts the studio rate. I build each system live in the monthly lab — you watch it get made, then take it home. <a href="{joinUrl}" target="_blank" rel="noopener" class="ul" style="color:oklch(0.52 0.145 38)">Join here →</a>',
-  },
-  {
-    question: "How often do you add to the library?",
-    answer:
-      "Constantly — at least one new system or upgrade a month, built live in the lab (see the log above). Lifetime access means every one of those lands in your account free, forever.",
+      'Yes — members get the library free when it lands. Join the waitlist with the same email you use there and I’ll line it up. I build each system live in the monthly lab, so you can watch it get made, then take it home. <a href="{joinUrl}" target="_blank" rel="noopener" class="ul" style="color:oklch(0.52 0.145 38)">Join here →</a>',
   },
   {
     question: "Can I just hire you to run my marketing?",
     answer:
-      "Yes — that's the Studio. I run any of these systems on your business myself, with the angle judgment baked in. Advertorials from $1,950, the Angle Report at $650, or a full funnel build scoped per project.",
+      "Yes — that’s the Studio, and it’s open now while the library is still being built. I run these systems on your business myself, with the angle judgment baked in. Advertorials from $1,950, the Angle Report at $650, or a full funnel build scoped per project.",
     cta: { label: "Book a call →", href: LINKS.book },
   },
   {
     question: "Who is this for?",
     answer:
-      "Founders, marketers and operators running paid acquisition who want the workflow of a senior performance marketer without hiring one. If you're sending cold traffic and want it to convert, you're in the right place.",
+      "Founders, marketers and operators running paid acquisition who want the workflow of a senior performance marketer without hiring one. If you’re sending cold traffic and want it to convert, you’re in the right place.",
   },
 ]

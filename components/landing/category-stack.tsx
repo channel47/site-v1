@@ -34,13 +34,13 @@ export function CategoryStack() {
 
   return (
     <header
-      style={{ position: "relative", paddingTop: 48, paddingBottom: 24 }}
+      style={{ position: "relative", paddingTop: "var(--space-12)", paddingBottom: "var(--space-6)" }}
     >
       <p
         className="serif rise"
         style={{
-          fontSize: 41,
-          lineHeight: 1.08,
+          fontSize: "var(--text-2xl)",
+          lineHeight: "var(--leading-tight)",
           letterSpacing: "-0.02em",
           color: "var(--ink)",
           maxWidth: 600,
@@ -48,7 +48,7 @@ export function CategoryStack() {
           fontWeight: 400,
         }}
       >
-        An agentic operating system for performance marketing.
+        An agentic operating system for performance marketers.
       </p>
 
       <div
@@ -56,8 +56,8 @@ export function CategoryStack() {
         style={{
           position: "relative",
           height: 332,
-          marginTop: 20,
-          marginBottom: 20,
+          marginTop: "var(--space-5)",
+          marginBottom: "var(--space-5)",
           animationDelay: "0.1s",
         }}
       >
@@ -86,9 +86,9 @@ export function CategoryStack() {
                 <span
                   className="mono stk-tag"
                   style={{
-                    fontSize: 9,
+                    fontSize: "var(--text-xs)",
                     borderRadius: 100,
-                    padding: "3px 9px",
+                    padding: "var(--space-1) var(--space-2)",
                     whiteSpace: "nowrap",
                   }}
                 >
@@ -98,10 +98,10 @@ export function CategoryStack() {
               <h3
                 className="serif stk-title"
                 style={{
-                  fontSize: 32,
+                  fontSize: "var(--text-xl)",
                   fontWeight: 500,
                   letterSpacing: "-0.015em",
-                  lineHeight: 1.04,
+                  lineHeight: "var(--leading-tight)",
                   marginTop: "auto",
                 }}
               >
@@ -110,9 +110,9 @@ export function CategoryStack() {
               <p
                 className="stk-desc"
                 style={{
-                  fontSize: 13.5,
-                  lineHeight: 1.5,
-                  marginTop: 9,
+                  fontSize: "var(--text-sm)",
+                  lineHeight: "var(--leading-snug)",
+                  marginTop: "var(--space-2)",
                   maxWidth: 400,
                 }}
               >

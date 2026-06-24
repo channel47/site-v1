@@ -26,8 +26,8 @@ export function FaqList() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                gap: 14,
-                padding: "20px 2px",
+                gap: "var(--space-3)",
+                padding: "var(--space-5) 2px",
                 width: "100%",
                 background: "none",
                 border: "none",
@@ -36,13 +36,13 @@ export function FaqList() {
               }}
             >
               <span
-                style={{ fontSize: 16, fontWeight: 600, color: "var(--ink-strong)" }}
+                style={{ fontSize: "var(--text-base)", fontWeight: 600, color: "var(--ink-strong)" }}
               >
                 {f.question}
               </span>
               <span
                 className="fchev serif"
-                style={{ fontSize: 20, color: "var(--accent)", flex: "none" }}
+                style={{ fontSize: "var(--text-lg)", color: "var(--accent)", flex: "none" }}
               >
                 +
               </span>
@@ -51,10 +51,10 @@ export function FaqList() {
               <div>
                 <p
                   style={{
-                    fontSize: 14.5,
-                    lineHeight: 1.6,
+                    fontSize: "var(--text-sm)",
+                    lineHeight: "var(--leading-body)",
                     color: "var(--ink-soft)",
-                    padding: `0 2px ${f.cta ? 14 : 20}px`,
+                    padding: `0 2px ${f.cta ? "var(--space-3)" : "var(--space-5)"}`,
                     maxWidth: 560,
                   }}
                   dangerouslySetInnerHTML={{
@@ -62,7 +62,7 @@ export function FaqList() {
                   }}
                 />
                 {f.cta ? (
-                  <div style={{ padding: "0 2px 20px" }}>
+                  <div style={{ padding: "0 2px var(--space-5)" }}>
                     <a
                       href={f.cta.href}
                       target="_blank"
@@ -73,8 +73,8 @@ export function FaqList() {
                         background: "var(--near-black)",
                         color: "var(--cream)",
                         borderRadius: 12,
-                        padding: "11px 18px",
-                        fontSize: 12.5,
+                        padding: "var(--space-3) var(--space-4)",
+                        fontSize: "var(--text-xs)",
                         fontWeight: 700,
                       }}
                     >

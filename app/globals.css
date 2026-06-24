@@ -51,6 +51,48 @@
 
   --font-serif: var(--font-newsreader), Georgia, "Times New Roman", serif;
   --font-sans: var(--font-space-grotesk), system-ui, sans-serif;
+
+  /* ----------------------------------------------------------------
+     Type scale — six steps the whole page draws from, on a roughly
+     even ~1.2–1.33x ramp. Nothing reads smaller than 12px. Always
+     reach for the token closest to the role; never set a raw font-size.
+     ---------------------------------------------------------------- */
+  --text-xs: 12px; /* small UI & micro caps: nav pill, tags, kickers, chips, meta */
+  --text-sm: 15px; /* secondary copy: answers, bullets, buttons, card descriptions */
+  --text-base: 18px; /* body copy, sub-headings, inline glyphs */
+  --text-lg: 24px; /* sub-display: system card names, pull-quotes, prices */
+  --text-xl: 32px; /* section, card & modal headings */
+  --text-2xl: 41px; /* hero display */
+
+  /* ----------------------------------------------------------------
+     Line-height (leading) scale — paired to the role, not the pixel.
+     Display sets tight, running copy sets open, and a single quote
+     value carries the large italic pull-quotes.
+     ---------------------------------------------------------------- */
+  --leading-none: 1; /* single-line UI, buttons, glyphs, big numerals */
+  --leading-tight: 1.1; /* display headings (hero, section, card, modal) */
+  --leading-quote: 1.35; /* large italic pull-quotes */
+  --leading-snug: 1.5; /* dense secondary copy: card & bullet text */
+  --leading-body: 1.6; /* running body copy */
+
+  /* ----------------------------------------------------------------
+     Spacing scale — a single 4px grid that drives margins, padding
+     and gaps, so the page keeps one vertical rhythm instead of dozens
+     of one-off pixel values. (Sub-grid optical nudges of 2px are left
+     as-is; they align text edges and aren't part of the rhythm.)
+     ---------------------------------------------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-18: 72px;
 }
 
 * {
@@ -88,6 +130,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  /* Let Newsreader pick its optical cut by size, and turn on kerning + standard
+     and contextual ligatures everywhere so the serif sets like print. */
+  font-optical-sizing: auto;
+  font-kerning: normal;
+  font-feature-settings: "kern", "liga", "calt";
   overflow-x: hidden;
   max-width: 100vw;
 }
@@ -103,6 +150,13 @@ h3 {
 /* Pretty-wrap body copy to avoid single-word last lines. */
 p {
   text-wrap: pretty;
+}
+
+/* Let the opening quotation mark hang into the margin so the quote's first line
+   of text optically aligns with the lines below it (progressive enhancement —
+   currently Safari; harmless elsewhere). */
+blockquote {
+  hanging-punctuation: first last;
 }
 
 a {
@@ -284,7 +338,7 @@ a {
   bottom: 0;
   height: 262px;
   border-radius: 22px;
-  padding: 17px 26px 24px;
+  padding: var(--space-4) var(--space-6) var(--space-6);
   display: flex;
   flex-direction: column;
   cursor: pointer;
@@ -292,6 +346,12 @@ a {
   border: 1px solid oklch(0.215 0.007 78 / 0.13);
   color: var(--cream);
   overflow: hidden;
+  /* Force WebKit to honour the rounded clip even when the card is promoted to
+     its own layer during transforms — without a mask, the square layer edge
+     leaks past the corners on iOS Safari. A solid mask preserves the shadow
+     (clip-path would crop it). */
+  -webkit-mask-image: -webkit-radial-gradient(white, white);
+  mask-image: radial-gradient(white, white);
   box-shadow: 0 24px 50px -32px oklch(0.215 0.007 78 / 0.55);
   transform-origin: bottom center;
   transition:
@@ -300,7 +360,6 @@ a {
     opacity 0.55s ease,
     background 0.45s ease,
     border-color 0.45s ease;
-  will-change: transform, opacity;
 }
 .hstack-card.d0 {
   transform: translateY(0) scale(1);
@@ -329,6 +388,9 @@ a {
 }
 .hstack-card.is-front {
   box-shadow: 0 30px 60px -28px oklch(0.228 0.01 81 / 0.5);
+  /* Only the front card animates (blobs + grain), so it alone needs promoting.
+     Keeping the static back cards off their own layers lets them clip cleanly. */
+  will-change: transform, opacity;
 }
 
 /* Each shelf is a permanent colour field: a deep base plus three blob hues
@@ -863,6 +925,73 @@ a {
 .cf-card {
   border-radius: 22px;
 }
+.cf-img {
+  background: var(--surface);
+}
+.cf-orange {
+  background: oklch(0.5 0.12 40);
+}
+.cf-gold {
+  background: oklch(0.5 0.085 76);
+}
+.cf-teal {
+  background: oklch(0.47 0.07 210);
+}
+.cf-indigo {
+  background: oklch(0.46 0.16 279);
+}
+.cf-green {
+  background: oklch(0.47 0.09 153);
+}
+.cf-rose {
+  background: oklch(0.47 0.135 18);
+}
+
+/* Each system card is one accent colour + grain + a full-bleed icon. */
+.cf-ic {
+  position: absolute;
+  z-index: 0;
+  right: -22px;
+  bottom: -34px;
+  width: 210px;
+  height: 210px;
+  color: var(--cream);
+  opacity: 0.93;
+}
+.cf-ic svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.cf-name {
+  position: absolute;
+  z-index: 2;
+  top: 16px;
+  left: 18px;
+  right: 18px;
+  font-size: var(--text-lg);
+  font-weight: 500;
+  line-height: var(--leading-tight);
+  letter-spacing: -0.01em;
+  color: var(--cream);
+}
+.cf-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image: var(--grain-tex);
+  background-size: 140px 140px;
+  mix-blend-mode: overlay;
+  /* Match the hero's grain register (.hs-grain is 0.5) so both read as one paint. */
+  opacity: 0.5;
+  pointer-events: none;
+}
+/* Subtle pure-black edge so artwork reads with consistent depth on the cream
+   surface (never a tinted neutral, which looks like dirt on the image edge). */
+.cf-card img {
+  outline: 1px solid oklch(0 0 0 / 0.1);
+  outline-offset: -1px;
+}
 .lift {
   transition:
     transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1),
@@ -884,8 +1013,8 @@ a {
   background: var(--paper);
   border: 1px solid oklch(0.242 0.011 73 / 0.16);
   color: var(--ink);
-  font-size: 17px;
-  line-height: 1;
+  font-size: var(--text-base);
+  line-height: var(--leading-none);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1104,6 +1233,17 @@ a {
 }
 .login-pill:active {
   scale: 0.96;
+}
+
+/* Waitlist email field — an editorial underline rather than a boxed input. */
+.wl-input {
+  transition: border-color 0.2s;
+}
+.wl-input::placeholder {
+  color: var(--muted);
+}
+.wl-input:focus {
+  border-bottom-color: var(--accent);
 }
 
 /* Respect users who ask for less motion — collapse animations and transitions
