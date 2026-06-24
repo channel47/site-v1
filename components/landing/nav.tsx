@@ -1,6 +1,6 @@
 import { GlitchLogo } from "./glitch-logo"
 
-/** Sticky top bar: the animated logo and a login pill. */
+/** Sticky top bar: the animated logo and a waitlist pill. */
 export function Nav() {
   return (
     <nav
@@ -33,7 +33,7 @@ export function Nav() {
             padding: "var(--space-2) var(--space-4)",
           }}
         >
-          Login
+          Join the list
         </a>
       </div>
     </nav>

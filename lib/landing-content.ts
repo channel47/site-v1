@@ -16,11 +16,6 @@ export const LINKS = {
   fungus: "https://fungusheadshop.com",
 } as const
 
-export const ACCESS_PRICE = "$249"
-export const ACCESS_SEPARATE_PRICE = "$870+"
-/** Member unlock code referenced in the bar and FAQ. */
-export const MEMBER_CODE = "VIBE47"
-
 /** A coloured marker used in the category stack and the system part chips. */
 export type PartKind = "skill" | "connector" | "agent"
 
@@ -259,29 +254,29 @@ export interface Faq {
 
 export const FAQS: Faq[] = [
   {
+    question: "Is any of this for sale yet?",
+    answer:
+      "Not yet. I’m building the library in the open, one system at a time, and shipping each to the list as it’s ready. Join the waitlist and you’ll be first when the early systems go live.",
+  },
+  {
     question: "Do I need to be technical to run these?",
     answer:
-      "No. Every system ships with a short setup walkthrough that gets you running from zero. If you can copy a file and follow a video, you can use them. The walkthroughs and live builds go deeper if you want them.",
+      "No. Every system ships with a short setup walkthrough that gets you running from zero. If you can copy a file and follow a video, you can use them. The walkthroughs go deeper if you want them.",
   },
   {
-    question: "What’s the difference between buying access and hiring you?",
+    question: "What will it cost?",
     answer:
-      "Access gets you the systems to run yourself — yours forever. The Studio gets you the finished output with my angle judgment applied, so you skip the setup and the learning curve. Same engine, your time back.",
+      "Still settling that — but it’ll be fair, and it’ll be a one-time thing, not a subscription. The list gets the first and best terms when access opens.",
   },
   {
-    question: "I’m in the Vibe Marketers — is it really free?",
+    question: "I’m in the Vibe Marketers — do I get anything?",
     answer:
-      'Yes. Members get the code <span class="mono" style="font-size:var(--text-sm);color:oklch(0.52 0.145 38)">VIBE47</span>, which unlocks the entire library here for free and discounts the studio rate. I build each system live in the monthly lab — you watch it get made, then take it home. <a href="{joinUrl}" target="_blank" rel="noopener" class="ul" style="color:oklch(0.52 0.145 38)">Join here →</a>',
-  },
-  {
-    question: "How often do you add to the library?",
-    answer:
-      "Constantly — at least one new system or upgrade a month, built live in the lab (see the log above). Lifetime access means every one of those lands in your account free, forever.",
+      'Yes — members get the library free when it lands. Join the waitlist with the same email you use there and I’ll line it up. I build each system live in the monthly lab, so you can watch it get made, then take it home. <a href="{joinUrl}" target="_blank" rel="noopener" class="ul" style="color:oklch(0.52 0.145 38)">Join here →</a>',
   },
   {
     question: "Can I just hire you to run my marketing?",
     answer:
-      "Yes — that’s the Studio. I run any of these systems on your business myself, with the angle judgment baked in. Advertorials from $1,950, the Angle Report at $650, or a full funnel build scoped per project.",
+      "Yes — that’s the Studio, and it’s open now while the library is still being built. I run these systems on your business myself, with the angle judgment baked in. Advertorials from $1,950, the Angle Report at $650, or a full funnel build scoped per project.",
     cta: { label: "Book a call →", href: LINKS.book },
   },
   {

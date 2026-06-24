@@ -1,8 +1,6 @@
-import { MEMBER_CODE } from "@/lib/landing-content"
-
 /**
- * Thin bar that slides open for unlocked members (visibility is driven by the
- * `member-on` root class — see MemberShell).
+ * Thin bar that slides open once you've joined the waitlist (visibility is
+ * driven by the `member-on` root class — see MemberShell / WaitlistForm).
  */
 export function MemberBar() {
   return (
@@ -32,8 +30,7 @@ export function MemberBar() {
             className="mono"
             style={{ fontSize: "var(--text-xs)", letterSpacing: "0.03em", color: "var(--hair)" }}
           >
-            CODE {MEMBER_CODE} ACTIVE — the whole library is free · studio rate
-            discounted
+YOU’RE ON THE LIST — early access lands in your inbox first
           </span>
         </div>
       </div>

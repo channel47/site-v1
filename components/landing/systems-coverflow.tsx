@@ -513,13 +513,13 @@ export function SystemsCoverflow() {
                     color: "var(--muted)",
                   }}
                 >
-                  Price
+                  Status
                 </span>
                 <span
                   className="serif"
                   style={{ fontSize: "var(--text-lg)", fontWeight: 500, color: "var(--ink-strong)" }}
                 >
-                  {sys.price}
+                  {sys.live ? "Ready at launch" : "Still in the lab"}
                 </span>
               </div>
               <a
@@ -538,7 +538,7 @@ export function SystemsCoverflow() {
                   fontSize: "var(--text-sm)",
                 }}
               >
-                Get lifetime access{" "}
+                Join the waitlist{" "}
                 <span className="serif" style={{ fontSize: "var(--text-base)", lineHeight: "var(--leading-none)" }}>
                   →
                 </span>

@@ -828,6 +828,17 @@ a {
   scale: 0.96;
 }
 
+/* Waitlist email field — an editorial underline rather than a boxed input. */
+.wl-input {
+  transition: border-color 0.2s;
+}
+.wl-input::placeholder {
+  color: var(--muted);
+}
+.wl-input:focus {
+  border-bottom-color: var(--accent);
+}
+
 /* Respect users who ask for less motion — collapse animations and transitions
    to near-instant so every element settles on its final, visible state. */
 @media (prefers-reduced-motion: reduce) {
