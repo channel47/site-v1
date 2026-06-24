@@ -11,7 +11,7 @@ import { FaqList } from "@/components/landing/faq-list"
 import { SiteFooter } from "@/components/landing/site-footer"
 
 const bodyText = {
-  fontSize: 17,
+  fontSize: "var(--text-base)",
   lineHeight: 1.62,
   color: "var(--ink-soft)",
 } as const
@@ -54,7 +54,7 @@ export default function Page() {
           </p>
           <p
             style={{
-              fontSize: 17,
+              fontSize: "var(--text-base)",
               lineHeight: 1.6,
               color: "var(--ink-strong)",
               marginTop: 18,
@@ -113,7 +113,7 @@ export default function Page() {
             control over the stack I run every day. The patterns that actually
             win are repeatable, so I encoded them.
           </p>
-          <p style={{ fontSize: 15.5, lineHeight: 1.62, color: "var(--ink-soft)", marginTop: 22 }}>
+          <p style={{ fontSize: "var(--text-sm)", lineHeight: 1.62, color: "var(--ink-soft)", marginTop: 22 }}>
             I teach all of it live, every month, as a mentor inside the Vibe
             Marketers —{" "}
             <a

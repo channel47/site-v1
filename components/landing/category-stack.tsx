@@ -39,7 +39,7 @@ export function CategoryStack() {
       <p
         className="serif rise"
         style={{
-          fontSize: 41,
+          fontSize: "var(--text-2xl)",
           lineHeight: 1.08,
           letterSpacing: "-0.02em",
           color: "var(--ink)",
@@ -86,7 +86,7 @@ export function CategoryStack() {
                 <span
                   className="mono stk-tag"
                   style={{
-                    fontSize: 9,
+                    fontSize: "var(--text-3xs)",
                     borderRadius: 100,
                     padding: "3px 9px",
                     whiteSpace: "nowrap",
@@ -98,7 +98,7 @@ export function CategoryStack() {
               <h3
                 className="serif stk-title"
                 style={{
-                  fontSize: 32,
+                  fontSize: "var(--text-xl)",
                   fontWeight: 500,
                   letterSpacing: "-0.015em",
                   lineHeight: 1.04,
@@ -110,7 +110,7 @@ export function CategoryStack() {
               <p
                 className="stk-desc"
                 style={{
-                  fontSize: 13.5,
+                  fontSize: "var(--text-xs)",
                   lineHeight: 1.5,
                   marginTop: 9,
                   maxWidth: 400,

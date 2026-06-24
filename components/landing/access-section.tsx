@@ -13,7 +13,7 @@ export function AccessSection() {
   return (
     <section id="access" style={{ padding: "64px 0 0", scrollMarginTop: 80 }}>
       <SectionHeading>Access</SectionHeading>
-      <p style={{ fontSize: 17, lineHeight: 1.62, color: "var(--ink-soft)" }}>
+      <p style={{ fontSize: "var(--text-base)", lineHeight: 1.62, color: "var(--ink-soft)" }}>
         One payment gets you the entire library — every system, every MCP
         connector, every walkthrough and principle — plus everything I add from
         here on. No subscription, no seat fees. You buy in once and it’s
@@ -41,13 +41,13 @@ export function AccessSection() {
             borderRadius: 12,
             padding: "15px 24px",
             fontWeight: 700,
-            fontSize: 15,
+            fontSize: "var(--text-sm)",
             fontFamily: "var(--font-sans)",
           }}
         >
           <span className="p-list">Get lifetime access — {ACCESS_PRICE}</span>
           <span className="p-mem">Unlock everything with {MEMBER_CODE}</span>
-          <span className="serif" style={{ fontSize: 18, lineHeight: 1 }}>
+          <span className="serif" style={{ fontSize: "var(--text-base)", lineHeight: 1 }}>
             →
           </span>
         </a>
@@ -55,20 +55,20 @@ export function AccessSection() {
           <span
             className="mono p-list"
             style={{
-              fontSize: 12,
+              fontSize: "var(--text-2xs)",
               color: "var(--muted)",
               textDecoration: "line-through",
             }}
           >
             {ACCESS_SEPARATE_PRICE} separately
           </span>
-          <span className="mono p-mem" style={{ fontSize: 12, color: "var(--accent-ink)" }}>
+          <span className="mono p-mem" style={{ fontSize: "var(--text-2xs)", color: "var(--accent-ink)" }}>
             unlocked with {MEMBER_CODE}
           </span>
           <span
             className="mono"
             style={{
-              fontSize: 10.5,
+              fontSize: "var(--text-3xs)",
               letterSpacing: "0.07em",
               textTransform: "uppercase",
               color: "var(--muted)",

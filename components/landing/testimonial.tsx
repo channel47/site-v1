@@ -14,7 +14,7 @@ export function Testimonial({ quote, name, role }: TestimonialData) {
       <blockquote
         className="serif"
         style={{
-          fontSize: 27,
+          fontSize: "var(--text-lg)",
           lineHeight: 1.34,
           letterSpacing: "-0.01em",
           fontStyle: "italic",
@@ -44,10 +44,10 @@ export function Testimonial({ quote, name, role }: TestimonialData) {
           }}
         />
         <div>
-          <div style={{ fontSize: 13.5, fontWeight: 600, color: "var(--ink-strong)" }}>
+          <div style={{ fontSize: "var(--text-xs)", fontWeight: 600, color: "var(--ink-strong)" }}>
             {name}
           </div>
-          <div className="mono" style={{ fontSize: 10.5, color: "var(--muted)" }}>
+          <div className="mono" style={{ fontSize: "var(--text-3xs)", color: "var(--muted)" }}>
             {role}
           </div>
         </div>

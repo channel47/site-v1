@@ -23,7 +23,7 @@ export function SectionHeading({
     >
       <h2
         className="serif"
-        style={{ fontSize: 32, fontWeight: 500, letterSpacing: "-0.015em" }}
+        style={{ fontSize: "var(--text-xl)", fontWeight: 500, letterSpacing: "-0.015em" }}
       >
         {children}
       </h2>

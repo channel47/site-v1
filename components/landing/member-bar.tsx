@@ -30,7 +30,7 @@ export function MemberBar() {
           />
           <span
             className="mono"
-            style={{ fontSize: 11, letterSpacing: "0.03em", color: "var(--hair)" }}
+            style={{ fontSize: "var(--text-2xs)", letterSpacing: "0.03em", color: "var(--hair)" }}
           >
             CODE {MEMBER_CODE} ACTIVE — the whole library is free · studio rate
             discounted

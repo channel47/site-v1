@@ -36,13 +36,13 @@ export function FaqList() {
               }}
             >
               <span
-                style={{ fontSize: 16, fontWeight: 600, color: "var(--ink-strong)" }}
+                style={{ fontSize: "var(--text-base)", fontWeight: 600, color: "var(--ink-strong)" }}
               >
                 {f.question}
               </span>
               <span
                 className="fchev serif"
-                style={{ fontSize: 20, color: "var(--accent)", flex: "none" }}
+                style={{ fontSize: "var(--text-md)", color: "var(--accent)", flex: "none" }}
               >
                 +
               </span>
@@ -51,7 +51,7 @@ export function FaqList() {
               <div>
                 <p
                   style={{
-                    fontSize: 14.5,
+                    fontSize: "var(--text-sm)",
                     lineHeight: 1.6,
                     color: "var(--ink-soft)",
                     padding: `0 2px ${f.cta ? 14 : 20}px`,
@@ -74,7 +74,7 @@ export function FaqList() {
                         color: "var(--cream)",
                         borderRadius: 12,
                         padding: "11px 18px",
-                        fontSize: 12.5,
+                        fontSize: "var(--text-2xs)",
                         fontWeight: 700,
                       }}
                     >

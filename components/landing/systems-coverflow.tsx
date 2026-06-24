@@ -370,7 +370,7 @@ export function SystemsCoverflow() {
               <span
                 className="mono"
                 style={{
-                  fontSize: 10,
+                  fontSize: "var(--text-3xs)",
                   letterSpacing: "0.16em",
                   color: "var(--muted)",
                 }}
@@ -383,7 +383,7 @@ export function SystemsCoverflow() {
                 onClick={close}
                 style={{
                   cursor: "pointer",
-                  fontSize: 17,
+                  fontSize: "var(--text-base)",
                   lineHeight: 1,
                   color: "var(--muted)",
                   display: "inline-flex",
@@ -404,7 +404,7 @@ export function SystemsCoverflow() {
             <h3
               className="serif"
               style={{
-                fontSize: 32,
+                fontSize: "var(--text-xl)",
                 fontWeight: 500,
                 letterSpacing: "-0.015em",
                 lineHeight: 1.04,
@@ -416,7 +416,7 @@ export function SystemsCoverflow() {
             </h3>
             <p
               style={{
-                fontSize: 16,
+                fontSize: "var(--text-base)",
                 lineHeight: 1.6,
                 color: "var(--ink-soft)",
                 marginTop: 13,
@@ -448,7 +448,7 @@ export function SystemsCoverflow() {
                     }}
                   />
                   <span
-                    style={{ fontSize: 15, lineHeight: 1.5, color: "var(--ink-soft)" }}
+                    style={{ fontSize: "var(--text-sm)", lineHeight: 1.5, color: "var(--ink-soft)" }}
                   >
                     {b}
                   </span>
@@ -471,7 +471,7 @@ export function SystemsCoverflow() {
                     display: "inline-flex",
                     alignItems: "center",
                     gap: 7,
-                    fontSize: 10,
+                    fontSize: "var(--text-3xs)",
                     letterSpacing: "0.08em",
                     padding: "6px 11px",
                     borderRadius: 999,
@@ -507,7 +507,7 @@ export function SystemsCoverflow() {
                 <span
                   className="mono"
                   style={{
-                    fontSize: 10,
+                    fontSize: "var(--text-3xs)",
                     letterSpacing: "0.1em",
                     textTransform: "uppercase",
                     color: "var(--muted)",
@@ -517,7 +517,7 @@ export function SystemsCoverflow() {
                 </span>
                 <span
                   className="serif"
-                  style={{ fontSize: 26, fontWeight: 500, color: "var(--ink-strong)" }}
+                  style={{ fontSize: "var(--text-lg)", fontWeight: 500, color: "var(--ink-strong)" }}
                 >
                   {sys.price}
                 </span>
@@ -535,11 +535,11 @@ export function SystemsCoverflow() {
                   borderRadius: 12,
                   padding: "15px 24px",
                   fontWeight: 700,
-                  fontSize: 15,
+                  fontSize: "var(--text-sm)",
                 }}
               >
                 Get lifetime access{" "}
-                <span className="serif" style={{ fontSize: 18, lineHeight: 1 }}>
+                <span className="serif" style={{ fontSize: "var(--text-base)", lineHeight: 1 }}>
                   →
                 </span>
               </a>

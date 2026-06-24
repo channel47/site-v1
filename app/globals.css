@@ -51,6 +51,23 @@
 
   --font-serif: var(--font-newsreader), Georgia, "Times New Roman", serif;
   --font-sans: var(--font-space-grotesk), system-ui, sans-serif;
+
+  /* ----------------------------------------------------------------
+     Type scale — one ramp the whole page draws from, so sizes stay
+     congruent instead of drifting into dozens of one-off values.
+     Spacing widens through the display sizes and tightens through the
+     reading sizes (a common editorial shape). Always reach for the
+     token closest to the role; never set a raw px font-size.
+     ---------------------------------------------------------------- */
+  --text-3xs: 10px; /* micro caps: tags, chips, kickers, meta labels */
+  --text-2xs: 12px; /* small mono UI: nav pill, member bar, struck prices */
+  --text-xs: 13.5px; /* small secondary: card descriptions, attributions */
+  --text-sm: 15px; /* secondary body & buttons: answers, bullets, CTAs */
+  --text-base: 17px; /* body copy, sub-headings, inline glyphs */
+  --text-md: 21px; /* lead-in display: system card names */
+  --text-lg: 27px; /* pull-quotes, feature prices */
+  --text-xl: 32px; /* section, card & modal headings */
+  --text-2xl: 41px; /* hero display */
 }
 
 * {
@@ -540,7 +557,7 @@ a {
   top: 16px;
   left: 18px;
   right: 18px;
-  font-size: 21px;
+  font-size: var(--text-md);
   font-weight: 500;
   line-height: 1.12;
   letter-spacing: -0.01em;
@@ -584,7 +601,7 @@ a {
   background: var(--paper);
   border: 1px solid oklch(0.242 0.011 73 / 0.16);
   color: var(--ink);
-  font-size: 17px;
+  font-size: var(--text-base);
   line-height: 1;
   display: flex;
   align-items: center;
