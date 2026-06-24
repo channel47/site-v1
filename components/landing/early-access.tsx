@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { GlitchLogo } from "./glitch-logo"
+import { CraftCanvas } from "./craft-canvas"
 import { EARLY_ACCESS, EA_RAIL, LINKS } from "@/lib/landing-content"
 
 type Status = "idle" | "sending" | "subscribed" | "dormant" | "error"
@@ -80,6 +81,7 @@ export function EarlyAccess() {
                   aria-hidden
                 />
                 <span className="fan-grain" aria-hidden />
+                <CraftCanvas tint={card.tint} motif={card.motif} seed={card.seed} />
                 <div className="fan-content">
                   <h3 className="fan-title serif">{card.title}</h3>
                   <p className="rfan-desc">{card.desc}</p>
