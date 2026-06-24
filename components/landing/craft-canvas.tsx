@@ -75,8 +75,8 @@ export function CraftCanvas({
     const ctx = canvas.getContext("2d")
     if (!ctx) return
 
+    // useEffect only runs in the browser, so window is always available here.
     const reduceMotion =
-      typeof window !== "undefined" &&
       typeof window.matchMedia === "function" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
@@ -243,7 +243,8 @@ export function CraftCanvas({
       if (!w || !h) return
       ctx.clearRect(0, 0, w, h)
       ctx.globalCompositeOperation = "lighter"
-      ;(motifs[motif] || grid)(t)
+      const draw = motifs[motif] ?? grid
+      draw(t)
       ctx.globalAlpha = 1
       ctx.globalCompositeOperation = "source-over"
     }
