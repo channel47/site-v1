@@ -72,10 +72,10 @@ export default function Page() {
           <SectionHeading>The Systems</SectionHeading>
           <p style={bodyText}>
             Everything I build lives here. It’s organized into shelves —
-            the&nbsp;<strong>systems</strong>, the live{" "}
-            <strong>walkthroughs</strong> that show how each was made, the{" "}
-            <strong>principles</strong> underneath them, and the way I actually{" "}
-            <strong>collaborate</strong> with agents to get there.
+            the&nbsp;<strong>systems</strong> themselves, the{" "}
+            <strong>method</strong> behind how the work gets split, the{" "}
+            <strong>walkthroughs</strong> that show them coming together, and the{" "}
+            <strong>tools</strong> ready to run.
           </p>
           <p style={{ ...bodyText, marginTop: "var(--space-4)" }}>
             Browse the shelf below. Open any system to see exactly what it does,
