@@ -271,7 +271,7 @@ export const FAQS: Faq[] = [
   {
     question: "I’m in the Vibe Marketers — is it really free?",
     answer:
-      'Yes. Members get the code <span class="mono" style="font-size:var(--text-xs);color:oklch(0.52 0.145 38)">VIBE47</span>, which unlocks the entire library here for free and discounts the studio rate. I build each system live in the monthly lab — you watch it get made, then take it home. <a href="{joinUrl}" target="_blank" rel="noopener" class="ul" style="color:oklch(0.52 0.145 38)">Join here →</a>',
+      'Yes. Members get the code <span class="mono" style="font-size:var(--text-sm);color:oklch(0.52 0.145 38)">VIBE47</span>, which unlocks the entire library here for free and discounts the studio rate. I build each system live in the monthly lab — you watch it get made, then take it home. <a href="{joinUrl}" target="_blank" rel="noopener" class="ul" style="color:oklch(0.52 0.145 38)">Join here →</a>',
   },
   {
     question: "How often do you add to the library?",

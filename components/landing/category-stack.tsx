@@ -86,7 +86,7 @@ export function CategoryStack() {
                 <span
                   className="mono stk-tag"
                   style={{
-                    fontSize: "var(--text-3xs)",
+                    fontSize: "var(--text-xs)",
                     borderRadius: 100,
                     padding: "var(--space-1) var(--space-2)",
                     whiteSpace: "nowrap",
@@ -110,7 +110,7 @@ export function CategoryStack() {
               <p
                 className="stk-desc"
                 style={{
-                  fontSize: "var(--text-xs)",
+                  fontSize: "var(--text-sm)",
                   lineHeight: "var(--leading-snug)",
                   marginTop: "var(--space-2)",
                   maxWidth: 400,

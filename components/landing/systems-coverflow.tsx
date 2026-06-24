@@ -370,7 +370,7 @@ export function SystemsCoverflow() {
               <span
                 className="mono"
                 style={{
-                  fontSize: "var(--text-3xs)",
+                  fontSize: "var(--text-xs)",
                   letterSpacing: "0.16em",
                   color: "var(--muted)",
                 }}
@@ -471,7 +471,7 @@ export function SystemsCoverflow() {
                     display: "inline-flex",
                     alignItems: "center",
                     gap: "var(--space-2)",
-                    fontSize: "var(--text-3xs)",
+                    fontSize: "var(--text-xs)",
                     letterSpacing: "0.08em",
                     padding: "var(--space-2) var(--space-3)",
                     borderRadius: 999,
@@ -507,7 +507,7 @@ export function SystemsCoverflow() {
                 <span
                   className="mono"
                   style={{
-                    fontSize: "var(--text-3xs)",
+                    fontSize: "var(--text-xs)",
                     letterSpacing: "0.1em",
                     textTransform: "uppercase",
                     color: "var(--muted)",

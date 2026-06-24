@@ -55,20 +55,20 @@ export function AccessSection() {
           <span
             className="mono p-list"
             style={{
-              fontSize: "var(--text-2xs)",
+              fontSize: "var(--text-xs)",
               color: "var(--muted)",
               textDecoration: "line-through",
             }}
           >
             {ACCESS_SEPARATE_PRICE} separately
           </span>
-          <span className="mono p-mem" style={{ fontSize: "var(--text-2xs)", color: "var(--accent-ink)" }}>
+          <span className="mono p-mem" style={{ fontSize: "var(--text-xs)", color: "var(--accent-ink)" }}>
             unlocked with {MEMBER_CODE}
           </span>
           <span
             className="mono"
             style={{
-              fontSize: "var(--text-3xs)",
+              fontSize: "var(--text-xs)",
               letterSpacing: "0.07em",
               textTransform: "uppercase",
               color: "var(--muted)",

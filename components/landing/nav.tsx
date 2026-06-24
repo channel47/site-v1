@@ -26,7 +26,7 @@ export function Nav() {
           href="#access"
           className="mono login-pill"
           style={{
-            fontSize: "var(--text-2xs)",
+            fontSize: "var(--text-xs)",
             letterSpacing: "0.04em",
             border: "1px solid oklch(0.242 0.011 73 / 0.25)",
             borderRadius: 12,

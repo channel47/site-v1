@@ -44,10 +44,10 @@ export function Testimonial({ quote, name, role }: TestimonialData) {
           }}
         />
         <div>
-          <div style={{ fontSize: "var(--text-xs)", fontWeight: 600, color: "var(--ink-strong)" }}>
+          <div style={{ fontSize: "var(--text-sm)", fontWeight: 600, color: "var(--ink-strong)" }}>
             {name}
           </div>
-          <div className="mono" style={{ fontSize: "var(--text-3xs)", color: "var(--muted)" }}>
+          <div className="mono" style={{ fontSize: "var(--text-xs)", color: "var(--muted)" }}>
             {role}
           </div>
         </div>

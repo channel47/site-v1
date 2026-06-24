@@ -42,7 +42,7 @@ export function FaqList() {
               </span>
               <span
                 className="fchev serif"
-                style={{ fontSize: "var(--text-md)", color: "var(--accent)", flex: "none" }}
+                style={{ fontSize: "var(--text-lg)", color: "var(--accent)", flex: "none" }}
               >
                 +
               </span>
@@ -74,7 +74,7 @@ export function FaqList() {
                         color: "var(--cream)",
                         borderRadius: 12,
                         padding: "var(--space-3) var(--space-4)",
-                        fontSize: "var(--text-2xs)",
+                        fontSize: "var(--text-xs)",
                         fontWeight: 700,
                       }}
                     >
