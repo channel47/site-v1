@@ -233,20 +233,22 @@ export const EARLY_ACCESS = {
 } as const
 
 /**
- * One card in the early-access fan stack. The colours are baked into the data
+ * One card in the early-access pillar rail. The colours are baked into the data
  * because each card is a self-contained dark colour field (a base plus three
  * blurred blob hues), straight from the design — they don't theme with the page.
+ * The rail scrolls horizontally on narrow screens and lays out as a fitted 3-up
+ * gallery on wide ones; the copy reveals on hover (and shows outright on touch).
  */
-export interface EAStackCard {
+export interface EARailCard {
   title: string
   desc: string
   /** Card base colour (OKLCH). */
   bg: string
-  /** Three blurred blob hues drifting behind the front card. */
+  /** Three blurred blob hues drifting behind the card. */
   blobs: [string, string, string]
 }
 
-export const EA_STACK: EAStackCard[] = [
+export const EA_RAIL: EARailCard[] = [
   {
     title: "Skills",
     desc: "Composable skills your agents call to research, write, and optimize.",
@@ -264,12 +266,6 @@ export const EA_STACK: EAStackCard[] = [
     desc: "MCP connectors that plug straight into Google, Bing, Klaviyo, and Shopify.",
     bg: "oklch(0.45 0.085 210)",
     blobs: ["oklch(0.62 0.11 200)", "oklch(0.42 0.08 232)", "oklch(0.58 0.10 175)"],
-  },
-  {
-    title: "Playbooks",
-    desc: "The thinking underneath — how the angles get found and the accounts get read.",
-    bg: "oklch(0.48 0.10 85)",
-    blobs: ["oklch(0.66 0.14 82)", "oklch(0.44 0.11 60)", "oklch(0.60 0.09 110)"],
   },
 ]
 

@@ -1,19 +1,16 @@
 "use client"
 
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useState } from "react"
 import { GlitchLogo } from "./glitch-logo"
-import { EARLY_ACCESS, EA_STACK, LINKS } from "@/lib/landing-content"
+import { EARLY_ACCESS, EA_RAIL, LINKS } from "@/lib/landing-content"
 
 type Status = "idle" | "sending" | "subscribed" | "dormant" | "error"
 
-const ROTATE_MS = 4400
-const SWIPE_PX = 40
-
 /**
- * The early-access landing page (transcribed from the "CH47 Early Access"
- * Claude Design file): the animated mark, the headline, a fan-stack of the
- * library's four building blocks that auto-rotates, the narrative copy, and the
- * one job — capturing an email.
+ * The early-access landing page — the "headline-top" layout of the CH47 Early
+ * Access Claude Design file: the animated mark, the headline, a full-bleed rail
+ * of the library's building blocks (Skills / Agents / Connectors), the narrative
+ * copy, and the one job — capturing an email.
  *
  * The form posts to `/api/subscribe` (env-gated Kit). On a real success we show
  * the design's confirmation; if the backend is unconfigured we say *that*,
@@ -23,36 +20,6 @@ export function EarlyAccess() {
   const [email, setEmail] = useState("")
   const [status, setStatus] = useState<Status>("idle")
 
-  // ---- auto-rotating fan stack ----
-  const [active, setActive] = useState(0)
-  const [tick, setTick] = useState(0)
-  const count = EA_STACK.length
-
-  useEffect(() => {
-    const id = setInterval(() => setActive((a) => (a + 1) % count), ROTATE_MS)
-    return () => clearInterval(id)
-  }, [count, tick])
-
-  const pick = useCallback((i: number) => {
-    setActive(i)
-    setTick((t) => t + 1)
-  }, [])
-
-  /** Depth class: d0 is the front card, d1–d3 fan up behind it. */
-  const depthClass = (i: number) => `d${(i - active + count) % count}`
-
-  // Swipe to advance/rewind on touch.
-  const touchX = useRef(0)
-  const onTouchStart = (e: React.TouchEvent) => {
-    touchX.current = e.touches[0]?.clientX ?? 0
-  }
-  const onTouchEnd = (e: React.TouchEvent) => {
-    const dx = (e.changedTouches[0]?.clientX ?? 0) - touchX.current
-    if (dx < -SWIPE_PX) pick((active + 1) % count)
-    else if (dx > SWIPE_PX) pick((active + count - 1) % count)
-  }
-
-  // ---- email capture ----
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!/.+@.+\..+/.test(email.trim())) {
@@ -80,58 +47,46 @@ export function EarlyAccess() {
 
   return (
     <div className="ea-page">
-      <nav style={{ display: "flex", alignItems: "center", padding: "22px 0 0" }}>
+      <nav className="ea-nav">
         <GlitchLogo autoPlay />
       </nav>
 
       <div className="ea-body">
+        {/* Headline (standalone, top) */}
         <h1 className="serif ea-h1">{EARLY_ACCESS.headline}</h1>
 
-        {/* Fan stack of the library's building blocks */}
-        <div
-          className="ea-stack"
-          onTouchStart={onTouchStart}
-          onTouchEnd={onTouchEnd}
-        >
-          {EA_STACK.map((card, i) => (
-            <div
-              key={card.title}
-              className={`fan-card ${depthClass(i)}`}
-              style={{ background: card.bg }}
-              onClick={() => pick(i)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault()
-                  pick(i)
-                }
-              }}
-              role="button"
-              tabIndex={0}
-              aria-label={`Show ${card.title}`}
-              aria-current={i === active}
-            >
-              <span
-                className="fan-blob b1"
-                style={{ background: card.blobs[0] }}
-                aria-hidden
-              />
-              <span
-                className="fan-blob b2"
-                style={{ background: card.blobs[1] }}
-                aria-hidden
-              />
-              <span
-                className="fan-blob b3"
-                style={{ background: card.blobs[2] }}
-                aria-hidden
-              />
-              <span className="fan-grain" aria-hidden />
-              <div className="fan-content">
-                <h3 className="fan-title serif">{card.title}</h3>
-                <p className="fan-desc">{card.desc}</p>
+        {/* Pillar rail — the library's building blocks */}
+        <div className="ea-stackcol">
+          <div className="ea-railscroll">
+            {EA_RAIL.map((card) => (
+              <div
+                key={card.title}
+                className="rfan"
+                style={{ background: card.bg }}
+              >
+                <span
+                  className="fan-blob b1"
+                  style={{ background: card.blobs[0] }}
+                  aria-hidden
+                />
+                <span
+                  className="fan-blob b2"
+                  style={{ background: card.blobs[1] }}
+                  aria-hidden
+                />
+                <span
+                  className="fan-blob b3"
+                  style={{ background: card.blobs[2] }}
+                  aria-hidden
+                />
+                <span className="fan-grain" aria-hidden />
+                <div className="fan-content">
+                  <h3 className="fan-title serif">{card.title}</h3>
+                  <p className="rfan-desc">{card.desc}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         {/* Copy + capture */}

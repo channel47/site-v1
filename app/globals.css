@@ -469,17 +469,38 @@ a {
 }
 
 /* ---- early-access page ------------------------------------------- */
-/* The live landing page. Page shell is a container so its own width (not the
-   viewport's) drives the mobile breakpoint. Card + form classes transcribed
-   from the "CH47 Early Access" design; keyframes are namespaced (fan*) so they
-   don't collide with the hero stack's blob/grain animations above. */
+/* The live landing page (the "headline-top" layout of the CH47 Early Access
+   design). The page is full-bleed so the pillar rail can scroll edge-to-edge;
+   the nav, headline and copy re-center in a 600px shell. The page is a container
+   so the rail's breakpoints fire on its own width, not the viewport's. Card
+   classes (fan-*) are shared with the rail (rfan); keyframes are namespaced
+   (fan*) so they don't collide with the hero blob/grain animations above. */
 .ea-page {
-  max-width: 600px;
+  width: 100%;
   margin: 0 auto;
-  padding: 0 28px 8px;
+  padding: 0 0 14px;
   box-sizing: border-box;
   container-type: inline-size;
   background: var(--bg);
+}
+/* Shell — nav, headline and copy re-center here at 600px while the rail below
+   them runs full-bleed. */
+.ea-nav,
+.ea-h1,
+.ea-copycol {
+  width: 100%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 28px;
+  padding-right: 28px;
+  box-sizing: border-box;
+}
+.ea-nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 22px;
 }
 .ea-body {
   display: flex;
@@ -494,64 +515,102 @@ a {
   color: var(--ink);
   font-weight: 400;
   text-wrap: balance;
-  max-width: 560px;
+}
+.ea-stackcol {
+  width: 100%;
 }
 
-/* fan card stack */
-.ea-stack {
-  position: relative;
-  height: 452px;
-  width: 100%;
-  max-width: 360px;
-  margin: 0 auto;
+/* pillar rail — full-bleed horizontal scroll; the first card aligns to the
+   600px shell's left edge, cards flow out to the viewport edge. On wide
+   containers it collapses to a fitted, centered 3-up gallery (no scrolling). */
+.ea-railscroll {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
+  scroll-padding-left: max(28px, calc(50% - 272px));
+  padding: 10px 28px 52px;
+  padding-left: max(28px, calc(50% - 272px));
+  margin: 0;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
-.fan-card {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 332px;
+.ea-railscroll::-webkit-scrollbar {
+  display: none;
+}
+.rfan {
+  flex: none;
+  width: 320px;
+  height: 320px;
+  position: relative;
   border-radius: 22px;
   overflow: hidden;
-  cursor: pointer;
-  transform-origin: center;
-  will-change: transform, opacity;
+  scroll-snap-align: start;
   border: 1px solid rgba(255, 255, 255, 0.16);
   box-shadow:
-    0 30px 58px -24px rgba(22, 16, 10, 0.55),
+    0 16px 30px -20px rgba(22, 16, 10, 0.46),
     inset 0 1px 0 rgba(255, 255, 255, 0.16);
   transition:
-    transform 0.85s cubic-bezier(0.34, 1.42, 0.5, 1),
-    opacity 0.7s ease,
-    box-shadow 0.6s ease;
+    transform 0.5s cubic-bezier(0.34, 1.3, 0.5, 1),
+    box-shadow 0.5s ease;
 }
-.fan-card.d0 {
-  transform: translateY(0) scale(1);
-  opacity: 1;
-  z-index: 50;
+.rfan:hover {
+  transform: translateY(-6px);
   box-shadow:
-    0 46px 82px -26px rgba(22, 16, 10, 0.62),
+    0 26px 42px -24px rgba(22, 16, 10, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
-.fan-card.d1 {
-  transform: translateY(-30px) scale(0.965);
-  opacity: 0.85;
-  z-index: 49;
+.rfan .fan-blob.b1 {
+  animation: fanBlobA 15s ease-in-out infinite;
 }
-.fan-card.d2 {
-  transform: translateY(-60px) scale(0.93);
-  opacity: 0.6;
-  z-index: 48;
+.rfan .fan-blob.b2 {
+  animation: fanBlobB 19s ease-in-out infinite;
 }
-.fan-card.d3 {
-  transform: translateY(-90px) scale(0.895);
-  opacity: 0.4;
-  z-index: 47;
+.rfan .fan-blob.b3 {
+  animation: fanBlobC 17s ease-in-out infinite;
 }
-.fan-card:focus-visible {
-  outline: 2px solid #f3ead9;
-  outline-offset: -5px;
+.rfan .fan-grain {
+  animation: fanGrainShift 6s steps(5) infinite;
 }
+.rfan .fan-content {
+  justify-content: flex-end;
+  padding: 26px 26px;
+}
+/* The card copy is revealed on hover; on touch (no hover) it shows outright. */
+.rfan-desc {
+  margin-top: 11px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(249, 243, 231, 0.94);
+  max-width: 340px;
+  opacity: 0;
+  max-height: 0;
+  transform: translateY(8px);
+  overflow: hidden;
+  transition:
+    opacity 0.4s ease,
+    max-height 0.45s ease,
+    transform 0.4s ease;
+}
+.rfan:hover .rfan-desc {
+  opacity: 1;
+  max-height: 140px;
+  transform: translateY(0);
+}
+@media (hover: none) {
+  .rfan-desc {
+    opacity: 1;
+    max-height: 140px;
+    transform: none;
+    transition: none;
+  }
+  .rfan:hover {
+    transform: none;
+  }
+}
+
+/* shared card internals — blurred colour blobs, film grain, content stack */
 .fan-blob {
   position: absolute;
   border-radius: 50%;
@@ -612,19 +671,6 @@ a {
   margin-top: 11px;
   max-width: 340px;
   color: rgba(249, 243, 231, 0.92);
-}
-/* Only the front card's field is alive. */
-.fan-card.d0 .fan-blob.b1 {
-  animation: fanBlobA 14s ease-in-out infinite;
-}
-.fan-card.d0 .fan-blob.b2 {
-  animation: fanBlobB 18s ease-in-out infinite;
-}
-.fan-card.d0 .fan-blob.b3 {
-  animation: fanBlobC 16s ease-in-out infinite;
-}
-.fan-card.d0 .fan-grain {
-  animation: fanGrainShift 5.5s steps(5) infinite;
 }
 @keyframes fanBlobA {
   0%,
@@ -725,20 +771,59 @@ a {
   }
 }
 
-/* Mobile: container query fires on the page shell's own width. */
+/* Wide containers: the rail becomes a fitted, centered 3-up gallery — no
+   scrolling, everything fits. */
+@container (min-width: 720px) {
+  .ea-railscroll {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    overflow: visible;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 8px 28px 44px;
+    scroll-snap-type: none;
+  }
+  .rfan {
+    width: auto;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+  .rfan .fan-content {
+    padding: 22px 22px;
+  }
+  .ea-railscroll .fan-title {
+    font-size: 26px;
+  }
+  .ea-railscroll .rfan-desc {
+    font-size: 13px;
+    line-height: 1.46;
+  }
+}
+
+/* Mobile: container query fires on the page's own width. */
 @container (max-width: 480px) {
   .ea-h1 {
     font-size: 31px;
     line-height: 1.12;
   }
-  .ea-stack {
-    height: 404px;
-  }
-  .fan-card {
-    height: 300px;
-  }
   .fan-title {
     font-size: 29px;
+  }
+  .rfan {
+    width: 84cqw;
+    max-width: 330px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+  .rfan .fan-content {
+    padding: 24px 24px;
+  }
+  /* no hover affordance on small screens — show the copy outright */
+  .rfan-desc {
+    opacity: 1;
+    max-height: 140px;
+    transform: none;
   }
   .ea-formrow {
     flex-direction: column;
