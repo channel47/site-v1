@@ -530,6 +530,386 @@ a {
   background: var(--cat-indigo);
 }
 
+/* ---- early-access page ------------------------------------------- */
+/* The live landing page (the "headline-top" layout of the CH47 Early Access
+   design). The page is full-bleed so the pillar rail can scroll edge-to-edge;
+   the nav, headline and copy re-center in a 600px shell. The page is a container
+   so the rail's breakpoints fire on its own width, not the viewport's. Card
+   classes (fan-*) are shared with the rail (rfan); keyframes are namespaced
+   (fan*) so they don't collide with the hero blob/grain animations above. */
+.ea-page {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 0 14px;
+  box-sizing: border-box;
+  container-type: inline-size;
+  background: var(--bg);
+}
+/* Shell — nav, headline and copy re-center here at 600px while the rail below
+   them runs full-bleed. */
+.ea-nav,
+.ea-h1,
+.ea-copycol {
+  width: 100%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 28px;
+  padding-right: 28px;
+  box-sizing: border-box;
+}
+.ea-nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 22px;
+}
+.ea-body {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-top: 46px;
+}
+.ea-h1 {
+  font-size: 42px;
+  line-height: 1.07;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  font-weight: 400;
+  text-wrap: balance;
+}
+.ea-stackcol {
+  width: 100%;
+}
+
+/* pillar rail — full-bleed horizontal scroll; the first card aligns to the
+   600px shell's left edge, cards flow out to the viewport edge. On wide
+   containers it collapses to a fitted, centered 3-up gallery (no scrolling). */
+.ea-railscroll {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
+  scroll-padding-left: max(28px, calc(50% - 272px));
+  padding: 10px 28px 52px;
+  padding-left: max(28px, calc(50% - 272px));
+  margin: 0;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.ea-railscroll::-webkit-scrollbar {
+  display: none;
+}
+.rfan {
+  flex: none;
+  width: 320px;
+  height: 320px;
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow:
+    0 16px 30px -20px rgba(22, 16, 10, 0.46),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  transition:
+    transform 0.5s cubic-bezier(0.34, 1.3, 0.5, 1),
+    box-shadow 0.5s ease;
+}
+.rfan:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 26px 42px -24px rgba(22, 16, 10, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+.rfan .fan-blob.b1 {
+  animation: fanBlobA 15s ease-in-out infinite;
+}
+.rfan .fan-blob.b2 {
+  animation: fanBlobB 19s ease-in-out infinite;
+}
+.rfan .fan-blob.b3 {
+  animation: fanBlobC 17s ease-in-out infinite;
+}
+.rfan .fan-grain {
+  animation: fanGrainShift 6s steps(5) infinite;
+}
+.rfan .fan-content {
+  justify-content: flex-end;
+  padding: 26px 26px;
+}
+/* The card copy is revealed on hover; on touch (no hover) it shows outright. */
+.rfan-desc {
+  margin-top: 11px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(249, 243, 231, 0.94);
+  max-width: 340px;
+  opacity: 0;
+  max-height: 0;
+  transform: translateY(8px);
+  overflow: hidden;
+  transition:
+    opacity 0.4s ease,
+    max-height 0.45s ease,
+    transform 0.4s ease;
+}
+.rfan:hover .rfan-desc {
+  opacity: 1;
+  max-height: 140px;
+  transform: translateY(0);
+}
+@media (hover: none) {
+  .rfan-desc {
+    opacity: 1;
+    max-height: 140px;
+    transform: none;
+    transition: none;
+  }
+  .rfan:hover {
+    transform: none;
+  }
+}
+
+/* shared card internals — blurred colour blobs, film grain, content stack */
+.fan-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(46px);
+  opacity: 0.85;
+  z-index: 0;
+  pointer-events: none;
+  will-change: transform;
+}
+.fan-blob.b1 {
+  width: 300px;
+  height: 300px;
+  top: -104px;
+  left: -84px;
+}
+.fan-blob.b2 {
+  width: 288px;
+  height: 288px;
+  bottom: -122px;
+  right: -72px;
+}
+.fan-blob.b3 {
+  width: 244px;
+  height: 244px;
+  top: 32%;
+  right: -126px;
+}
+.fan-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image: var(--grain-tex);
+  background-size: 200px 200px;
+  opacity: 0.15;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+.fan-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 26px 28px;
+  color: #f3ead9;
+}
+.fan-title {
+  font-size: 33px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.02;
+  color: #f9f3e7;
+}
+.fan-desc {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-top: 11px;
+  max-width: 340px;
+  color: rgba(249, 243, 231, 0.92);
+}
+@keyframes fanBlobA {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(26px, 20px) scale(1.18);
+  }
+}
+@keyframes fanBlobB {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-30px, -16px) scale(1.12);
+  }
+}
+@keyframes fanBlobC {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-22px, 24px) scale(1.22);
+  }
+}
+@keyframes fanGrainShift {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 200px 160px;
+  }
+}
+
+/* copy + capture */
+.ea-copy p {
+  font-size: 17px;
+  line-height: 1.62;
+  color: var(--ink-soft);
+  text-wrap: pretty;
+}
+.ea-copy p + p {
+  margin-top: 16px;
+}
+.ea-copy p.ea-lead {
+  color: var(--ink-strong);
+  font-weight: 600;
+}
+.ea-formwrap {
+  margin-top: 26px;
+  width: 100%;
+  max-width: 440px;
+}
+.ea-formrow {
+  display: flex;
+  gap: 9px;
+}
+.ea-helper {
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  margin-top: 11px;
+}
+.ea-ok {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 15px 18px;
+  background: var(--cream);
+  border: 1px solid oklch(0.242 0.011 73 / 0.16);
+  border-radius: 12px;
+  animation: popIn 0.4s cubic-bezier(0.2, 0.8, 0.25, 1) both;
+}
+@keyframes popIn {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.ok-check path {
+  stroke-dasharray: 26;
+  animation: okDraw 0.6s 0.12s cubic-bezier(0.6, 0.05, 0.25, 1) both;
+}
+@keyframes okDraw {
+  from {
+    stroke-dashoffset: 26;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Wide containers: the rail becomes a fitted, centered 3-up gallery — no
+   scrolling, everything fits. */
+@container (min-width: 720px) {
+  .ea-railscroll {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    overflow: visible;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 8px 28px 44px;
+    scroll-snap-type: none;
+  }
+  .rfan {
+    width: auto;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+  .rfan .fan-content {
+    padding: 22px 22px;
+  }
+  .ea-railscroll .fan-title {
+    font-size: 26px;
+  }
+  .ea-railscroll .rfan-desc {
+    font-size: 13px;
+    line-height: 1.46;
+  }
+}
+
+/* Mobile: container query fires on the page's own width. */
+@container (max-width: 480px) {
+  .ea-h1 {
+    font-size: 31px;
+    line-height: 1.12;
+  }
+  .fan-title {
+    font-size: 29px;
+  }
+  .rfan {
+    width: 84cqw;
+    max-width: 330px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+  .rfan .fan-content {
+    padding: 24px 24px;
+  }
+  /* no hover affordance on small screens — show the copy outright */
+  .rfan-desc {
+    opacity: 1;
+    max-height: 140px;
+    transform: none;
+  }
+  /* stacked form — full-width input over a full-width button, with real
+     vertical padding so the button keeps its height once the row's stretch no
+     longer sets it. !important beats the button's inline padding. */
+  .ea-formrow {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+  .ea-formrow > * {
+    width: 100%;
+  }
+  .ea-formrow .ufield {
+    padding: 16px 18px !important;
+    font-size: 16px !important; /* ≥16px stops iOS zoom-on-focus */
+    border-radius: 13px !important;
+  }
+  .ea-formrow button {
+    padding: 16px 20px !important;
+    font-size: 14.5px !important;
+    border-radius: 13px !important;
+  }
+}
+
 /* ---- systems coverflow ------------------------------------------ */
 .cf-track::-webkit-scrollbar {
   display: none;
@@ -539,10 +919,9 @@ a {
   scrollbar-width: none;
 }
 
-/* Shelf cards share the HERO's deep accent fields (acc0–acc4 bases) instead of
-   the bright --cat-* tokens, so "the orange" is one orange across hero and
-   shelf, and the cream name/icon clears WCAG AA (the bright fills did not).
-   Radius matches the hero (22px); image cards keep the neutral surface. */
+/* Each shelf card is an artifact preview (see system-artifacts.tsx): a deep
+   accent header tab over a paper body that shows a glimpse of the system's
+   output. Radius matches the hero (22px); the card clips its header to it. */
 .cf-card {
   border-radius: 22px;
 }
@@ -815,6 +1194,13 @@ a {
   position: relative;
   display: inline-flex;
   align-items: center;
+  font-size: 12px;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 999px;
+  padding: 7px 14px;
   transition:
     border-color 0.2s,
     color 0.2s,
@@ -825,11 +1211,24 @@ a {
 .login-pill::before {
   content: "";
   position: absolute;
-  inset: -8px -4px;
+  inset: -7px -4px;
+}
+.login-pill .lp-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.login-pill .lp-ico {
+  display: inline-flex;
+  color: var(--accent);
+  transition: color 0.2s;
 }
 .login-pill:hover {
   border-color: var(--ink);
   background: var(--ink);
+  color: var(--cream);
+}
+.login-pill:hover .lp-ico {
   color: var(--cream);
 }
 .login-pill:active {
@@ -866,6 +1265,66 @@ a {
   transition: scale 0.18s cubic-bezier(0.2, 0, 0, 1);
 }
 .press:active {
+  scale: 0.96;
+}
+
+/* ---- unlock panel fields ---------------------------------------- */
+.ufield {
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--cream);
+  border: 1px solid oklch(0.242 0.011 73 / 0.2);
+  border-radius: 12px;
+  padding: 13px 15px;
+  outline: none;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+.ufield::placeholder {
+  color: var(--muted);
+}
+.ufield:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px oklch(0.565 0.133 38 / 0.14);
+}
+
+/* Two-tier button system shared by the unlock panel so its actions read as one
+   family: a solid primary (.btn-invert) and this quiet outlined secondary. */
+.u-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  padding: 0 18px;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 13px;
+  white-space: nowrap;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.u-btn:disabled {
+  cursor: default;
+  opacity: 0.65;
+}
+.u-ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--hair);
+  transition:
+    border-color 0.2s,
+    background 0.2s,
+    color 0.2s,
+    scale 0.18s cubic-bezier(0.2, 0, 0, 1);
+}
+.u-ghost:hover {
+  border-color: var(--ink);
+  background: oklch(0.245 0.013 85 / 0.05);
+}
+.u-ghost:active {
   scale: 0.96;
 }
 
