@@ -1,24 +1,21 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Newsreader, Space_Grotesk } from "next/font/google"
+import { Geist, Space_Grotesk } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
-// Load Newsreader as a variable font (no static `weight` array) and pull in its
-// optical-size axis. With `opsz` available, `font-optical-sizing: auto` lets the
-// browser render a refined display cut at headline sizes and a sturdier text cut
-// at body sizes — the heart of the editorial feel. The full weight axis (200–800)
-// means every 300/400/500/600 the page uses renders from one continuous font.
-const newsreader = Newsreader({
+// Geist as a variable font (full 100–900 weight axis) carries both the display
+// headings and the body copy — the design's "sans" typeface. One continuous
+// font renders every weight the page uses (400 body → 600 headline) with no
+// static cuts to swap between.
+const geist = Geist({
   subsets: ["latin"],
-  variable: "--font-newsreader",
-  style: ["normal", "italic"],
-  axes: ["opsz"],
+  variable: "--font-geist",
   display: "swap",
 })
 
-// Space Grotesk as a variable font too — smoother, continuous weights for the
-// sans labels, buttons and mono-style codes.
+// Space Grotesk carries the labels, helper text and form codes — the design's
+// monospace-feel "label" face, kept distinct from the Geist body.
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-space-grotesk",
@@ -56,7 +53,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${newsreader.variable} ${spaceGrotesk.variable}`}
+      className={`${geist.variable} ${spaceGrotesk.variable}`}
     >
       <body>
         {children}

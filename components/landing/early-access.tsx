@@ -2,16 +2,21 @@
 
 import { useState } from "react"
 import { GlitchLogo } from "./glitch-logo"
-import { CraftCanvas } from "./craft-canvas"
+import { SchematicFig } from "./schematic-fig"
 import { EARLY_ACCESS, EA_RAIL, LINKS } from "@/lib/landing-content"
 
 type Status = "idle" | "sending" | "subscribed" | "dormant" | "error"
 
 /**
  * The early-access landing page — the "headline-top" layout of the CH47 Early
- * Access Claude Design file: the animated mark, the headline, a full-bleed rail
- * of the library's building blocks (Skills / Agents / Connectors), the narrative
- * copy, and the one job — capturing an email.
+ * Access Claude Design file: the animated mark, a standalone headline, a
+ * full-bleed rail of the library's building blocks (Skills / Agents /
+ * Connectors) drawn in the riso × schematic treatment, the narrative copy, and
+ * the one job — capturing an email.
+ *
+ * The page chrome runs on a greige OKLCH palette that flips to its dark ladder
+ * via `prefers-color-scheme` (see globals.css), so light/dark follows the
+ * visitor's system setting with no toggle. The cards stay vivid in both.
  *
  * The form posts to `/api/subscribe` (env-gated Kit). On a real success we show
  * the design's confirmation; if the backend is unconfigured we say *that*,
@@ -48,40 +53,31 @@ export function EarlyAccess() {
 
   return (
     <div className="ea-page">
-      <nav className="ea-nav">
+      <nav className="ea-nav ea-shell">
         <GlitchLogo autoPlay />
       </nav>
 
       <div className="ea-body">
         {/* Headline (standalone, top) */}
-        <h1 className="serif ea-h1">{EARLY_ACCESS.headline}</h1>
+        <h1 className="serif ea-h1 ea-shell">{EARLY_ACCESS.headline}</h1>
 
         {/* Pillar rail — the library's building blocks */}
         <div className="ea-stackcol">
           <div className="ea-railscroll">
             {EA_RAIL.map((card) => (
-              <div
-                key={card.title}
-                className="rfan"
-                style={{ background: card.bg }}
-              >
+              <div key={card.title} className="rfan hyb" style={{ background: card.bg }}>
                 <span
-                  className="fan-blob b1"
-                  style={{ background: card.blobs[0] }}
+                  className="riso-flood"
+                  style={{ background: card.flood }}
                   aria-hidden
                 />
                 <span
-                  className="fan-blob b2"
-                  style={{ background: card.blobs[1] }}
-                  aria-hidden
-                />
-                <span
-                  className="fan-blob b3"
-                  style={{ background: card.blobs[2] }}
+                  className="riso-dots"
+                  style={{ backgroundImage: card.dots }}
                   aria-hidden
                 />
                 <span className="fan-grain" aria-hidden />
-                <CraftCanvas tint={card.tint} motif={card.motif} seed={card.seed} />
+                <SchematicFig motif={card.motif} />
                 <div className="fan-content">
                   <h3 className="fan-title serif">{card.title}</h3>
                   <p className="rfan-desc">{card.desc}</p>
@@ -92,7 +88,7 @@ export function EarlyAccess() {
         </div>
 
         {/* Copy + capture */}
-        <div className="ea-copycol">
+        <div className="ea-copycol ea-shell">
           <div className="ea-copy">
             <p>{EARLY_ACCESS.p1}</p>
             <p>{EARLY_ACCESS.p2}</p>
@@ -123,7 +119,7 @@ export function EarlyAccess() {
                   <span
                     className="serif"
                     style={{
-                      fontSize: 17,
+                      fontSize: 18,
                       fontWeight: 500,
                       lineHeight: 1,
                       color: "var(--ink)",
@@ -141,9 +137,9 @@ export function EarlyAccess() {
             ) : status === "dormant" ? (
               <p
                 style={{
-                  fontSize: 15.5,
+                  fontSize: "var(--body-size)",
                   lineHeight: 1.55,
-                  color: "var(--ink-soft)",
+                  color: "var(--body)",
                 }}
               >
                 Email signup isn&apos;t wired up on this page yet. For now,{" "}
@@ -152,7 +148,7 @@ export function EarlyAccess() {
                   target="_blank"
                   rel="noopener"
                   className="ul"
-                  style={{ color: "var(--accent-ink)" }}
+                  style={{ color: "var(--accent)" }}
                 >
                   come build with me live →
                 </a>
@@ -161,7 +157,7 @@ export function EarlyAccess() {
               <>
                 <form className="ea-formrow" onSubmit={submit}>
                   <input
-                    className="ufield mono"
+                    className="ea-in"
                     type="email"
                     value={email}
                     onChange={(e) => {
@@ -174,21 +170,8 @@ export function EarlyAccess() {
                   />
                   <button
                     type="submit"
-                    className="btn-invert mono"
+                    className="ea-btn"
                     disabled={status === "sending"}
-                    style={{
-                      flex: "none",
-                      background: "var(--near-black)",
-                      color: "var(--cream)",
-                      border: "1px solid transparent",
-                      borderRadius: 12,
-                      padding: "0 20px",
-                      fontSize: 13.5,
-                      fontWeight: 700,
-                      whiteSpace: "nowrap",
-                      cursor: status === "sending" ? "default" : "pointer",
-                      opacity: status === "sending" ? 0.65 : 1,
-                    }}
                   >
                     {status === "sending" ? "…" : "Get early access"}
                   </button>
@@ -198,7 +181,7 @@ export function EarlyAccess() {
                     className="mono"
                     style={{
                       fontSize: 12,
-                      color: "var(--accent-ink)",
+                      color: "var(--accent)",
                       marginTop: 9,
                     }}
                   >
