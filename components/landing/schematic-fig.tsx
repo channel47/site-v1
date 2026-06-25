@@ -80,7 +80,14 @@ function Agents() {
         strokeWidth="1.2"
         style={ringOrigin}
       />
-      <circle cx="78" cy="60" r="4" fill={ink(0.95)} />
+      <circle
+        className="ag-core"
+        cx="78"
+        cy="60"
+        r="4"
+        fill={ink(0.95)}
+        style={{ transformBox: "fill-box", transformOrigin: "center" }}
+      />
       <g className="ag-orbit" style={ringOrigin}>
         <circle cx="124" cy="60" r="4.2" fill={ink(0.9)} />
         <circle cx="50" cy="32" r="3.6" fill={ink(0.7)} />

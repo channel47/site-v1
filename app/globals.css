@@ -227,6 +227,89 @@ a {
     opacity: 1;
   }
 }
+/* Mobile focus loops — the card centered in the rail plays its schematic through
+   one natural cycle, then rests. Driven by `.rfan.in-focus` (see the mobile
+   container query + early-access.tsx). Origins live on the SVG nodes themselves
+   (transform-box: fill-box) so each part pivots about its own center. */
+@keyframes skLoop1 {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0);
+  }
+  50% {
+    transform: translate(7px, -10px) rotate(2deg);
+  }
+}
+@keyframes skLoop2 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(0, -1px) scale(1.015);
+  }
+}
+@keyframes skLoop3 {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0);
+  }
+  50% {
+    transform: translate(-6px, 8px) rotate(-2deg);
+  }
+}
+@keyframes agOrbitLoop {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes agRingA {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.74;
+  }
+}
+@keyframes agRingB {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.74;
+  }
+  50% {
+    transform: scale(0.92);
+    opacity: 1;
+  }
+}
+@keyframes agCorePulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.95;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.5;
+  }
+}
+@keyframes cnNodeLoop {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  45% {
+    transform: scale(1.75);
+    opacity: 1;
+  }
+}
 
 /* ---- page shell -------------------------------------------------- */
 /* The page is full-bleed so the pillar rail can scroll edge-to-edge; the nav,
@@ -462,6 +545,9 @@ a {
     transition: none;
   }
   .rfan:hover {
+    transform: none;
+  }
+  .rfan:hover .fig {
     transform: none;
   }
 }
@@ -704,19 +790,93 @@ button:focus-visible {
   .fan-title {
     font-size: 29px;
   }
+  /* The rail becomes a one-card-per-swipe carousel: mandatory snap, each card
+     centered in view, symmetric padding so the first and last can reach center. */
+  .ea-railscroll {
+    scroll-snap-type: x mandatory;
+    gap: 14px;
+    padding: 10px 0 46px;
+    padding-left: 8cqw;
+    padding-right: 8cqw;
+    scroll-padding-left: 0;
+  }
   .rfan {
     width: 84cqw;
-    max-width: 330px;
+    max-width: none;
     height: auto;
     aspect-ratio: 1 / 1;
+    scroll-snap-align: center;
   }
   .rfan .fan-content {
     padding: 24px 24px;
   }
+  /* No hover affordance on touch — the copy shows outright. */
   .rfan-desc {
     opacity: 1;
     max-height: 140px;
     transform: none;
+  }
+  /* Schematic sits larger and centered in the upper half, stable under touch. */
+  .rfan .fig {
+    top: 28px;
+    transform: scale(1.14) !important;
+    transform-origin: 50% 0;
+  }
+  /* Each schematic plays ONE natural cycle when its card is centered, then rests.
+     `.in-focus` is toggled in JS onto whichever card sits nearest the rail's
+     center (see early-access.tsx); neighbors stay still. */
+  /* skills — plates riffle open, then settle */
+  .rfan.in-focus .sk-r3 {
+    animation: skLoop3 5s cubic-bezier(0.45, 0.05, 0.35, 1) 1;
+  }
+  .rfan.in-focus .sk-r2 {
+    animation: skLoop2 5s cubic-bezier(0.45, 0.05, 0.35, 1) 0.16s 1;
+  }
+  .rfan.in-focus .sk-r1 {
+    animation: skLoop1 5s cubic-bezier(0.45, 0.05, 0.35, 1) 0.32s 1;
+  }
+  /* agents — one graceful orbit, a single ring breath + core pulse */
+  .rfan.in-focus .ag-orbit {
+    animation: agOrbitLoop 7s cubic-bezier(0.4, 0, 0.3, 1) 1;
+  }
+  .rfan.in-focus .ag-ring:nth-of-type(1) {
+    animation: agRingA 5.2s ease-in-out 1;
+  }
+  .rfan.in-focus .ag-ring:nth-of-type(2) {
+    animation: agRingB 4s ease-in-out 1;
+  }
+  .rfan.in-focus .ag-core {
+    animation: agCorePulse 3.4s ease-in-out 1;
+  }
+  /* connectors — wires draw in once (staggered), nodes fire a single
+     left→right wave, then rest */
+  .rfan.in-focus .cn-path {
+    stroke-dashoffset: 0 !important;
+    transition: stroke-dashoffset 0.9s ease;
+  }
+  .rfan.in-focus .cn-path:nth-of-type(2) {
+    transition-delay: 0.12s;
+  }
+  .rfan.in-focus .cn-path:nth-of-type(3) {
+    transition-delay: 0.24s;
+  }
+  .rfan.in-focus .cn-node {
+    animation: cnNodeLoop 2.4s ease-in-out 1;
+  }
+  .rfan.in-focus .cn-node:nth-of-type(2) {
+    animation-delay: 0.1s;
+  }
+  .rfan.in-focus .cn-node:nth-of-type(3) {
+    animation-delay: 0.2s;
+  }
+  .rfan.in-focus .cn-node:nth-of-type(4) {
+    animation-delay: 0.32s;
+  }
+  .rfan.in-focus .cn-node:nth-of-type(5) {
+    animation-delay: 0.42s;
+  }
+  .rfan.in-focus .cn-node:nth-of-type(6) {
+    animation-delay: 0.52s;
   }
   .ea-formrow {
     flex-direction: column;
