@@ -144,16 +144,23 @@ assets — so there are only ever six, and the full motion stays viable.
 │                                               │
 │   ▸ Next live: <title> · <date>   [Join →]    │  quiet next-live strip
 │                                               │  (collapses if none)
-│   <narrative / trenches copy>                 │  earns the ask
+│   Latest from the channel                     │  3–5 recent assets as
+│   Title ……………  Article · Jun 2026             │  editorial rows (reuses
+│   Title ……………  Skill                          │  the Browse row); proof
+│   Title ……………  Workshop · Jul 3               │  the channel publishes
+│                              Browse all →      │
 │                                               │
-│   [ email ……………… ] [ Get early access ]      │  capture (kept at bottom)
+│   "<1–2 line signed note — Jackson>"          │  condensed trenches voice
+│   [ email ……………… ] [ Get early access ]      │  capture
 │                                               │
 │   Footer — six types · Newsletter · About     │  SEO net
 └─────────────────────────────────────────────┘
 ```
 
 The current page, evolved — not rebuilt. Adds: icon header, 3 more type cards (6 total),
-next-live strip, footer.
+next-live strip, a **Latest from the channel** feed, footer. The region below the cards
+does two jobs — prove the channel publishes (latest feed) and earn the ask (short signed
+note → capture). The long-form trenches narrative moves to **About**.
 
 ### Browse  [locked]
 
@@ -215,7 +222,9 @@ capture component already exists and posts to `/api/subscribe` (env-gated Kit, h
 ### About  [recommended]
 
 Editorial single column: the trenches story, the ronin/blade narrative, what Channel47
-is and who it's for. Understated headshot. Jackson signs his work here.
+is and who it's for. Understated headshot. Jackson signs his work here. **This is the home
+for the long-form narrative** that previously lived on the landing page (Home now carries
+only a condensed 1–2 line signed note).
 
 ---
 
