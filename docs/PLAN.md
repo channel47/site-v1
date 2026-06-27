@@ -38,11 +38,14 @@ workshops + courses (bottom). Journey: personal skill-building → monetizing by
 Workshop CTAs point to **Skool now**, **self-hosted checkout later** (everything else on
 the page identical).
 
-### Copy note
+### Copy note [locked]
 
 The live headline — "An agentic operating system for performance marketers" — reads like
-a SaaS product for sale. It should be reframed to the teacher/guide promise above
-(education brand, not a product). Exact headline TBD during the Home build.
+a SaaS product for sale. **Direction:** reframe to the education-brand / operator-promise
+above (you, teaching — not a product). **Exact headline + subhead are deferred to the Home
+build**, drafted against the real layout. Two reference poles to draft between:
+operator-promise ("Become an agentic operator") vs trenches-credibility ("Agentic
+marketing for ecommerce operators — from the trenches").
 
 ---
 
@@ -228,8 +231,11 @@ in-house community features. Skool remains the paid destination until the list i
 
 ## Open items to confirm
 
-1. URL structure — typed prefixes (§3)?
-2. Skill/Agent/Connector asset template (§5)?
-3. Newsletter + About page treatments (§5)?
-4. Phase 1 scope (§6)?
-5. Reframed Home headline — draft during the Home build, or pin the wording now?
+Standing recommendations — accepted as defaults unless revised:
+
+1. URL structure — typed prefixes (§3).
+2. Skill/Agent/Connector asset template (§5).
+3. Newsletter + About page treatments (§5).
+4. Phase 1 scope (§6).
+
+Resolved: Home headline wording deferred to the Home build (see Copy note, §1).
