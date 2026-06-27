@@ -94,10 +94,41 @@ hover **and keyboard focus** (real text in the DOM, not a tooltip — keeps SEO 
 Mobile collapses to a single right-side hamburger. The six type-cards on Home _are_ the
 primary navigation, so the header deliberately doesn't repeat the six types.
 
-### Footer nav [locked]
+### Footer [locked]
 
-Full link list — all six types + Newsletter + About. This is the SEO/completeness net
-that lets the visible header stay minimal.
+**Links-only** (no capture) — the footer is the site's completeness + SEO layer; density
+is fine here since the header stays minimal. Three tidy columns + a brand block + social
+row + legal.
+
+```
+┌───────────────────────────────────────────────────────────────┐
+│ [47] Channel47                                                  │
+│ "<one-line positioning tag — deferred with the headline>"       │
+│                                                                 │
+│ Learn          Live                 More                        │
+│   Articles       Workshops            About                     │
+│   Posts          Vibe Marketers →     Browse all                │
+│   Skills                              Newsletter                │
+│   Agents                                                        │
+│   Connectors                                                    │
+│ ──────────────────────────────────────────────────────────────│
+│ © 2026 Channel47 · by Jackson Dean                              │
+│ Skool · YouTube · X · LinkedIn                          Privacy │
+└───────────────────────────────────────────────────────────────┘
+```
+
+- **No footer capture [locked].** Every page still has a subscribe path: the header
+  **Newsletter** icon → `/newsletter` is present sitewide, and Home/Article/Workshop carry
+  inline captures. Browse and type/asset pages route out via the header rather than
+  capturing in place.
+- **Brand block:** "47" mark + one-line positioning tag (wording deferred with the
+  headline) + "by Jackson Dean" — where he signs the whole site.
+- **Social / community [locked]:** Vibe Marketers (Skool — reuse `LINKS.join` from
+  `lib/landing-content.ts`), YouTube, X, LinkedIn. The Skool link also appears in the
+  **Live** column as the workshop/community destination.
+- **Legal:** © + **Privacy** (required — email collection). Terms deferred.
+- Full six-type list lives here regardless of grouping — the SEO/completeness net that
+  lets the visible header stay minimal.
 
 ---
 
