@@ -73,19 +73,33 @@ Six first-class types. Browse filters on these six.
 ```
 /                       Home
 /browse                 Filterable catalog of everything (chips: All + 6 types)
+/articles               Static flat index of all Articles (SEO crawl target)
 /articles/[slug]        Article detail
+/posts                  Static flat index of all Posts
 /posts/[slug]           Post detail
+/skills                 Static flat index of all Skills
 /skills/[slug]          Skill detail        ── shared "asset" shell
+/agents                 Static flat index of all Agents
 /agents/[slug]          Agent detail        ──
+/connectors             Static flat index of all Connectors
 /connectors/[slug]      Connector detail    ──
+/workshops              Static flat index of all Workshops
 /workshops/[slug]       Workshop detail (state-driven: upcoming → past)
 /newsletter             Dedicated subscribe page
 /about                  Jackson's story (understated)
+/glossary               SEO — DTC / agentic-marketing terms
+/faq                    SEO — common questions
+/terms                  Legal
 [/login]                Deferred
 ```
 
 - **URL structure [recommended]:** typed prefixes (above) over a flat `/[slug]` — clearer
   for users, SEO, and the workshop special-casing.
+- **Per-type index pages `/[type]` [locked]:** each type segment's index route is a
+  static, server-rendered flat list of every page of that type — SEO crawl targets that
+  guarantee every asset is linkable without JS. The **type cards + footer Learn links stay
+  on the interactive `/browse?type=X`**; the static indexes are reached from the footer's
+  SEO row. Interactive filter and static index point at the same content by design.
 
 ### Header nav [locked]
 
@@ -109,14 +123,21 @@ row + legal.
 │   Articles       Workshops            About                     │
 │   Posts          Vibe Marketers →     Browse all                │
 │   Skills                              Newsletter                │
-│   Agents                                                        │
-│   Connectors                                                    │
+│   Agents                              Glossary                  │
+│   Connectors                          FAQ                       │
+│ ──────────────────────────────────────────────────────────────│
+│ Indexes  Articles · Posts · Skills · Agents · Connectors ·      │  SEO crawl row
+│          Workshops                                              │
 │ ──────────────────────────────────────────────────────────────│
 │ © 2026 Channel47 · by Jackson Dean                              │
-│ Skool · YouTube · X · LinkedIn                          Privacy │
+│ Skool · YouTube · X · LinkedIn              Privacy · Terms     │
 └───────────────────────────────────────────────────────────────┘
 ```
 
+- **SEO links [locked]:** Glossary + FAQ sit in the **More** column; **Terms** joins the
+  legal line beside Privacy; the static per-type **Indexes** are a compact crawl row above
+  legal (`/articles`, `/posts`, `/skills`, `/agents`, `/connectors`, `/workshops`). Low
+  visual weight, full crawlability — keeps the footer tidy rather than a fat 4th column.
 - **No footer capture [locked].** Every page still has a subscribe path: the header
   **Newsletter** icon → `/newsletter` is present sitewide, and Home/Article/Workshop carry
   inline captures. Browse and type/asset pages route out via the header rather than
@@ -126,7 +147,7 @@ row + legal.
 - **Social / community [locked]:** Vibe Marketers (Skool — reuse `LINKS.join` from
   `lib/landing-content.ts`), YouTube, X, LinkedIn. The Skool link also appears in the
   **Live** column as the workshop/community destination.
-- **Legal:** © + **Privacy** (required — email collection). Terms deferred.
+- **Legal:** © + **Privacy** (required — email collection) + **Terms** (`/terms`).
 - Full six-type list lives here regardless of grouping — the SEO/completeness net that
   lets the visible header stay minimal.
 
