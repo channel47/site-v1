@@ -898,6 +898,321 @@ button:focus-visible {
   }
 }
 
+/* ============================================================
+   Story pages (/stories, /stories/[slug]) — the "library stacks"
+   counterpart to the landing page: restrained, editorial, fast.
+   Runs entirely on the greige token ladder above, so light/dark
+   follows the system exactly like the landing page.
+   ============================================================ */
+
+.st-page {
+  min-height: 100vh;
+  background: var(--page);
+  padding-bottom: 72px;
+}
+.st-shell {
+  width: 100%;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 28px;
+  padding-right: 28px;
+  box-sizing: border-box;
+}
+
+/* nav — mark left, context right */
+.st-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 40px;
+}
+.st-mark {
+  display: inline-flex;
+  color: var(--ink);
+  transition: color 0.2s;
+}
+.st-mark:hover {
+  color: var(--accent);
+}
+.st-nav-here,
+.st-nav-back {
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+.st-nav-back {
+  transition: color 0.2s;
+}
+.st-nav-back:hover {
+  color: var(--accent);
+}
+
+/* header */
+.st-head {
+  margin-top: 56px;
+}
+.st-h1 {
+  font-size: 34px;
+  line-height: 1.14;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+  color: var(--ink);
+  max-width: 620px;
+}
+.st-intro,
+.st-byline {
+  margin-top: 16px;
+}
+.st-intro {
+  font-size: var(--body-size);
+  line-height: var(--body-lh);
+  color: var(--body);
+  max-width: 560px;
+}
+.st-byline {
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+/* "Introduces" asset strip — a pointer to the asset, not a duplicate of the
+   story's own closing install section. */
+.st-asset {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+  padding: 12px 16px;
+  background: var(--field-bg);
+  border: 1px solid var(--field-border);
+  border-radius: 12px;
+  transition: border-color 0.2s;
+}
+.st-asset:hover {
+  border-color: var(--accent);
+}
+.st-asset-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.st-asset-name {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--accent);
+}
+.st-asset-type {
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-left: auto;
+}
+
+/* prose — rendered markdown body */
+.st-prose {
+  margin-top: 40px;
+  font-size: var(--body-size);
+  line-height: var(--body-lh);
+  color: var(--body);
+}
+.st-prose p {
+  margin-top: 18px;
+}
+.st-prose h2 {
+  font-family: var(--font-display);
+  font-size: 23px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin-top: 44px;
+}
+.st-prose h3 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-top: 32px;
+}
+.st-prose ul,
+.st-prose ol {
+  margin-top: 18px;
+  padding-left: 24px;
+}
+.st-prose li {
+  margin-top: 10px;
+}
+.st-prose li::marker {
+  color: var(--muted);
+}
+.st-prose strong {
+  color: var(--body-strong);
+  font-weight: 600;
+}
+.st-prose a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklch, var(--accent) 40%, transparent);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.2s;
+}
+.st-prose a:hover {
+  text-decoration-color: var(--accent);
+}
+.st-prose blockquote {
+  margin-top: 18px;
+  padding: 2px 0 2px 18px;
+  border-left: 2px solid var(--accent);
+  color: var(--body-strong);
+}
+.st-prose blockquote p {
+  margin-top: 0;
+}
+.st-prose code {
+  font-family: var(--font-label);
+  font-size: 0.86em;
+  background: var(--field-bg);
+  border: 1px solid var(--field-border);
+  border-radius: 6px;
+  padding: 2px 6px;
+}
+.st-prose pre {
+  margin-top: 18px;
+  padding: 16px 18px;
+  background: var(--field-bg);
+  border: 1px solid var(--field-border);
+  border-radius: 12px;
+  overflow-x: auto;
+}
+.st-prose pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.st-prose hr {
+  margin-top: 40px;
+  border: none;
+  border-top: 1px solid var(--field-border);
+}
+
+/* index — grouped editorial rows (the Browse-row treatment) */
+.st-group {
+  margin-top: 56px;
+}
+.st-group-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.st-group-blurb {
+  margin-top: 10px;
+  font-size: 15px;
+  line-height: 1.58;
+  color: var(--muted);
+  max-width: 540px;
+}
+.st-rows {
+  list-style: none;
+  margin-top: 20px;
+  border-top: 1px solid var(--field-border);
+}
+.st-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--field-border);
+}
+.st-row-main {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.st-row-title {
+  font-size: 17.5px;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  line-height: 1.3;
+  color: var(--ink);
+  transition: color 0.2s;
+}
+.st-row:hover .st-row-title {
+  color: var(--accent);
+}
+.st-row-desc {
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--body);
+}
+.st-row-meta {
+  flex: none;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* footer */
+.st-foot {
+  margin-top: 64px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.st-foot-note {
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.st-accent-link {
+  color: var(--accent);
+}
+.st-accent-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* landing nav link over to the stories */
+.ea-nav {
+  justify-content: space-between;
+}
+.ea-nav-link {
+  font-family: var(--font-label);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+.ea-nav-link:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 560px) {
+  .st-h1 {
+    font-size: 27px;
+  }
+  .st-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .st-row-meta {
+    white-space: normal;
+  }
+  .st-asset-type {
+    margin-left: 0;
+  }
+}
+
 /* ---- reduced motion --------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   *,
