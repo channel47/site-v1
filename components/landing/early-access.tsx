@@ -1,6 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
+import Link from "next/link"
 import { GlitchLogo } from "./glitch-logo"
 import { SchematicFig } from "./schematic-fig"
 import { EARLY_ACCESS, EA_RAIL, LINKS } from "@/lib/landing-content"
@@ -104,6 +105,9 @@ export function EarlyAccess() {
     <div className="ea-page">
       <nav className="ea-nav ea-shell">
         <GlitchLogo autoPlay />
+        <Link href="/stories" className="ea-nav-link">
+          Stories →
+        </Link>
       </nav>
 
       <div className="ea-body">
