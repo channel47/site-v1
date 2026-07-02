@@ -1,10 +1,11 @@
-import { EarlyAccess } from "@/components/landing/early-access"
+import { Home } from "@/components/landing/home"
 
 /**
- * The live site is the email-first early-access page — the mark, the headline,
- * the fan-stack of the library's building blocks, and the one job: capturing an
- * email. Transcribed from the "CH47 Early Access" Claude Design file.
+ * The homepage — the channel's front door (docs/PLAN.md §5). The single-purpose
+ * early-access page, evolved: an icon header, the reframed POV hero, six riso
+ * type gateways, a next-live strip, a "Latest from the channel" feed, a
+ * condensed signed note → email capture, and the SEO footer.
  */
 export default function Page() {
-  return <EarlyAccess />
+  return <Home />
 }

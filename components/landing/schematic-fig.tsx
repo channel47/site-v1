@@ -142,10 +142,160 @@ function Connectors() {
   )
 }
 
+function Articles() {
+  // A page with a video-embed play triangle up top and ruled body lines below —
+  // the Article's "leads with a video, then the how-to" shape.
+  const line = (y: number, w: number, o: number) => (
+    <rect
+      key={y}
+      className="ar-line"
+      x="46"
+      y={y}
+      width={w}
+      height="3.4"
+      rx="1.7"
+      fill={ink(o)}
+      style={{ transformBox: "fill-box", transformOrigin: "left center" }}
+    />
+  )
+  return (
+    <>
+      <rect
+        className="ar-page"
+        x="38"
+        y="14"
+        width="80"
+        height="94"
+        rx="6"
+        stroke={ink(0.9)}
+        strokeWidth="1.6"
+        fill={ink(0.05)}
+        style={{ transformBox: "fill-box", transformOrigin: "center" }}
+      />
+      <rect
+        x="46"
+        y="22"
+        width="64"
+        height="34"
+        rx="4"
+        stroke={ink(0.5)}
+        strokeWidth="1.3"
+        fill={ink(0.04)}
+      />
+      <path className="ar-play" d="M72 31 L86 39 L72 47 Z" fill={ink(0.95)} />
+      {line(66, 64, 0.7)}
+      {line(76, 64, 0.4)}
+      {line(86, 48, 0.4)}
+    </>
+  )
+}
+
+function Posts() {
+  // An oversized quotation mark over two ruled lines — the personable, spoken
+  // voice. The glyph gives a gentle nod on hover (see .po-quote rules).
+  return (
+    <>
+      <text
+        className="po-quote"
+        x="34"
+        y="74"
+        fontSize="86"
+        fontFamily="Georgia, serif"
+        fill={ink(0.95)}
+        style={{ transformBox: "fill-box", transformOrigin: "center" }}
+      >
+        &ldquo;
+      </text>
+      <rect
+        className="po-line"
+        x="74"
+        y="52"
+        width="46"
+        height="3.4"
+        rx="1.7"
+        fill={ink(0.62)}
+        style={{ transformBox: "fill-box", transformOrigin: "left center" }}
+      />
+      <rect
+        className="po-line"
+        x="74"
+        y="64"
+        width="34"
+        height="3.4"
+        rx="1.7"
+        fill={ink(0.4)}
+        style={{ transformBox: "fill-box", transformOrigin: "left center" }}
+      />
+    </>
+  )
+}
+
+function Workshops() {
+  // A calendar plate with a single lit day and a live-broadcast pulse — the
+  // "live event on a date" identity. The lit cell and arcs breathe on hover.
+  const dot = (cx: number, cy: number, o: number, lit = false) => (
+    <circle
+      key={`${cx}-${cy}`}
+      className={lit ? "wk-live" : "wk-cell"}
+      cx={cx}
+      cy={cy}
+      r={lit ? 5 : 3.2}
+      fill={ink(lit ? 0.98 : o)}
+      style={{ transformBox: "fill-box", transformOrigin: "center" }}
+    />
+  )
+  return (
+    <>
+      <rect
+        x="34"
+        y="24"
+        width="88"
+        height="80"
+        rx="7"
+        stroke={ink(0.9)}
+        strokeWidth="1.6"
+        fill={ink(0.05)}
+      />
+      <line x1="34" y1="44" x2="122" y2="44" stroke={ink(0.6)} strokeWidth="1.3" />
+      <line x1="54" y1="18" x2="54" y2="30" stroke={ink(0.85)} strokeWidth="2.4" strokeLinecap="round" />
+      <line x1="102" y1="18" x2="102" y2="30" stroke={ink(0.85)} strokeWidth="2.4" strokeLinecap="round" />
+      {dot(50, 58, 0.5)}
+      {dot(68, 58, 0.5)}
+      {dot(86, 58, 0.5)}
+      {dot(104, 58, 0.5)}
+      {dot(50, 78, 0.5)}
+      {dot(68, 78, 0.98, true)}
+      {dot(86, 78, 0.5)}
+      {dot(104, 78, 0.5)}
+      <circle
+        className="wk-arc"
+        cx="68"
+        cy="78"
+        r="11"
+        stroke={ink(0.85)}
+        strokeWidth="1.4"
+        style={{ transformBox: "fill-box", transformOrigin: "center" }}
+      />
+      <circle
+        className="wk-arc"
+        cx="68"
+        cy="78"
+        r="17"
+        stroke={ink(0.45)}
+        strokeWidth="1.2"
+        style={{ transformBox: "fill-box", transformOrigin: "center" }}
+      />
+    </>
+  )
+}
+
 const MOTIFS: Record<CardMotif, () => React.ReactElement> = {
   skills: Skills,
   agents: Agents,
   connectors: Connectors,
+  articles: Articles,
+  posts: Posts,
+  workshops: Workshops,
 }
 
 export function SchematicFig({ motif }: { motif: CardMotif }) {

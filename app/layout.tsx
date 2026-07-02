@@ -1,5 +1,5 @@
 import type React from "react"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { Geist, Space_Grotesk } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
@@ -22,15 +22,25 @@ const spaceGrotesk = Space_Grotesk({
   display: "swap",
 })
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f7f6f3" },
+    { media: "(prefers-color-scheme: dark)", color: "#2b2b28" },
+  ],
+}
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://channel47.dev"),
-  title: "Channel 47 — Agentic systems for performance marketers",
+  title: "Channel 47 — Become an agentic operator",
   description:
-    "A living library of agentic systems and tools for performance marketers. Built by an operator who’s deployed them across $3M+ in ad spend.",
+    "Channel 47 teaches ecommerce operators to run growth as a system of AI agents, skills, and connectors — drawn from years inside real ad accounts.",
   openGraph: {
-    title: "Channel 47 — Agentic systems for performance marketers",
+    title: "Channel 47 — Become an agentic operator",
     description:
-      "A living library of agentic systems and tools for performance marketers.",
+      "Learn to run your brand's growth as a system of AI agents, skills, and connectors. From an operator who's deployed them across $3M+ in ad spend.",
     url: "https://channel47.dev",
     siteName: "Channel 47",
     type: "website",
