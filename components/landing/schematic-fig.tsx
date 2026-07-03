@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react"
-import type { CardMotif } from "@/lib/landing-content"
+import type { CardMotif } from "@/lib/site-content"
 
 /**
  * The line-art schematic that sits on each pillar card — one paper-ink colour
@@ -142,10 +142,89 @@ function Connectors() {
   )
 }
 
+function Posts() {
+  // A written page: ruled lines that draw in left-to-right on hover, with a
+  // short signature stroke — the first-person voice of the library.
+  const line = (d: string, o: number, w: number, len: number, delay: string) => (
+    <path
+      key={d}
+      className="po-line"
+      d={d}
+      stroke={ink(o)}
+      strokeWidth={w}
+      strokeLinecap="round"
+      style={{
+        strokeDasharray: len,
+        strokeDashoffset: len,
+        transition: `stroke-dashoffset .7s ease ${delay}`,
+      }}
+    />
+  )
+  return (
+    <>
+      <rect
+        x="34"
+        y="14"
+        width="88"
+        height="92"
+        rx="6"
+        stroke={ink(0.55)}
+        strokeWidth="1.4"
+        fill={ink(0.05)}
+      />
+      {line("M46 34 H110", 0.92, 1.6, 64, "0s")}
+      {line("M46 50 H102", 0.55, 1.3, 56, ".1s")}
+      {line("M46 66 H110", 0.55, 1.3, 64, ".2s")}
+      {line("M46 82 H86", 0.55, 1.3, 40, ".3s")}
+      {line("M92 94 C98 88 106 92 112 86", 0.95, 1.8, 34, ".42s")}
+    </>
+  )
+}
+
+function Workshops() {
+  // A live signal: broadcast arcs rippling out from a source dot — the
+  // monthly sessions, on air.
+  const arc = (r: number, o: number, w: number) => (
+    <circle
+      key={r}
+      className="ws-arc"
+      cx="78"
+      cy="66"
+      r={r}
+      stroke={ink(o)}
+      strokeWidth={w}
+      fill="none"
+      style={{
+        transformBox: "fill-box",
+        transformOrigin: "center",
+        strokeDasharray: `${Math.round(r * 3.6)} ${Math.round(r * 2.7)}`,
+        strokeDashoffset: Math.round(r * 1.8),
+      }}
+    />
+  )
+  return (
+    <>
+      <circle
+        className="ws-dot"
+        cx="78"
+        cy="66"
+        r="5"
+        fill={ink(0.95)}
+        style={{ transformBox: "fill-box", transformOrigin: "center" }}
+      />
+      {arc(20, 0.9, 1.7)}
+      {arc(34, 0.62, 1.4)}
+      {arc(48, 0.4, 1.2)}
+    </>
+  )
+}
+
 const MOTIFS: Record<CardMotif, () => React.ReactElement> = {
+  posts: Posts,
   skills: Skills,
   agents: Agents,
   connectors: Connectors,
+  workshops: Workshops,
 }
 
 export function SchematicFig({ motif }: { motif: CardMotif }) {
