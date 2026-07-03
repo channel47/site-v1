@@ -129,61 +129,11 @@ a {
 }
 
 /* ---- keyframes -------------------------------------------------- */
-/* Colour-field drift — blurred blobs wander slowly behind the card. */
-@keyframes blobA {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-  50% {
-    transform: translate(26px, 20px) scale(1.18);
-  }
-}
-@keyframes blobB {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-  50% {
-    transform: translate(-30px, -16px) scale(1.12);
-  }
-}
-@keyframes blobC {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-  50% {
-    transform: translate(-22px, 24px) scale(1.22);
-  }
-}
-/* Film-grain shimmer — nudges the noise tile so it flickers like real grain. */
-@keyframes grainShift {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: 200px 160px;
-  }
-}
-/* Riso registration wobble + halftone-dot drift — the "misprint" motion. */
-@keyframes risoReg {
-  0%,
-  100% {
-    transform: translate(0, 0);
-  }
-  50% {
-    transform: translate(3px, -2px);
-  }
-}
-@keyframes risoDrift {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: 48px 30px;
-  }
-}
+/* Animation doctrine (docs/PLAN.md §4): nothing on the page moves unless the
+   user caused it or it confirms an action. Ambient infinite loops (colour-blob
+   drift, grain shimmer, riso registration wobble, halftone-dot drift) were
+   removed; grain and dots remain as static print texture. What stays: the
+   run-once motif cycles, the "47" glitch scramble, and form feedback. */
 @keyframes popIn {
   from {
     transform: scale(0.85);
@@ -310,6 +260,26 @@ a {
     opacity: 1;
   }
 }
+@keyframes wsRipple {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.1);
+  }
+}
+@keyframes wsDotPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.95;
+  }
+  45% {
+    transform: scale(1.45);
+    opacity: 0.6;
+  }
+}
 
 /* ---- page shell -------------------------------------------------- */
 /* The page is full-bleed so the pillar rail can scroll edge-to-edge; the nav,
@@ -332,12 +302,6 @@ a {
   padding-right: 28px;
   box-sizing: border-box;
 }
-.ea-nav {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding-top: 40px;
-}
 .ea-body {
   display: flex;
   flex-direction: column;
@@ -358,20 +322,7 @@ a {
   width: 100%;
 }
 
-/* ---- copy + capture --------------------------------------------- */
-.ea-copy p {
-  font-size: var(--body-size);
-  line-height: var(--body-lh);
-  color: var(--body);
-  text-wrap: pretty;
-}
-.ea-copy p + p {
-  margin-top: 16px;
-}
-.ea-copy p.ea-lead {
-  color: var(--body-strong);
-  font-weight: 600;
-}
+/* ---- capture ----------------------------------------------------- */
 .ea-formwrap {
   margin-top: 26px;
   width: 100%;
@@ -500,18 +451,6 @@ a {
     0 26px 42px -24px rgba(22, 16, 10, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
-.rfan .fan-blob.b1 {
-  animation: blobA 15s ease-in-out infinite;
-}
-.rfan .fan-blob.b2 {
-  animation: blobB 19s ease-in-out infinite;
-}
-.rfan .fan-blob.b3 {
-  animation: blobC 17s ease-in-out infinite;
-}
-.rfan .fan-grain {
-  animation: grainShift 6s steps(5) infinite;
-}
 .rfan .fan-content {
   justify-content: flex-end;
   padding: 26px 26px;
@@ -597,7 +536,6 @@ a {
   filter: blur(16px);
   z-index: 1;
   pointer-events: none;
-  animation: risoReg 10s ease-in-out infinite;
 }
 .riso-dots {
   position: absolute;
@@ -607,7 +545,6 @@ a {
   opacity: 0.4;
   z-index: 1;
   pointer-events: none;
-  animation: risoDrift 18s linear infinite;
 }
 .fig {
   position: absolute;
@@ -654,6 +591,29 @@ a {
 }
 .hyb:hover .cn-node {
   transform: scale(1.6);
+}
+/* posts — the page's ruled lines write themselves in */
+.hyb:hover .po-line {
+  stroke-dashoffset: 0 !important;
+}
+/* workshops — the broadcast arcs ripple out from the source dot */
+.hyb .ws-arc,
+.hyb .ws-dot {
+  transition:
+    transform 0.55s cubic-bezier(0.2, 0.8, 0.25, 1),
+    opacity 0.55s ease;
+}
+.hyb .ws-arc:nth-of-type(3) {
+  transition-delay: 0.08s;
+}
+.hyb .ws-arc:nth-of-type(4) {
+  transition-delay: 0.16s;
+}
+.hyb:hover .ws-arc {
+  transform: scale(1.1);
+}
+.hyb:hover .ws-dot {
+  transform: scale(1.35);
 }
 
 /* ---- glitch logo ------------------------------------------------ */
@@ -752,14 +712,15 @@ button:focus-visible {
   border-radius: 3px;
 }
 
-/* ---- wide containers: fitted 3-up gallery ----------------------- */
+/* ---- wide containers: fitted 2×2 gallery ------------------------ */
+/* Four populated-type cards (PLAN §4) — a square 2×2 on wide screens. */
 @container (min-width: 720px) {
   .ea-railscroll {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 16px;
     overflow: visible;
-    max-width: 880px;
+    max-width: 700px;
     margin: 0 auto;
     padding: 8px 28px 44px;
     scroll-snap-type: none;
@@ -878,6 +839,36 @@ button:focus-visible {
   .rfan.in-focus .cn-node:nth-of-type(6) {
     animation-delay: 0.52s;
   }
+  /* posts — the ruled lines write themselves in once (staggered) */
+  .rfan.in-focus .po-line {
+    stroke-dashoffset: 0 !important;
+    transition: stroke-dashoffset 0.8s ease;
+  }
+  .rfan.in-focus .po-line:nth-of-type(2) {
+    transition-delay: 0.1s;
+  }
+  .rfan.in-focus .po-line:nth-of-type(3) {
+    transition-delay: 0.2s;
+  }
+  .rfan.in-focus .po-line:nth-of-type(4) {
+    transition-delay: 0.3s;
+  }
+  .rfan.in-focus .po-line:nth-of-type(5) {
+    transition-delay: 0.44s;
+  }
+  /* workshops — one outward ripple from the source dot, then rest */
+  .rfan.in-focus .ws-dot {
+    animation: wsDotPulse 2.6s ease-in-out 1;
+  }
+  .rfan.in-focus .ws-arc {
+    animation: wsRipple 2.6s ease-in-out 1;
+  }
+  .rfan.in-focus .ws-arc:nth-of-type(3) {
+    animation-delay: 0.14s;
+  }
+  .rfan.in-focus .ws-arc:nth-of-type(4) {
+    animation-delay: 0.28s;
+  }
   .ea-formrow {
     flex-direction: column;
     gap: 12px;
@@ -920,31 +911,12 @@ button:focus-visible {
   box-sizing: border-box;
 }
 
-/* nav — mark left, context right */
-.st-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 40px;
-}
 .st-mark {
   display: inline-flex;
   color: var(--ink);
   transition: color 0.2s;
 }
 .st-mark:hover {
-  color: var(--accent);
-}
-.st-nav-here,
-.st-nav-back {
-  font-size: 13px;
-  letter-spacing: 0.02em;
-  color: var(--muted);
-}
-.st-nav-back {
-  transition: color 0.2s;
-}
-.st-nav-back:hover {
   color: var(--accent);
 }
 
@@ -1182,21 +1154,6 @@ button:focus-visible {
   text-underline-offset: 3px;
 }
 
-/* landing nav link over to the stories */
-.ea-nav {
-  justify-content: space-between;
-}
-.ea-nav-link {
-  font-family: var(--font-label);
-  font-size: 13px;
-  letter-spacing: 0.02em;
-  color: var(--muted);
-  transition: color 0.2s;
-}
-.ea-nav-link:hover {
-  color: var(--accent);
-}
-
 @media (max-width: 560px) {
   .st-h1 {
     font-size: 27px;
@@ -1211,6 +1168,256 @@ button:focus-visible {
   .st-asset-type {
     margin-left: 0;
   }
+}
+
+/* ============================================================
+   Site chrome — header, footer, and the Phase-1 page furniture
+   (docs/PLAN.md §3/§5). Runs on the same greige token ladder.
+   ============================================================ */
+
+/* header — the mark + plain text links */
+.sh {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 40px;
+}
+.sh-links {
+  display: flex;
+  gap: 22px;
+}
+.sh-link {
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+.sh-link:hover {
+  color: var(--accent);
+}
+
+/* footer — links-only completeness layer */
+.sf {
+  margin-top: 88px;
+  border-top: 1px solid var(--field-border);
+}
+.sf-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  padding-top: 40px;
+  padding-bottom: 48px;
+}
+.sf-brand {
+  color: var(--ink);
+}
+.sf-tag {
+  margin-top: 12px;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--body);
+  max-width: 380px;
+}
+.sf-by {
+  margin-top: 6px;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+.sf-cols {
+  display: flex;
+  gap: 56px;
+  flex-wrap: wrap;
+}
+.sf-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 110px;
+}
+.sf-col-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.sf-link {
+  font-size: 14px;
+  color: var(--body);
+  transition: color 0.2s;
+  width: fit-content;
+}
+.sf-link:hover {
+  color: var(--accent);
+}
+.sf-legal {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--field-border);
+  padding-top: 20px;
+}
+.sf-legal p {
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+.sf-legal .sf-link {
+  font-size: 12px;
+  color: var(--muted);
+}
+.sf-legal .sf-link:hover {
+  color: var(--accent);
+}
+.sf-dot {
+  margin: 0 8px;
+  color: var(--muted);
+}
+
+/* home — subhead, latest feed, signed note */
+.home-sub {
+  margin-top: 14px;
+  font-size: var(--body-size);
+  line-height: var(--body-lh);
+  color: var(--body);
+  max-width: 520px;
+  text-wrap: pretty;
+}
+.home-browse-all {
+  margin-top: 18px;
+  font-size: 14.5px;
+}
+.home-note {
+  font-size: 16.5px;
+  line-height: 1.6;
+  color: var(--body-strong);
+  max-width: 520px;
+  text-wrap: pretty;
+}
+.home-note-sig {
+  font-size: 13px;
+  color: var(--muted);
+  white-space: nowrap;
+  margin-left: 4px;
+}
+
+/* capture — states extracted from the retired early-access page */
+.ea-ok-title {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--ink);
+  position: relative;
+  top: 1px;
+}
+.ea-dormant {
+  font-size: var(--body-size);
+  line-height: 1.55;
+  color: var(--body);
+}
+.ea-dormant-link {
+  color: var(--accent);
+}
+.ea-form-error {
+  font-size: 12px;
+  color: var(--accent);
+  margin-top: 9px;
+}
+
+/* browse — filter chips */
+.br-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+.br-chip {
+  font-size: 12.5px;
+  letter-spacing: 0.02em;
+  padding: 7px 14px;
+  border: 1px solid var(--field-border);
+  border-radius: 999px;
+  color: var(--body);
+  transition:
+    border-color 0.2s,
+    color 0.2s,
+    background 0.2s;
+}
+.br-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.br-chip-on,
+.br-chip-on:hover {
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  border-color: var(--btn-bg);
+}
+.br-list {
+  margin-top: 16px;
+}
+
+/* asset detail — install block + related */
+.as-h1 {
+  margin-top: 10px;
+}
+.as-grab {
+  margin-top: 48px;
+}
+.as-install {
+  margin-top: 14px;
+  padding: 16px 18px;
+  background: var(--field-bg);
+  border: 1px solid var(--field-border);
+  border-radius: 12px;
+  overflow-x: auto;
+  font-family: var(--font-label);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.as-repo {
+  margin-top: 12px;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-size: 14.5px;
+}
+.as-pkg {
+  font-size: 12px;
+  color: var(--muted);
+}
+.as-related {
+  margin-top: 48px;
+}
+
+/* workshops / newsletter / shared page furniture */
+.ws-join {
+  margin-top: 36px;
+}
+.ws-join-btn {
+  display: inline-block;
+  padding: 14px 22px;
+  border-radius: 12px;
+}
+.ws-notify {
+  margin-top: 48px;
+}
+.ws-notify .ea-formwrap {
+  margin-top: 16px;
+}
+.nl-capture {
+  margin-top: 32px;
+}
+.st-post-capture {
+  margin-top: 56px;
+}
+.si-rows {
+  margin-top: 32px;
 }
 
 /* ---- reduced motion --------------------------------------------- */

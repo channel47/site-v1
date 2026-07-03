@@ -24,13 +24,13 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://channel47.dev"),
-  title: "Channel 47 — Agentic systems for performance marketers",
+  title: "Channel 47 — Skills, connectors, and agents for marketers",
   description:
-    "A living library of agentic systems and tools for performance marketers. Built by an operator who’s deployed them across $3M+ in ad spend.",
+    "Skills, connectors, and agents for marketers — built in real ad accounts by a working operator. Free to grab, live sessions monthly.",
   openGraph: {
-    title: "Channel 47 — Agentic systems for performance marketers",
+    title: "Channel 47 — Skills, connectors, and agents for marketers",
     description:
-      "A living library of agentic systems and tools for performance marketers.",
+      "Skills, connectors, and agents for marketers — built in real ad accounts by a working operator.",
     url: "https://channel47.dev",
     siteName: "Channel 47",
     type: "website",
