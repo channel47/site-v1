@@ -4,6 +4,9 @@ import { notFound } from "next/navigation"
 import { SiteHeader } from "@/components/site/header"
 import { SiteFooter } from "@/components/site/footer"
 import { Capture } from "@/components/site/capture"
+import { CopyMarkdown } from "@/components/site/copy-markdown"
+import { JsonLd } from "@/components/site/json-ld"
+import { postGraph } from "@/lib/seo"
 import {
   getAllPosts,
   getAssetForPost,
@@ -59,10 +62,12 @@ export default async function PostPage({ params }: Props) {
       <SiteHeader />
 
       <article className="st-shell">
+        <JsonLd data={postGraph(post)} />
         <header className="st-head">
           <h1 className="serif st-h1">{post.title}</h1>
           <p className="st-byline mono">
-            {post.author} · {shortDate(post.date)}
+            {post.author} · {shortDate(post.date)} ·{" "}
+            <CopyMarkdown path={`/posts/${post.slug}.md`} />
           </p>
           {asset ? (
             <Link href={assetHref} className="st-asset">

@@ -2,6 +2,8 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { SiteHeader } from "@/components/site/header"
 import { SiteFooter } from "@/components/site/footer"
+import { JsonLd } from "@/components/site/json-ld"
+import { skillsIndexGraph } from "@/lib/seo"
 import { getAssets } from "@/lib/content"
 
 export const metadata: Metadata = {
@@ -25,6 +27,7 @@ export default function SkillsIndexPage() {
       <SiteHeader />
 
       <main className="st-shell">
+        <JsonLd data={skillsIndexGraph(skills)} />
         <header className="st-head">
           <h1 className="serif st-h1">Skills</h1>
           <p className="st-intro">
