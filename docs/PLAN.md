@@ -1,8 +1,10 @@
-# Channel47 — Direction Review
+# Channel47 — Direction Spec
 
-> Output of the positioning + sitemap + wireframe interview. This is the spec the
-> build works from. Decisions marked **[locked]** were confirmed in the interview;
-> items marked **[recommended]** are proposed defaults awaiting a yes/adjust.
+> The working spec for channel47.dev. Originally the output of the positioning +
+> sitemap + wireframe interview; **revised 2026-07-03** after a second interview that
+> confirmed the plan stands, resolved every deferred item, and added the strip-down
+> design doctrine. Decisions marked **[locked]** are confirmed; the "Interview log"
+> at the bottom records what changed and why.
 
 ---
 
@@ -38,200 +40,191 @@ workshops + courses (bottom). Journey: personal skill-building → monetizing by
 Workshop CTAs point to **Skool now**, **self-hosted checkout later** (everything else on
 the page identical).
 
-### Copy note [locked]
+### Home copy [locked — resolved 2026-07-03]
 
-The live headline — "An agentic operating system for performance marketers" — reads like
-a SaaS product for sale. **Direction:** reframe to the education-brand / operator-promise
-above (you, teaching — not a product). **Exact headline + subhead are deferred to the Home
-build**, drafted against the real layout. Two reference poles to draft between:
-operator-promise ("Become an agentic operator") vs trenches-credibility ("Agentic
-marketing for ecommerce operators — from the trenches").
+The SaaS-sounding live headline dies. Direction chosen: **descriptive and plain** —
+the strip-down doctrine applies to copy too. No aspiration language on Home; the
+promise/trenches narrative lives on **About** and in the posts.
+
+- **Headline:** `Skills, connectors, and agents for marketers.`
+- **Subhead:** `Built in real ad accounts by a working operator. Free to grab,
+  live sessions monthly.`
 
 ---
 
 ## 2. Content taxonomy [locked]
 
-Six first-class types. Browse filters on these six.
+Six first-class types remain the ultimate taxonomy. **But the surface only shows
+populated types** — a card/filter/footer row appears when its type gets its first
+real item. No empty shelves.
 
-| Type | What it is |
-|------|-----------|
-| **Articles** | Practical how-tos. Usually lead with a video embed near the top. |
-| **Posts** | The personable counterpart — opinion, behind-the-scenes, the human voice. |
-| **Skills** | Agentic toolkit asset. |
-| **Agents** | Agentic toolkit asset. |
-| **Connectors** | Agentic toolkit asset (MCP connectors). |
-| **Workshops** | Live events. First-class alongside the rest; each has its own page. |
+| Type | What it is | Launch state |
+|------|-----------|--------------|
+| **Posts** | First-person voice — asset-introduction stories, opinion, behind-the-scenes. | **Populated** — the 12 story pieces are Posts. |
+| **Skills** | Agentic toolkit asset. | **Populated** — 6 assets from `channel47/skills`. |
+| **Connectors** | Agentic toolkit asset (MCP connectors). | **Populated** — 6 assets from `channel47/mcps`. |
+| **Workshops** | Live events (the monthly Vibe Marketers sessions). | **Populated** via the evergreen sessions page (§5). |
+| **Articles** | Practical how-tos, video near the top. | Deferred until the first article exists. |
+| **Agents** | Agentic toolkit asset. | Deferred until a real packaged agent exists. |
 
+- **Stories = Posts [resolved].** The 12 shipped pieces in `content/stories/` are Posts;
+  the Posts definition widens to "first-person voice — opinion, behind-the-scenes, and
+  asset introductions." They route at `/posts/[slug]`; `/stories*` 301-redirects.
 - No standalone "Video" type — video rides inside Articles.
-- Skills / Agents / Connectors are **standalone assets**, not embedded in Articles.
-  An Article _links to_ the asset it uses (one skill → reusable across many articles).
+- Skills / Agents / Connectors are **standalone assets**, not embedded in editorial.
+  A Post/Article _links to_ the asset it uses.
+- **Asset page source of truth [resolved]:** hand-authored markdown in this repo
+  (`content/skills/`, `content/connectors/`), one file per asset — same pattern as
+  posts. Frontmatter carries the technical facts (repo URL, install command, package);
+  the body is web copy, not lifted docs.
 
 ---
 
-## 3. Sitemap (ultimate)
+## 3. Sitemap (launch → ultimate)
 
 ```
 /                       Home
-/browse                 Filterable catalog of everything (chips: All + 6 types)
-/articles/[slug]        Article detail
-/posts/[slug]           Post detail
+/browse                 Filterable catalog (chips: All + populated types)
+/posts/[slug]           Post detail            (12 at launch; /stories* redirects here)
 /skills                 Static flat index of all Skills (SEO crawl target)
 /skills/[slug]          Skill detail        ── shared "asset" shell
-/agents/[slug]          Agent detail        ──
 /connectors/[slug]      Connector detail    ──
-/workshops/[slug]       Workshop detail (state-driven: upcoming → past)
+/workshops              Evergreen sessions page (upgrades to per-event pages when dated)
 /newsletter             Dedicated subscribe page
 /about                  Jackson's story (understated)
-/glossary               SEO — DTC / agentic-marketing terms
-/faq                    SEO — common questions
+/privacy                Legal — required (email collection)
 /terms                  Legal
+[/articles/[slug]]      When Articles exist
+[/agents/[slug]]        When Agents exist
+[/workshops/[slug]]     When individual dated sessions get pages
+[/glossary] [/faq]      Deferred until their content exists (empty-shelf rule)
 [/login]                Deferred
 ```
 
-- **URL structure [recommended]:** typed prefixes (above) over a flat `/[slug]` — clearer
-  for users, SEO, and the workshop special-casing.
-- **Skills index `/skills` [locked]:** a single static, server-rendered flat list of every
-  Skill page — an SEO crawl target that guarantees each artifact is linkable without JS.
-  **Skills only** — the other types don't get a static index. The **type cards + footer
-  Learn links stay on the interactive `/browse?type=X`**; `/skills` is reached from a
-  single footer link. Interactive filter and static index point at the same content by
-  design.
+- **URL structure [locked]:** typed prefixes over a flat `/[slug]`.
+- **Skills index `/skills` [locked]:** single static server-rendered flat list of every
+  Skill page — an SEO crawl target, Skills only, reached from a single footer link.
 
-### Header nav [locked]
+### Header nav [locked — revised 2026-07-03]
 
-Compact **icon** nav: **Browse · Live · Newsletter** + the "47" logo. Labels reveal on
-hover **and keyboard focus** (real text in the DOM, not a tooltip — keeps SEO + a11y).
-Mobile collapses to a single right-side hamburger. The six type-cards on Home _are_ the
-primary navigation, so the header deliberately doesn't repeat the six types.
+**Plain text links**, not icons: `Browse · Live · Newsletter` + the "47" glitch mark
+(the mark is the only signature element in the header). The icon-with-hover-reveal nav
+is dropped under the strip-down doctrine — zero decoding, zero reveal machinery.
+Mobile: same links, they're short enough to keep visible; collapse only if they wrap.
+The type cards on Home remain the primary navigation; the header doesn't repeat types.
 
-### Footer [locked]
+### Footer [locked — trimmed 2026-07-03]
 
-**Links-only** (no capture) — the footer is the site's completeness + SEO layer; density
-is fine here since the header stays minimal. Three tidy columns + a brand block + social
-row + legal.
+Links-only (no capture). Brand block + grouped nav + social row + legal.
 
 ```
-┌───────────────────────────────────────────────────────────────┐
-│ [47] Channel47                                                  │
-│ "<one-line positioning tag — deferred with the headline>"       │
-│                                                                 │
-│ Learn          Live                 More                        │
-│   Articles       Workshops            About                     │
-│   Posts          Vibe Marketers →     Browse all                │
-│   Skills                              Newsletter                │
-│   Agents                              Skills index              │
-│   Connectors                          Glossary                  │
-│                                       FAQ                       │
-│ ──────────────────────────────────────────────────────────────│
-│ © 2026 Channel47 · by Jackson Dean                              │
-│ Skool · YouTube · X · LinkedIn              Privacy · Terms     │
-└───────────────────────────────────────────────────────────────┘
+[47] Channel47
+"Skills, connectors, and agents for marketers."
+by Jackson Dean
+
+Learn            Live                 More
+  Posts            Workshops            About
+  Skills           Vibe Marketers →     Browse all
+  Connectors                            Newsletter
+                                        Skills index
+─────────────────────────────────────────────────
+© 2026 Channel47 · by Jackson Dean
+Skool · YouTube · X · LinkedIn        Privacy · Terms
 ```
 
-- **SEO links [locked]:** the **Skills index** (`/skills`), **Glossary** (`/glossary`),
-  and **FAQ** (`/faq`) sit in the **More** column; **Terms** joins the legal line beside
-  Privacy. Skills is the only type with a static index — no six-type crawl row.
-- **No footer capture [locked].** Every page still has a subscribe path: the header
-  **Newsletter** icon → `/newsletter` is present sitewide, and Home/Article/Workshop carry
-  inline captures. Browse and type/asset pages route out via the header rather than
-  capturing in place.
-- **Brand block:** "47" mark + one-line positioning tag (wording deferred with the
-  headline) + "by Jackson Dean" — where he signs the whole site.
-- **Social / community [locked]:** Vibe Marketers (Skool — reuse `LINKS.join` from
-  `lib/landing-content.ts`), YouTube, X, LinkedIn. The Skool link also appears in the
-  **Live** column as the workshop/community destination.
-- **Legal:** © + **Privacy** (required — email collection) + **Terms** (`/terms`).
-- Full six-type list lives here regardless of grouping — the SEO/completeness net that
-  lets the visible header stay minimal.
+- Learn column lists **populated types only**; rows appear as types launch.
+- Glossary/FAQ rows return when those pages exist.
+- Social: Vibe Marketers (Skool — reuse `LINKS.join`), YouTube, X, LinkedIn.
+- Legal: © + Privacy + Terms.
 
 ---
 
-## 4. Design system [locked]
+## 4. Design system [locked — strip-down doctrine added 2026-07-03]
 
-The current visual language stays — the **contrasting moods are a feature, not a bug:**
+The visual language stays: vivid riso type-cards on greige/neutral chrome, terracotta
+accent, restrained editorial lists, light/dark by system preference, the "47" glitch
+mark as the signature. On top of it, the doctrine:
 
-- **Vivid riso cards = the front door.** Greige/neutral page chrome lets the cards do the
-  visual lifting. Light/dark by system preference, single terracotta accent.
-- **Restrained editorial list = the library stacks.** Browse is neutral, fast, scannable.
-- Barebones / minimal: no decorative eyebrow labels. Keep the "47" glitch mark and its
-  motion as the signature.
+> **Everything has a purpose. No eyebrow labels, no pulsating dots, no unnecessary UI
+> elements. Purposeful animation and micro-interactions are what give the page life —
+> nothing on the page moves unless the user caused it or it confirms an action.**
 
-### Riso cards = type gateways [locked]
+### Animation rules [locked]
 
-The three riso cards become **six** — one per content type (Skills, Agents, Connectors,
-Articles, Posts, Workshops). Each has its own **motif** + **color field**, and on click
-routes to **Browse pre-filtered to that type**. They represent _types_, not individual
-assets — so there are only ever six, and the full motion stays viable.
+| Tier | Verdict | Concretely |
+|------|---------|-----------|
+| Infinite ambient loops | **KILL** | Background blobs, grain shift, riso registration wobble, drifting halftone dot field — all removed. Dots/grain remain as **static** print texture on cards. |
+| Run-once motif animation | **KEEP** | Each card's line-art schematic plays once on hover/focus (mobile: when carousel-centered). |
+| Signature | **KEEP** | The "47" glitch scramble — on load and on hover only. |
+| Feedback | **KEEP** | Form success pop-in, checkmark draw, error states. |
 
-- Draw **3 new motifs** (Articles, Posts, Workshops) to join the existing Skills /
-  Agents / Connectors line-art.
-- Motif = type identity; color = individuality.
+`prefers-reduced-motion` stays respected.
+
+### Riso cards = type gateways [locked — count follows population]
+
+One card per **populated** type — **four at launch** (Posts, Skills, Connectors,
+Workshops), 2×2 on wide screens, snap carousel on mobile. Cards route to Browse
+pre-filtered (`/browse?type=X`); the Workshops card routes to `/workshops`.
+Motif = type identity; color = individuality. New motifs drawn for Posts and
+Workshops join the existing Skills/Connectors line-art (the Agents motif is
+shelved with its type). Six cards remain the end state.
 
 ---
 
 ## 5. Wireframes — key pages
 
-### Home  [locked]
+### Home [locked — revised 2026-07-03]
 
 ```
 ┌─────────────────────────────────────────────┐
-│ [47]                        ⬚ ⬚ ⬚  (icon nav)│  minimal header
+│ [47]              Browse · Live · Newsletter  │  text-link header
 │                                               │
-│           ◆ 47 mark (glitch)                  │  hero
-│           POV headline (reframed)             │
+│           ◆ 47 mark (glitch)                  │
+│   Skills, connectors, and agents              │  plain headline
+│   for marketers.                              │
+│   Built in real ad accounts by a working      │  subhead
+│   operator. Free to grab, live sessions       │
+│   monthly.                                    │
 │                                               │
-│   ┌────┐ ┌────┐ ┌────┐                        │  six riso TYPE cards
-│   │Skil│ │Agen│ │Conn│                        │  → Browse?type=…
-│   └────┘ └────┘ └────┘                        │
-│   ┌────┐ ┌────┐ ┌────┐                        │
-│   │Arti│ │Post│ │Work│                        │
-│   └────┘ └────┘ └────┘                        │
+│   ┌──────┐ ┌──────┐                           │  four riso TYPE cards
+│   │Posts │ │Skills│                           │  → Browse?type=… /
+│   └──────┘ └──────┘                           │    /workshops
+│   ┌──────┐ ┌──────┐                           │
+│   │Conn. │ │Works.│                           │
+│   └──────┘ └──────┘                           │
 │                                               │
-│   ▸ Next live: <title> · <date>   [Join →]    │  quiet next-live strip
-│                                               │  (collapses if none)
-│   Latest from the channel                     │  3–5 recent assets as
-│   Title ……………  Article · Jun 2026             │  editorial rows (reuses
-│   Title ……………  Skill                          │  the Browse row); proof
-│   Title ……………  Workshop · Jul 3               │  the channel publishes
+│   ▸ Next live: <title> · <date>   [Join →]    │  strip renders ONLY when a
+│                                               │  session date exists
+│   Latest from the channel                     │  3–5 recent items as
+│   Title ……………  Post · Jun 2026                │  editorial rows (reuses
+│   Title ……………  Skill                          │  the Browse row)
 │                              Browse all →      │
 │                                               │
-│   "<1–2 line signed note — Jackson>"          │  condensed trenches voice
-│   [ email ……………… ] [ Get early access ]      │  capture
+│   "<1–2 line signed note — Jackson>"          │  earns the ask, his voice
+│   [ email ……………… ] [ Subscribe ]             │  capture
 │                                               │
-│   Footer — six types · Newsletter · About     │  SEO net
+│   Footer                                      │
 └─────────────────────────────────────────────┘
 ```
 
-The current page, evolved — not rebuilt. Adds: icon header, 3 more type cards (6 total),
-next-live strip, a **Latest from the channel** feed, footer. The region below the cards
-does two jobs — prove the channel publishes (latest feed) and earn the ask (short signed
-note → capture). The long-form trenches narrative moves to **About**.
+Below-cards region survives strip-down intact: the feed proves the channel publishes,
+the signed note earns the ask, capture is the business. Nothing else. The long-form
+trenches narrative lives on **About**.
 
-### Browse  [locked]
+### Browse [locked]
 
-```
-┌─────────────────────────────────────────────┐
-│ [47]                        ⬚ ⬚ ⬚            │
-│  [All] Articles Posts Skills Agents …  chips  │  filter (pre-set from card)
-│                                               │
-│  Title ……………………………  Article · Jun 2026       │  editorial text rows
-│  Title ……………………………  Workshop · Jul 3 (live)  │  title·type·date·one-liner
-│  Title ……………………………  Skill                    │
-│  …                                            │
-│  Footer                                       │
-└─────────────────────────────────────────────┘
-```
+Chips: All + populated types. Editorial text rows: title · type · date · one-liner.
+Pre-filtered arrival from the type cards.
 
-### Article  [locked]  (Posts inherit this minus video + artifact blocks)
+### Post [locked] (was "Article" template; Articles inherit later, adding video)
 
 ```
 Title
 small byline · date
 ────────────────────────
-[ video embed ]
-practical body …
+body …
 ┌ Grab this ───────────┐
-│ → uses the «X» Skill │   highlighted artifact link
+│ → uses the «X» Skill │   highlighted artifact link (from `asset` frontmatter)
 └──────────────────────┘
 body …
 ────────────────────────
@@ -239,57 +232,77 @@ body …
 Related assets ▸ ▸ ▸
 ```
 
-### Workshop  [locked]  (one page, state-driven)
+### Workshops — evergreen page [locked — resolved 2026-07-03]
+
+Monthly cadence is real; the next date isn't pinned. One evergreen page until it is:
 
 ```
-UPCOMING                          PAST (auto-flip)
-Title                             Title
-📅 date · time                    "Held <date>"
-What we'll demo/build …           What we built …
-Who it's for …                    [ replay / recap if available ]
-[ Register → Skool ]              ┌ Missed it? ─────────────┐
-(→ self-checkout later)          │ Get notified about the   │
-                                 │ next: [ email ] [Notify] │
-                                 └──────────────────────────┘
+Live sessions — monthly, inside Vibe Marketers
+What they are: live build-alongs — Jackson builds/runs an
+  agentic workflow (a skill, a connector, a campaign system)
+  live; attendees follow along.
+Replays: recorded, replays live inside Skool.
+[ Join Vibe Marketers → Skool ]
+Get notified about the next one: [ email ] [ Notify ]
 ```
 
-### Skill / Agent / Connector  [recommended]
+When a session gets a date: the Home next-live strip renders, and the dated session
+can get its own `/workshops/[slug]` page on the state-driven upcoming→past template
+from the original plan.
 
-Shared "asset" template: what it does → how to use/install → the asset itself
-(copy/download) → related Articles that use it → email capture.
+### Skill / Connector [locked]
 
-### Newsletter  [recommended]
+Shared "asset" template: what it does → how to install/use (from frontmatter facts) →
+the asset itself (repo link / install command, copy button) → related Posts that use
+it → email capture.
 
-Focused capture page: what you'll get, cadence, maybe 1–2 sample issues. The email
-capture component already exists and posts to `/api/subscribe` (env-gated Kit, honest
-"not wired up yet" fallback) — reuse it.
+### Newsletter [locked — framing resolved 2026-07-03]
 
-### About  [recommended]
+Focused capture page. **Honest promise: "New skills, connectors, and posts as they
+ship, plus the next live session."** No cadence commitment. The early-access
+"one email when the first systems ship" framing dies with the early-access page.
+Reuses the existing capture component (`/api/subscribe`, env-gated Kit, honest
+"not wired up yet" fallback).
+
+### About [locked]
 
 Editorial single column: the trenches story, the ronin/blade narrative, what Channel47
-is and who it's for. Understated headshot. Jackson signs his work here. **This is the home
-for the long-form narrative** that previously lived on the landing page (Home now carries
-only a condensed 1–2 line signed note).
+is and who it's for. Understated headshot. Jackson signs his work here. Home carries
+only the condensed 1–2 line signed note.
 
 ---
 
-## 6. Phasing  [recommended]
+## 6. Phasing [locked — revised 2026-07-03]
 
-**Phase 1 (ship):** Home (evolved) · Browse · the six detail templates · Newsletter ·
-About · footer. Workshop CTAs → **Skool**. Reuse the existing honest email capture.
+**Phase 1 (ship):** Home (rebuilt: plain headline, text nav, 4 cards, feed + note +
+capture) · Browse · Post/Skill/Connector detail templates · `/workshops` evergreen ·
+`/skills` index · Newsletter · About · Privacy + Terms · footer · animation strip-down ·
+`/stories*` → `/posts*` redirects. Workshop CTAs → **Skool**.
 
-**Deferred:** login/accounts · self-hosted checkout (workshops stay on Skool) · any
-in-house community features. Skool remains the paid destination until the list is built.
+**Unlocks on content, not code:** Articles card+routes (first article) · Agents
+card+routes (first packaged agent) · Glossary/FAQ (their content) · dated
+`/workshops/[slug]` pages (next session pinned) · Home next-live strip (same).
+
+**Deferred:** login/accounts · self-hosted checkout · in-house community features.
 
 ---
 
-## Open items to confirm
+## Interview log — 2026-07-03
 
-Standing recommendations — accepted as defaults unless revised:
+Decisions from the second interview (all previously-open items resolved):
 
-1. URL structure — typed prefixes (§3).
-2. Skill/Agent/Connector asset template (§5).
-3. Newsletter + About page treatments (§5).
-4. Phase 1 scope (§6).
-
-Resolved: Home headline wording deferred to the Home build (see Copy note, §1).
+1. **Plan stands** — this document is the spec; stuckness was execution stall, not strategy.
+2. **Design strip-down doctrine** — keep the visual language, remove everything without
+   a purpose; purposeful animation/micro-interactions only (§4).
+3. **Animation tiers** — kill infinite ambient; keep run-once motif, glitch mark, feedback.
+4. **Stories → Posts** at `/posts/[slug]`; Posts definition widened; `/stories*` redirects.
+5. **Populated types only** — 4 cards at launch; Agents + Articles join when real.
+6. **Launch set** — Posts + Skills + Connectors + Workshops.
+7. **Asset pages hand-authored** in `content/skills|connectors/`, facts in frontmatter.
+8. **Sessions** — monthly cadence, no date pinned → evergreen `/workshops` page; format
+   is live build-alongs; replays live in Skool.
+9. **Headline** — descriptive/plain, option A (§1 Home copy).
+10. **Header** — plain text links, icon nav dropped.
+11. **SEO pages** — `/skills` index + Privacy/Terms at launch; Glossary/FAQ deferred.
+12. **Newsletter promise** — drops + session announcements, no cadence commitment.
+13. **Home body** — latest feed + signed note + capture all survive.
