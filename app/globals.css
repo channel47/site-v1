@@ -1154,6 +1154,21 @@ button:focus-visible {
   text-underline-offset: 3px;
 }
 
+/* "Copy as Markdown" — quiet mono text-button on content pages; the label
+   swap on click is its feedback (see components/site/copy-markdown.tsx). */
+.st-copy-md {
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  cursor: pointer;
+}
+.st-copy-md:hover {
+  color: var(--accent);
+}
+
 @media (max-width: 560px) {
   .st-h1 {
     font-size: 27px;

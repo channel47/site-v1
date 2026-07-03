@@ -2,6 +2,9 @@ import Link from "next/link"
 import { SiteHeader } from "./header"
 import { SiteFooter } from "./footer"
 import { Capture } from "@/components/site/capture"
+import { CopyMarkdown } from "@/components/site/copy-markdown"
+import { JsonLd } from "@/components/site/json-ld"
+import { assetGraph } from "@/lib/seo"
 import { getPostsForAsset, shortDate, type Asset } from "@/lib/content"
 
 /**
@@ -12,12 +15,14 @@ import { getPostsForAsset, shortDate, type Asset } from "@/lib/content"
 export function AssetPage({ asset }: { asset: Asset }) {
   const related = getPostsForAsset(asset)
   const typeLabel = asset.type === "skill" ? "Skill" : "MCP connector"
+  const section = asset.type === "skill" ? "skills" : "connectors"
 
   return (
     <div className="st-page">
       <SiteHeader />
 
       <article className="st-shell">
+        <JsonLd data={assetGraph(asset)} />
         <header className="st-head">
           <p className="st-group-title mono">{typeLabel}</p>
           <h1 className="serif st-h1 as-h1">{asset.title}</h1>
@@ -47,6 +52,7 @@ export function AssetPage({ asset }: { asset: Asset }) {
             {asset.package ? (
               <span className="mono as-pkg">{asset.package}</span>
             ) : null}
+            <CopyMarkdown path={`/${section}/${asset.slug}.md`} />
           </p>
         </section>
 

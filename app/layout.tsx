@@ -2,6 +2,8 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Geist, Space_Grotesk } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
+import { JsonLd } from "@/components/site/json-ld"
+import { baseGraph } from "@/lib/seo"
 import "./globals.css"
 
 // Geist as a variable font (full 100–900 weight axis) carries both the display
@@ -56,6 +58,16 @@ export default function RootLayout({
       className={`${geist.variable} ${spaceGrotesk.variable}`}
     >
       <body>
+        {/* Rendered here (not via `metadata.alternates`, which page-level
+            canonicals would replace wholesale) — React hoists it to <head>. */}
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="Channel 47"
+          href="/rss.xml"
+        />
+        {/* Site-wide entity graph (Organization + Person + WebSite) — see lib/seo.ts. */}
+        <JsonLd data={baseGraph()} />
         {children}
         <Analytics />
       </body>

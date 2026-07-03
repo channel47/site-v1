@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import Link from "next/link"
 import { SiteHeader } from "@/components/site/header"
 import { SiteFooter } from "@/components/site/footer"
@@ -6,6 +7,11 @@ import { TypeCards } from "@/components/home/type-cards"
 import { Rows } from "@/components/site/rows"
 import { getLatest } from "@/lib/content"
 import { HOME } from "@/lib/site-content"
+
+// Title/description/OG inherit from the root layout; Home only pins its canonical.
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+}
 
 /**
  * Home (PLAN §5) — plain headline, the four type cards as primary navigation,

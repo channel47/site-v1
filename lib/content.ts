@@ -42,6 +42,8 @@ export interface PostMeta {
 export interface Post extends PostMeta {
   /** Markdown body rendered to HTML (trusted, first-party content). */
   html: string
+  /** Raw markdown body — the source for machine surfaces (.md twins, RSS, search). */
+  markdown: string
 }
 
 // ---------------------------------------------------------------- assets
@@ -62,6 +64,8 @@ export interface AssetMeta {
 
 export interface Asset extends AssetMeta {
   html: string
+  /** Raw markdown body — the source for machine surfaces (.md twins, RSS, search). */
+  markdown: string
 }
 
 // ---------------------------------------------------------------- loading
@@ -135,6 +139,7 @@ function loadPost(category: PostCategory, file: string): Post {
     tags: meta.tags ?? [],
     date: isoDate(meta.date),
     html: marked.parse(content, { async: false }),
+    markdown: content.trim(),
   }
 }
 
@@ -153,6 +158,7 @@ function loadAsset(type: AssetType, file: string): Asset {
     tags: meta.tags ?? [],
     date: isoDate(meta.date),
     html: marked.parse(content, { async: false }),
+    markdown: content.trim(),
   }
 }
 
