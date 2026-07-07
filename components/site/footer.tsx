@@ -1,16 +1,48 @@
 import Link from "next/link"
 import { LINKS, HOME } from "@/lib/site-content"
+import { Unfold } from "./unfold"
+import { ThemeToggle } from "./theme-toggle"
+
+const GROUPS = [
+  {
+    key: "learn",
+    label: "Learn",
+    links: [
+      { href: "/browse?type=posts", label: "Posts" },
+      { href: "/browse?type=skills", label: "Skills" },
+      { href: "/browse?type=connectors", label: "Connectors" },
+    ],
+  },
+  {
+    key: "live",
+    label: "Live",
+    links: [
+      { href: "/workshops", label: "Workshops" },
+      { href: LINKS.join, label: "Vibe Marketers →", external: true },
+    ],
+  },
+  {
+    key: "more",
+    label: "More",
+    links: [
+      { href: "/about", label: "About" },
+      { href: "/browse", label: "Browse all" },
+      { href: "/newsletter", label: "Newsletter" },
+      { href: "/skills", label: "Skills index" },
+    ],
+  },
+] as const
 
 /**
- * Sitewide footer — links-only, the site's completeness + SEO layer (PLAN §3).
- * The Learn column lists populated types only; rows appear as types launch.
- * Glossary/FAQ links return when those pages exist. Social row grows as
- * profile URLs are confirmed — currently Skool only.
+ * Sitewide footer — the completeness + SEO layer (PLAN §3), now with
+ * unfold link groups and the one shared sun toggle (round 12/14). The
+ * social row grows past Skool as other profile URLs are confirmed — never
+ * guess one.
  */
 export function SiteFooter() {
   return (
     <footer className="sf">
-      <div className="sf-inner ea-shell">
+      <div className="sf-inner st-shell">
         <div className="sf-brand">
           <svg
             viewBox="0 0 46 24"
@@ -30,54 +62,60 @@ export function SiteFooter() {
           <p className="sf-by mono">by Jackson Dean</p>
         </div>
 
-        <div className="sf-cols">
-          <div className="sf-col">
-            <h2 className="sf-col-title mono">Learn</h2>
-            <Link href="/browse?type=posts" className="sf-link">
-              Posts
-            </Link>
-            <Link href="/browse?type=skills" className="sf-link">
-              Skills
-            </Link>
-            <Link href="/browse?type=connectors" className="sf-link">
-              Connectors
-            </Link>
-          </div>
-          <div className="sf-col">
-            <h2 className="sf-col-title mono">Live</h2>
-            <Link href="/workshops" className="sf-link">
-              Workshops
-            </Link>
-            <a href={LINKS.join} target="_blank" rel="noopener" className="sf-link">
-              Vibe Marketers →
+        <div className="sf-groups">
+          {GROUPS.map((group) => (
+            <Unfold
+              key={group.key}
+              triggerClassName="sf-group-toggle"
+              trigger={
+                <>
+                  {group.label}
+                  <span className="sf-group-plus" aria-hidden>
+                    +
+                  </span>
+                </>
+              }
+            >
+              <div className="sf-group-links">
+                {group.links.map((link) =>
+                  "external" in link && link.external ? (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener"
+                      className="sf-link"
+                    >
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link key={link.href} href={link.href} className="sf-link">
+                      {link.label}
+                    </Link>
+                  ),
+                )}
+              </div>
+            </Unfold>
+          ))}
+        </div>
+
+        <div className="sf-social">
+          <div className="sf-social-icons">
+            <a
+              href={LINKS.join}
+              target="_blank"
+              rel="noopener"
+              className="sf-link mono"
+            >
+              Skool
             </a>
           </div>
-          <div className="sf-col">
-            <h2 className="sf-col-title mono">More</h2>
-            <Link href="/about" className="sf-link">
-              About
-            </Link>
-            <Link href="/browse" className="sf-link">
-              Browse all
-            </Link>
-            <Link href="/newsletter" className="sf-link">
-              Newsletter
-            </Link>
-            <Link href="/skills" className="sf-link">
-              Skills index
-            </Link>
-          </div>
+          <ThemeToggle />
         </div>
 
         <div className="sf-legal">
           <p className="mono">© 2026 Channel47 · by Jackson Dean</p>
           <p className="mono">
-            <a href={LINKS.join} target="_blank" rel="noopener" className="sf-link">
-              Skool
-            </a>
-            <span className="sf-dot" aria-hidden>
-              ·
-            </span>
             <Link href="/privacy" className="sf-link">
               Privacy
             </Link>

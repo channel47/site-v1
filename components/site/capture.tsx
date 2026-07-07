@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { track } from "@vercel/analytics"
 import { CAPTURE, LINKS } from "@/lib/site-content"
 
 type Status = "idle" | "sending" | "subscribed" | "dormant" | "error"
@@ -14,9 +15,13 @@ type Status = "idle" | "sending" | "subscribed" | "dormant" | "error"
 export function Capture({
   helper = CAPTURE.helper,
   cta = CAPTURE.cta,
+  focusVariant = "gradient",
 }: {
   helper?: string
   cta?: string
+  /** The focus underline: the sitewide 6-stop gradient, or a single-hue
+   * mauve variant for Workshops-specific capture contexts. */
+  focusVariant?: "gradient" | "mauve"
 }) {
   const [email, setEmail] = useState("")
   const [status, setStatus] = useState<Status>("idle")
@@ -24,9 +29,11 @@ export function Capture({
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!/.+@.+\..+/.test(email.trim())) {
+      track("newsletter_subscribe", { status: "invalid", intent: "warm" })
       setStatus("error")
       return
     }
+    track("newsletter_submit", { intent: "warm" })
     setStatus("sending")
     try {
       const r = await fetch("/api/subscribe", {
@@ -38,10 +45,18 @@ export function Capture({
         ok?: boolean
         code?: string
       }
-      if (r.ok && data.ok) setStatus("subscribed")
-      else if (data.code === "unconfigured") setStatus("dormant")
-      else setStatus("error")
+      if (r.ok && data.ok) {
+        track("newsletter_subscribe", { status: "success", intent: "warm" })
+        setStatus("subscribed")
+      } else if (data.code === "unconfigured") {
+        track("newsletter_subscribe", { status: "dormant", intent: "warm" })
+        setStatus("dormant")
+      } else {
+        track("newsletter_subscribe", { status: "error", intent: "warm" })
+        setStatus("error")
+      }
     } catch {
+      track("newsletter_subscribe", { status: "network_error", intent: "warm" })
       setStatus("error")
     }
   }
@@ -96,7 +111,7 @@ export function Capture({
     <div className="ea-formwrap">
       <form className="ea-formrow" onSubmit={submit}>
         <input
-          className="ea-in"
+          className={`ea-in${focusVariant === "mauve" ? " ea-in-mauve" : ""}`}
           type="email"
           value={email}
           onChange={(e) => {

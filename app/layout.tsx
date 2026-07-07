@@ -1,28 +1,10 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Geist, Space_Grotesk } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { JsonLd } from "@/components/site/json-ld"
+import { PostHogAnalytics } from "@/components/site/posthog"
 import { baseGraph } from "@/lib/seo"
 import "./globals.css"
-
-// Geist as a variable font (full 100–900 weight axis) carries both the display
-// headings and the body copy — the design's "sans" typeface. One continuous
-// font renders every weight the page uses (400 body → 600 headline) with no
-// static cuts to swap between.
-const geist = Geist({
-  subsets: ["latin"],
-  variable: "--font-geist",
-  display: "swap",
-})
-
-// Space Grotesk carries the labels, helper text and form codes — the design's
-// monospace-feel "label" face, kept distinct from the Geist body.
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-space-grotesk",
-  display: "swap",
-})
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://channel47.dev"),
@@ -47,16 +29,22 @@ export const metadata: Metadata = {
   },
 }
 
+// Reads the persisted scheme choice before paint so the toggle never flashes.
+// `color-scheme` on <html> defaults to `light dark` (system) in globals.css;
+// this only overrides it once the visitor has explicitly picked a mode (see
+// components/site/theme-toggle.tsx).
+const THEME_INIT_SCRIPT = `(function(){try{var m=localStorage.getItem("ch47-theme");if(m==="light"||m==="dark"){document.documentElement.style.colorScheme=m;document.documentElement.setAttribute("data-theme",m)}}catch(e){}})()`
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geist.variable} ${spaceGrotesk.variable}`}
-    >
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
       <body>
         {/* Rendered here (not via `metadata.alternates`, which page-level
             canonicals would replace wholesale) — React hoists it to <head>. */}
@@ -69,6 +57,7 @@ export default function RootLayout({
         {/* Site-wide entity graph (Organization + Person + WebSite) — see lib/seo.ts. */}
         <JsonLd data={baseGraph()} />
         {children}
+        <PostHogAnalytics />
         <Analytics />
       </body>
     </html>

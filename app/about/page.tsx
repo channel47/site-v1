@@ -24,7 +24,7 @@ export default function AboutPage() {
 
       <main className="st-shell">
         <header className="st-head">
-          <h1 className="serif st-h1">About Channel47</h1>
+          <h1 className="serif st-h1 an-blur">About Channel47</h1>
         </header>
 
         <div className="st-prose">
