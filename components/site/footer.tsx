@@ -66,6 +66,7 @@ export function SiteFooter() {
           {GROUPS.map((group) => (
             <Unfold
               key={group.key}
+              className="sf-group"
               triggerClassName="sf-group-toggle"
               trigger={
                 <>

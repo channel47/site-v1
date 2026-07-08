@@ -435,6 +435,13 @@ button {
   gap: 24px;
   flex-wrap: wrap;
 }
+/* A fixed flex-basis, not auto — otherwise a closed group's hidden links
+   still contribute their max-content width to the flex item even while
+   collapsed to zero height, throwing off the gap between labels. */
+.sf-group {
+  flex: 1 1 130px;
+  min-width: 130px;
+}
 .sf-group-toggle {
   display: flex;
   align-items: baseline;

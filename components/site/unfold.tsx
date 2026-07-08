@@ -12,6 +12,7 @@ export function Unfold({
   children,
   defaultOpen = false,
   triggerClassName,
+  className,
 }: {
   /** Static trigger content — the "+" glyph's rotation into an "×" is driven
    * purely by CSS off `aria-expanded`, so this never needs the open state. */
@@ -19,11 +20,15 @@ export function Unfold({
   children: ReactNode
   defaultOpen?: boolean
   triggerClassName?: string
+  /** Class for the outer wrapper — needed when siblings share a row (the
+   * footer's groups) so a closed panel's content can't widen its flex item
+   * even while collapsed to zero height. */
+  className?: string
 }) {
   const [open, setOpen] = useState(defaultOpen)
 
   return (
-    <div>
+    <div className={className}>
       <button
         type="button"
         className={triggerClassName}
