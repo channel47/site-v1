@@ -8,7 +8,10 @@
 export const LINKS = {
   join:
     "https://www.skool.com/the-vibe-marketers/about?ref=be313e8087da44cca0ecd7edd9ac0775",
-  // Social profiles join the footer row as they're confirmed — never guess a URL.
+  x: "https://x.com/ctrlswing",
+  github: "https://github.com/ctrlswing",
+  linkedin: "https://linkedin.com/in/ctrlswing",
+  // More social profiles join the footer row as they're confirmed — never guess a URL.
 } as const
 
 /** Home hero — descriptive and plain (PLAN §1 Home copy). */

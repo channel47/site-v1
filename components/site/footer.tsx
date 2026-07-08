@@ -2,6 +2,14 @@ import Link from "next/link"
 import { LINKS, HOME } from "@/lib/site-content"
 import { Unfold } from "./unfold"
 import { ThemeToggle } from "./theme-toggle"
+import { XIcon, GitHubIcon, LinkedInIcon, SkoolIcon } from "./social-icons"
+
+const SOCIALS = [
+  { href: LINKS.x, label: "X", Icon: XIcon },
+  { href: LINKS.linkedin, label: "LinkedIn", Icon: LinkedInIcon },
+  { href: LINKS.github, label: "GitHub", Icon: GitHubIcon },
+  { href: LINKS.join, label: "Skool", Icon: SkoolIcon },
+] as const
 
 const GROUPS = [
   {
@@ -121,14 +129,19 @@ export function SiteFooter() {
 
         <div className="sf-social">
           <div className="sf-social-icons">
-            <a
-              href={LINKS.join}
-              target="_blank"
-              rel="noopener"
-              className="sf-link mono"
-            >
-              Skool
-            </a>
+            {SOCIALS.map(({ href, label, Icon }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener"
+                className="sf-icon"
+                aria-label={label}
+                title={label}
+              >
+                <Icon />
+              </a>
+            ))}
           </div>
           <ThemeToggle />
         </div>
