@@ -69,9 +69,9 @@ The templates enforce the plumbing; the content rules live with the writer:
 | `/api/search?q=` | `app/api/search/route.ts` | Public JSON search — the site as a callable tool |
 
 ### Layer 4 — Distribution
-- **"Copy as Markdown"** on every post and asset page
-  (`components/site/copy-markdown.tsx`) — readers paste our exact framing
-  into their own AI chats; distribution no crawler reaches.
+- **"Copy page"** (the markdown-twin copy button) on every post and asset
+  page (`components/site/copy-markdown.tsx`) — readers paste our exact
+  framing into their own AI chats; distribution no crawler reaches.
 - The installable artifacts already exist (`channel47/skills`,
   `channel47/mcps` + npm packages) — they are the flywheel. Keep install
   commands and canonical channel47.dev links in every README so adopters'
