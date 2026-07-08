@@ -15,9 +15,13 @@ const nextConfig = {
   async redirects() {
     // Stories became Posts in the taxonomy (docs/PLAN.md §2) — the old URLs
     // 301 to their new homes so inbound links and crawl equity carry over.
+    // Workshops' dedicated index folded into Browse as a type filter, same
+    // as every other content type (docs/PLAN.md §5) — session detail pages
+    // at /workshops/:slug are unaffected.
     return [
       { source: "/stories", destination: "/browse?type=posts", permanent: true },
       { source: "/stories/:slug", destination: "/posts/:slug", permanent: true },
+      { source: "/workshops", destination: "/browse?type=workshops", permanent: true },
     ]
   },
 }

@@ -49,7 +49,7 @@ export default function AboutPage() {
           <p>
             The tools are free to grab. If you want to watch them get built —
             and build alongside — I run{" "}
-            <Link href="/workshops" className="st-accent-link">
+            <Link href="/browse?type=workshops" className="st-accent-link">
               live monthly sessions
             </Link>{" "}
             inside the{" "}

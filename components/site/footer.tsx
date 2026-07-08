@@ -25,7 +25,7 @@ const GROUPS = [
     key: "live",
     label: "Live",
     links: [
-      { href: "/workshops", label: "Workshops" },
+      { href: "/browse?type=workshops", label: "Workshops" },
       { href: LINKS.join, label: "Vibe Marketers →", external: true },
     ],
   },

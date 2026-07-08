@@ -1,4 +1,4 @@
-import { getAllPosts, getAssets } from "@/lib/content"
+import { getAllPosts, getAssets, getWorkshops } from "@/lib/content"
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo"
 
 /**
@@ -17,6 +17,7 @@ export function GET() {
   const posts = getAllPosts()
   const skills = getAssets("skill")
   const connectors = getAssets("connector")
+  const workshops = getWorkshops()
 
   const lines = [
     `# ${SITE_NAME}`,
@@ -57,9 +58,14 @@ export function GET() {
     "## Posts",
     ...posts.map((p) => `- [${p.title}](${SITE_URL}/posts/${p.slug}.md)`),
     "",
+    "## Workshops",
+    ...workshops.map(
+      (w) => `- [${w.title}](${SITE_URL}/workshops/${w.slug}): ${w.description}`,
+    ),
+    "",
     "## Optional",
     `- [About](${SITE_URL}/about): who runs this (Jackson Dean) and why it exists`,
-    `- [Live sessions](${SITE_URL}/workshops): monthly build-alongs, replays inside Vibe Marketers`,
+    `- [Live sessions](${SITE_URL}/browse?type=workshops): monthly build-alongs, replays inside Vibe Marketers`,
     `- [Skills index](${SITE_URL}/skills): flat HTML list of every skill`,
     "",
   ]

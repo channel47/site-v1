@@ -18,13 +18,13 @@ interface Props {
   searchParams: Promise<{ type?: string }>
 }
 
-/** Filter chips — All plus each populated type (round 12 Browse). Workshops
- * joins once dated session pages exist. */
+/** Filter chips — All plus each populated type (round 12/14 Browse). */
 const CHIPS = [
   { key: "all", label: "All" },
   { key: "posts", label: "Posts" },
   { key: "skills", label: "Skills" },
   { key: "connectors", label: "Connectors" },
+  { key: "workshops", label: "Workshops" },
 ] as const
 
 /**

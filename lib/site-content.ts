@@ -78,6 +78,6 @@ export const CATEGORIES: Category[] = [
     key: "workshops",
     title: "Workshops",
     desc: "Live monthly build-alongs inside Vibe Marketers — watch a system get built, then grab it.",
-    href: "/workshops",
+    href: "/browse?type=workshops",
   },
 ]

@@ -1,4 +1,4 @@
-import { getAllPosts, getAssets } from "@/lib/content"
+import { getAllPosts, getAssets, getWorkshops } from "@/lib/content"
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo"
 
 /**
@@ -14,6 +14,7 @@ export function GET() {
   const posts = getAllPosts()
   const skills = getAssets("skill")
   const connectors = getAssets("connector")
+  const workshops = getWorkshops()
 
   const row = (url: string, title: string, date?: string) =>
     `- [${title}](${url})${date ? ` — updated ${date}` : ""}`
@@ -27,7 +28,6 @@ export function GET() {
     row(`${SITE_URL}/`, "Home"),
     row(`${SITE_URL}/browse`, "Browse — the full library, filterable by type"),
     row(`${SITE_URL}/skills`, "Skills index"),
-    row(`${SITE_URL}/workshops`, "Live sessions — monthly build-alongs"),
     row(`${SITE_URL}/newsletter`, "Newsletter"),
     row(`${SITE_URL}/about`, "About Channel 47 / Jackson Dean"),
     row(`${SITE_URL}/privacy`, "Privacy"),
@@ -43,6 +43,10 @@ export function GET() {
     "",
     "## Posts",
     ...posts.map((p) => row(`${SITE_URL}/posts/${p.slug}`, p.title, p.date)),
+    "",
+    "## Workshops",
+    row(`${SITE_URL}/browse?type=workshops`, "Live sessions — monthly build-alongs, filtered in Browse"),
+    ...workshops.map((w) => row(`${SITE_URL}/workshops/${w.slug}`, w.title, w.date)),
     "",
     "## Machine access",
     "",

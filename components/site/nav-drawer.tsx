@@ -7,7 +7,7 @@ const ROWS = [
   { label: "Skills", href: "/browse?type=skills" },
   { label: "Connectors", href: "/browse?type=connectors" },
   { label: "Posts", href: "/browse?type=posts" },
-  { label: "Workshops", href: "/workshops" },
+  { label: "Workshops", href: "/browse?type=workshops" },
 ] as const
 
 /**

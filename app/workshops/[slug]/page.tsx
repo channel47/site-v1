@@ -167,7 +167,7 @@ export default async function WorkshopPage({ params }: Props) {
         />
 
         <p className="dt-back">
-          <Link href="/workshops">← All workshops</Link>
+          <Link href="/browse?type=workshops">← More workshops</Link>
         </p>
       </article>
 
