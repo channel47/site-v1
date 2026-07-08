@@ -31,6 +31,18 @@ const GROUPS = [
       { href: "/skills", label: "Skills index" },
     ],
   },
+  {
+    key: "agents",
+    label: "Agents",
+    links: [
+      // Machine-readable surfaces (docs/AI-SEO.md Layer 3) — non-HTML
+      // route handlers, not app pages, so these render as plain anchors.
+      { href: "/llms.txt", label: "llms.txt", plain: true },
+      { href: "/sitemap.md", label: "sitemap.md", plain: true },
+      { href: "/api", label: "API", plain: true },
+      { href: "/rss.xml", label: "RSS", plain: true },
+    ],
+  },
 ] as const
 
 /**
@@ -87,6 +99,13 @@ export function SiteFooter() {
                       rel="noopener"
                       className="sf-link"
                     >
+                      {link.label}
+                    </a>
+                  ) : "plain" in link && link.plain ? (
+                    // Non-HTML route handlers (llms.txt, sitemap.md, /api,
+                    // rss.xml) — a plain anchor, not next/link's Link, since
+                    // there's no app page here for it to prefetch/navigate.
+                    <a key={link.href} href={link.href} className="sf-link">
                       {link.label}
                     </a>
                   ) : (
