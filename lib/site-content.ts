@@ -8,7 +8,10 @@
 export const LINKS = {
   join:
     "https://www.skool.com/the-vibe-marketers/about?ref=be313e8087da44cca0ecd7edd9ac0775",
-  // Social profiles join the footer row as they're confirmed — never guess a URL.
+  x: "https://x.com/ctrlswing",
+  github: "https://github.com/ctrlswing",
+  linkedin: "https://linkedin.com/in/ctrlswing",
+  // More social profiles join the footer row as they're confirmed — never guess a URL.
 } as const
 
 /** Home hero — descriptive and plain (PLAN §1 Home copy). */
@@ -30,72 +33,51 @@ export const CAPTURE = {
   successHelper: "New drops and the next live session, straight to you.",
 } as const
 
-/** The line-art schematic drawn over each card (see SchematicFig). */
-export type CardMotif = "posts" | "skills" | "agents" | "connectors" | "workshops"
+/** Content-type identity — ink at rest, colour only on hover/press/selection
+ * (round 12/13/14/15). Keys match `FeedItem["type"]` plus "workshops". */
+export type ContentTypeKey = "skills" | "connectors" | "posts" | "workshops"
+
+export const TYPE_COLORS: Record<ContentTypeKey, string> = {
+  skills: "var(--c-skill)",
+  connectors: "var(--c-connector)",
+  posts: "var(--c-post)",
+  workshops: "var(--c-workshop)",
+}
 
 /**
- * One riso type card. Each is a self-contained, vivid colour field (a deep
- * OKLCH base) dressed in the riso treatment: a screen-blended `flood` radial,
- * a static halftone `dots` field, and a schematic line drawing keyed by
- * `motif`. Colours are baked into the data because the cards stay vivid in
- * both light and dark — they don't theme with the page.
- *
- * Cards exist only for POPULATED types (PLAN §2) — Agents and Articles join
- * when their first real item ships. Motif = type identity; colour =
- * individuality.
+ * The four Home category rows / drawer nav rows — one per populated content
+ * type. Agents joins when its first real item ships.
  */
-export interface TypeCard {
+export interface Category {
+  key: ContentTypeKey
   title: string
   desc: string
   href: string
-  /** Card base colour (OKLCH). */
-  bg: string
-  /** Screen-blended radial flood behind the schematic. */
-  flood: string
-  /** Halftone dot field (a repeating radial-gradient image). */
-  dots: string
-  motif: CardMotif
 }
 
-export const TYPE_CARDS: TypeCard[] = [
+export const CATEGORIES: Category[] = [
   {
-    title: "Posts",
-    desc: "Field stories from real accounts — every tool here ships with the story of why it exists.",
-    href: "/browse?type=posts",
-    bg: "oklch(0.52 0.11 85)",
-    flood:
-      "radial-gradient(circle, rgba(250,226,152,0.6), rgba(250,226,152,0) 60%)",
-    dots: "radial-gradient(rgba(250,226,152,0.82) 1.1px, transparent 1.4px)",
-    motif: "posts",
-  },
-  {
+    key: "skills",
     title: "Skills",
     desc: "Composable skills your agents call to research, write, and optimize.",
     href: "/browse?type=skills",
-    bg: "oklch(0.55 0.19 32)",
-    flood:
-      "radial-gradient(circle, rgba(247,205,120,0.6), rgba(247,205,120,0) 60%)",
-    dots: "radial-gradient(rgba(247,205,120,0.82) 1.1px, transparent 1.4px)",
-    motif: "skills",
   },
   {
+    key: "connectors",
     title: "Connectors",
     desc: "MCP connectors that plug straight into Google, Meta, Bing, LinkedIn, TikTok, and Pinterest.",
     href: "/browse?type=connectors",
-    bg: "oklch(0.54 0.115 200)",
-    flood:
-      "radial-gradient(circle, rgba(190,222,130,0.6), rgba(190,222,130,0) 60%)",
-    dots: "radial-gradient(rgba(190,222,130,0.82) 1.1px, transparent 1.4px)",
-    motif: "connectors",
   },
   {
+    key: "posts",
+    title: "Posts",
+    desc: "Field stories from real accounts — every tool here ships with the story of why it exists.",
+    href: "/browse?type=posts",
+  },
+  {
+    key: "workshops",
     title: "Workshops",
     desc: "Live monthly build-alongs inside Vibe Marketers — watch a system get built, then grab it.",
     href: "/workshops",
-    bg: "oklch(0.48 0.13 340)",
-    flood:
-      "radial-gradient(circle, rgba(244,168,196,0.6), rgba(244,168,196,0) 60%)",
-    dots: "radial-gradient(rgba(244,168,196,0.82) 1.1px, transparent 1.4px)",
-    motif: "workshops",
   },
 ]

@@ -50,6 +50,21 @@ export interface Post extends PostMeta {
 
 export type AssetType = "skill" | "connector"
 
+/** One row of the "ask/answer" example card on a Skill/Connector page. */
+export interface AskAnswerRow {
+  label: string
+  value: string
+  value2?: string
+}
+
+/** The optional ask/answer exchange (round 13a) — only renders when a page
+ * has a real worked example; nothing here is invented from a template. */
+export interface AskAnswer {
+  question: string
+  rows: AskAnswerRow[]
+  caption: string
+}
+
 export interface AssetMeta {
   title: string
   slug: string
@@ -60,6 +75,11 @@ export interface AssetMeta {
   package?: string
   date: string
   tags: string[]
+  /** Real screenshot path (public/), optional — omitted pages skip the figure
+   * entirely rather than showing a placeholder. */
+  screenshot?: string
+  screenshotCaption?: string
+  askAnswer?: AskAnswer
 }
 
 export interface Asset extends AssetMeta {
@@ -182,6 +202,59 @@ export function getAssets(type: AssetType): Asset[] {
     .sort(byRank)
 }
 
+// ---------------------------------------------------------------- workshops
+
+/** A dated workshop session — upcoming until it airs, past once recorded
+ * (round 15). No sessions are pinned yet, so `content/workshops/` is empty
+ * and these all return `[]`; nothing here is invented ahead of a real date. */
+export interface WorkshopMeta {
+  title: string
+  slug: string
+  description: string
+  status: "upcoming" | "past"
+  /** Session date — the day it runs (upcoming) or was recorded (past). */
+  date: string
+  /** Start time, e.g. "12:00 PM ET" — upcoming only. */
+  time?: string
+  duration: string
+  author: string
+  tags: string[]
+  /** The asset (skill/connector) this session builds with, if any. */
+  relatedAsset?: { type: AssetType; slug: string }
+  /** Real replay-still image path (public/), past sessions only — omitted
+   * pages skip the figure rather than showing a placeholder. */
+  screenshot?: string
+  screenshotCaption?: string
+}
+
+export interface Workshop extends WorkshopMeta {
+  html: string
+  markdown: string
+}
+
+function loadWorkshop(file: string): Workshop {
+  const raw = fs.readFileSync(path.join(CONTENT_DIR, "workshops", file), "utf8")
+  const { data, content } = matter(raw)
+  const meta = data as Omit<WorkshopMeta, "date"> & { date: string | Date }
+  return {
+    ...meta,
+    tags: meta.tags ?? [],
+    date: isoDate(meta.date),
+    html: marked.parse(content, { async: false }),
+    markdown: content.trim(),
+  }
+}
+
+export function getWorkshops(): Workshop[] {
+  return markdownFiles("workshops")
+    .map((f) => loadWorkshop(f))
+    .sort((a, b) => b.date.localeCompare(a.date))
+}
+
+export function getWorkshopBySlug(slug: string): Workshop | undefined {
+  return getWorkshops().find((w) => w.slug === slug)
+}
+
 export function getAssetBySlug(
   type: AssetType,
   slug: string,
@@ -210,7 +283,7 @@ export interface FeedItem {
   /** Row meta label, e.g. "Post", "Skill", "Connector". */
   typeLabel: string
   /** Browse filter key. */
-  type: "posts" | "skills" | "connectors"
+  type: "posts" | "skills" | "connectors" | "workshops"
   date: string
 }
 
@@ -239,7 +312,15 @@ export function getFeedItems(): FeedItem[] {
     type: "connectors",
     date: a.date,
   }))
-  return [...posts, ...skills, ...connectors]
+  const workshops: FeedItem[] = getWorkshops().map((w) => ({
+    title: w.title,
+    description: w.description,
+    href: `/workshops/${w.slug}`,
+    typeLabel: "Workshop",
+    type: "workshops",
+    date: w.date,
+  }))
+  return [...posts, ...skills, ...connectors, ...workshops]
 }
 
 /** Most recent items across every type — the Home feed. */
@@ -247,6 +328,12 @@ export function getLatest(n: number): FeedItem[] {
   return getFeedItems()
     .sort((a, b) => b.date.localeCompare(a.date))
     .slice(0, n)
+}
+
+/** Word count / 200wpm, rounded up to at least 1 — the post byline's read time. */
+export function readTime(markdown: string): number {
+  const words = markdown.trim().split(/\s+/).filter(Boolean).length
+  return Math.max(1, Math.round(words / 200))
 }
 
 /** "2026-07-02" → "Jul 2026" (browse-row date treatment). */

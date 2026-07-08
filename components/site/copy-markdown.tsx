@@ -31,10 +31,10 @@ export function CopyMarkdown({ path }: { path: string }) {
   }
 
   const label =
-    state === "copied" ? "Copied ✓" : state === "failed" ? "Couldn't copy" : "Copy as Markdown"
+    state === "copied" ? "Copied ✓" : state === "failed" ? "Couldn't copy" : "Copy page"
 
   return (
-    <button type="button" className="st-copy-md mono" onClick={copy} aria-live="polite">
+    <button type="button" className="btn-ghost" onClick={copy} aria-live="polite">
       {label}
     </button>
   )

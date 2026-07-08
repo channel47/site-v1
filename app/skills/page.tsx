@@ -29,8 +29,8 @@ export default function SkillsIndexPage() {
       <main className="st-shell">
         <JsonLd data={skillsIndexGraph(skills)} />
         <header className="st-head">
-          <h1 className="serif st-h1">Skills</h1>
-          <p className="st-intro">
+          <h1 className="serif st-h1 an-blur">Skills</h1>
+          <p className="st-intro an-up" style={{ animationDelay: ".3s" }}>
             Agentic marketing systems — research pipelines, media buying
             routines, distribution tools — that install into Claude Code,
             Cursor, and any SKILL.md-compatible agent. Each one was built and

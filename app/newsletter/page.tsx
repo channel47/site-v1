@@ -22,8 +22,8 @@ export default function NewsletterPage() {
 
       <main className="st-shell">
         <header className="st-head">
-          <h1 className="serif st-h1">The list</h1>
-          <p className="st-intro">
+          <h1 className="serif st-h1 an-blur">The list</h1>
+          <p className="st-intro an-up" style={{ animationDelay: ".3s" }}>
             One email when something ships: a new skill, a new connector, a new
             post — and a heads-up when the next live session gets a date.
             That&apos;s the whole deal. No content-calendar filler, no daily
