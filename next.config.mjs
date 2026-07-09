@@ -13,11 +13,18 @@ const nextConfig = {
     ]
   },
   async redirects() {
-    // Stories became Posts in the taxonomy (docs/PLAN.md §2) — the old URLs
-    // 301 to their new homes so inbound links and crawl equity carry over.
+    // Legacy URLs permanently redirect to their closest current homes so
+    // inbound links and crawl equity carry over after the site taxonomy moved
+    // to posts, skills, connectors, and workshops.
     return [
       { source: "/stories", destination: "/browse?type=posts", permanent: true },
       { source: "/stories/:slug", destination: "/posts/:slug", permanent: true },
+      { source: "/guides", destination: "/browse?type=posts", permanent: true },
+      { source: "/guides/claude-for-ppc", destination: "/posts/media-buyer", permanent: true },
+      { source: "/labs", destination: "/workshops", permanent: true },
+      { source: "/plugins/google-ads", destination: "/connectors/google-ads", permanent: true },
+      { source: "/blog/gaql-queries-guide", destination: "/posts/gaql", permanent: true },
+      { source: "/tools", destination: "/browse", permanent: true },
     ]
   },
 }
