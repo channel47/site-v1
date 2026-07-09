@@ -38,7 +38,6 @@ const GROUPS = [
       { href: "/about", label: "About" },
       { href: "/browse", label: "Browse all" },
       { href: "/newsletter", label: "Newsletter" },
-      { href: "/skills", label: "Skills index" },
     ],
   },
   {

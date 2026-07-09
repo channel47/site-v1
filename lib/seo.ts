@@ -159,24 +159,6 @@ export function assetGraph(asset: Asset) {
   }
 }
 
-/** ItemList for the /skills index — declares the catalog as one entity. */
-export function skillsIndexGraph(skills: Asset[]) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "@id": `${SITE_URL}/skills#list`,
-    name: "Channel 47 skills",
-    description:
-      "Every skill in the Channel 47 library — agentic marketing systems for research, media buying, and distribution, free to install.",
-    itemListElement: skills.map((skill, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      name: skill.title,
-      url: `${SITE_URL}/skills/${skill.slug}`,
-    })),
-  }
-}
-
 /** Serialize a JSON-LD object for a <script type="application/ld+json">.
  * `<` is escaped so content strings can never close the script tag. */
 export function jsonLd(data: object): string {

@@ -134,7 +134,7 @@ export function AssetPage({ asset }: { asset: Asset }) {
         </div>
 
         <p className="dt-back">
-          <Link href={`/${section}`}>← All {section}</Link>
+          <Link href={`/browse?type=${section}`}>← All {section}</Link>
         </p>
       </article>
 

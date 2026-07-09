@@ -27,7 +27,6 @@ export function GET() {
     "## Pages",
     row(`${SITE_URL}/`, "Home"),
     row(`${SITE_URL}/browse`, "Browse — the full library, filterable by type"),
-    row(`${SITE_URL}/skills`, "Skills index"),
     row(`${SITE_URL}/newsletter`, "Newsletter"),
     row(`${SITE_URL}/about`, "About Channel 47 / Jackson Dean"),
     row(`${SITE_URL}/privacy`, "Privacy"),

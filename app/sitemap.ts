@@ -22,12 +22,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const connectors = getAssets("connector")
   const workshops = getWorkshops()
   const newest = latestDate(getFeedItems().map((i) => i.date))
-  const newestSkill = latestDate(skills.map((s) => s.date))
 
   return [
     { url: `${SITE_URL}/`, lastModified: newest },
     { url: `${SITE_URL}/browse`, lastModified: newest },
-    { url: `${SITE_URL}/skills`, lastModified: newestSkill },
     { url: `${SITE_URL}/newsletter` },
     { url: `${SITE_URL}/about` },
     { url: `${SITE_URL}/privacy` },

@@ -66,7 +66,6 @@ export function GET() {
     "## Optional",
     `- [About](${SITE_URL}/about): who runs this (Jackson Dean) and why it exists`,
     `- [Live sessions](${SITE_URL}/browse?type=workshops): monthly build-alongs, replays inside Vibe Marketers`,
-    `- [Skills index](${SITE_URL}/skills): flat HTML list of every skill`,
     "",
   ]
 
