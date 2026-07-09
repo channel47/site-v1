@@ -33,6 +33,23 @@ export const CAPTURE = {
   successHelper: "New drops and the next live session, straight to you.",
 } as const
 
+/** Recent sends shown on /newsletter — a hardcoded log for now; move to the
+ * Kit API once there's an archive route to link each row to. */
+export const NEWSLETTER_SENDS = [
+  {
+    date: "Jul 3",
+    title: "pinterest-ads ships — the slow channel, measured right",
+  },
+  {
+    date: "Jun 13",
+    title: "Replay: mining reviews for ad angles, live",
+  },
+  {
+    date: "May 29",
+    title: "tiktok-ads + the creative velocity problem",
+  },
+] as const
+
 /** Content-type identity — ink at rest, colour only on hover/press/selection
  * (round 12/13/14/15). Keys match `FeedItem["type"]` plus "workshops". */
 export type ContentTypeKey = "skills" | "connectors" | "posts" | "workshops"
@@ -53,31 +70,38 @@ export interface Category {
   title: string
   desc: string
   href: string
+  /** The shine-link copy closing the row's open body — specific to what the
+   * type actually contains, not a generic "Browse {type} →". */
+  linkText: string
 }
 
 export const CATEGORIES: Category[] = [
+  {
+    key: "posts",
+    title: "Posts",
+    desc: "Field stories from real accounts — every tool here ships with the story of why it exists.",
+    href: "/browse?type=posts",
+    linkText: "Read the posts →",
+  },
   {
     key: "skills",
     title: "Skills",
     desc: "Composable skills your agents call to research, write, and optimize.",
     href: "/browse?type=skills",
+    linkText: "Browse all skills →",
   },
   {
     key: "connectors",
     title: "Connectors",
     desc: "MCP connectors that plug straight into Google, Meta, Bing, LinkedIn, TikTok, and Pinterest.",
     href: "/browse?type=connectors",
-  },
-  {
-    key: "posts",
-    title: "Posts",
-    desc: "Field stories from real accounts — every tool here ships with the story of why it exists.",
-    href: "/browse?type=posts",
+    linkText: "Browse all connectors →",
   },
   {
     key: "workshops",
     title: "Workshops",
     desc: "Live monthly build-alongs inside Vibe Marketers — watch a system get built, then grab it.",
     href: "/browse?type=workshops",
+    linkText: "See the next session →",
   },
 ]

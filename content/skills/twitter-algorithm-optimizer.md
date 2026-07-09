@@ -6,13 +6,14 @@ repo: https://github.com/channel47/skills/tree/main/skills/distribution/twitter-
 install: npx skills add channel47/skills --skill twitter-algorithm-optimizer
 date: 2026-07-02
 tags: [x, twitter, distribution, algorithm, social]
+pairing: "No credentials — it analyzes drafts, it doesn't post."
 ---
 
 X open-sourced its recommendation algorithm; almost nobody read it. This skill
 did — including the January 2026 Grok-based version — and scores your drafts
 against what the ranking system actually rewards before you post.
 
-## What it does
+## What it knows
 
 - Encodes the engagement weights: a like is the ~0.5–1× baseline, a repost
   ~20×, a reply 13.5×, a reply you reply back to ~75×, and sustained
@@ -34,7 +35,3 @@ against what the ranking system actually rewards before you post.
   in the first reply), and a first-30-minutes strategy.
 - Stamps the date it was last verified against the public source and tells you
   to distrust stale specifics.
-
-## Setup
-
-No credentials — it analyzes drafts, it doesn't post.

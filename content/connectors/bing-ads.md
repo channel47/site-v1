@@ -7,6 +7,7 @@ install: npm i -g @channel47/bing-ads-mcp
 package: "@channel47/bing-ads-mcp"
 date: 2026-07-02
 tags: [bing-ads, microsoft-advertising, mcp, paid-media, reporting]
+pairing: "Needs a developer token, Azure AD client ID, and refresh token. Driven by the [Media Buyer skill](/skills/media-buyer)."
 ---
 
 The account nobody checks. Microsoft Advertising quietly converts — and quietly
@@ -32,9 +33,3 @@ channel becomes as easy to interrogate as Google or Meta.
 - Absorbs the Bing quirks: rotating OAuth refresh tokens, costs returned in
   dollars (vs Google's micros), and CTR representation differences —
   normalized so cross-platform comparison doesn't lie.
-
-## Setup
-
-Install globally and run `bing-ads-mcp`. Credentials are environment
-variables: developer token, Azure AD client ID, and refresh token — documented
-in the README. Driven by the [Media Buyer skill](/skills/media-buyer).

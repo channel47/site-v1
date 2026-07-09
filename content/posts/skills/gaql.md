@@ -36,7 +36,7 @@ Looks friendly. Isn't, quite. GAQL is SQL's strict cousin who grew up with unusu
 and it communicates those rules through validation errors that tell you what broke but
 rarely why. My first weeks with it were a loop of submit, read cryptic error, guess, submit.
 
-A sampler of the walls I hit, each of which cost me an evening:
+## The walls I hit
 
 - **There is no OR.** Conditions join with AND only. You fake OR with `IN` on a single
   field, and you restructure your thinking for everything else.

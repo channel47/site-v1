@@ -6,6 +6,7 @@ repo: https://github.com/channel47/skills/tree/main/skills/paid-media/media-buye
 install: npx skills add channel47/skills --skill media-buyer
 date: 2026-07-02
 tags: [paid-media, google-ads, bing-ads, meta-ads, account-audit, waste-detection]
+pairing: "No credentials of its own — needs at least one of the connectors it drives: [google-ads](/connectors/google-ads), [bing-ads](/connectors/bing-ads), or [meta-ads](/connectors/meta-ads)."
 ---
 
 The looking part of media buying — the morning sweep across every account —
@@ -13,7 +14,7 @@ delegated. This skill sits on top of the Channel47 MCP connectors for Google
 Ads, Bing Ads, and Meta and turns a multi-account audit routine into one
 request: "morning brief on all accounts."
 
-## What it does
+## What it knows
 
 - Checks which platforms are connected, pulls yesterday plus the trailing
   period, and returns **findings**, not screenshots: budget pacing against
@@ -32,8 +33,3 @@ request: "morning brief on all accounts."
   only after an explicit "go." It never skips the dry run.
 - Works with whichever connectors respond — a missing platform is skipped, not
   an error.
-
-## Setup
-
-Requires at least one of the connectors it drives (google-ads, bing-ads, or
-meta-ads). The skill itself needs no credentials of its own.

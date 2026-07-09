@@ -26,6 +26,9 @@ export interface PostAsset {
   repo: string
   install: string
   package?: string
+  /** Override for the end-of-post cross-link card title — defaults to
+   * "{name} — the {skill|connector} this story ships with". */
+  cardTitle?: string
 }
 
 export interface PostMeta {
@@ -63,6 +66,9 @@ export interface AskAnswer {
   question: string
   rows: AskAnswerRow[]
   caption: string
+  /** Column header labels shown above the rows, e.g. ["Keyword", "QS",
+   * "Impr"] — omitted when a plain label/value/value2 table needs no header. */
+  columns?: [string, string, string]
 }
 
 export interface AssetMeta {
@@ -75,11 +81,17 @@ export interface AssetMeta {
   package?: string
   date: string
   tags: string[]
-  /** Real screenshot path (public/), optional — omitted pages skip the figure
-   * entirely rather than showing a placeholder. */
+  /** Real screenshot path (public/) — when present, renders as the figure.
+   * When absent but `screenshotCaption` is set, the figure still renders as
+   * a riso-hatch placeholder captioned with what a screenshot would show;
+   * when both are absent the figure is skipped entirely. */
   screenshot?: string
   screenshotCaption?: string
   askAnswer?: AskAnswer
+  /** One sentence on what this asset pairs with and why — e.g. the
+   * connector a skill needs, or the skill a connector's queries come from.
+   * May contain a single markdown link. Replaces the old repo/package row. */
+  pairing?: string
 }
 
 export interface Asset extends AssetMeta {

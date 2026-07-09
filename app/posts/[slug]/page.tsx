@@ -44,13 +44,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-const ASSET_TYPE_LABEL = { skill: "Skill", mcp: "MCP connector" } as const
-
 /**
- * Post detail (round 13a, the Post variant): crumb → headline-length title →
- * one-liner → byline (author · date · read time) → an "introduces" strip
- * pointing at the asset the post is about → body (the first blockquote reads
- * as the pull-quote) → share → newsletter → back link.
+ * Post detail (round 14, confirmed): crumb → headline-length title →
+ * one-liner → byline (author · date · read time) → body (the first
+ * blockquote reads as the pull-quote) → a cross-link card to the asset this
+ * story ships with → share → newsletter → back link.
  */
 export default async function PostPage({ params }: Props) {
   const { slug } = await params
@@ -59,13 +57,17 @@ export default async function PostPage({ params }: Props) {
   const asset = getAssetForPost(post)
   const assetType = post.asset.type === "skill" ? "skills" : "connectors"
   const assetHref = asset ? `/${assetType}/${asset.slug}` : post.asset.repo
+  const assetTypeWord = post.asset.type === "skill" ? "skill" : "connector"
+  const crossTitle =
+    post.asset.cardTitle ??
+    `${post.asset.name} — the ${assetTypeWord} this story ships with`
   const href = `/posts/${post.slug}`
 
   return (
     <div className="st-page">
       <SiteHeader />
 
-      <article className="st-shell">
+      <article className="st-shell" style={{ "--type-color": TYPE_COLORS.posts } as CSSProperties}>
         <JsonLd data={postGraph(post)} />
         <header className="st-head">
           <Crumb
@@ -81,33 +83,6 @@ export default async function PostPage({ params }: Props) {
           <p className="dt-byline an-up" style={{ animationDelay: ".45s" }}>
             {post.author} · {shortDate(post.date)} · {readTime(post.markdown)} min
           </p>
-          {asset ? (
-            <Link
-              href={assetHref}
-              className="st-asset an-up"
-              style={{ "--type-color": TYPE_COLORS[assetType], animationDelay: ".55s" } as CSSProperties}
-            >
-              <span className="st-asset-label mono">Introduces</span>
-              <span className="st-asset-name mono">{post.asset.name}</span>
-              <span className="st-asset-type mono">
-                {ASSET_TYPE_LABEL[post.asset.type]} →
-              </span>
-            </Link>
-          ) : (
-            <a
-              href={post.asset.repo}
-              target="_blank"
-              rel="noopener"
-              className="st-asset an-up"
-              style={{ animationDelay: ".55s" }}
-            >
-              <span className="st-asset-label mono">Introduces</span>
-              <span className="st-asset-name mono">{post.asset.name}</span>
-              <span className="st-asset-type mono">
-                {ASSET_TYPE_LABEL[post.asset.type]} · GitHub →
-              </span>
-            </a>
-          )}
         </header>
 
         <div
@@ -115,6 +90,38 @@ export default async function PostPage({ params }: Props) {
           // First-party markdown from content/posts — rendered at build time.
           dangerouslySetInnerHTML={{ __html: post.html }}
         />
+
+        {asset ? (
+          <Link
+            href={assetHref}
+            className="dt-cross"
+            style={{ "--type-color": TYPE_COLORS[assetType] } as CSSProperties}
+          >
+            <span>
+              <span className="dt-cross-kicker mono">
+                {post.asset.type === "skill" ? "Skill" : "Connector"}
+              </span>
+              <p className="dt-cross-title">{crossTitle}</p>
+            </span>
+            <span aria-hidden>→</span>
+          </Link>
+        ) : (
+          <a
+            href={assetHref}
+            target="_blank"
+            rel="noopener"
+            className="dt-cross"
+            style={{ "--type-color": TYPE_COLORS[assetType] } as CSSProperties}
+          >
+            <span>
+              <span className="dt-cross-kicker mono">
+                {post.asset.type === "skill" ? "Skill" : "Connector"}
+              </span>
+              <p className="dt-cross-title">{crossTitle}</p>
+            </span>
+            <span aria-hidden>→</span>
+          </a>
+        )}
 
         <ShareRow
           mdPath={`/posts/${post.slug}.md`}
@@ -127,7 +134,7 @@ export default async function PostPage({ params }: Props) {
         </div>
 
         <p className="dt-back">
-          <Link href="/browse?type=posts">← More posts</Link>
+          <Link href="/browse?type=posts">← All posts</Link>
         </p>
       </article>
 

@@ -4,6 +4,7 @@ import Link from "next/link"
 import { SiteHeader } from "@/components/site/header"
 import { SiteFooter } from "@/components/site/footer"
 import { Rows } from "@/components/site/rows"
+import { TypeIcon, AllTypesIcon } from "@/components/site/type-icon"
 import { getFeedItems } from "@/lib/content"
 import { TYPE_COLORS } from "@/lib/site-content"
 
@@ -45,7 +46,7 @@ export default async function BrowsePage({ searchParams }: Props) {
     <div className="st-page">
       <SiteHeader />
 
-      <main className="st-shell">
+      <main className="st-shell st-shell-full">
         <header className="st-head">
           <h1 className="serif st-h1 an-blur">Browse</h1>
           <nav
@@ -60,10 +61,15 @@ export default async function BrowsePage({ searchParams }: Props) {
                 <Link
                   key={chip.key}
                   href={chip.key === "all" ? "/browse" : `/browse?type=${chip.key}`}
-                  className={`br-chip mono${on ? " br-chip-on" : ""}`}
+                  className={`br-chip${on ? " br-chip-on" : ""}`}
                   style={on && color ? ({ "--chip-color": color } as CSSProperties) : undefined}
                   aria-current={on ? "true" : undefined}
                 >
+                  {chip.key === "all" ? (
+                    <AllTypesIcon className="br-chip-icon" />
+                  ) : (
+                    <TypeIcon type={chip.key} className="br-chip-icon" />
+                  )}
                   {chip.label}
                 </Link>
               )

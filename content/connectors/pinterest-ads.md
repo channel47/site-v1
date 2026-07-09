@@ -7,6 +7,7 @@ install: npx @channel47/pinterest-ads-mcp@latest
 package: "@channel47/pinterest-ads-mcp"
 date: 2026-07-02
 tags: [pinterest-ads, mcp, dtc, attribution, seasonal, paid-media]
+pairing: "Needs an access token, or client credentials plus a refresh token — the server mints and renews tokens itself, though Pinterest's refresh tokens may rotate on use."
 ---
 
 Pinterest converts on planner time, not feed time — and bad reporting kills the
@@ -36,14 +37,3 @@ attribution right, so the slow channel gets measured correctly instead of cut.
   and bids don't miss by six zeros.
 - **Read-only mode:** `PINTEREST_ADS_READ_ONLY=true` removes the mutate tool
   entirely.
-
-## Setup
-
-Add with `claude mcp add pinterest-ads --env
-PINTEREST_ADS_ACCESS_TOKEN=<token> --env
-PINTEREST_ADS_AD_ACCOUNT_ID=<ad-account-id> -- npx
-@channel47/pinterest-ads-mcp@latest`. Auth: paste an access token, or supply
-client credentials plus a refresh token and the server mints access tokens
-itself. Pinterest's refresh tokens may rotate on use — the server can't
-persist the new value, so it logs a loud warning to update your env when that
-happens. OAuth setup is in the README.

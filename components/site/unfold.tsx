@@ -3,14 +3,18 @@
 import { useState, type ReactNode } from "react"
 
 /**
- * Shared disclosure pattern — Home's category rows and the footer's link
- * groups both open/close independently (no accordion-exclusivity) via a
- * `grid-template-rows: 0fr → 1fr` transition.
+ * Shared disclosure pattern via a `grid-template-rows: 0fr → 1fr` transition.
+ * Uncontrolled by default (each instance opens/closes independently, as
+ * Home's category rows once did). Pass `open` + `onToggle` to run it as one
+ * row in an exclusive accordion instead — Home's category rows and the
+ * footer's link groups both do this now, one open at a time.
  */
 export function Unfold({
   trigger,
   children,
   defaultOpen = false,
+  open: controlledOpen,
+  onToggle,
   triggerClassName,
   className,
 }: {
@@ -19,13 +23,28 @@ export function Unfold({
   trigger: ReactNode
   children: ReactNode
   defaultOpen?: boolean
+  /** Controlled open state — omit to let this instance manage its own. */
+  open?: boolean
+  /** Called on trigger click when `open` is controlled; receives the next
+   * open state (the exclusive-accordion parent decides what that means). */
+  onToggle?: (next: boolean) => void
   triggerClassName?: string
   /** Class for the outer wrapper — needed when siblings share a row (the
    * footer's groups) so a closed panel's content can't widen its flex item
    * even while collapsed to zero height. */
   className?: string
 }) {
-  const [open, setOpen] = useState(defaultOpen)
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen)
+  const isControlled = controlledOpen !== undefined
+  const open = isControlled ? controlledOpen : uncontrolledOpen
+
+  const handleClick = () => {
+    if (isControlled) {
+      onToggle?.(!open)
+    } else {
+      setUncontrolledOpen((o) => !o)
+    }
+  }
 
   return (
     <div className={className}>
@@ -33,7 +52,7 @@ export function Unfold({
         type="button"
         className={triggerClassName}
         aria-expanded={open}
-        onClick={() => setOpen((o) => !o)}
+        onClick={handleClick}
       >
         {trigger}
       </button>

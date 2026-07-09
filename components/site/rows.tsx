@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react"
 import Link from "next/link"
 import { shortDate, type FeedItem } from "@/lib/content"
 import { TYPE_COLORS } from "@/lib/site-content"
@@ -17,20 +18,28 @@ export function Rows({
 }) {
   return (
     <ul className="st-rows">
-      {items.map((item) => {
+      {items.map((item, i) => {
         const highlighted = activeType != null && activeType === item.type
         return (
-          <li key={item.href}>
-            <Link href={item.href} className="st-row">
-              <span className="st-row-main">
-                <span className="st-row-title serif">{item.title}</span>
-                <span className="st-row-desc">{item.description}</span>
-              </span>
+          <li
+            key={item.href}
+            className="an-up"
+            style={{ animationDelay: `${0.45 + Math.min(i * 0.05, 0.75)}s` }}
+          >
+            <Link
+              href={item.href}
+              className="st-row"
+              style={{ "--type-color": TYPE_COLORS[item.type] } as CSSProperties}
+            >
               <span
                 className="st-row-meta mono"
                 style={highlighted ? { color: TYPE_COLORS[item.type] } : undefined}
               >
                 {item.typeLabel} · {shortDate(item.date)}
+              </span>
+              <span className="st-row-main">
+                <span className="st-row-title serif">{item.title}</span>
+                <span className="st-row-desc">{item.description}</span>
               </span>
             </Link>
           </li>

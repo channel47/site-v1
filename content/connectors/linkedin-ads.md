@@ -7,6 +7,7 @@ install: npx @channel47/linkedin-ads-mcp@latest
 package: "@channel47/linkedin-ads-mcp"
 date: 2026-07-02
 tags: [linkedin-ads, mcp, b2b, lead-gen, analytics]
+pairing: "Needs a 60-day member token, or client credentials plus a refresh token — the server mints and renews access tokens itself. LinkedIn's Advertising API requires app approval."
 ---
 
 $28 clicks make you careful. LinkedIn's Marketing API is powerful and hostile —
@@ -34,11 +35,3 @@ operation to a safe, non-serving state.
   or monthly — and encodes the hard limits: max 20 metric fields per call
   (enforced), no pagination on the analytics endpoint (caps at 15,000
   elements; it tells you to narrow the range instead of silently truncating).
-
-## Setup
-
-Add with `claude mcp add linkedin-ads --env LINKEDIN_ADS_ACCESS_TOKEN=<token>
--- npx @channel47/linkedin-ads-mcp@latest`. Auth takes either a 60-day member
-token pasted directly, or client credentials plus a year-long refresh token —
-the server mints and renews access tokens itself, refreshing five minutes
-before expiry. Note LinkedIn's Advertising API requires app approval.

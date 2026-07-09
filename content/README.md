@@ -55,6 +55,23 @@ install: string        # one-line install command (rendered as the "Grab it" blo
 package: string        # npm package (connectors only)
 date: YYYY-MM-DD
 tags: [string]
+pairing: string         # optional — one sentence on what this asset pairs with and
+                        # why (may contain a single markdown link); renders under
+                        # the install block, replacing the old repo/package row
+screenshot: string      # optional — real screenshot path under public/
+screenshotCaption: string
+                        # optional — figure caption. With `screenshot`, captions the
+                        # real image. Without it, still renders the figure as a
+                        # riso-hatch placeholder captioned with what a screenshot
+                        # would show. Omit both to skip the figure entirely.
+askAnswer:              # optional — only add for a real worked example, never invented
+  question: string
+  columns: [string, string, string]  # optional header row, e.g. [Keyword, QS, Impr]
+  rows:
+    - label: string
+      value: string
+      value2: string    # optional
+  caption: string
 ```
 
 ## Editorial notes

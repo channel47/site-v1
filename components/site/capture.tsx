@@ -69,15 +69,16 @@ export function Capture({
             className="ok-check"
             width="20"
             height="20"
-            viewBox="0 0 26 26"
+            viewBox="0 0 16 16"
             fill="none"
             style={{ flex: "none" }}
             aria-hidden
           >
+            <circle cx="8" cy="8" r="7" stroke="var(--success)" strokeWidth="1.6" />
             <path
-              d="M4.5 13.8 L10.5 19.4 L21.5 6.2"
-              stroke="var(--accent)"
-              strokeWidth="2.4"
+              d="M4.8 8.3 L7 10.6 L11.3 5.7"
+              stroke="var(--success)"
+              strokeWidth="1.8"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
@@ -85,6 +86,16 @@ export function Capture({
           <span className="serif ea-ok-title">{CAPTURE.successTitle}</span>
         </div>
         <p className="ea-helper">{CAPTURE.successHelper}</p>
+        <button
+          type="button"
+          className="ea-reset mono"
+          onClick={() => {
+            setStatus("idle")
+            setEmail("")
+          }}
+        >
+          Wrong address? Start over
+        </button>
       </div>
     )
   }

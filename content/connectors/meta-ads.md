@@ -7,6 +7,7 @@ install: npx @channel47/meta-ads-mcp@latest
 package: "@channel47/meta-ads-mcp"
 date: 2026-07-02
 tags: [meta-ads, facebook-ads, instagram-ads, mcp, creative-testing, insights]
+pairing: "Needs a `META_ADS_ACCESS_TOKEN` (long-lived or system-user), plus an optional default account ID. Driven by the [Media Buyer skill](/skills/media-buyer)."
 ---
 
 Creative fatigue creeps — frequency 4.2 doesn't announce itself. This MCP
@@ -32,9 +33,3 @@ breakdowns, plus dry-run-first changes.
   (`"daily_budget": "5000"` is $50), rate limiting is retried automatically
   honoring Meta's `Retry-After` header, and account IDs come back normalized
   without the `act_` prefix.
-
-## Setup
-
-One required environment variable: `META_ADS_ACCESS_TOKEN` (a long-lived or
-system-user token), plus an optional default account ID. Driven by the
-[Media Buyer skill](/skills/media-buyer).

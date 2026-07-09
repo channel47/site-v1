@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react"
 import type { Metadata } from "next"
 import Link from "next/link"
 import { SiteHeader } from "@/components/site/header"
@@ -5,6 +6,7 @@ import { SiteFooter } from "@/components/site/footer"
 import { JsonLd } from "@/components/site/json-ld"
 import { skillsIndexGraph } from "@/lib/seo"
 import { getAssets } from "@/lib/content"
+import { TYPE_COLORS } from "@/lib/site-content"
 
 export const metadata: Metadata = {
   title: "Skills index — Channel 47",
@@ -38,7 +40,7 @@ export default function SkillsIndexPage() {
           </p>
         </header>
 
-        <ul className="st-rows si-rows">
+        <ul className="st-rows si-rows" style={{ "--type-color": TYPE_COLORS.skills } as CSSProperties}>
           {skills.map((skill) => (
             <li key={skill.slug}>
               <Link href={`/skills/${skill.slug}`} className="st-row">

@@ -6,6 +6,7 @@ repo: https://github.com/channel47/skills/tree/main/skills/distribution/kit-news
 install: npx skills add channel47/skills --skill kit-newsletter
 date: 2026-07-02
 tags: [newsletter, kit, convertkit, email, distribution]
+pairing: "One environment variable — `KIT_API_KEY` from Kit's developer settings. Pairs with the [content-miner skill](/skills/content-miner), which drafts what this sends."
 ---
 
 The friction between writing and sending, removed. This skill lets you draft,
@@ -13,7 +14,7 @@ schedule, and check Kit (ConvertKit) broadcasts in the same conversation where
 you wrote them — no dashboard. It bundles a small Python CLI around Kit's V4
 API, stdlib only, nothing to install.
 
-## What it does
+## What it knows
 
 - Converts an issue to email-safe HTML (simple tags, no div soup — Kit's
   template handles the outer styling) and shows you the content for review
@@ -30,9 +31,3 @@ API, stdlib only, nothing to install.
   through it, and the failure modes — 401 means bad key, 429 means back off.
 - First command in any session is an account check to confirm auth before
   touching anything.
-
-## Setup
-
-One environment variable: `KIT_API_KEY`, from Kit's developer settings. Pairs
-naturally with [content-miner](/skills/content-miner), which drafts what this
-sends.

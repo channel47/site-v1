@@ -1,6 +1,8 @@
+"use client"
+
+import { useState } from "react"
 import Link from "next/link"
-import { LINKS, HOME } from "@/lib/site-content"
-import { Unfold } from "./unfold"
+import { LINKS } from "@/lib/site-content"
 import { ThemeToggle } from "./theme-toggle"
 import { XIcon, GitHubIcon, LinkedInIcon, SkoolIcon } from "./social-icons"
 
@@ -43,62 +45,52 @@ const GROUPS = [
     key: "agents",
     label: "Agents",
     links: [
-      // Machine-readable surfaces (docs/AI-SEO.md Layer 3) — non-HTML
-      // route handlers, not app pages, so these render as plain anchors.
+      // Machine-readable surfaces (docs/AI-SEO.md Layer 3) — non-HTML route
+      // handlers, not app pages, so these render as plain anchors, filenames
+      // only (no "API"/"RSS" labels — an agent recognizes the path).
       { href: "/llms.txt", label: "llms.txt", plain: true },
+      { href: "/rss.xml", label: "rss.xml", plain: true },
       { href: "/sitemap.md", label: "sitemap.md", plain: true },
-      { href: "/api", label: "API", plain: true },
-      { href: "/rss.xml", label: "RSS", plain: true },
     ],
   },
 ] as const
 
 /**
- * Sitewide footer — the completeness + SEO layer (PLAN §3), now with
- * unfold link groups and the one shared sun toggle (round 12/14). The
- * social row grows past Skool as other profile URLs are confirmed — never
- * guess one.
+ * Sitewide footer — one horizontal row of group toggles, one shared panel
+ * below it (exclusive: opening a group closes whichever was open), plus the
+ * social row and the one shared sun toggle.
  */
 export function SiteFooter() {
+  const [openGroup, setOpenGroup] = useState<string | null>(null)
+  const active = GROUPS.find((g) => g.key === openGroup)
+
   return (
     <footer className="sf">
-      <div className="sf-inner st-shell">
-        <div className="sf-brand">
-          <svg
-            viewBox="0 0 46 24"
-            width={34}
-            height={18}
-            fill="currentColor"
-            aria-hidden
-          >
-            <rect x="0" y="0" width="7" height="18" />
-            <rect x="7" y="12" width="7" height="6" />
-            <rect x="14" y="0" width="7" height="24" />
-            <rect x="25" y="0" width="14" height="6" />
-            <rect x="39" y="0" width="7" height="12" />
-            <rect x="32" y="12" width="7" height="12" />
-          </svg>
-          <p className="sf-tag">{HOME.headline}</p>
-          <p className="sf-by mono">by Jackson Dean</p>
-        </div>
-
-        <div className="sf-groups">
+      <div className="sf-inner st-shell st-shell-full">
+        <div className="sf-toggles">
           {GROUPS.map((group) => (
-            <Unfold
+            <button
               key={group.key}
-              className="sf-group"
-              triggerClassName="sf-group-toggle"
-              trigger={
-                <>
-                  {group.label}
-                  <span className="sf-group-plus" aria-hidden>
-                    +
-                  </span>
-                </>
+              type="button"
+              className="sf-group-toggle"
+              aria-expanded={openGroup === group.key}
+              onClick={() =>
+                setOpenGroup((k) => (k === group.key ? null : group.key))
               }
             >
+              {group.label}
+              <span className="sf-group-plus" aria-hidden>
+                +
+              </span>
+            </button>
+          ))}
+        </div>
+
+        <div className="uf-body" data-open={active != null}>
+          <div>
+            {active ? (
               <div className="sf-group-links">
-                {group.links.map((link) =>
+                {active.links.map((link) =>
                   "external" in link && link.external ? (
                     <a
                       key={link.href}
@@ -110,10 +102,11 @@ export function SiteFooter() {
                       {link.label}
                     </a>
                   ) : "plain" in link && link.plain ? (
-                    // Non-HTML route handlers (llms.txt, sitemap.md, /api,
-                    // rss.xml) — a plain anchor, not next/link's Link, since
-                    // there's no app page here for it to prefetch/navigate.
-                    <a key={link.href} href={link.href} className="sf-link">
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      className="sf-link mono"
+                    >
                       {link.label}
                     </a>
                   ) : (
@@ -123,8 +116,8 @@ export function SiteFooter() {
                   ),
                 )}
               </div>
-            </Unfold>
-          ))}
+            ) : null}
+          </div>
         </div>
 
         <div className="sf-social">
@@ -147,8 +140,8 @@ export function SiteFooter() {
         </div>
 
         <div className="sf-legal">
-          <p className="mono">© 2026 Channel47 · by Jackson Dean</p>
-          <p className="mono">
+          <p>© 2026 Channel47 · by Jackson Dean</p>
+          <p>
             <Link href="/privacy" className="sf-link">
               Privacy
             </Link>

@@ -6,6 +6,7 @@ repo: https://github.com/channel47/skills/tree/main/skills/distribution/content-
 install: npx skills add channel47/skills --skill content-miner
 date: 2026-07-02
 tags: [content, distribution, build-in-public, newsletter, x, linkedin]
+pairing: "No credentials — configure sources and defaults in `.claude/content-miner.local.md`. Pairs with the [kit-newsletter skill](/skills/kit-newsletter), which sends what this drafts."
 ---
 
 The builder's content problem: you shipped all week and posted nothing. This
@@ -14,7 +15,7 @@ calendar, not an idea generator. It digs through your past week of work
 artifacts, notes, conversations, and completed tasks, and surfaces the content
 that was already there.
 
-## What it does
+## What it knows
 
 - Runs four phases — **gather → filter → classify → brief** — over your last
   7–14 days: commits and merged PRs, notes and journals, conversation history,
@@ -33,8 +34,3 @@ that was already there.
   result).
 - Fast mode for "just post something": pulls the last 3 days, finds the single
   most concrete thing, returns one X draft and one LinkedIn draft.
-
-## Setup
-
-No credentials. Configure sources and defaults in
-`.claude/content-miner.local.md`.

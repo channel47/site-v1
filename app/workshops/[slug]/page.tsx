@@ -7,6 +7,7 @@ import { SiteFooter } from "@/components/site/footer"
 import { Capture } from "@/components/site/capture"
 import { Crumb } from "@/components/site/crumb"
 import { ShareRow } from "@/components/site/share-row"
+import { SkoolIcon } from "@/components/site/social-icons"
 import { getWorkshopBySlug, getWorkshops, shortDate, getAssetBySlug } from "@/lib/content"
 import { LINKS, TYPE_COLORS } from "@/lib/site-content"
 import { SITE_URL } from "@/lib/seo"
@@ -57,7 +58,7 @@ export default async function WorkshopPage({ params }: Props) {
     <div className="st-page">
       <SiteHeader />
 
-      <article className="st-shell">
+      <article className="st-shell" style={{ "--type-color": TYPE_COLORS.workshops } as CSSProperties}>
         <header className="st-head">
           <Crumb
             typeLabel="Workshops"
@@ -79,8 +80,13 @@ export default async function WorkshopPage({ params }: Props) {
         {w.status === "upcoming" ? (
           <div className="ws-plate an-up" style={{ animationDelay: ".55s" }}>
             <div className="ws-plate-head">
-              <span className="ws-plate-live mono">Live session</span>
-              <span className="ws-plate-dur">{w.duration}</span>
+              <span className="ws-plate-live mono">
+                <svg width="8" height="9" viewBox="0 0 8 9" fill="currentColor" aria-hidden>
+                  <path d="M0 0l8 4.5L0 9z" />
+                </svg>
+                Live session
+              </span>
+              <span className="ws-plate-dur mono">{w.duration}</span>
             </div>
             <div className="ws-plate-body">
               <p className="ws-plate-date serif">{longDate(w.date)}</p>
@@ -99,7 +105,20 @@ export default async function WorkshopPage({ params }: Props) {
               <figcaption className="dt-figcaption">{w.screenshotCaption}</figcaption>
             ) : null}
           </figure>
-        ) : null}
+        ) : (
+          <figure className="dt-figure an-up" style={{ animationDelay: ".55s" }}>
+            <div className="ws-still-hatch" aria-hidden>
+              <span className="ws-still-tag mono">Still — session replay</span>
+              <svg className="ws-still-play" width="46" height="46" viewBox="0 0 46 46" fill="none" aria-hidden>
+                <circle cx="23" cy="23" r="22" stroke="currentColor" strokeWidth="1.5" />
+                <path d="M18 14.5l14 8.5-14 8.5z" fill="currentColor" />
+              </svg>
+            </div>
+            {w.screenshotCaption ? (
+              <figcaption className="dt-figcaption">{w.screenshotCaption}</figcaption>
+            ) : null}
+          </figure>
+        )}
 
         <div
           className="st-prose"
@@ -107,14 +126,27 @@ export default async function WorkshopPage({ params }: Props) {
           dangerouslySetInnerHTML={{ __html: w.html }}
         />
 
+        {w.status === "past" && related ? (
+          <Link
+            href={`/${w.relatedAsset!.type === "skill" ? "skills" : "connectors"}/${related.slug}`}
+            className="dt-cross"
+            style={{ "--type-color": "var(--c-workshop)" } as CSSProperties}
+          >
+            <p className="dt-cross-title">
+              {related.title} — grab the {w.relatedAsset!.type === "skill" ? "skill" : "connector"}
+            </p>
+            <span aria-hidden>→</span>
+          </Link>
+        ) : null}
+
         {w.status === "upcoming" ? (
           <div className="ws-cta">
             <p className="ws-cta-title">
               Workshops run live inside Vibe Marketers.
             </p>
             <p className="ws-cta-body">
-              Join the community to attend live, ask questions as it&apos;s
-              built, and get every past session&apos;s replay.
+              Join the community to get the calendar invite, attend this
+              build-along live, and ask questions while it happens.
             </p>
             <a
               href={LINKS.join}
@@ -123,6 +155,7 @@ export default async function WorkshopPage({ params }: Props) {
               className="btn-solid"
               style={{ "--btn-color": "var(--c-workshop)" } as CSSProperties}
             >
+              <SkoolIcon />
               Join Vibe Marketers →
             </a>
             <p className="ws-cta-caption mono">
@@ -133,18 +166,24 @@ export default async function WorkshopPage({ params }: Props) {
           <div className="ws-cta">
             <p className="ws-cta-title">Missed it? Catch the next one live.</p>
             <p className="ws-cta-body">
-              The replay is inside Vibe Marketers now. Get a heads-up the
-              moment the next session gets a date.
+              Drop your email and I&apos;ll tell you when the next lab is on
+              the calendar — one note per session, nothing else.
             </p>
             <Capture
               helper="One email when the next session gets a date. No spam."
               cta="Notify me →"
               focusVariant="mauve"
             />
+            <p className="ws-cta-caption mono">
+              Replay of this session is inside{" "}
+              <a href={LINKS.join} target="_blank" rel="noopener">
+                Vibe Marketers →
+              </a>
+            </p>
           </div>
         )}
 
-        {related ? (
+        {w.status === "upcoming" && related ? (
           <Link
             href={`/${w.relatedAsset!.type === "skill" ? "skills" : "connectors"}/${related.slug}`}
             className="dt-cross"
@@ -167,7 +206,7 @@ export default async function WorkshopPage({ params }: Props) {
         />
 
         <p className="dt-back">
-          <Link href="/browse?type=workshops">← More workshops</Link>
+          <Link href="/browse?type=workshops">← All workshops</Link>
         </p>
       </article>
 

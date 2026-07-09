@@ -6,32 +6,34 @@ repo: https://github.com/channel47/skills/tree/main/skills/paid-media/gaql
 install: npx skills add channel47/skills --skill gaql
 date: 2026-07-02
 tags: [gaql, google-ads, google-ads-api, reporting, queries]
+pairing: "No credentials — it's a reference, not a connection. Pairs with the [google-ads connector](/connectors/google-ads), which executes what this skill writes."
+screenshotCaption: "The submit → cryptic error → guess loop, ended: the agent answers from the reference."
+askAnswer:
+  question: "Keywords under quality score 5 with real impression volume — last 30 days."
+  columns: ["Keyword", "QS", "Impr"]
+  rows:
+    - label: "rain jacket women"
+      value: "3"
+      value2: "12,480"
+    - label: "waterproof shell"
+      value: "3"
+      value2: "9,120"
+    - label: "hiking jacket sale"
+      value: "4"
+      value2: "7,940"
+  caption: "Query written and run by the agent — this skill supplies the grammar, the google-ads connector executes."
 ---
 
-GAQL — Google Ads Query Language — looks like SQL and isn't, quite. It's SQL's
-strict cousin with unusual rules, communicated through validation errors that
-say what broke but rarely why. This skill is the written-down reference that
-loads whenever you ask anything GAQL-shaped, so queries get written correctly
-instead of hallucinated.
+GAQL — Google Ads Query Language — looks like SQL and isn't, quite. Its rules
+arrive as validation errors that say what broke but rarely why. This skill is
+that missing manual, loaded whenever you ask anything GAQL-shaped.
 
-## What it does
+## What it knows
 
-- Carries the formal GAQL grammar — every clause and operator — plus the full
-  list of predefined date ranges.
-- Encodes the case-sensitivity table (`LIKE` is insensitive, `=` is sensitive,
-  `REGEXP_MATCH` needs a `(?i)` prefix) and the gotcha list: no `OR` (fake it
-  with `IN` on a single field), non-date segments you filter on must also be
-  selected, everything cost-related travels in micros, and period filters need
-  the first day of the period or you get `MISALIGNED_DATE_FOR_FILTER`.
-- Checks segment/metric compatibility with field-metadata queries (via
-  `GoogleAdsFieldService`) before you hit the error.
-- Includes a cookbook of ready-made queries that replicate the Google Ads UI
-  screens: campaign performance, low quality-score keywords, search terms.
-- Answers GAQL questions in place — write a query, explain a cryptic error,
-  produce the case-insensitive version of a filter.
-
-## Setup
-
-No credentials — it's a reference, not a connection. Pairs with the
-[google-ads connector](/connectors/google-ads), which executes what this skill
-writes; also works standalone for scripts, notebooks, or direct API use.
+- The formal grammar — every clause and operator, plus all the predefined
+  date ranges.
+- The gotcha list — no `OR`, costs in micros, case sensitivity that varies by
+  operator, period filters that want day one.
+- Compatibility checks — segment and metric rules verified before you hit the
+  error.
+- A cookbook of ready-made queries that mirror the Google Ads UI screens.

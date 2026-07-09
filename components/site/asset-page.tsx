@@ -1,5 +1,6 @@
 import { Fragment, type CSSProperties } from "react"
 import Link from "next/link"
+import { marked } from "marked"
 import { SiteHeader } from "./header"
 import { SiteFooter } from "./footer"
 import { Capture } from "@/components/site/capture"
@@ -7,18 +8,18 @@ import { Crumb } from "@/components/site/crumb"
 import { ShareRow } from "@/components/site/share-row"
 import { JsonLd } from "@/components/site/json-ld"
 import { assetGraph, SITE_URL, AUTHOR_NAME } from "@/lib/seo"
-import { getPostsForAsset, shortDate, type Asset } from "@/lib/content"
+import { shortDate, type Asset } from "@/lib/content"
 import { TYPE_COLORS } from "@/lib/site-content"
 
 /**
- * The shared Skill/Connector detail fold (round 13a, adopted): crumb → title
- * → one-liner → byline (specs collapsed into one line) → figure (only when a
- * real screenshot exists) → body → ask/answer (only when a real worked
- * example exists) → grab it → related posts → share → newsletter → back
- * link. Agents inherit this template when the type launches.
+ * The shared Skill/Connector detail fold (round 14, confirmed): crumb →
+ * title → one-liner → byline (specs collapsed into one line) → figure (real
+ * screenshot, or a riso placeholder when there's a caption but no image yet)
+ * → body → ask/answer (only when a real worked example exists) → grab it →
+ * pairing note → share → newsletter → back link. Agents inherit this
+ * template when the type launches.
  */
 export function AssetPage({ asset }: { asset: Asset }) {
-  const related = getPostsForAsset(asset)
   const typeLabel = asset.type === "skill" ? "Skills" : "Connectors"
   const section = asset.type === "skill" ? "skills" : "connectors"
   const typeColor = asset.type === "skill" ? TYPE_COLORS.skills : TYPE_COLORS.connectors
@@ -28,7 +29,7 @@ export function AssetPage({ asset }: { asset: Asset }) {
     <div className="st-page">
       <SiteHeader />
 
-      <article className="st-shell">
+      <article className="st-shell st-shell-article" style={{ "--type-color": typeColor } as CSSProperties}>
         <JsonLd data={assetGraph(asset)} />
         <header className="st-head">
           <Crumb
@@ -59,6 +60,15 @@ export function AssetPage({ asset }: { asset: Asset }) {
               </figcaption>
             ) : null}
           </figure>
+        ) : asset.screenshotCaption ? (
+          <figure className="dt-figure an-up" style={{ animationDelay: ".55s" }}>
+            <div className="dt-figure-hatch" aria-hidden>
+              <span className="dt-figure-tag mono">FIG. 01</span>
+            </div>
+            <figcaption className="dt-figcaption">
+              {asset.screenshotCaption}
+            </figcaption>
+          </figure>
         ) : null}
 
         <div
@@ -76,6 +86,15 @@ export function AssetPage({ asset }: { asset: Asset }) {
             <div className="dt-qa-a">
               <p className="dt-qa-kicker mono">It answers</p>
               <div className="dt-qa-table">
+                {asset.askAnswer.columns ? (
+                  <>
+                    {asset.askAnswer.columns.map((label, i) => (
+                      <div key={i} className="dt-qa-head">
+                        {label}
+                      </div>
+                    ))}
+                  </>
+                ) : null}
                 {asset.askAnswer.rows.map((row, i) => (
                   <Fragment key={i}>
                     <div>{row.label}</div>
@@ -90,45 +109,19 @@ export function AssetPage({ asset }: { asset: Asset }) {
         ) : null}
 
         <section className="as-grab" aria-label="Install">
-          <h2 className="st-group-title mono">Grab it</h2>
+          <h2 className="st-section-h2">Grab it</h2>
           <pre className="as-install">
             <code>{asset.install}</code>
           </pre>
-          <p className="as-repo">
-            <a
-              href={asset.repo}
-              target="_blank"
-              rel="noopener"
-              className="st-accent-link"
-            >
-              Source on GitHub →
-            </a>
-            {asset.package ? (
-              <span className="mono as-pkg">{asset.package}</span>
-            ) : null}
-          </p>
+          {asset.pairing ? (
+            <p
+              className="as-pairing"
+              dangerouslySetInnerHTML={{
+                __html: marked.parseInline(asset.pairing, { async: false }),
+              }}
+            />
+          ) : null}
         </section>
-
-        {related.length > 0 ? (
-          <section className="as-related" aria-label="Related posts">
-            <h2 className="st-group-title mono">The story behind it</h2>
-            <ul className="st-rows">
-              {related.map((post) => (
-                <li key={post.slug}>
-                  <Link href={`/posts/${post.slug}`} className="st-row">
-                    <span className="st-row-main">
-                      <span className="st-row-title serif">{post.title}</span>
-                      <span className="st-row-desc">{post.description}</span>
-                    </span>
-                    <span className="st-row-meta mono">
-                      Post · {shortDate(post.date)}
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </section>
-        ) : null}
 
         <ShareRow
           mdPath={`/${section}/${asset.slug}.md`}

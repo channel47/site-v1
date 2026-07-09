@@ -6,6 +6,7 @@ repo: https://github.com/channel47/skills/tree/main/skills/creative-strategy/cre
 install: npx skills add channel47/skills --skill creative-strategist
 date: 2026-07-02
 tags: [creative-strategy, voice-of-customer, personas, ad-angles, advertorial, dtc]
+pairing: "No credentials needed — works in Claude Code, Cursor, Cline, Windsurf, and Codex CLI. A sample dossier ships in the repo."
 ---
 
 The best ad angles aren't brainstormed — they're mined. This skill systematizes a
@@ -14,7 +15,7 @@ customer language from product reviews, competitor reviews, and Reddit threads,
 then works it into personas, ranked angles, and a build-ready advertorial.
 Research first, write last.
 
-## What it does
+## What it knows
 
 - Runs four stages — **research → personas → angles → advertorial** — as one
   pipeline or one stage at a time, accumulating everything in a single dossier
@@ -33,8 +34,3 @@ Research first, write last.
   marked proven, needs-source, or remove.
 - Re-running research gives new quotes fresh IDs and flags stale downstream
   sections until they're rebuilt.
-
-## Setup
-
-Works in Claude Code, Cursor, Cline, Windsurf, Codex CLI — anything that reads
-`SKILL.md` files. No credentials needed. A sample dossier ships in the repo.

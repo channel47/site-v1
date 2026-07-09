@@ -7,6 +7,7 @@ install: npx @channel47/tiktok-ads-mcp@latest
 package: "@channel47/tiktok-ads-mcp"
 date: 2026-07-02
 tags: [tiktok-ads, mcp, creative-testing, ugc, paid-media]
+pairing: "Needs a `TIKTOK_ADS_ACCESS_TOKEN` — walked through the developer-app authorize-and-exchange flow in the README."
 ---
 
 TikTok burns through creative faster than any platform — velocity is the whole
@@ -34,9 +35,3 @@ paused.
   envelope responses where an HTTP 200 can carry an error code (surfaced
   properly), automatic pagination, and rate-limit retries honoring
   `Retry-After`.
-
-## Setup
-
-Add with `claude mcp add tiktok-ads --env TIKTOK_ADS_ACCESS_TOKEN=<token> --
-npx @channel47/tiktok-ads-mcp@latest`. Token setup — developer app, authorize,
-exchange for a long-lived token — is walked through in the README.
