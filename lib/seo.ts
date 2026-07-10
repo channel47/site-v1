@@ -1,4 +1,5 @@
-import type { Asset, Post } from "@/lib/content"
+import type { Metadata } from "next"
+import { ASSET_DIRS, type Asset, type Post } from "@/lib/content"
 
 /**
  * Entity foundation + JSON-LD builders (docs/AI-SEO.md, Layer 1).
@@ -127,14 +128,11 @@ export function postGraph(post: Post) {
  * SoftwareSourceCode is the honest type — these are installable source
  * artifacts living in a repo, not hosted applications. */
 export function assetGraph(asset: Asset) {
+  const path = ASSET_DIRS[asset.type]
   const section =
     asset.type === "skill"
-      ? { path: "skills", name: "Skills", indexUrl: `${SITE_URL}/skills` }
-      : {
-          path: "connectors",
-          name: "Connectors",
-          indexUrl: `${SITE_URL}/browse?type=connectors`,
-        }
+      ? { path, name: "Skills", indexUrl: `${SITE_URL}/browse?type=skills` }
+      : { path, name: "Connectors", indexUrl: `${SITE_URL}/browse?type=connectors` }
   const url = `${SITE_URL}/${section.path}/${asset.slug}`
   return {
     "@context": "https://schema.org",
@@ -163,4 +161,22 @@ export function assetGraph(asset: Asset) {
  * `<` is escaped so content strings can never close the script tag. */
 export function jsonLd(data: object): string {
   return JSON.stringify(data).replace(/</g, "\\u003c")
+}
+
+/** Shared `generateMetadata` shape for the Skill/Connector detail routes —
+ * identical except for the kind word in the title ("skill" / "MCP connector"). */
+export function assetMetadata(asset: Asset, kindLabel: string): Metadata {
+  const path = ASSET_DIRS[asset.type]
+  return {
+    title: `${asset.title} — a ${SITE_NAME} ${kindLabel}`,
+    description: asset.description,
+    alternates: { canonical: `/${path}/${asset.slug}` },
+    openGraph: {
+      title: asset.title,
+      description: asset.description,
+      url: `${SITE_URL}/${path}/${asset.slug}`,
+      siteName: SITE_NAME,
+      type: "website",
+    },
+  }
 }
