@@ -64,28 +64,30 @@ export async function POST(req: Request) {
       return Response.json({ ok: false, code: "provider-error" }, { status: 502 })
     }
 
-    // 2. Add to the form (opt-in flow) when configured. Best-effort.
+    // 2 & 3. Add to the form (opt-in flow) and tag by intent, when configured —
+    // both best-effort and independent of each other, so run them concurrently
+    // rather than paying two sequential round-trips on every signup.
     const formId = process.env.KIT_FORM_ID
-    if (formId) {
-      await fetch(`${KIT_BASE}/forms/${formId}/subscribers`, {
-        method: "POST",
-        headers,
-        body: JSON.stringify({ email_address: email }),
-      }).catch((e) => console.error("[/api/subscribe] form add failed", e))
-    }
-
-    // 3. Tag by intent when configured. Best-effort.
     const tagId =
       intent === "member"
         ? process.env.KIT_MEMBER_TAG_ID
         : process.env.KIT_WARM_TAG_ID
-    if (tagId) {
-      await fetch(`${KIT_BASE}/tags/${tagId}/subscribers`, {
-        method: "POST",
-        headers,
-        body: JSON.stringify({ email_address: email }),
-      }).catch((e) => console.error("[/api/subscribe] tag failed", e))
-    }
+    await Promise.all([
+      formId
+        ? fetch(`${KIT_BASE}/forms/${formId}/subscribers`, {
+            method: "POST",
+            headers,
+            body: JSON.stringify({ email_address: email }),
+          }).catch((e) => console.error("[/api/subscribe] form add failed", e))
+        : null,
+      tagId
+        ? fetch(`${KIT_BASE}/tags/${tagId}/subscribers`, {
+            method: "POST",
+            headers,
+            body: JSON.stringify({ email_address: email }),
+          }).catch((e) => console.error("[/api/subscribe] tag failed", e))
+        : null,
+    ])
 
     return Response.json({ ok: true })
   } catch (e) {

@@ -1,14 +1,5 @@
 import Link from "next/link"
-
-/** The six blocks that form the "47" mark (same geometry as GlitchLogo). */
-const BLOCKS = [
-  { x: 0, y: 0, width: 7, height: 18 },
-  { x: 7, y: 12, width: 7, height: 6 },
-  { x: 14, y: 0, width: 7, height: 24 },
-  { x: 25, y: 0, width: 14, height: 6 },
-  { x: 39, y: 0, width: 7, height: 12 },
-  { x: 32, y: 12, width: 7, height: 12 },
-]
+import { BLOCKS } from "@/components/site/mark-blocks"
 
 /**
  * Static "47" mark that links home. The landing page's GlitchLogo is a

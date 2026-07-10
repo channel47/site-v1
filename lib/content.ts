@@ -1,5 +1,6 @@
 import fs from "node:fs"
 import path from "node:path"
+import { cache } from "react"
 import matter from "gray-matter"
 import { marked } from "marked"
 
@@ -24,8 +25,6 @@ export interface PostAsset {
   name: string
   type: "skill" | "mcp"
   repo: string
-  install: string
-  package?: string
   /** Override for the end-of-post cross-link card title — defaults to
    * "{name} — the {skill|connector} this story ships with". */
   cardTitle?: string
@@ -104,9 +103,23 @@ export interface Asset extends AssetMeta {
 
 const CONTENT_DIR = path.join(process.cwd(), "content")
 const POST_CATEGORIES: PostCategory[] = ["skills", "connectors"]
-const ASSET_DIRS: Record<AssetType, string> = {
+
+/** Canonical AssetType → URL path segment / display label — the one place
+ * this mapping lives. Everything that needs "skill or connector, as a path
+ * or a word" imports these rather than re-deriving them with a ternary. */
+export const ASSET_DIRS: Record<AssetType, "skills" | "connectors"> = {
   skill: "skills",
   connector: "connectors",
+}
+export const ASSET_LABELS: Record<AssetType, string> = {
+  skill: "Skill",
+  connector: "Connector",
+}
+
+/** A post's `asset.type` uses the frontmatter spelling ("mcp" for
+ * connectors); normalize it to the shared `AssetType` vocabulary. */
+export function postAssetKind(type: PostAsset["type"]): AssetType {
+  return type === "skill" ? "skill" : "connector"
 }
 
 /**
@@ -194,25 +207,29 @@ function loadAsset(type: AssetType, file: string): Asset {
   }
 }
 
-/** All posts, curated order — skills stories first, then connectors. */
-export function getAllPosts(): Post[] {
+/** All posts, curated order — skills stories first, then connectors.
+ * Cached: this reads and re-parses (incl. markdown→HTML) every post file, and
+ * Next.js calls generateStaticParams/generateMetadata/the page separately for
+ * the same route, so an uncached version repeats that work several times per
+ * page during static generation. */
+export const getAllPosts = cache((): Post[] => {
   return POST_CATEGORIES.flatMap((category) =>
     markdownFiles("posts", category)
       .map((f) => loadPost(category, f))
       .sort(byRank),
   )
-}
+})
 
-export function getPostBySlug(slug: string): Post | undefined {
+export const getPostBySlug = cache((slug: string): Post | undefined => {
   return getAllPosts().find((p) => p.slug === slug)
-}
+})
 
-/** All assets of one type, curated order. */
-export function getAssets(type: AssetType): Asset[] {
+/** All assets of one type, curated order. See getAllPosts re: caching. */
+export const getAssets = cache((type: AssetType): Asset[] => {
   return markdownFiles(ASSET_DIRS[type])
     .map((f) => loadAsset(type, f))
     .sort(byRank)
-}
+})
 
 // ---------------------------------------------------------------- workshops
 
@@ -257,33 +274,26 @@ function loadWorkshop(file: string): Workshop {
   }
 }
 
-export function getWorkshops(): Workshop[] {
+export const getWorkshops = cache((): Workshop[] => {
   return markdownFiles("workshops")
     .map((f) => loadWorkshop(f))
     .sort((a, b) => b.date.localeCompare(a.date))
-}
+})
 
-export function getWorkshopBySlug(slug: string): Workshop | undefined {
+export const getWorkshopBySlug = cache((slug: string): Workshop | undefined => {
   return getWorkshops().find((w) => w.slug === slug)
-}
+})
 
-export function getAssetBySlug(
-  type: AssetType,
-  slug: string,
-): Asset | undefined {
-  return getAssets(type).find((a) => a.slug === slug)
-}
+export const getAssetBySlug = cache(
+  (type: AssetType, slug: string): Asset | undefined => {
+    return getAssets(type).find((a) => a.slug === slug)
+  },
+)
 
 /** The asset a post introduces, if that asset has a page here. */
-export function getAssetForPost(post: Post): Asset | undefined {
-  const type: AssetType = post.asset.type === "skill" ? "skill" : "connector"
-  return getAssetBySlug(type, post.asset.name)
-}
-
-/** Posts that introduce/use a given asset (matched on `asset.name`). */
-export function getPostsForAsset(asset: Asset): Post[] {
-  return getAllPosts().filter((p) => p.asset.name === asset.slug)
-}
+export const getAssetForPost = cache((post: Post): Asset | undefined => {
+  return getAssetBySlug(postAssetKind(post.asset.type), post.asset.name)
+})
 
 // ---------------------------------------------------------------- feed
 
@@ -299,7 +309,7 @@ export interface FeedItem {
   date: string
 }
 
-export function getFeedItems(): FeedItem[] {
+export const getFeedItems = cache((): FeedItem[] => {
   const posts: FeedItem[] = getAllPosts().map((p) => ({
     title: p.title,
     description: p.description,
@@ -333,14 +343,7 @@ export function getFeedItems(): FeedItem[] {
     date: w.date,
   }))
   return [...posts, ...skills, ...connectors, ...workshops]
-}
-
-/** Most recent items across every type — the Home feed. */
-export function getLatest(n: number): FeedItem[] {
-  return getFeedItems()
-    .sort((a, b) => b.date.localeCompare(a.date))
-    .slice(0, n)
-}
+})
 
 /** Word count / 200wpm, rounded up to at least 1 — the post byline's read time. */
 export function readTime(markdown: string): number {

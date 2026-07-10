@@ -1,16 +1,7 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-
-/** The six blocks that form the "47" mark. */
-const BLOCKS = [
-  { x: 0, y: 0, width: 7, height: 18 },
-  { x: 7, y: 12, width: 7, height: 6 },
-  { x: 14, y: 0, width: 7, height: 24 },
-  { x: 25, y: 0, width: 14, height: 6 },
-  { x: 39, y: 0, width: 7, height: 12 },
-  { x: 32, y: 12, width: 7, height: 12 },
-]
+import { BLOCKS } from "@/components/site/mark-blocks"
 
 interface GlitchLogoProps {
   /** Replay the scatter-assemble animation once on mount. */

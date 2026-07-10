@@ -2,15 +2,14 @@
 
 import { useState, type CSSProperties } from "react"
 import Link from "next/link"
-import { TYPE_COLORS } from "@/lib/site-content"
+import { CATEGORIES, TYPE_COLORS } from "@/lib/site-content"
 import { TypeIcon } from "./type-icon"
 
-const ROWS = [
-  { label: "Posts", href: "/browse?type=posts", type: "posts" },
-  { label: "Skills", href: "/browse?type=skills", type: "skills" },
-  { label: "Connectors", href: "/browse?type=connectors", type: "connectors" },
-  { label: "Workshops", href: "/browse?type=workshops", type: "workshops" },
-] as const
+const ROWS = CATEGORIES.map(({ title, href, key }) => ({
+  label: title,
+  href,
+  type: key,
+}))
 
 /**
  * Mobile-only burger → full-screen drawer (round 12/14 standing rule, desktop

@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next"
-import { getAllPosts, getAssets, getFeedItems, getWorkshops } from "@/lib/content"
+import { getAllPosts, getAssets, getWorkshops } from "@/lib/content"
 import { SITE_URL } from "@/lib/seo"
 
 /**
@@ -21,7 +21,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const skills = getAssets("skill")
   const connectors = getAssets("connector")
   const workshops = getWorkshops()
-  const newest = latestDate(getFeedItems().map((i) => i.date))
+  const newest = latestDate(
+    [...posts, ...skills, ...connectors, ...workshops].map((i) => i.date),
+  )
 
   return [
     { url: `${SITE_URL}/`, lastModified: newest },

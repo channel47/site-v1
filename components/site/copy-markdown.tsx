@@ -1,8 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
-
-type CopyState = "idle" | "copied" | "failed"
+import { useCopyAction } from "./use-copy-action"
 
 /**
  * "Copy as Markdown" — one click puts the page's markdown twin on the
@@ -12,23 +10,11 @@ type CopyState = "idle" | "copied" | "failed"
  * feedback-tier animation the design doctrine keeps.
  */
 export function CopyMarkdown({ path }: { path: string }) {
-  const [state, setState] = useState<CopyState>("idle")
-  const reset = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
-
-  useEffect(() => () => clearTimeout(reset.current), [])
-
-  async function copy() {
-    try {
-      const res = await fetch(path)
-      if (!res.ok) throw new Error(String(res.status))
-      await navigator.clipboard.writeText(await res.text())
-      setState("copied")
-    } catch {
-      setState("failed")
-    }
-    clearTimeout(reset.current)
-    reset.current = setTimeout(() => setState("idle"), 2000)
-  }
+  const { state, copy } = useCopyAction(async () => {
+    const res = await fetch(path)
+    if (!res.ok) throw new Error(String(res.status))
+    return res.text()
+  })
 
   const label =
     state === "copied" ? "Copied ✓" : state === "failed" ? "Couldn't copy" : "Copy page"

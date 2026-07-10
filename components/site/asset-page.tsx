@@ -8,7 +8,7 @@ import { Crumb } from "@/components/site/crumb"
 import { ShareRow } from "@/components/site/share-row"
 import { JsonLd } from "@/components/site/json-ld"
 import { assetGraph, SITE_URL, AUTHOR_NAME } from "@/lib/seo"
-import { shortDate, type Asset } from "@/lib/content"
+import { ASSET_DIRS, shortDate, type Asset } from "@/lib/content"
 import { TYPE_COLORS } from "@/lib/site-content"
 
 /**
@@ -21,8 +21,8 @@ import { TYPE_COLORS } from "@/lib/site-content"
  */
 export function AssetPage({ asset }: { asset: Asset }) {
   const typeLabel = asset.type === "skill" ? "Skills" : "Connectors"
-  const section = asset.type === "skill" ? "skills" : "connectors"
-  const typeColor = asset.type === "skill" ? TYPE_COLORS.skills : TYPE_COLORS.connectors
+  const section = ASSET_DIRS[asset.type]
+  const typeColor = TYPE_COLORS[section]
   const href = `/${section}/${asset.slug}`
 
   return (

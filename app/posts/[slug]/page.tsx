@@ -8,11 +8,14 @@ import { Capture } from "@/components/site/capture"
 import { Crumb } from "@/components/site/crumb"
 import { ShareRow } from "@/components/site/share-row"
 import { JsonLd } from "@/components/site/json-ld"
-import { postGraph, SITE_URL } from "@/lib/seo"
+import { postGraph, SITE_NAME, SITE_URL } from "@/lib/seo"
 import {
+  ASSET_DIRS,
+  ASSET_LABELS,
   getAllPosts,
   getAssetForPost,
   getPostBySlug,
+  postAssetKind,
   readTime,
   shortDate,
 } from "@/lib/content"
@@ -37,8 +40,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: post.title,
       description: post.description,
-      url: `https://channel47.dev/posts/${post.slug}`,
-      siteName: "Channel 47",
+      url: `${SITE_URL}/posts/${post.slug}`,
+      siteName: SITE_NAME,
       type: "article",
     },
   }
@@ -55,12 +58,22 @@ export default async function PostPage({ params }: Props) {
   const post = getPostBySlug(slug)
   if (!post) notFound()
   const asset = getAssetForPost(post)
-  const assetType = post.asset.type === "skill" ? "skills" : "connectors"
+  const assetKind = postAssetKind(post.asset.type)
+  const assetType = ASSET_DIRS[assetKind]
   const assetHref = asset ? `/${assetType}/${asset.slug}` : post.asset.repo
-  const assetTypeWord = post.asset.type === "skill" ? "skill" : "connector"
   const crossTitle =
     post.asset.cardTitle ??
-    `${post.asset.name} — the ${assetTypeWord} this story ships with`
+    `${post.asset.name} — the ${assetKind} this story ships with`
+  const crossStyle = { "--type-color": TYPE_COLORS[assetType] } as CSSProperties
+  const crossContent = (
+    <>
+      <span>
+        <span className="dt-cross-kicker mono">{ASSET_LABELS[assetKind]}</span>
+        <p className="dt-cross-title">{crossTitle}</p>
+      </span>
+      <span aria-hidden>→</span>
+    </>
+  )
   const href = `/posts/${post.slug}`
 
   return (
@@ -92,18 +105,8 @@ export default async function PostPage({ params }: Props) {
         />
 
         {asset ? (
-          <Link
-            href={assetHref}
-            className="dt-cross"
-            style={{ "--type-color": TYPE_COLORS[assetType] } as CSSProperties}
-          >
-            <span>
-              <span className="dt-cross-kicker mono">
-                {post.asset.type === "skill" ? "Skill" : "Connector"}
-              </span>
-              <p className="dt-cross-title">{crossTitle}</p>
-            </span>
-            <span aria-hidden>→</span>
+          <Link href={assetHref} className="dt-cross" style={crossStyle}>
+            {crossContent}
           </Link>
         ) : (
           <a
@@ -111,15 +114,9 @@ export default async function PostPage({ params }: Props) {
             target="_blank"
             rel="noopener"
             className="dt-cross"
-            style={{ "--type-color": TYPE_COLORS[assetType] } as CSSProperties}
+            style={crossStyle}
           >
-            <span>
-              <span className="dt-cross-kicker mono">
-                {post.asset.type === "skill" ? "Skill" : "Connector"}
-              </span>
-              <p className="dt-cross-title">{crossTitle}</p>
-            </span>
-            <span aria-hidden>→</span>
+            {crossContent}
           </a>
         )}
 

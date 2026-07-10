@@ -3,20 +3,19 @@ import type { Metadata } from "next"
 import { Analytics } from "@vercel/analytics/next"
 import { JsonLd } from "@/components/site/json-ld"
 import { PostHogAnalytics } from "@/components/site/posthog"
-import { baseGraph } from "@/lib/seo"
+import { baseGraph, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://channel47.dev"),
-  title: "Channel 47 — Skills, connectors, and agents for marketers",
-  description:
-    "Skills, connectors, and agents for marketers — built in real ad accounts by a working operator. Free to grab, live sessions monthly.",
+  metadataBase: new URL(SITE_URL),
+  title: `${SITE_NAME} — Skills, connectors, and agents for marketers`,
+  description: SITE_DESCRIPTION,
   openGraph: {
-    title: "Channel 47 — Skills, connectors, and agents for marketers",
+    title: `${SITE_NAME} — Skills, connectors, and agents for marketers`,
     description:
       "Skills, connectors, and agents for marketers — built in real ad accounts by a working operator.",
-    url: "https://channel47.dev",
-    siteName: "Channel 47",
+    url: SITE_URL,
+    siteName: SITE_NAME,
     type: "website",
   },
   icons: {
