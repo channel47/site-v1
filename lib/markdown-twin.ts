@@ -1,4 +1,4 @@
-import type { Asset, Post } from "@/lib/content"
+import { ASSET_DIRS, type Asset, type Post, type Workshop } from "@/lib/content"
 import { AUTHOR_NAME, SITE_URL } from "@/lib/seo"
 
 /**
@@ -40,8 +40,25 @@ export function postTwin(post: Post): string {
   )
 }
 
+export function workshopTwin(workshop: Workshop): string {
+  return (
+    frontmatter({
+      title: workshop.title,
+      slug: workshop.slug,
+      type: "workshop",
+      description: workshop.description,
+      author: AUTHOR_NAME,
+      updatedAt: workshop.date,
+      canonical: `${SITE_URL}/workshops/${workshop.slug}`,
+      status: workshop.status,
+      duration: workshop.duration,
+    }) +
+    `\n# ${workshop.title}\n\n${workshop.markdown}\n`
+  )
+}
+
 export function assetTwin(asset: Asset): string {
-  const section = asset.type === "skill" ? "skills" : "connectors"
+  const section = ASSET_DIRS[asset.type]
   return (
     frontmatter({
       title: asset.title,

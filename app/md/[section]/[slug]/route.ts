@@ -3,8 +3,10 @@ import {
   getAssetBySlug,
   getAssets,
   getPostBySlug,
+  getWorkshopBySlug,
+  getWorkshops,
 } from "@/lib/content"
-import { assetTwin, postTwin } from "@/lib/markdown-twin"
+import { assetTwin, postTwin, workshopTwin } from "@/lib/markdown-twin"
 
 /**
  * The markdown-twin endpoint. Agents reach it as `/posts/<slug>.md` (or via
@@ -30,6 +32,7 @@ export function generateStaticParams() {
       section: "connectors",
       slug: a.slug,
     })),
+    ...getWorkshops().map((w) => ({ section: "workshops", slug: w.slug })),
   ]
 }
 
@@ -43,6 +46,9 @@ export async function GET(_req: Request, { params }: Params) {
   } else if (section === "skills" || section === "connectors") {
     const asset = getAssetBySlug(section === "skills" ? "skill" : "connector", slug)
     twin = asset && assetTwin(asset)
+  } else if (section === "workshops") {
+    const workshop = getWorkshopBySlug(slug)
+    twin = workshop && workshopTwin(workshop)
   }
   if (!twin) return new Response("Not found", { status: 404 })
 

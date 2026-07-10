@@ -60,18 +60,18 @@ The templates enforce the plumbing; the content rules live with the writer:
 |---|---|---|
 | `robots.txt` | `app/robots.ts` | All AI crawlers explicitly welcomed; `/api/subscribe` and `/md/` excluded |
 | `llms.txt` | `app/llms.txt/route.ts` | Curated agent map + operator hints, generated from content |
-| Markdown twins | `proxy.ts` + `app/md/[section]/[slug]/route.ts` | Every post/skill/connector at `<url>.md`, YAML frontmatter, built from the same source as the HTML — cannot drift |
+| Markdown twins | `proxy.ts` + `app/md/[section]/[slug]/route.ts` | Every post/skill/connector/workshop at `<url>.md`, YAML frontmatter, built from the same source as the HTML — cannot drift |
 | Content negotiation | `proxy.ts` | `Accept: text/markdown` on canonical URLs returns the twin |
 | `sitemap.xml` | `app/sitemap.ts` | Real lastmod from frontmatter; evergreen pages omit it rather than fake it |
 | `sitemap.md` | `app/sitemap.md/route.ts` | Exhaustive agent-readable index + curl examples |
-| `rss.xml` | `app/rss.xml/route.ts` | Full-content feed of everything, newest first |
+| `rss.xml` | `app/rss.xml/route.ts` | Full-content feed of everything, newest first (workshops join once recorded) |
 | `/api` | `app/api/route.ts` | Versioned JSON discovery document with `nextActions` |
 | `/api/search?q=` | `app/api/search/route.ts` | Public JSON search — the site as a callable tool |
 
 ### Layer 4 — Distribution
-- **"Copy page"** (the markdown-twin copy button) on every post and asset
-  page (`components/site/copy-markdown.tsx`) — readers paste our exact
-  framing into their own AI chats; distribution no crawler reaches.
+- **"Copy page"** (the markdown-twin copy button) on every post, asset, and
+  workshop page (`components/site/copy-markdown.tsx`) — readers paste our
+  exact framing into their own AI chats; distribution no crawler reaches.
 - The installable artifacts already exist (`channel47/skills`,
   `channel47/mcps` + npm packages) — they are the flywheel. Keep install
   commands and canonical channel47.dev links in every README so adopters'

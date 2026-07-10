@@ -13,7 +13,7 @@ import { NextResponse, type NextRequest } from "next/server"
  * a browser or HTML to an agent that negotiated.
  */
 
-const CONTENT_ROUTE = /^\/(posts|skills|connectors)\/([a-z0-9-]+)(\.md)?$/
+const CONTENT_ROUTE = /^\/(posts|skills|connectors|workshops)\/([a-z0-9-]+)(\.md)?$/
 
 export function proxy(req: NextRequest) {
   const match = CONTENT_ROUTE.exec(req.nextUrl.pathname)
@@ -35,5 +35,5 @@ export function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/posts/:slug*", "/skills/:slug*", "/connectors/:slug*"],
+  matcher: ["/posts/:slug*", "/skills/:slug*", "/connectors/:slug*", "/workshops/:slug*"],
 }

@@ -1,4 +1,11 @@
-import { getAllPosts, getAssets, type Asset, type Post } from "@/lib/content"
+import {
+  getAllPosts,
+  getAssets,
+  getWorkshops,
+  type Asset,
+  type Post,
+  type Workshop,
+} from "@/lib/content"
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo"
 
 /**
@@ -6,6 +13,10 @@ import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo"
  * asset pages alike, newest first). RSS is the oldest machine-readable
  * surface and still feeds aggregators, newsletter tools, and AI data
  * pipelines; full content means consumers never need a second fetch.
+ *
+ * Workshops only join once `status: past` — an upcoming session's date is a
+ * future call time, not a publish date, and its page is a pre-event
+ * announcement rather than the finished recording write-up.
  */
 
 export const dynamic = "force-static"
@@ -30,7 +41,7 @@ function cdata(html: string): string {
   return `<![CDATA[${html.replaceAll("]]>", "]]]]><![CDATA[>")}]]>`
 }
 
-function entry(item: Post | Asset, url: string): FeedEntry {
+function entry(item: Post | Asset | Workshop, url: string): FeedEntry {
   return {
     title: item.title,
     url,
@@ -47,6 +58,9 @@ export function GET() {
     ...getAssets("connector").map((a) =>
       entry(a, `${SITE_URL}/connectors/${a.slug}`),
     ),
+    ...getWorkshops()
+      .filter((w) => w.status === "past")
+      .map((w) => entry(w, `${SITE_URL}/workshops/${w.slug}`)),
   ].sort((a, b) => b.date.localeCompare(a.date))
 
   const rfc822 = (iso: string) => new Date(`${iso}T12:00:00Z`).toUTCString()

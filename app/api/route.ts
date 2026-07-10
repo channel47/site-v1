@@ -50,6 +50,13 @@ export function GET() {
           markdownPattern: "/connectors/:slug.md",
           visibility: "public",
         },
+        {
+          name: "workshops",
+          description: "Recorded and upcoming live build sessions",
+          htmlPattern: "/workshops/:slug",
+          markdownPattern: "/workshops/:slug.md",
+          visibility: "public",
+        },
       ],
       search: {
         endpoint: "/api/search",

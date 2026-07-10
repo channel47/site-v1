@@ -8,9 +8,16 @@ import { Capture } from "@/components/site/capture"
 import { Crumb } from "@/components/site/crumb"
 import { ShareRow } from "@/components/site/share-row"
 import { SkoolIcon } from "@/components/site/social-icons"
-import { getWorkshopBySlug, getWorkshops, shortDate, getAssetBySlug } from "@/lib/content"
+import {
+  ASSET_DIRS,
+  ASSET_LABELS,
+  getAssetBySlug,
+  getWorkshopBySlug,
+  getWorkshops,
+  shortDate,
+} from "@/lib/content"
 import { LINKS, TYPE_COLORS } from "@/lib/site-content"
-import { SITE_URL } from "@/lib/seo"
+import { SITE_NAME, SITE_URL } from "@/lib/seo"
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -28,6 +35,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${w.title} — Channel 47`,
     description: w.description,
     alternates: { canonical: `/workshops/${w.slug}` },
+    openGraph: {
+      title: w.title,
+      description: w.description,
+      url: `${SITE_URL}/workshops/${w.slug}`,
+      siteName: SITE_NAME,
+      type: "website",
+    },
   }
 }
 
@@ -51,7 +65,10 @@ export default async function WorkshopPage({ params }: Props) {
   const { slug } = await params
   const w = getWorkshopBySlug(slug)
   if (!w) notFound()
+  const relatedKind = w.relatedAsset?.type
   const related = w.relatedAsset ? getAssetBySlug(w.relatedAsset.type, w.relatedAsset.slug) : undefined
+  const relatedHref = related && relatedKind ? `/${ASSET_DIRS[relatedKind]}/${related.slug}` : undefined
+  const relatedLabel = relatedKind ? ASSET_LABELS[relatedKind] : undefined
   const href = `/workshops/${w.slug}`
 
   return (
@@ -126,14 +143,14 @@ export default async function WorkshopPage({ params }: Props) {
           dangerouslySetInnerHTML={{ __html: w.html }}
         />
 
-        {w.status === "past" && related ? (
+        {w.status === "past" && related && relatedHref ? (
           <Link
-            href={`/${w.relatedAsset!.type === "skill" ? "skills" : "connectors"}/${related.slug}`}
+            href={relatedHref}
             className="dt-cross"
             style={{ "--type-color": "var(--c-workshop)" } as CSSProperties}
           >
             <p className="dt-cross-title">
-              {related.title} — grab the {w.relatedAsset!.type === "skill" ? "skill" : "connector"}
+              {related.title} — grab the {relatedLabel?.toLowerCase()}
             </p>
             <span aria-hidden>→</span>
           </Link>
@@ -183,16 +200,14 @@ export default async function WorkshopPage({ params }: Props) {
           </div>
         )}
 
-        {w.status === "upcoming" && related ? (
+        {w.status === "upcoming" && related && relatedHref ? (
           <Link
-            href={`/${w.relatedAsset!.type === "skill" ? "skills" : "connectors"}/${related.slug}`}
+            href={relatedHref}
             className="dt-cross"
             style={{ "--type-color": "var(--c-workshop)" } as CSSProperties}
           >
             <span>
-              <span className="dt-cross-kicker mono">
-                {w.relatedAsset!.type === "skill" ? "Skill" : "Connector"}
-              </span>
+              <span className="dt-cross-kicker mono">{relatedLabel}</span>
               <p className="dt-cross-title">{related.title}</p>
             </span>
             <span aria-hidden>→</span>

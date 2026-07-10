@@ -7,7 +7,7 @@ const nextConfig = {
     // header in production, and the rewritten .md responses carry their own.
     return [
       {
-        source: "/(posts|skills|connectors)/:slug",
+        source: "/(posts|skills|connectors|workshops)/:slug",
         headers: [{ key: "Vary", value: "Accept" }],
       },
     ]
@@ -22,6 +22,21 @@ const nextConfig = {
       { source: "/stories", destination: "/browse?type=posts", permanent: true },
       { source: "/stories/:slug", destination: "/posts/:slug", permanent: true },
       { source: "/workshops", destination: "/browse?type=workshops", permanent: true },
+      // All 12 posts unpublished (moved to content/_unpublished/posts/) — an
+      // explicit list per known slug, not a blanket /posts/:slug rule, so a
+      // future post at a fresh slug isn't shadowed by this takedown.
+      { source: "/posts/content-miner", destination: "/browse?type=posts", permanent: true },
+      { source: "/posts/creative-strategist", destination: "/browse?type=posts", permanent: true },
+      { source: "/posts/gaql", destination: "/browse?type=posts", permanent: true },
+      { source: "/posts/kit-newsletter", destination: "/browse?type=posts", permanent: true },
+      { source: "/posts/media-buyer", destination: "/browse?type=posts", permanent: true },
+      { source: "/posts/twitter-algorithm-optimizer", destination: "/browse?type=posts", permanent: true },
+      { source: "/posts/bing-ads-mcp", destination: "/browse?type=posts", permanent: true },
+      { source: "/posts/google-ads-mcp", destination: "/browse?type=posts", permanent: true },
+      { source: "/posts/linkedin-ads-mcp", destination: "/browse?type=posts", permanent: true },
+      { source: "/posts/meta-ads-mcp", destination: "/browse?type=posts", permanent: true },
+      { source: "/posts/pinterest-ads-mcp", destination: "/browse?type=posts", permanent: true },
+      { source: "/posts/tiktok-ads-mcp", destination: "/browse?type=posts", permanent: true },
     ]
   },
 }
