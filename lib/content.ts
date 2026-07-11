@@ -17,6 +17,41 @@ import { marked } from "marked"
  * Frontmatter schemas are documented in `content/README.md`.
  */
 
+/** Minimal HTML-attribute/text escape for values interpolated into the
+ * renderer overrides below (alt text, captions) — markdown content is
+ * trusted, but alt text can still contain `<`, `&`, or `"`. */
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+}
+
+/** "Framed still" image treatment — every `![alt](src)` in content markdown
+ * renders as a hard-edged figure (see `.st-shot` in globals.css) instead of
+ * a bare `<img>`, with the alt text doubling as a small mono figcaption. */
+marked.use({
+  renderer: {
+    image({ href, text }) {
+      const alt = escapeHtml(text)
+      const caption = text
+        ? `<figcaption class="st-shot-cap">${alt}</figcaption>`
+        : ""
+      return `<figure class="st-shot"><div class="st-shot-field"><img src="${href}" alt="${alt}" loading="lazy" /></div>${caption}</figure>`
+    },
+    // An image on its own line parses as a paragraph containing a single
+    // image token — unwrap it so the figure isn't nested inside a <p>,
+    // which browsers treat as invalid and auto-close in weird places.
+    paragraph({ tokens }) {
+      if (tokens.length === 1 && tokens[0].type === "image") {
+        return this.parser.parseInline(tokens)
+      }
+      return `<p>${this.parser.parseInline(tokens)}</p>`
+    },
+  },
+})
+
 // ---------------------------------------------------------------- posts
 
 export type PostCategory = "skills" | "connectors"

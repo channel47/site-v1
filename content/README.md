@@ -74,6 +74,23 @@ askAnswer:              # optional — only add for a real worked example, never
   caption: string
 ```
 
+## Images ("framed stills")
+
+Markdown images render as framed figures, not bare `<img>` tags: a hairline-bordered
+field tinted with the page's content-type colour, with the screenshot floating on it
+under a CSS drop-shadow. Alt text doubles as the visible figcaption.
+
+```markdown
+![The audit run that found the $412.](/posts/audit-run.png)
+```
+
+- Capture windows with `⌘⇧4 → Space → ⌥-click` (Option omits the native shadow) so the
+  PNG keeps its rounded corners on a transparent background — the treatment depends on
+  that transparency.
+- Files live in `public/posts/`; reference them root-relative. No double quotes in paths.
+- Write alt text as a real caption — it's shown under the figure in mono.
+- The rendering is `marked.use()` in `lib/content.ts` + `.st-shot*` in `app/globals.css`.
+
 ## Editorial notes
 
 - Every feature, command, query, and workflow referenced in posts and asset pages is
