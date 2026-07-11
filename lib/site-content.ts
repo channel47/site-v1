@@ -14,18 +14,16 @@ export const LINKS = {
   // More social profiles join the footer row as they're confirmed — never guess a URL.
 } as const
 
-/** Home hero — first person, credibility inline (confirmed design). */
+/** Home hero — first person, capture in the hero, bio below the rows (v2). */
 export const HOME = {
   headline: "I build agentic systems for marketers.",
   subhead:
     "Skills, connectors, and workshops from real ad accounts I run every day. Free to grab, live sessions monthly.",
-  /** The small identity row under the subhead. */
+  /** The bio block between "Browse all" and the footer. */
   name: "Jackson Dean",
   tagline: "7 years buying media",
   avatar: "/jackson.jpeg",
-  /** The 1–2 line signed note that earns the capture ask. */
-  note: "Channel47 is where I publish the marketing tools and workshop notes I make available to others.",
-  noteSignature: "— Jackson",
+  bio: "I run ad accounts for a living, and I got tired of rebuilding the same tools every Monday. So I ship them here as I make them. If one of them saves you an afternoon, it's yours.",
 } as const
 
 /** Sitewide email-capture copy (PLAN §5 Newsletter framing). */

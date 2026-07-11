@@ -87,6 +87,10 @@ under a CSS drop-shadow. Alt text doubles as the visible figcaption.
 - Capture windows with `⌘⇧4 → Space → ⌥-click` (Option omits the native shadow) so the
   PNG keeps its rounded corners on a transparent background — the treatment depends on
   that transparency.
+- Every real screenshot on the site — terminal *and* browser windows alike — uses this
+  framed treatment. The riso hatch is strictly a placeholder for missing art, never a
+  final state. (The asset-page figure in `components/site/asset-page.tsx` pre-dates the
+  frame; migrate it to `.st-shot` when its first real screenshot lands.)
 - Files live in `public/posts/`; reference them root-relative. No double quotes in paths.
 - Write alt text as a real caption — it's shown under the figure in mono.
 - The rendering is `marked.use()` in `lib/content.ts` + `.st-shot*` in `app/globals.css`.

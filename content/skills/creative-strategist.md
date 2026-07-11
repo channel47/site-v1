@@ -6,6 +6,8 @@ repo: https://github.com/channel47/skills/tree/main/skills/creative-strategy/cre
 install: npx skills add channel47/skills --skill creative-strategist
 date: 2026-07-02
 tags: [creative-strategy, voice-of-customer, personas, ad-angles, advertorial, dtc]
+screenshot: /uploads/creative-strategist-skill-readme.png
+screenshotCaption: "Creative Strategist's staged research, persona, angle, and advertorial workflow."
 pairing: "Requires access to the research sources used in a run. Brief Me and Ad Recon can provide upstream context."
 ---
 

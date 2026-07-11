@@ -50,9 +50,9 @@ function coversFor(key: ContentTypeKey): Cover[] {
 }
 
 /**
- * Home (round 12/14) — plain headline, then category rows that unfold
- * into a short description and the most recent items in that type, then the
- * below-the-fold region with a signed note and email capture.
+ * Home (v2) — plain headline with the email capture in the hero, then
+ * category rows that unfold into a short description and the most recent
+ * items in that type, then the bio block ahead of the footer.
  */
 export default function Page() {
   const rows: CategoryRow[] = CATEGORIES.map((cat) => ({
@@ -70,18 +70,8 @@ export default function Page() {
           <p className="home-sub an-up" style={{ animationDelay: ".2s" }}>
             {HOME.subhead}
           </p>
-          <div className="home-id an-up" style={{ animationDelay: ".32s" }}>
-            <img
-              src={HOME.avatar}
-              alt=""
-              width={38}
-              height={38}
-              className="home-id-avatar"
-            />
-            <span className="home-id-text">
-              <span className="home-id-name">{HOME.name}</span>
-              <span className="home-id-tag">{HOME.tagline}</span>
-            </span>
+          <div className="home-hero-capture an-up" style={{ animationDelay: ".32s" }}>
+            <Capture />
           </div>
         </div>
 
@@ -93,12 +83,23 @@ export default function Page() {
           </Link>
         </p>
 
-        <section aria-label="Subscribe" className="home-subscribe">
-          <p className="home-note">
-            {HOME.note}{" "}
-            <span className="home-note-sig mono">{HOME.noteSignature}</span>
-          </p>
-          <Capture />
+        <section aria-label="About Jackson" className="home-bio">
+          <div className="home-bio-inner">
+            <div className="home-bio-id">
+              <img
+                src={HOME.avatar}
+                alt={HOME.name}
+                width={64}
+                height={64}
+                className="home-bio-avatar"
+              />
+              <span className="home-bio-text">
+                <span className="home-bio-name">{HOME.name}</span>
+                <span className="home-bio-tag">{HOME.tagline}</span>
+              </span>
+            </div>
+            <p className="home-bio-note">{HOME.bio}</p>
+          </div>
         </section>
       </main>
 

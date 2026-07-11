@@ -9,7 +9,7 @@ import { ShareRow } from "@/components/site/share-row"
 import { JsonLd } from "@/components/site/json-ld"
 import { assetGraph, SITE_URL, AUTHOR_NAME } from "@/lib/seo"
 import { ASSET_DIRS, shortDate, type Asset } from "@/lib/content"
-import { TYPE_COLORS } from "@/lib/site-content"
+import { HOME, TYPE_COLORS } from "@/lib/site-content"
 
 /**
  * The shared Skill/Connector detail fold (round 14, confirmed): crumb →
@@ -42,20 +42,36 @@ export function AssetPage({ asset }: { asset: Asset }) {
           <p className="dt-oneliner an-up" style={{ animationDelay: ".2s" }}>
             {asset.description}
           </p>
-          <p className="dt-byline an-up" style={{ animationDelay: ".32s" }}>
-            {AUTHOR_NAME} · Shipped {shortDate(asset.date)} ·{" "}
-            <a href={asset.repo} target="_blank" rel="noopener">
-              Source on GitHub →
-            </a>
+          <p
+            className="dt-byline dt-byline-author an-up"
+            style={{ animationDelay: ".32s" }}
+          >
+            <img
+              src={HOME.avatar}
+              alt=""
+              width={24}
+              height={24}
+              className="dt-byline-avatar"
+            />
+            <span>
+              <span className="dt-byline-name">{AUTHOR_NAME}</span> ·{" "}
+              {shortDate(asset.date)}
+            </span>
           </p>
         </header>
 
         {asset.screenshot ? (
-          <figure className="dt-figure an-up" style={{ animationDelay: ".4s" }}>
+          <figure className="st-shot an-up" style={{ animationDelay: ".4s" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={asset.screenshot} alt="" />
+            <div className="st-shot-field">
+              <img
+                src={asset.screenshot}
+                alt={asset.screenshotCaption ?? ""}
+                loading="lazy"
+              />
+            </div>
             {asset.screenshotCaption ? (
-              <figcaption className="dt-figcaption">
+              <figcaption className="st-shot-cap">
                 {asset.screenshotCaption}
               </figcaption>
             ) : null}
@@ -127,6 +143,7 @@ export function AssetPage({ asset }: { asset: Asset }) {
           mdPath={`/${section}/${asset.slug}.md`}
           url={`${SITE_URL}${href}`}
           title={asset.title}
+          sourceHref={asset.repo}
         />
 
         <div className="st-post-capture">
