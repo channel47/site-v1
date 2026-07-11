@@ -11,7 +11,7 @@ import {
   getWorkshops,
   shortDate,
 } from "@/lib/content"
-import { CATEGORIES, HOME, type ContentTypeKey } from "@/lib/site-content"
+import { CATEGORIES, HOME, HOME_NEWSLETTER, type ContentTypeKey } from "@/lib/site-content"
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -61,9 +61,10 @@ function coversFor(key: ContentTypeKey): Cover[] {
 }
 
 /**
- * Home (v2) — plain headline with the email capture in the hero, then
- * category rows that unfold into a short description and the most recent
- * items in that type, then the bio block ahead of the footer.
+ * Home (v2 repositioning) — broadened hero with a quiet bordered "Book a
+ * session" as the primary action (no filled button, no booking-metadata
+ * line — that detail lives on /session), then category rows, the bio, and
+ * the email capture relocated below the bio ahead of the footer.
  */
 export default function Page() {
   const rows: CategoryRow[] = CATEGORIES.map((cat) => ({
@@ -81,8 +82,13 @@ export default function Page() {
           <p className="home-sub an-up" style={{ animationDelay: ".2s" }}>
             {HOME.subhead}
           </p>
-          <div className="home-hero-capture an-up" style={{ animationDelay: ".32s" }}>
-            <Capture />
+          <div className="home-hero-actions an-up" style={{ animationDelay: ".32s" }}>
+            <Link href="/session" className="home-hero-primary">
+              Book a session
+            </Link>
+            <Link href="/browse" className="home-hero-secondary">
+              Browse the workshop →
+            </Link>
           </div>
         </div>
 
@@ -110,6 +116,16 @@ export default function Page() {
               </span>
             </div>
             <p className="home-bio-note">{HOME.bio}</p>
+          </div>
+        </section>
+
+        <section aria-label="Subscribe" className="home-newsletter">
+          <div className="home-newsletter-inner">
+            <h2 className="home-newsletter-h2">{HOME_NEWSLETTER.heading}</h2>
+            <p className="home-newsletter-sub">{HOME_NEWSLETTER.sub}</p>
+            <div className="home-newsletter-capture">
+              <Capture helper={HOME_NEWSLETTER.microcopy} />
+            </div>
           </div>
         </section>
       </main>

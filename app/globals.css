@@ -50,6 +50,13 @@
   --row-hover: rgba(22, 23, 24, 0.03);
   /* drop-shadow under a framed-still screenshot PNG */
   --shadow-ink: rgba(12, 13, 14, 0.32);
+  /* offer-card border weight — a step heavier than section hairlines
+     (--hairline .1), lighter than input underlines (--underline .3) */
+  --card-border: rgba(22, 23, 24, 0.14);
+  /* raised surface for the /session offer card + mobile booking card */
+  --surface-raised: #ffffff;
+  /* translucent sticky book bar background (mobile /session) */
+  --sticky-bar-bg: rgba(253, 253, 252, 0.9);
 
   --btn-bg: #161718;
   --btn-fg: #fdfdfc;
@@ -144,6 +151,9 @@
     --row-hover: rgba(236, 236, 234, 0.05);
     /* drop-shadow under a framed-still screenshot PNG */
     --shadow-ink: rgba(0, 0, 0, 0.55);
+    --card-border: rgba(236, 236, 234, 0.16);
+    --surface-raised: #16171a;
+    --sticky-bar-bg: rgba(15, 16, 18, 0.9);
     --btn-bg: #ececea;
     --btn-fg: #0f1012;
   }
@@ -173,6 +183,9 @@
   --still-bg: rgba(236, 236, 234, 0.04);
   /* drop-shadow under a framed-still screenshot PNG */
   --shadow-ink: rgba(0, 0, 0, 0.55);
+  --card-border: rgba(236, 236, 234, 0.16);
+  --surface-raised: #16171a;
+  --sticky-bar-bg: rgba(15, 16, 18, 0.9);
   --btn-bg: #ececea;
   --btn-fg: #0f1012;
 }
@@ -1746,9 +1759,41 @@ input:focus-visible {
   max-width: 290px;
 }
 
-/* Email capture in the hero, directly under the subhead. */
-.home-hero-capture {
-  margin-top: 26px;
+/* Hero action row (v2) — quiet bordered "Book a session" pairs visually
+   with .sh-nav-ghost; "Browse the workshop →" is a plain muted-ink link.
+   No filled button here (reserved for the /session offer card). */
+.home-hero-actions {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.home-hero-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  padding: 12px 18px;
+  border: 1px solid var(--nav-ghost-border);
+  color: var(--ink);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.home-hero-primary:hover {
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  border-color: var(--btn-bg);
+}
+.home-hero-secondary {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--body);
+  transition: color 0.2s;
+}
+.home-hero-secondary:hover {
+  color: var(--ink);
 }
 
 .home-cats {
@@ -1930,6 +1975,33 @@ input:focus-visible {
   color: var(--body-strong);
 }
 
+/* Newsletter capture relocated below the bio (v2) — kept on mobile too
+   (stacked naturally), even though the design's mobile frame omitted it. */
+.home-newsletter {
+  margin-top: 36px;
+}
+.home-newsletter-inner {
+  padding-top: 24px;
+  border-top: 1px solid var(--hairline);
+}
+.home-newsletter-h2 {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+.home-newsletter-sub {
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--body);
+  max-width: 320px;
+}
+.home-newsletter-capture {
+  margin-top: 18px;
+  max-width: 400px;
+}
+
 @media (min-width: 768px) {
   .home-hero {
     margin-top: 88px;
@@ -1946,11 +2018,18 @@ input:focus-visible {
   .home-sub {
     margin-top: 20px;
     font-size: 17px;
-    max-width: 440px;
+    max-width: 520px;
   }
-  .home-hero-capture {
-    margin-top: 32px;
-    max-width: 460px;
+  .home-hero-actions {
+    margin-top: 36px;
+    gap: 20px;
+  }
+  .home-hero-primary {
+    font-size: 15px;
+    padding: 13px 20px;
+  }
+  .home-hero-secondary {
+    font-size: 14px;
   }
   .home-bio {
     margin-top: 56px;
@@ -1974,6 +2053,25 @@ input:focus-visible {
     max-width: 460px;
     font-size: 14px;
     line-height: 1.65;
+  }
+  .home-newsletter {
+    margin-top: 60px;
+  }
+  .home-newsletter-inner {
+    max-width: 640px;
+    padding-top: 34px;
+  }
+  .home-newsletter-h2 {
+    font-size: 22px;
+  }
+  .home-newsletter-sub {
+    margin-top: 10px;
+    font-size: 14px;
+    max-width: 470px;
+  }
+  .home-newsletter-capture {
+    margin-top: 22px;
+    max-width: 460px;
   }
   .home-cat-toggle {
     padding: 24px 0;
@@ -2327,6 +2425,382 @@ input:focus-visible {
   .dt-share {
     flex-direction: column;
     align-items: flex-start;
+  }
+}
+
+/* ---- working session (/session) — two-column desktop, mobile sticky
+   book bar (spec 06) ---------------------------------------------------- */
+
+/* Bottom padding clears the mobile sticky bar; desktop resets it since the
+   bar is mobile-only. */
+.session-page {
+  padding-bottom: 84px;
+}
+
+.session-layout {
+  padding-top: 32px;
+}
+.session-main {
+  min-width: 0;
+}
+
+/* Offer-card / mobile-card shared table -------------------------------- */
+.session-card-label,
+.session-card-microcopy {
+  color: var(--muted);
+}
+.session-card-label {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.session-card-table {
+  margin-top: 14px;
+}
+.session-card-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid var(--hairline);
+}
+.session-card-row:last-child {
+  border-bottom: 1px solid var(--hairline);
+}
+.session-card-row-label {
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--body);
+}
+.session-card-row-value {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+}
+.session-card-microcopy {
+  margin-top: 12px;
+  font-size: 10.5px;
+  line-height: 1.55;
+}
+
+/* The one filled button on the site — reserved for the Cal.com booking
+   action (offer card + sticky bar). */
+.session-book-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: 20px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  padding: 14px 22px;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  border: 1px solid var(--btn-bg);
+  transition: opacity 0.2s;
+}
+.session-book-btn:hover {
+  opacity: 0.85;
+}
+
+.session-card-testimonial {
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--hairline);
+}
+.session-card-quote {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.55;
+  color: var(--body-strong);
+}
+.session-card-attribution {
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* Desktop sidebar offer card — a raised surface, a step heavier border
+   than section hairlines. */
+.session-card {
+  border: 1px solid var(--card-border);
+  background: var(--surface-raised);
+  padding: 26px 26px 28px;
+}
+
+/* Mobile "what you're booking" inline card — same table, no button/quote
+   (booking lives in the sticky bar instead). */
+.session-mobile-card {
+  margin-top: 22px;
+  border: 1px solid var(--card-border);
+  background: var(--surface-raised);
+  padding: 20px 20px 22px;
+}
+
+.session-intro-mobile {
+  display: block;
+}
+.session-intro-desktop {
+  display: none;
+}
+.session-personal-bio-mobile {
+  display: block;
+}
+.session-personal-bio-desktop {
+  display: none;
+}
+.session-boundary-body-mobile {
+  display: block;
+}
+.session-boundary-body-desktop {
+  display: none;
+}
+
+.session-h2 {
+  margin-top: 40px;
+  padding-top: 18px;
+  border-top: 1px solid var(--hairline);
+}
+.session-section:first-of-type .session-h2 {
+  margin-top: 32px;
+}
+
+.session-steps {
+  margin-top: 4px;
+}
+.session-step {
+  display: flex;
+  gap: 14px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--hairline-soft);
+}
+.session-step:last-child {
+  border-bottom: none;
+}
+.session-step-index {
+  flex: none;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--faint);
+  padding-top: 2px;
+}
+.session-step-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--body-strong);
+}
+
+.session-proof-lede {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--body);
+}
+.session-proof-list {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.session-proof-card {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 1px solid var(--hairline);
+  transition: border-color 0.2s;
+}
+.session-proof-card:hover {
+  border-color: var(--c-build);
+}
+.session-proof-tag {
+  display: block;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c-build);
+}
+.session-proof-title {
+  display: block;
+  margin-top: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.session-proof-arrow {
+  flex: none;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.session-personal {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.session-personal-avatar {
+  flex: none;
+  width: 60px;
+  height: 60px;
+  border-radius: 99px;
+  object-fit: cover;
+  object-position: 50% 22%;
+  box-shadow: 0 0 0 1px var(--hairline);
+}
+.session-personal-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.session-personal-name {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.session-personal-meta {
+  font-size: 12px;
+  color: var(--body);
+}
+.session-personal-bio {
+  margin-top: 16px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--body-strong);
+}
+
+.session-boundary {
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--hairline);
+}
+.session-boundary-label {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.session-boundary-body {
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--body-strong);
+}
+
+/* Mobile sticky book bar — pinned to the viewport bottom, translucent. */
+.session-sticky-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 13px 20px 15px;
+  border-top: 1px solid var(--card-border);
+  background: var(--sticky-bar-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.session-sticky-price {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.session-sticky-price-unit {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--body);
+}
+.session-sticky-meta {
+  font-size: 9.5px;
+  letter-spacing: 0.02em;
+  color: var(--body);
+}
+.session-sticky-btn {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  border: 1px solid var(--btn-bg);
+  transition: opacity 0.2s;
+}
+.session-sticky-btn:hover {
+  opacity: 0.85;
+}
+
+@media (min-width: 768px) {
+  .session-page {
+    padding-bottom: 0;
+  }
+  .session-layout {
+    display: flex;
+    gap: 64px;
+    align-items: flex-start;
+    padding-top: 60px;
+  }
+  .session-main {
+    flex: 1;
+  }
+  .session-aside {
+    flex: none;
+    width: 340px;
+  }
+  .session-card {
+    position: sticky;
+    top: 24px;
+  }
+  .session-mobile-card {
+    display: none;
+  }
+  .session-intro-mobile {
+    display: none;
+  }
+  .session-intro-desktop {
+    display: block;
+  }
+  .session-personal-bio-mobile {
+    display: none;
+  }
+  .session-personal-bio-desktop {
+    display: block;
+  }
+  .session-boundary-body-mobile {
+    display: none;
+  }
+  .session-boundary-body-desktop {
+    display: block;
+  }
+  .session-sticky-bar {
+    display: none;
+  }
+  .session-h2 {
+    margin-top: 44px;
+    padding-top: 20px;
+    font-size: 20px;
+  }
+  .session-section:first-of-type .session-h2 {
+    margin-top: 44px;
   }
 }
 
