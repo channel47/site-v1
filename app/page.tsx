@@ -70,6 +70,19 @@ export default function Page() {
           <p className="home-sub an-up" style={{ animationDelay: ".3s" }}>
             {HOME.subhead}
           </p>
+          <div className="home-id an-up" style={{ animationDelay: ".45s" }}>
+            <img
+              src={HOME.avatar}
+              alt=""
+              width={38}
+              height={38}
+              className="home-id-avatar"
+            />
+            <span className="home-id-text">
+              <span className="home-id-name">{HOME.name}</span>
+              <span className="home-id-tag">{HOME.tagline}</span>
+            </span>
+          </div>
         </div>
 
         <HomeCats rows={rows} />

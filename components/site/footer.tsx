@@ -54,68 +54,78 @@ const GROUPS = [
 ] as const
 
 /**
- * Sitewide footer — one horizontal row of group toggles, one shared panel
- * below it (exclusive: opening a group closes whichever was open), plus the
- * social row and the one shared sun toggle.
+ * Sitewide footer — one horizontal row of group toggles over one panel per
+ * group (exclusive: opening a group closes whichever was open). Every panel
+ * stays mounted so closing collapses through the same grid-rows transition
+ * it opened with, instead of unmounting and snapping shut.
  */
 export function SiteFooter() {
   const [openGroup, setOpenGroup] = useState<string | null>(null)
-  const active = GROUPS.find((g) => g.key === openGroup)
 
   return (
     <footer className="sf">
       <div className="sf-inner st-shell st-shell-full">
-        <div className="sf-toggles">
-          {GROUPS.map((group) => (
-            <button
-              key={group.key}
-              type="button"
-              className="sf-group-toggle"
-              aria-expanded={openGroup === group.key}
-              onClick={() =>
-                setOpenGroup((k) => (k === group.key ? null : group.key))
-              }
-            >
-              {group.label}
-              <span className="sf-group-plus" aria-hidden>
-                +
-              </span>
-            </button>
-          ))}
-        </div>
-
-        <div className="uf-body" data-open={active != null}>
-          <div>
-            {active ? (
-              <div className="sf-group-links">
-                {active.links.map((link) =>
-                  "external" in link && link.external ? (
-                    <a
-                      key={link.href}
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener"
-                      className="sf-link"
-                    >
-                      {link.label}
-                    </a>
-                  ) : "plain" in link && link.plain ? (
-                    <a
-                      key={link.href}
-                      href={link.href}
-                      className="sf-link mono"
-                    >
-                      {link.label}
-                    </a>
-                  ) : (
-                    <Link key={link.href} href={link.href} className="sf-link">
-                      {link.label}
-                    </Link>
-                  ),
-                )}
-              </div>
-            ) : null}
+        <div className="sf-nav">
+          <div className="sf-toggles">
+            {GROUPS.map((group) => (
+              <button
+                key={group.key}
+                type="button"
+                className="sf-group-toggle"
+                aria-expanded={openGroup === group.key}
+                onClick={() =>
+                  setOpenGroup((k) => (k === group.key ? null : group.key))
+                }
+              >
+                {group.label}
+                <span className="sf-group-plus" aria-hidden>
+                  +
+                </span>
+              </button>
+            ))}
           </div>
+
+          {GROUPS.map((group) => (
+            <div
+              key={group.key}
+              className="uf-body sf-body"
+              data-open={openGroup === group.key}
+            >
+              <div>
+                <div className="sf-group-links">
+                  {group.links.map((link) =>
+                    "external" in link && link.external ? (
+                      <a
+                        key={link.href}
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener"
+                        className="sf-link"
+                      >
+                        {link.label}
+                      </a>
+                    ) : "plain" in link && link.plain ? (
+                      <a
+                        key={link.href}
+                        href={link.href}
+                        className="sf-link mono"
+                      >
+                        {link.label}
+                      </a>
+                    ) : (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        className="sf-link"
+                      >
+                        {link.label}
+                      </Link>
+                    ),
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
 
         <div className="sf-social">

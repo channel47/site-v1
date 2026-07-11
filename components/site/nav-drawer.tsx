@@ -19,6 +19,14 @@ const ROWS = CATEGORIES.map(({ title, href, key }) => ({
  */
 export function NavDrawer() {
   const [open, setOpen] = useState(false)
+  // Bumped on every open so the row icons' blocks rebuild each time the
+  // drawer slides in — parity picks the keyframe, so it always replays.
+  const [menuPulse, setMenuPulse] = useState(0)
+
+  const toggle = () => {
+    setOpen((o) => !o)
+    if (!open) setMenuPulse((p) => p + 1)
+  }
 
   return (
     <>
@@ -27,7 +35,7 @@ export function NavDrawer() {
         className="nd-burger"
         aria-expanded={open}
         aria-label={open ? "Close menu" : "Open menu"}
-        onClick={() => setOpen((o) => !o)}
+        onClick={toggle}
       >
         <span aria-hidden />
         <span aria-hidden />
@@ -49,7 +57,12 @@ export function NavDrawer() {
                 tabIndex={open ? 0 : -1}
                 onClick={() => setOpen(false)}
               >
-                <TypeIcon type={row.type} className="nd-row-icon" />
+                <TypeIcon
+                  type={row.type}
+                  className="nd-row-icon"
+                  pulse={open ? menuPulse : undefined}
+                  delay={0.24 + i * 0.055}
+                />
                 {row.label}
               </Link>
             </li>

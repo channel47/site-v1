@@ -1,21 +1,57 @@
 import type { ContentTypeKey } from "@/lib/site-content"
+import { bitAnim } from "./bit-anim"
 
-/** One 16×16 glyph per content type — shared by the mobile drawer, the Home
- * category rows, and the Browse filter chips so the same shapes carry the
- * same meaning everywhere they appear. */
-const PATHS: Record<ContentTypeKey, string> = {
-  posts: "M1 2.5h14v2H1zM1 7h14v2H1zM1 11.5h9v2H1z",
-  skills: "M8 1l7 7-7 7-7-7z",
-  connectors: "M1 4.5h5v7H1zM10 4.5h5v7h-5zM6 7h4v2H6z",
-  workshops: "M4.5 2.5l9.5 5.5-9.5 5.5z",
+/** One 16×16 glyph per content type — three blocks arranged per type, shared
+ * by the mobile drawer, the Home category rows, and the Browse filter chips
+ * so the same shapes carry the same meaning everywhere they appear. Built
+ * from rects (not a path) so the blocks can build in like the "47" mark. */
+const BITS: Record<
+  ContentTypeKey,
+  ReadonlyArray<readonly [number, number, number, number]>
+> = {
+  posts: [
+    [1, 1, 6, 14],
+    [9, 1, 6, 6],
+    [9, 9, 6, 6],
+  ],
+  skills: [
+    [1, 1, 14, 6],
+    [1, 9, 6, 6],
+    [9, 9, 6, 6],
+  ],
+  connectors: [
+    [1, 1, 6, 6],
+    [9, 1, 6, 6],
+    [1, 9, 14, 6],
+  ],
+  workshops: [
+    [1, 1, 6, 6],
+    [1, 9, 6, 6],
+    [9, 1, 6, 14],
+  ],
+}
+
+/** Build-in accent per type — the brighter shine twin of the type colour. */
+const SHINE: Record<ContentTypeKey, string> = {
+  posts: "var(--shine-post)",
+  skills: "var(--shine-skill)",
+  connectors: "var(--shine-connector)",
+  workshops: "var(--shine-workshop)",
 }
 
 export function TypeIcon({
   type,
   className,
+  pulse,
+  delay = 0.05,
 }: {
   type: ContentTypeKey
   className?: string
+  /** When set, the blocks build in staggered (same treatment as the logo);
+   * bump the value to replay. Omit for a static glyph. */
+  pulse?: number
+  /** Base delay in seconds before the build starts. */
+  delay?: number
 }) {
   return (
     <svg
@@ -26,7 +62,20 @@ export function TypeIcon({
       aria-hidden
       className={className}
     >
-      <path d={PATHS[type]} />
+      {BITS[type].map(([x, y, w, h], i) => (
+        <rect
+          key={i}
+          x={x}
+          y={y}
+          width={w}
+          height={h}
+          style={
+            pulse !== undefined
+              ? bitAnim(i, pulse, delay, SHINE[type])
+              : undefined
+          }
+        />
+      ))}
     </svg>
   )
 }

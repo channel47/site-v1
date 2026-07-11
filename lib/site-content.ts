@@ -14,11 +14,15 @@ export const LINKS = {
   // More social profiles join the footer row as they're confirmed — never guess a URL.
 } as const
 
-/** Home hero — descriptive and plain (PLAN §1 Home copy). */
+/** Home hero — first person, credibility inline (confirmed design). */
 export const HOME = {
-  headline: "Open-source skills and connectors for marketers.",
+  headline: "I build agentic systems for marketers.",
   subhead:
-    "Tools for creative strategy and paid media with AI agents.",
+    "Skills, connectors, and workshops from real ad accounts I run every day. Free to grab, live sessions monthly.",
+  /** The small identity row under the subhead. */
+  name: "Jackson Dean",
+  tagline: "7 years buying media",
+  avatar: "/jackson.jpeg",
   /** The 1–2 line signed note that earns the capture ask. */
   note: "Channel47 is where I publish the marketing tools and workshop notes I make available to others.",
   noteSignature: "— Jackson",

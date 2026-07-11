@@ -26,28 +26,39 @@ const SHINE_COLORS: Record<ContentTypeKey, string> = {
  */
 export function HomeCats({ rows }: { rows: CategoryRow[] }) {
   const [openKey, setOpenKey] = useState<string | null>(null)
+  // Bumped on every open so the open row's icon blocks rebuild each time,
+  // not just the first — parity picks the keyframe, so it always replays.
+  const [rowPulse, setRowPulse] = useState(0)
 
   return (
     <nav className="home-cats" aria-label="Browse by type">
-      {rows.map((cat) => (
+      {rows.map((cat, idx) => (
         <div
           key={cat.key}
-          className="home-cat"
+          className="home-cat an-up"
           style={
             {
               "--type-color": TYPE_COLORS[cat.key],
               "--shine-color": SHINE_COLORS[cat.key],
+              animationDelay: `${(0.45 + idx * 0.08).toFixed(2)}s`,
             } as CSSProperties
           }
         >
           <Unfold
             triggerClassName="home-cat-toggle"
             open={openKey === cat.key}
-            onToggle={(next) => setOpenKey(next ? cat.key : null)}
+            onToggle={(next) => {
+              setOpenKey(next ? cat.key : null)
+              if (next) setRowPulse((p) => p + 1)
+            }}
             trigger={
               <>
                 <span className="home-cat-lead">
-                  <TypeIcon type={cat.key} className="home-cat-icon" />
+                  <TypeIcon
+                    type={cat.key}
+                    className="home-cat-icon"
+                    pulse={openKey === cat.key ? rowPulse : undefined}
+                  />
                   <span className="home-cat-label">{cat.title}</span>
                 </span>
                 <span className="home-cat-plus" aria-hidden>
