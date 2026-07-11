@@ -1,12 +1,13 @@
 ---
-title: LinkedIn Ads MCP
+title: "linkedin-ads-mcp — Bring B2B campaign data into the conversation"
 slug: linkedin-ads
 description: "An MCP server for LinkedIn advertising accounts, campaign entities, analytics, and previewed mutations."
 repo: https://github.com/channel47/mcps/tree/main/linkedin-ads
-install: git clone https://github.com/channel47/mcps.git && cd mcps && npm install
+install: npx @channel47/linkedin-ads-mcp@beta
+package: "@channel47/linkedin-ads-mcp"
 date: 2026-07-02
 tags: [linkedin-ads, mcp, b2b, lead-gen, analytics]
-pairing: "Source install; this package is not published to npm. LinkedIn's Advertising API requires app approval; run with `node linkedin-ads/server/index.js`."
+pairing: "Requires LinkedIn Advertising API app approval and a supported OAuth setup."
 ---
 
 LinkedIn Ads MCP connects an MCP client to LinkedIn's Advertising API. It

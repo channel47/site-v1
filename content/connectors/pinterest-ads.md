@@ -1,12 +1,13 @@
 ---
-title: Pinterest Ads MCP
+title: "pinterest-ads-mcp — Query performance with attribution intact"
 slug: pinterest-ads
 description: "An MCP server for Pinterest advertising accounts, campaign entities, analytics, and previewed mutations."
 repo: https://github.com/channel47/mcps/tree/main/pinterest-ads
-install: git clone https://github.com/channel47/mcps.git && cd mcps && npm install
+install: npx @channel47/pinterest-ads-mcp@beta
+package: "@channel47/pinterest-ads-mcp"
 date: 2026-07-02
 tags: [pinterest-ads, mcp, dtc, attribution, seasonal, paid-media]
-pairing: "Source install; this package is not published to npm. Requires Pinterest OAuth credentials, then runs with `node pinterest-ads/server/index.js`."
+pairing: "Requires Pinterest OAuth credentials; supports an access token or client credentials with a refresh token."
 ---
 
 Pinterest Ads MCP connects an MCP client to the Pinterest Ads API. It requires

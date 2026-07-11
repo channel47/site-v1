@@ -1,12 +1,13 @@
 ---
-title: Meta Ads MCP
+title: "meta-ads-mcp — Give your agent a live view of Meta Ads"
 slug: meta-ads
 description: "An MCP server for Meta advertising accounts, campaign entities, insights, and previewed mutations."
 repo: https://github.com/channel47/mcps/tree/main/meta-ads
-install: git clone https://github.com/channel47/mcps.git && cd mcps && npm install
+install: npx @channel47/meta-ads-mcp@beta
+package: "@channel47/meta-ads-mcp"
 date: 2026-07-02
 tags: [meta-ads, facebook-ads, instagram-ads, mcp, creative-testing, insights]
-pairing: "Source install; this package is not published to npm. Requires `META_ADS_ACCESS_TOKEN`, then runs with `node meta-ads/server/index.js`."
+pairing: "Requires `META_ADS_ACCESS_TOKEN`; set `META_ADS_READ_ONLY=true` for reporting-only use."
 ---
 
 Meta Ads MCP is a local stdio server that connects an MCP client to Meta's

@@ -1,5 +1,5 @@
 ---
-title: Bing Ads MCP
+title: "bing-ads-mcp — Search, shopping, and reporting in one agent"
 slug: bing-ads
 description: "An MCP server for Microsoft Advertising account data, reports, Merchant Center data, editorial status, and mutations."
 repo: https://github.com/channel47/mcps/tree/main/bing-ads
