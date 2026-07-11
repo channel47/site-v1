@@ -122,20 +122,7 @@ export default async function WorkshopPage({ params }: Props) {
               <figcaption className="dt-figcaption">{w.screenshotCaption}</figcaption>
             ) : null}
           </figure>
-        ) : (
-          <figure className="dt-figure an-up" style={{ animationDelay: ".55s" }}>
-            <div className="ws-still-hatch" aria-hidden>
-              <span className="ws-still-tag mono">Still — session replay</span>
-              <svg className="ws-still-play" width="46" height="46" viewBox="0 0 46 46" fill="none" aria-hidden>
-                <circle cx="23" cy="23" r="22" stroke="currentColor" strokeWidth="1.5" />
-                <path d="M18 14.5l14 8.5-14 8.5z" fill="currentColor" />
-              </svg>
-            </div>
-            {w.screenshotCaption ? (
-              <figcaption className="dt-figcaption">{w.screenshotCaption}</figcaption>
-            ) : null}
-          </figure>
-        )}
+        ) : null}
 
         <div
           className="st-prose"
@@ -176,27 +163,17 @@ export default async function WorkshopPage({ params }: Props) {
               Join Vibe Marketers →
             </a>
             <p className="ws-cta-caption mono">
-              Free to join · the replay lands inside right after
+              Schedule and access are managed inside the community.
             </p>
           </div>
         ) : (
           <div className="ws-cta">
-            <p className="ws-cta-title">Missed it? Catch the next one live.</p>
+            <p className="ws-cta-title">Get Channel47 updates.</p>
             <p className="ws-cta-body">
-              Drop your email and I&apos;ll tell you when the next lab is on
-              the calendar — one note per session, nothing else.
+              Subscribe for occasional updates when I add a skill, connector,
+              or workshop.
             </p>
-            <Capture
-              helper="One email when the next session gets a date. No spam."
-              cta="Notify me →"
-              focusVariant="mauve"
-            />
-            <p className="ws-cta-caption mono">
-              Replay of this session is inside{" "}
-              <a href={LINKS.join} target="_blank" rel="noopener">
-                Vibe Marketers →
-              </a>
-            </p>
+            <Capture focusVariant="mauve" />
           </div>
         )}
 

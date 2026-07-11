@@ -30,13 +30,6 @@ export function GET() {
       },
       resources: [
         {
-          name: "posts",
-          description: "First-person stories behind each tool",
-          htmlPattern: "/posts/:slug",
-          markdownPattern: "/posts/:slug.md",
-          visibility: "public",
-        },
-        {
           name: "skills",
           description: "Installable agent skills for marketers",
           htmlPattern: "/skills/:slug",

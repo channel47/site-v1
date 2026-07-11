@@ -1,39 +1,22 @@
 ---
 title: Pinterest Ads MCP
 slug: pinterest-ads
-description: "Pinterest Ads with the attribution windows done right — first-class click/engagement/view windows, so the slow channel is measured instead of killed."
+description: "An MCP server for Pinterest advertising accounts, campaign entities, analytics, and previewed mutations."
 repo: https://github.com/channel47/mcps/tree/main/pinterest-ads
-install: npx @channel47/pinterest-ads-mcp@latest
-package: "@channel47/pinterest-ads-mcp"
+install: git clone https://github.com/channel47/mcps.git && cd mcps && npm install
 date: 2026-07-02
 tags: [pinterest-ads, mcp, dtc, attribution, seasonal, paid-media]
-pairing: "Needs an access token, or client credentials plus a refresh token — the server mints and renews tokens itself, though Pinterest's refresh tokens may rotate on use."
+pairing: "Source install; this package is not published to npm. Requires Pinterest OAuth credentials, then runs with `node pinterest-ads/server/index.js`."
 ---
 
-Pinterest converts on planner time, not feed time — and bad reporting kills the
-sleeper channel prematurely. This MCP server is built around getting the
-attribution right, so the slow channel gets measured correctly instead of cut.
+Pinterest Ads MCP connects an MCP client to the Pinterest Ads API. It requires
+an access token or a supported OAuth refresh setup.
 
-## What it does
+## Tools and safety
 
-- The **`analytics`** tool exposes attribution windows as first-class
-  parameters: separate `click_window_days`, `engagement_window_days`, and
-  `view_window_days` (0 to 60), plus `conversion_report_time` to credit
-  conversions at time of ad action or time of conversion.
-- Granularity from `TOTAL` down to `HOUR`, account-through-ad-level pivots —
-  and it surfaces the constraint that the API reaches back at most 90 days
-  with a 90-day max range, so you plan longitudinal pulls instead of
-  discovering the wall.
-- **`query`** reads campaigns, ad groups, and ads, and exposes
-  `entity_statuses` — the API defaults to returning only `ACTIVE` and `PAUSED`
-  entities, so archived history stays visible on request.
-- **`list_accounts`** walks Pinterest's bookmark pagination.
-- **`mutate` is dry-run by default**, previewing exact requests (Pinterest has
-  no server-side validate mode). **Creates default to `PAUSED`.** Pinterest
-  has no delete and archive is terminal — an archived entity can never be
-  reactivated — which the server documents in bold before you find out the
-  hard way.
-- Money travels in micro-currency (`25000000` = 25.00) — documented so budgets
-  and bids don't miss by six zeros.
-- **Read-only mode:** `PINTEREST_ADS_READ_ONLY=true` removes the mutate tool
-  entirely.
+- `list_accounts` lists accessible advertising accounts.
+- `query` reads supported campaign entities.
+- `analytics` supports configurable attribution windows, reporting levels, and
+  time granularity.
+- `mutate` defaults to `dry_run: true`; new entities default to `PAUSED`.
+- `PINTEREST_ADS_READ_ONLY=true` removes the mutation tool.

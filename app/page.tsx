@@ -6,7 +6,6 @@ import { Capture } from "@/components/site/capture"
 import { HomeCats, type CategoryRow } from "@/components/site/home-cats"
 import type { Cover } from "@/components/site/cover-card"
 import {
-  getAllPosts,
   getAssets,
   getWorkshops,
   shortDate,
@@ -17,10 +16,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 }
 
-/** Two most recent covers per type. Workshops looks for an upcoming session
- * specifically (not just "most recent") — with none scheduled, the row
- * still needs to read as alive, so it falls back to one static card rather
- * than an empty "nothing here" state. */
+/** Two most recent covers per active content type. */
 function coversFor(key: ContentTypeKey): Cover[] {
   if (key === "skills") {
     return getAssets("skill")
@@ -42,18 +38,8 @@ function coversFor(key: ContentTypeKey): Cover[] {
         type: "connectors" as const,
       }))
   }
-  if (key === "posts") {
-    return getAllPosts()
-      .slice(0, 2)
-      .map((p) => ({
-        title: p.title,
-        meta: `Post · ${shortDate(p.date)}`,
-        href: `/posts/${p.slug}`,
-        type: "posts" as const,
-      }))
-  }
-  const upcoming = getWorkshops()
-    .filter((w) => w.status === "upcoming")
+  if (key === "posts") return []
+  return getWorkshops()
     .slice(0, 2)
     .map((w) => ({
       title: w.title,
@@ -61,22 +47,12 @@ function coversFor(key: ContentTypeKey): Cover[] {
       href: `/workshops/${w.slug}`,
       type: "workshops" as const,
     }))
-  if (upcoming.length > 0) return upcoming
-  return [
-    {
-      title: "Build-alongs, live",
-      meta: "Live · monthly, replays inside",
-      href: "/browse?type=workshops",
-      type: "workshops" as const,
-    },
-  ]
 }
 
 /**
- * Home (round 12/14) — plain headline, then four category rows that unfold
+ * Home (round 12/14) — plain headline, then category rows that unfold
  * into a short description and the most recent items in that type, then the
- * below-the-fold region doing exactly two jobs: prove the channel publishes
- * and earn the ask (signed note → capture).
+ * below-the-fold region with a signed note and email capture.
  */
 export default function Page() {
   const rows: CategoryRow[] = CATEGORIES.map((cat) => ({

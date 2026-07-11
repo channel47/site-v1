@@ -8,12 +8,11 @@ import "./globals.css"
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: `${SITE_NAME} — Skills, connectors, and agents for marketers`,
+  title: `${SITE_NAME} — Open-source tools for marketers`,
   description: SITE_DESCRIPTION,
   openGraph: {
-    title: `${SITE_NAME} — Skills, connectors, and agents for marketers`,
-    description:
-      "Skills, connectors, and agents for marketers — built in real ad accounts by a working operator.",
+    title: `${SITE_NAME} — Open-source tools for marketers`,
+    description: SITE_DESCRIPTION,
     url: SITE_URL,
     siteName: SITE_NAME,
     type: "website",

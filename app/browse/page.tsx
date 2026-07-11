@@ -11,7 +11,7 @@ import { TYPE_COLORS } from "@/lib/site-content"
 export const metadata: Metadata = {
   title: "Browse — Channel 47",
   description:
-    "Everything in the Channel 47 library — posts, skills, and MCP connectors for marketers, filterable by type.",
+    "Browse Channel 47 skills, MCP connectors, and workshops for marketers.",
   alternates: { canonical: "/browse" },
 }
 
@@ -22,7 +22,6 @@ interface Props {
 /** Filter chips — All plus each populated type (round 12/14 Browse). */
 const CHIPS = [
   { key: "all", label: "All" },
-  { key: "posts", label: "Posts" },
   { key: "skills", label: "Skills" },
   { key: "connectors", label: "Connectors" },
   { key: "workshops", label: "Workshops" },

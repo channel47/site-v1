@@ -18,7 +18,6 @@ const GROUPS = [
     key: "learn",
     label: "Learn",
     links: [
-      { href: "/browse?type=posts", label: "Posts" },
       { href: "/browse?type=skills", label: "Skills" },
       { href: "/browse?type=connectors", label: "Connectors" },
     ],
@@ -41,8 +40,8 @@ const GROUPS = [
     ],
   },
   {
-    key: "agents",
-    label: "Agents",
+    key: "formats",
+    label: "Formats",
     links: [
       // Machine-readable surfaces (docs/AI-SEO.md Layer 3) — non-HTML route
       // handlers, not app pages, so these render as plain anchors, filenames

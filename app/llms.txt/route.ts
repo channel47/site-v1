@@ -31,9 +31,12 @@ export function GET() {
     `- ${SITE_URL}/rss.xml : full-content RSS feed`,
     "",
     "Route families:",
-    `- Posts (first-person stories behind each tool): \`${SITE_URL}/posts/<slug>\``,
     `- Skills (installable agent skills): \`${SITE_URL}/skills/<slug>\``,
     `- Connectors (MCP servers for ad platforms): \`${SITE_URL}/connectors/<slug>\``,
+    `- Workshops (session notes): \`${SITE_URL}/workshops/<slug>\``,
+    ...(posts.length > 0
+      ? [`- Posts: \`${SITE_URL}/posts/<slug>\``]
+      : []),
     "",
     "Markdown twins:",
     "- Every content route above also serves clean markdown at the same URL + `.md`",
@@ -53,19 +56,21 @@ export function GET() {
         `- [${a.title}](${SITE_URL}/connectors/${a.slug}.md): ${a.description}`,
     ),
     "",
-    // Title-only rows keep the file map-sized (~4KB); descriptions live in
-    // sitemap.md and each twin's frontmatter.
-    "## Posts",
-    ...posts.map((p) => `- [${p.title}](${SITE_URL}/posts/${p.slug}.md)`),
-    "",
+    ...(posts.length > 0
+      ? [
+          "## Posts",
+          ...posts.map((p) => `- [${p.title}](${SITE_URL}/posts/${p.slug}.md)`),
+          "",
+        ]
+      : []),
     "## Workshops",
     ...workshops.map(
       (w) => `- [${w.title}](${SITE_URL}/workshops/${w.slug}): ${w.description}`,
     ),
     "",
     "## Optional",
-    `- [About](${SITE_URL}/about): who runs this (Jackson Dean) and why it exists`,
-    `- [Live sessions](${SITE_URL}/browse?type=workshops): monthly build-alongs, replays inside Vibe Marketers`,
+    `- [About](${SITE_URL}/about): who maintains Channel47`,
+    `- [Workshops](${SITE_URL}/browse?type=workshops): sessions hosted inside Vibe Marketers`,
     "",
   ]
 

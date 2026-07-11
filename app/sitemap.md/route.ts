@@ -40,11 +40,15 @@ export function GET() {
       row(`${SITE_URL}/connectors/${a.slug}`, a.title, a.date),
     ),
     "",
-    "## Posts",
-    ...posts.map((p) => row(`${SITE_URL}/posts/${p.slug}`, p.title, p.date)),
-    "",
+    ...(posts.length > 0
+      ? [
+          "## Posts",
+          ...posts.map((p) => row(`${SITE_URL}/posts/${p.slug}`, p.title, p.date)),
+          "",
+        ]
+      : []),
     "## Workshops",
-    row(`${SITE_URL}/browse?type=workshops`, "Live sessions — monthly build-alongs, filtered in Browse"),
+    row(`${SITE_URL}/browse?type=workshops`, "Workshop archive"),
     ...workshops.map((w) => row(`${SITE_URL}/workshops/${w.slug}`, w.title, w.date)),
     "",
     "## Machine access",

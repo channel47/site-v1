@@ -130,11 +130,8 @@ export function postAssetKind(type: PostAsset["type"]): AssetType {
  */
 const ORDER: string[] = [
   "creative-strategist",
-  "media-buyer",
-  "gaql",
-  "content-miner",
-  "kit-newsletter",
-  "twitter-algorithm-optimizer",
+  "brief-me",
+  "ad-recon",
   "google-ads",
   "google-ads-mcp",
   "meta-ads",
