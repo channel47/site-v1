@@ -88,33 +88,44 @@ export default function SessionPage() {
             </div>
           </section>
 
-          {builds.length > 0 ? (
-            <section className="session-section">
-              <h2 className="session-h2 st-section-h2">Systems I&apos;ve actually built</h2>
-              <p className="session-proof-lede">
-                {builds.length === 1
-                  ? "A build that came out of the same approach we'd use in a session:"
-                  : "Builds that came out of the same approach we'd use in a session:"}
-              </p>
-              <div className="session-proof-list">
-                {builds.map((build) => (
-                  <Link
-                    key={build.slug}
-                    href={`/builds/${build.slug}`}
-                    className="session-proof-card"
-                  >
-                    <span>
-                      <span className="mono session-proof-tag">Build</span>
-                      <span className="session-proof-title">{build.title}</span>
-                    </span>
-                    <span className="session-proof-arrow" aria-hidden>
-                      →
-                    </span>
-                  </Link>
-                ))}
-              </div>
-            </section>
-          ) : null}
+          <section className="session-section">
+            <h2 className="session-h2 st-section-h2">Systems I&apos;ve actually built</h2>
+            <p className="session-proof-lede">
+              Two builds that came out of the same approach we&apos;d use in a session:
+            </p>
+            <div className="session-proof-list">
+              {builds.map((build) => (
+                <Link
+                  key={build.slug}
+                  href={`/builds/${build.slug}`}
+                  className="session-proof-card"
+                >
+                  <span>
+                    <span className="mono session-proof-tag">Build</span>
+                    <span className="session-proof-title">{build.title}</span>
+                  </span>
+                  <span className="session-proof-arrow" aria-hidden>
+                    →
+                  </span>
+                </Link>
+              ))}
+              {/* Hardcoded in-progress entry for the weekly KPI-review build,
+                  which has no detail page yet. Remove this once a real Build
+                  ships for it — the section will then come entirely from
+                  getBuilds() again. */}
+              <Link href={SESSION.inProgressBuild.href} className="session-proof-card">
+                <span>
+                  <span className="mono session-proof-tag session-proof-tag-progress">
+                    {SESSION.inProgressBuild.tag}
+                  </span>
+                  <span className="session-proof-title">{SESSION.inProgressBuild.title}</span>
+                </span>
+                <span className="session-proof-arrow" aria-hidden>
+                  →
+                </span>
+              </Link>
+            </div>
+          </section>
 
           <section className="session-section">
             <h2 className="session-h2 st-section-h2">Who you&apos;d be working with</h2>

@@ -53,6 +53,14 @@ export const SESSION = {
     "We find where an agent could help, and where it shouldn't.",
     "You leave with a concrete approach and the next few steps, in tools you already use.",
   ],
+  /** Hardcoded proof-card entry for the weekly KPI-review build, which has
+   * no detail page yet. Append this after real getBuilds() results on
+   * /session; delete it the day that build ships as a real Build. */
+  inProgressBuild: {
+    tag: "Build · In progress",
+    title: "The weekly KPI review, read before I open a dashboard",
+    href: "/browse?type=builds",
+  },
   offer: {
     label: "Book a working session",
     rows: [

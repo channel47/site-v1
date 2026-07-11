@@ -181,6 +181,7 @@
   --code-bg: rgba(236, 236, 234, 0.07);
   --backdrop: rgba(0, 0, 0, 0.5);
   --still-bg: rgba(236, 236, 234, 0.04);
+  --row-hover: rgba(236, 236, 234, 0.05);
   /* drop-shadow under a framed-still screenshot PNG */
   --shadow-ink: rgba(0, 0, 0, 0.55);
   --card-border: rgba(236, 236, 234, 0.16);
@@ -2528,7 +2529,12 @@ input:focus-visible {
 }
 
 /* Desktop sidebar offer card — a raised surface, a step heavier border
-   than section hairlines. */
+   than section hairlines. Hidden below the desktop breakpoint: on mobile
+   the button + testimonial would duplicate the sticky bar's CTA, so
+   `.session-mobile-card` (facts only) stands in for it instead. */
+.session-aside {
+  display: none;
+}
 .session-card {
   border: 1px solid var(--card-border);
   background: var(--surface-raised);
@@ -2628,6 +2634,11 @@ input:focus-visible {
   text-transform: uppercase;
   color: var(--c-build);
 }
+/* In-progress proof card — no detail page yet, so the tag reads as faint
+   ink rather than the gold Build accent (spec 06). */
+.session-proof-tag-progress {
+  color: var(--faint);
+}
 .session-proof-title {
   display: block;
   margin-top: 4px;
@@ -2697,13 +2708,14 @@ input:focus-visible {
   color: var(--body-strong);
 }
 
-/* Mobile sticky book bar — pinned to the viewport bottom, translucent. */
+/* Mobile sticky book bar — pinned to the viewport bottom, translucent.
+   Must stay below .nd-panel (z 3) so the open drawer covers it. */
 .session-sticky-bar {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 20;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2763,6 +2775,7 @@ input:focus-visible {
     flex: 1;
   }
   .session-aside {
+    display: block;
     flex: none;
     width: 340px;
   }
