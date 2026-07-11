@@ -12,12 +12,20 @@ export interface CategoryRow extends Category {
 }
 
 /**
- * Home's four category rows (round 14, confirmed) — an exclusive accordion,
- * one open at a time, each opening onto a short description and up to two
- * recent covers in the row's identity colour.
+ * Home's four category rows (round 14, confirmed; Builds joins as the
+ * default-open row in v2) — an exclusive accordion, one open at a time, each
+ * opening onto a short description and up to two recent covers in the row's
+ * identity colour.
  */
-export function HomeCats({ rows }: { rows: CategoryRow[] }) {
-  const [openKey, setOpenKey] = useState<string | null>(null)
+export function HomeCats({
+  rows,
+  defaultOpen,
+}: {
+  rows: CategoryRow[]
+  /** Category key open on first render — spec 03: Builds opens by default. */
+  defaultOpen?: string
+}) {
+  const [openKey, setOpenKey] = useState<string | null>(defaultOpen ?? null)
   // Bumped on every open so the open row's icon blocks rebuild each time,
   // not just the first — parity picks the keyframe, so it always replays.
   const [rowPulse, setRowPulse] = useState(0)

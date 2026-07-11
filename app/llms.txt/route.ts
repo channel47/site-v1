@@ -1,4 +1,4 @@
-import { getAllPosts, getAssets, getWorkshops } from "@/lib/content"
+import { getAllPosts, getAssets, getBuilds, getWorkshops } from "@/lib/content"
 import {
   CONTENT_COLLECTION,
   CONTENT_COLLECTIONS,
@@ -21,6 +21,7 @@ import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo"
 export const dynamic = "force-static"
 
 export function GET() {
+  const builds = getBuilds()
   const posts = getAllPosts()
   const skills = getAssets("skill")
   const connectors = getAssets("connector")
@@ -49,6 +50,11 @@ export function GET() {
     "",
     "Public JSON APIs:",
     `- ${SITE_URL}/api/search?q=<query> : keyword search over all public content`,
+    "",
+    "## Builds",
+    ...builds.map(
+      (b) => `- [${b.title}](${SITE_URL}/builds/${b.slug}.md): ${b.description}`,
+    ),
     "",
     "## Skills",
     ...skills.map(

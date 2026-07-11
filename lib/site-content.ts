@@ -39,10 +39,18 @@ export const CAPTURE = {
 } as const
 
 /** Content-type identity — ink at rest, colour only on hover/press/selection
- * (round 12/13/14/15). Keys match `FeedItem["type"]` plus "workshops". */
-export type ContentTypeKey = "skills" | "connectors" | "posts" | "workshops"
+ * (round 12/13/14/15). Keys match `FeedItem["type"]` plus "workshops".
+ * Builds reuse the Post gold accent (`--c-build` aliases `--c-post` in
+ * globals.css) — they're distinguished by a pixel glyph, not a new hue. */
+export type ContentTypeKey =
+  | "builds"
+  | "skills"
+  | "connectors"
+  | "posts"
+  | "workshops"
 
 export const TYPE_COLORS: Record<ContentTypeKey, string> = {
+  builds: "var(--c-build)",
   skills: "var(--c-skill)",
   connectors: "var(--c-connector)",
   posts: "var(--c-post)",
@@ -64,6 +72,13 @@ export interface Category {
 }
 
 export const CATEGORIES: Category[] = [
+  {
+    key: "builds",
+    title: "Builds",
+    desc: "Annotated blueprints for systems I've actually built and run — enough that you can make your own version, without the full tutorial.",
+    href: "/browse?type=builds",
+    linkText: "Browse all builds →",
+  },
   {
     key: "skills",
     title: "Skills",

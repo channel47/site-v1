@@ -21,12 +21,14 @@ const INK = "#161718"
 const BODY = "rgba(22, 23, 24, 0.55)"
 const BRAND_MONO = "rgba(22, 23, 24, 0.55)"
 
-/** Matches --c-skill/--c-connector/--c-post/--c-workshop in globals.css. */
+/** Matches --c-skill/--c-connector/--c-post/--c-workshop/--c-build in
+ * globals.css. Build reuses the post gold — same literal, no new hue. */
 export const TYPE_ACCENTS = {
   skill: "#bc6b62",
   connector: "#18998b",
   post: "#a27f30",
   workshop: "#ad6b9b",
+  build: "#a27f30",
 } as const
 
 /** Matches --gradient in globals.css — the site-wide default's top bar. */

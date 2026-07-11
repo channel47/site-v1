@@ -20,9 +20,11 @@ interface Props {
   searchParams: Promise<{ type?: string }>
 }
 
-/** Filter chips — All plus each populated type (round 12/14 Browse). */
+/** Filter chips — All plus each populated type (round 12/14 Browse; Builds
+ * added in v2, first after All per the spec's row order). */
 const CHIPS = [
   { key: "all", label: "All" },
+  { key: "builds", label: "Builds" },
   { key: "skills", label: "Skills" },
   { key: "connectors", label: "Connectors" },
   { key: "workshops", label: "Workshops" },

@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next"
-import { getAllPosts, getAssets, getWorkshops } from "@/lib/content"
+import { getAllPosts, getAssets, getBuilds, getWorkshops } from "@/lib/content"
 import { PUBLIC_PAGES, absoluteUrl } from "@/lib/discovery"
 import { SITE_URL } from "@/lib/seo"
 
@@ -18,12 +18,13 @@ function latestDate(dates: string[]): string | undefined {
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const builds = getBuilds()
   const posts = getAllPosts()
   const skills = getAssets("skill")
   const connectors = getAssets("connector")
   const workshops = getWorkshops()
   const newest = latestDate(
-    [...posts, ...skills, ...connectors, ...workshops].map((i) => i.date),
+    [...builds, ...posts, ...skills, ...connectors, ...workshops].map((i) => i.date),
   )
 
   return [
@@ -33,6 +34,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
         "lastModified" in page && page.lastModified === "content"
           ? newest
           : undefined,
+    })),
+    ...builds.map((b) => ({
+      url: `${SITE_URL}/builds/${b.slug}`,
+      lastModified: b.date,
     })),
     ...posts.map((p) => ({
       url: `${SITE_URL}/posts/${p.slug}`,

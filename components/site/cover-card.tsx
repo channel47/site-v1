@@ -1,6 +1,7 @@
 import Link from "next/link"
 
 const ART_LABEL = {
+  builds: "cover",
   posts: "hero img",
   skills: "cover",
   connectors: "logo",

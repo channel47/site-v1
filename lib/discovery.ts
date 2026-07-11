@@ -46,6 +46,19 @@ export const PUBLIC_PAGES = [
 ] as const
 
 export const CONTENT_COLLECTION = {
+  builds: {
+    key: "builds",
+    segment: "builds",
+    searchType: "build",
+    label: "Builds",
+    singularLabel: "Build",
+    description: "Annotated blueprints for real agentic systems",
+    routeDescription: "Builds (annotated system blueprints)",
+    basePath: "/builds",
+    indexPath: "/browse?type=builds",
+    htmlPattern: "/builds/:slug",
+    markdownPattern: "/builds/:slug.md",
+  },
   posts: {
     key: "posts",
     segment: "posts",

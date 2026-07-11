@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { ASSET_DIRS, type Asset, type Post } from "@/lib/content"
+import { ASSET_DIRS, type Asset, type Build, type Post } from "@/lib/content"
 
 /**
  * Entity foundation + JSON-LD builders (docs/AI-SEO.md, Layer 1).
@@ -124,6 +124,34 @@ export function postGraph(post: Post) {
         isPartOf: { "@id": WEBSITE_ID },
       },
       breadcrumb(url, { name: "Posts", url: `${SITE_URL}/browse?type=posts` }, post.title),
+    ],
+  }
+}
+
+/** Per-build graph: TechArticle + breadcrumb, anchored to the base entities.
+ * TechArticle (not SoftwareSourceCode) — a Build is a writeup of a system,
+ * not an installable artifact living in a repo. */
+export function buildGraph(build: Build) {
+  const url = `${SITE_URL}/builds/${build.slug}`
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        "@id": `${url}#article`,
+        headline: build.title,
+        url,
+        mainEntityOfPage: { "@type": "WebPage", "@id": url },
+        description: build.description,
+        author: personRef,
+        publisher: orgRef,
+        datePublished: build.date,
+        dateModified: build.date,
+        isAccessibleForFree: true,
+        keywords: build.tags.join(", "),
+        isPartOf: { "@id": WEBSITE_ID },
+      },
+      breadcrumb(url, { name: "Builds", url: `${SITE_URL}/browse?type=builds` }, build.title),
     ],
   }
 }

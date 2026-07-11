@@ -7,6 +7,7 @@ import { HomeCats, type CategoryRow } from "@/components/site/home-cats"
 import type { Cover } from "@/components/site/cover-card"
 import {
   getAssets,
+  getBuilds,
   getWorkshops,
   shortDate,
 } from "@/lib/content"
@@ -18,6 +19,16 @@ export const metadata: Metadata = {
 
 /** Two most recent covers per active content type. */
 function coversFor(key: ContentTypeKey): Cover[] {
+  if (key === "builds") {
+    return getBuilds()
+      .slice(0, 2)
+      .map((b) => ({
+        title: b.title,
+        meta: `Build · ${shortDate(b.date)}`,
+        href: `/builds/${b.slug}`,
+        type: "builds" as const,
+      }))
+  }
   if (key === "skills") {
     return getAssets("skill")
       .slice(0, 2)
@@ -75,7 +86,7 @@ export default function Page() {
           </div>
         </div>
 
-        <HomeCats rows={rows} />
+        <HomeCats rows={rows} defaultOpen="builds" />
 
         <p className="home-browse-all">
           <Link href="/browse" className="home-browse-all-link">
