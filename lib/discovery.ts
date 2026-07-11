@@ -13,14 +13,14 @@ export const PUBLIC_PAGES = [
     path: "/",
     title: "Home",
     description:
-      "channel47 homepage for open-source marketing skills, MCP connectors, and workshops.",
+      "channel47 homepage: builds, skills, MCP connectors, and workshops for practical agentic systems.",
     lastModified: "content",
   },
   {
     path: "/browse",
     title: "Browse — the full library, filterable by type",
     description:
-      "Browse channel47 skills, MCP connectors, posts, and workshops.",
+      "Browse channel47 builds, skills, MCP connectors, and workshops.",
     lastModified: "content",
   },
   {
@@ -78,7 +78,7 @@ export const CONTENT_COLLECTION = {
     searchType: "skill",
     label: "Skills",
     singularLabel: "Skill",
-    description: "Installable agent skills for marketers",
+    description: "Installable agent skills, many born in real ad accounts",
     routeDescription: "Skills (installable agent skills)",
     basePath: "/skills",
     indexPath: "/browse?type=skills",
@@ -91,8 +91,8 @@ export const CONTENT_COLLECTION = {
     searchType: "connector",
     label: "Connectors",
     singularLabel: "Connector",
-    description: "MCP servers for ad platforms",
-    routeDescription: "Connectors (MCP servers for ad platforms)",
+    description: "MCP servers for the tools recurring work runs on, starting with ad platforms",
+    routeDescription: "Connectors (MCP servers for the tools recurring work runs on)",
     basePath: "/connectors",
     indexPath: "/browse?type=connectors",
     htmlPattern: "/connectors/:slug",

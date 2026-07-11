@@ -30,7 +30,7 @@ export const SITE_NAME = "channel47"
 /** The canonical positioning string: homepage meta description, WebSite/Org
  * schema description, and the llms.txt blockquote. One string, everywhere. */
 export const SITE_DESCRIPTION =
-  "Open-source skills and MCP connectors for marketers, plus workshops hosted inside Vibe Marketers."
+  "Jackson Dean's public workshop for practical agentic systems: builds, skills, and MCP connectors, plus workshops hosted inside Vibe Marketers."
 
 export const AUTHOR_NAME = "Jackson Dean"
 
@@ -72,7 +72,7 @@ export function baseGraph() {
         name: AUTHOR_NAME,
         url: SITE_URL,
         description:
-          "Media buyer and Vibe Marketers mentor who publishes open-source marketing skills and MCP connectors at channel47.",
+          "Builds and shares agentic systems at channel47. 7 years buying media, and a mentor in the Vibe Marketers community.",
         worksFor: orgRef,
       },
       {
