@@ -2,13 +2,14 @@ import type { Metadata } from "next"
 import { SiteHeader } from "@/components/site/header"
 import { SiteFooter } from "@/components/site/footer"
 import { Capture } from "@/components/site/capture"
+import { pageMetadata } from "@/lib/seo"
 
-export const metadata: Metadata = {
-  title: "Newsletter — Channel 47",
+export const metadata: Metadata = pageMetadata({
+  title: "Newsletter",
   description:
-    "Occasional updates when Channel 47 adds a skill, connector, or workshop.",
-  alternates: { canonical: "/newsletter" },
-}
+    "Occasional updates when channel47 adds a skill, connector, or workshop.",
+  path: "/newsletter",
+})
 
 /**
  * The dedicated subscribe page. No cadence promise: updates go out only
@@ -21,7 +22,7 @@ export default function NewsletterPage() {
 
       <main className="st-shell st-shell-newsletter">
         <header className="st-head">
-          <h1 className="serif st-h1 an-blur">Occasional updates from Channel47.</h1>
+          <h1 className="serif st-h1 an-blur">Occasional updates from channel47.</h1>
           <p className="st-intro an-up" style={{ animationDelay: ".2s" }}>
             One email when I add a skill, connector, or workshop. Nothing on a
             schedule.

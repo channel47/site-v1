@@ -5,7 +5,7 @@ const host = process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com"
 
 /**
  * Optional PostHog capture. Dormant unless NEXT_PUBLIC_POSTHOG_KEY is present,
- * so Channel47 can keep Vercel Analytics as the default lightweight source and
+ * so channel47 can keep Vercel Analytics as the default lightweight source and
  * enable PostHog later without another code change.
  */
 export function PostHogAnalytics() {

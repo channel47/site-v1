@@ -7,13 +7,14 @@ import { Rows } from "@/components/site/rows"
 import { TypeIcon, AllTypesIcon } from "@/components/site/type-icon"
 import { getFeedItems } from "@/lib/content"
 import { TYPE_COLORS } from "@/lib/site-content"
+import { pageMetadata } from "@/lib/seo"
 
-export const metadata: Metadata = {
-  title: "Browse — Channel 47",
+export const metadata: Metadata = pageMetadata({
+  title: "Browse",
   description:
-    "Browse Channel 47 skills, MCP connectors, and workshops for marketers.",
-  alternates: { canonical: "/browse" },
-}
+    "Browse channel47 skills, MCP connectors, and workshops for marketers.",
+  path: "/browse",
+})
 
 interface Props {
   searchParams: Promise<{ type?: string }>

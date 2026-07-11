@@ -1,12 +1,13 @@
 import type { Metadata } from "next"
 import { SiteHeader } from "@/components/site/header"
 import { SiteFooter } from "@/components/site/footer"
+import { pageMetadata } from "@/lib/seo"
 
-export const metadata: Metadata = {
-  title: "Privacy — Channel 47",
-  description: "How Channel 47 handles the little data it collects.",
-  alternates: { canonical: "/privacy" },
-}
+export const metadata: Metadata = pageMetadata({
+  title: "Privacy",
+  description: "How channel47 handles the little data it collects.",
+  path: "/privacy",
+})
 
 export default function PrivacyPage() {
   return (
@@ -20,7 +21,7 @@ export default function PrivacyPage() {
         </header>
 
         <div className="st-prose">
-          <p>Channel47 collects as little as possible. Concretely:</p>
+          <p>channel47 collects as little as possible. Concretely:</p>
           <ul>
             <li>
               <strong>Email address.</strong> If you subscribe, your email is

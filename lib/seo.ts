@@ -20,8 +20,12 @@ import { ASSET_DIRS, type Asset, type Post } from "@/lib/content"
 
 export const SITE_URL = "https://channel47.dev"
 
-/** Canonical brand name — matches page titles; "Channel47" is the mark's spelling. */
-export const SITE_NAME = "Channel 47"
+/** Canonical brand string — lowercase, matches the site design rule
+ * ("channel47" everywhere) and drives every page title, OG tag, and schema
+ * `name` field. Historical capitalized spellings live only in `alternateName`
+ * below, so entity matching still works for engines that know the brand
+ * that way. */
+export const SITE_NAME = "channel47"
 
 /** The canonical positioning string: homepage meta description, WebSite/Org
  * schema description, and the llms.txt blockquote. One string, everywhere. */
@@ -55,7 +59,7 @@ export function baseGraph() {
         "@type": "Organization",
         "@id": ORG_ID,
         name: SITE_NAME,
-        alternateName: "Channel47",
+        alternateName: ["Channel 47", "Channel47"],
         url: SITE_URL,
         description: SITE_DESCRIPTION,
         logo: `${SITE_URL}/icon.svg`,
@@ -68,7 +72,7 @@ export function baseGraph() {
         name: AUTHOR_NAME,
         url: `${SITE_URL}/about`,
         description:
-          "Media buyer and Vibe Marketers mentor who publishes open-source marketing skills and MCP connectors at Channel 47.",
+          "Media buyer and Vibe Marketers mentor who publishes open-source marketing skills and MCP connectors at channel47.",
         worksFor: orgRef,
       },
       {
@@ -163,18 +167,53 @@ export function jsonLd(data: object): string {
   return JSON.stringify(data).replace(/</g, "\\u003c")
 }
 
+/** Shared `generateMetadata` shape for simple content routes and static
+ * utility pages — pass just the unique title fragment; the root layout's
+ * `title.template` appends " — {SITE_NAME}". Centralizing here means every
+ * route gets `alternates.canonical` and a matching `openGraph` block by
+ * construction instead of by remembering to add them. */
+export function pageMetadata({
+  title,
+  description,
+  path,
+  ogType = "website",
+}: {
+  title: string
+  description: string
+  path: string
+  ogType?: "website" | "article"
+}): Metadata {
+  const url = `${SITE_URL}${path}`
+  return {
+    title,
+    description,
+    alternates: { canonical: path },
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: SITE_NAME,
+      type: ogType,
+    },
+  }
+}
+
 /** Shared `generateMetadata` shape for the Skill/Connector detail routes —
- * identical except for the kind word in the title ("skill" / "MCP connector"). */
+ * identical except for the kind word in the title ("skill" / "MCP connector").
+ * Uses `title.absolute` rather than a plain string: this suffix ("— a
+ * {SITE_NAME} skill") differs from the root layout's plain "%s — {SITE_NAME}"
+ * template, so it must bypass that template instead of being wrapped by it. */
 export function assetMetadata(asset: Asset, kindLabel: string): Metadata {
   const path = ASSET_DIRS[asset.type]
+  const canonical = `/${path}/${asset.slug}`
   return {
-    title: `${asset.title} — a ${SITE_NAME} ${kindLabel}`,
+    title: { absolute: `${asset.title} — a ${SITE_NAME} ${kindLabel}` },
     description: asset.description,
-    alternates: { canonical: `/${path}/${asset.slug}` },
+    alternates: { canonical },
     openGraph: {
       title: asset.title,
       description: asset.description,
-      url: `${SITE_URL}/${path}/${asset.slug}`,
+      url: `${SITE_URL}${canonical}`,
       siteName: SITE_NAME,
       type: "website",
     },

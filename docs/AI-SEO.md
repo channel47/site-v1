@@ -21,9 +21,17 @@ The premises the whole system rests on:
 ## What shipped, by layer
 
 ### Layer 1 — Entity foundation
-- `lib/seo.ts` — the single source of entity truth: one org (Channel 47),
+- `lib/seo.ts` — the single source of entity truth: one org (channel47),
   one person (Jackson Dean), one canonical positioning string, stable `@id`
   anchors so every page joins ONE connected graph.
+- Title composition is centralized too: the root layout sets
+  `title.template: "%s — {SITE_NAME}"`, and `pageMetadata()` / `assetMetadata()`
+  (both in `lib/seo.ts`) are the only two places that build a page's
+  title/description/canonical/OpenGraph block. Every route gets a matching
+  OG card and canonical URL by construction instead of by remembering to add
+  one. Asset pages pass `title.absolute` to bypass the template, since their
+  suffix ("— a {SITE_NAME} skill/MCP connector") differs from the plain
+  "— {SITE_NAME}" every other route gets.
 - Site-wide Organization + WebSite + Person JSON-LD (`app/layout.tsx`),
   server-rendered — never client-injected.
 - `BlogPosting` + breadcrumbs on every post; `SoftwareSourceCode` +
@@ -45,6 +53,12 @@ The templates enforce the plumbing; the content rules live with the writer:
   survive being quoted alone; question-shaped H2s where natural.
 - **One term, one meaning.** "Skill", "connector", "agent" — never vary the
   word for elegance; synonym variety splits relevance.
+- **The `<title>` tag is the frontmatter `title` verbatim, plus a template
+  suffix.** No route hand-builds a suffix string — content authors just write
+  `title` in frontmatter; `pageMetadata()` / `assetMetadata()` and the root
+  `title.template` do the rest. Keep frontmatter titles under ~50 characters
+  so `title — channel47` (or the longer asset-page suffix) still fits
+  Google's ~60-character SERP truncation.
 - Roadmap (unlocks on content, per the empty-shelf rule — see PLAN §6):
   - **Definitional posts** for the category's queries ("What is an agent
     skill?", "What is an MCP connector?", "Skills vs. MCP servers") — flat
@@ -73,9 +87,12 @@ and machine endpoint lists do not drift independently.
 | `/api/search?q=` | `app/api/search/route.ts` | Public JSON search — the site as a callable tool |
 
 Run `pnpm check:seo-surfaces` before deploys that add, remove, or rename
-routes. It fails when a static App Router page is missing from the registry,
-when a registry page has no matching route, or when drift-prone machine
-surfaces stop importing the shared definitions.
+routes, or that touch metadata. It fails when a static App Router page is
+missing from the registry, when a registry page has no matching route, when
+drift-prone machine surfaces stop importing the shared definitions, when a
+page ships metadata without a matching OpenGraph block and canonical URL, or
+when a capitalized "Channel 47"/"Channel47" literal leaks outside
+`lib/seo.ts`'s `alternateName` (see Brand naming, below).
 
 ### Layer 4 — Distribution
 - **"Copy page"** (the markdown-twin copy button) on every post, asset, and
@@ -95,7 +112,7 @@ surfaces stop importing the shared definitions.
 ## Decisions (and why)
 
 - **AI training bots are allowed** (GPTBot, Google-Extended, CCBot…). The
-  tradeoff is content control vs. being *known* by future models. Channel47's
+  tradeoff is content control vs. being *known* by future models. channel47's
   business is being discovered and recommended by agents and the people who
   run them; the content is free by design. Allowing is the correct side of
   the trade here. Revisit if paid content moves on-site.
@@ -108,10 +125,14 @@ surfaces stop importing the shared definitions.
   the twin responses. Self-hosted `next start` overrides Vary on HTML
   documents (Next manages it for RSC); on Vercel the routing layer applies
   it, and the middleware runs before the cache either way.
-- **Brand naming**: schema uses `name: "Channel 47"` (matches page titles)
-  with `alternateName: "Channel47"`. The site currently mixes both spellings;
-  consolidating on one everywhere (titles, prose, socials, repo READMEs)
-  would sharpen the entity. Worth a pass when convenient.
+- **Brand naming (resolved 2026-07-11)**: canonical spelling is lowercase
+  `channel47` everywhere — titles, schema `name`, OG `siteName`, UI copy —
+  matching the site's design rule. `lib/seo.ts`'s `SITE_NAME` constant is the
+  single source; `Organization.alternateName` carries the historical
+  `"Channel 47"` / `"Channel47"` spellings as schema.org variants, so entity
+  matching still works for engines that already know the brand that way.
+  `pnpm check:seo-surfaces` now fails the build if a capitalized literal
+  leaks back into a page, layout, OG image route, or the discovery registry.
 
 ## Post-deploy checklist (one-time)
 

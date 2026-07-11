@@ -8,7 +8,10 @@ import "./globals.css"
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: `${SITE_NAME} — Open-source tools for marketers`,
+  title: {
+    default: `${SITE_NAME} — Open-source tools for marketers`,
+    template: `%s — ${SITE_NAME}`,
+  },
   description: SITE_DESCRIPTION,
   openGraph: {
     title: `${SITE_NAME} — Open-source tools for marketers`,
@@ -49,7 +52,7 @@ export default function RootLayout({
         <link
           rel="alternate"
           type="application/rss+xml"
-          title="Channel 47"
+          title={SITE_NAME}
           href="/rss.xml"
         />
         {/* Site-wide entity graph (Organization + Person + WebSite) — see lib/seo.ts. */}

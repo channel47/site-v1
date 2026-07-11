@@ -5,16 +5,17 @@ import { SiteHeader } from "@/components/site/header"
 import { SiteFooter } from "@/components/site/footer"
 import { Capture } from "@/components/site/capture"
 import { LINKS } from "@/lib/site-content"
+import { pageMetadata } from "@/lib/seo"
 
-export const metadata: Metadata = {
-  title: "About — Channel 47",
+export const metadata: Metadata = pageMetadata({
+  title: "About",
   description:
-    "Channel 47 is Jackson Dean's collection of open-source marketing skills, MCP connectors, and workshop notes.",
-  alternates: { canonical: "/about" },
-}
+    "channel47 is Jackson Dean's collection of open-source marketing skills, MCP connectors, and workshop notes.",
+  path: "/about",
+})
 
 /**
- * A short factual introduction to Channel47 and its author.
+ * A short factual introduction to channel47 and its author.
  */
 export default function AboutPage() {
   return (
@@ -23,12 +24,12 @@ export default function AboutPage() {
 
       <main className="st-shell">
         <header className="st-head">
-          <h1 className="serif st-h1 an-blur">About Channel47</h1>
+          <h1 className="serif st-h1 an-blur">About channel47</h1>
         </header>
 
         <div className="st-prose">
           <p>
-            Channel47 is where I publish open-source skills and MCP connectors
+            channel47 is where I publish open-source skills and MCP connectors
             for marketers working with AI agents.
           </p>
           <p>
@@ -60,7 +61,7 @@ export default function AboutPage() {
               rel="noopener"
               className="st-accent-link"
             >
-              Channel47 GitHub organization
+              channel47 GitHub organization
             </a>
             .
           </p>

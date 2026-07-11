@@ -13,35 +13,35 @@ export const PUBLIC_PAGES = [
     path: "/",
     title: "Home",
     description:
-      "Channel 47 homepage for open-source marketing skills, MCP connectors, and workshops.",
+      "channel47 homepage for open-source marketing skills, MCP connectors, and workshops.",
     lastModified: "content",
   },
   {
     path: "/browse",
     title: "Browse — the full library, filterable by type",
     description:
-      "Browse Channel 47 skills, MCP connectors, posts, and workshops.",
+      "Browse channel47 skills, MCP connectors, posts, and workshops.",
     lastModified: "content",
   },
   {
     path: "/newsletter",
     title: "Newsletter",
-    description: "Subscribe for Channel 47 updates.",
+    description: "Subscribe for channel47 updates.",
   },
   {
     path: "/about",
-    title: "About Channel 47 / Jackson Dean",
-    description: "Who maintains Channel 47.",
+    title: "About channel47 / Jackson Dean",
+    description: "Who maintains channel47.",
   },
   {
     path: "/privacy",
     title: "Privacy",
-    description: "Channel 47 privacy policy.",
+    description: "channel47 privacy policy.",
   },
   {
     path: "/terms",
     title: "Terms",
-    description: "Channel 47 terms of use.",
+    description: "channel47 terms of use.",
   },
 ] as const
 

@@ -148,7 +148,7 @@ export function SiteFooter() {
         </div>
 
         <div className="sf-legal">
-          <p>© 2026 Channel47 · by Jackson Dean</p>
+          <p>© 2026 channel47 · by Jackson Dean</p>
           <p>
             <Link href="/privacy" className="sf-link">
               Privacy

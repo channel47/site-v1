@@ -26,7 +26,7 @@ interface GlitchLogoProps {
 }
 
 /**
- * Channel 47 logo: an SVG "47" whose blocks build in at staggered offsets,
+ * channel47 logo: an SVG "47" whose blocks build in at staggered offsets,
  * each in a content-type colour, before settling to ink. Plays on mount
  * (Home) and replays on every click. It's a button, not a link — clicking
  * is a pure easter-egg replay and intentionally does nothing else (no
@@ -44,7 +44,7 @@ export function GlitchLogo({
   return (
     <button
       type="button"
-      aria-label="Channel 47 — replay logo animation"
+      aria-label="channel47 — replay logo animation"
       className={`gl-logo${className ? ` ${className}` : ""}`}
       style={{ width, height }}
       onClick={() => setPulse((p) => p + 1)}

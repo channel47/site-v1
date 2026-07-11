@@ -1,12 +1,13 @@
 import type { Metadata } from "next"
 import { SiteHeader } from "@/components/site/header"
 import { SiteFooter } from "@/components/site/footer"
+import { pageMetadata } from "@/lib/seo"
 
-export const metadata: Metadata = {
-  title: "Terms — Channel 47",
+export const metadata: Metadata = pageMetadata({
+  title: "Terms",
   description: "Terms of use for channel47.dev.",
-  alternates: { canonical: "/terms" },
-}
+  path: "/terms",
+})
 
 export default function TermsPage() {
   return (

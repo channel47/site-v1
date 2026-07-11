@@ -17,7 +17,7 @@ import {
   shortDate,
 } from "@/lib/content"
 import { LINKS, TYPE_COLORS } from "@/lib/site-content"
-import { SITE_NAME, SITE_URL } from "@/lib/seo"
+import { pageMetadata, SITE_URL } from "@/lib/seo"
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -31,18 +31,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const w = getWorkshopBySlug(slug)
   if (!w) return {}
-  return {
-    title: `${w.title} — Channel 47`,
+  return pageMetadata({
+    title: w.title,
     description: w.description,
-    alternates: { canonical: `/workshops/${w.slug}` },
-    openGraph: {
-      title: w.title,
-      description: w.description,
-      url: `${SITE_URL}/workshops/${w.slug}`,
-      siteName: SITE_NAME,
-      type: "website",
-    },
-  }
+    path: `/workshops/${w.slug}`,
+  })
 }
 
 function longDate(iso: string): string {
@@ -168,7 +161,7 @@ export default async function WorkshopPage({ params }: Props) {
           </div>
         ) : (
           <div className="ws-cta">
-            <p className="ws-cta-title">Get Channel47 updates.</p>
+            <p className="ws-cta-title">Get channel47 updates.</p>
             <p className="ws-cta-body">
               Subscribe for occasional updates when I add a skill, connector,
               or workshop.

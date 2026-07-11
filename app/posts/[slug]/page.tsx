@@ -8,7 +8,7 @@ import { Capture } from "@/components/site/capture"
 import { Crumb } from "@/components/site/crumb"
 import { ShareRow } from "@/components/site/share-row"
 import { JsonLd } from "@/components/site/json-ld"
-import { postGraph, SITE_NAME, SITE_URL } from "@/lib/seo"
+import { pageMetadata, postGraph, SITE_URL } from "@/lib/seo"
 import {
   ASSET_DIRS,
   ASSET_LABELS,
@@ -33,18 +33,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const post = getPostBySlug(slug)
   if (!post) return {}
-  return {
-    title: `${post.title} — Channel 47`,
+  return pageMetadata({
+    title: post.title,
     description: post.description,
-    alternates: { canonical: `/posts/${post.slug}` },
-    openGraph: {
-      title: post.title,
-      description: post.description,
-      url: `${SITE_URL}/posts/${post.slug}`,
-      siteName: SITE_NAME,
-      type: "article",
-    },
-  }
+    path: `/posts/${post.slug}`,
+    ogType: "article",
+  })
 }
 
 /**

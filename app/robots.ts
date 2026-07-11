@@ -4,7 +4,7 @@ import { SITE_URL } from "@/lib/seo"
 /**
  * Humans-and-machines-welcome crawl policy (docs/AI-SEO.md, Layer 3).
  *
- * Channel 47's growth model depends on being known and recommended by AI
+ * channel47's growth model depends on being known and recommended by AI
  * systems, so AI crawlers — training, search retrieval, and on-demand user
  * fetches alike — are explicitly allowed. The explicit per-bot groups signal
  * a deliberate policy and give us a place to diverge per-bot later.
