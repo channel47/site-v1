@@ -12,6 +12,9 @@ export const LINKS = {
   github: "https://github.com/ctrlswing",
   linkedin: "https://linkedin.com/in/ctrlswing",
   // More social profiles join the footer row as they're confirmed — never guess a URL.
+  // Not yet linked directly by nav/footer (both point at /session) — Wave 3's
+  // /session page consumes this for the Cal.com booking CTA.
+  booking: "https://cal.com/ctrlswing/15min",
 } as const
 
 /** Home hero — first person, capture in the hero, bio below the rows (v2). */

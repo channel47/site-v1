@@ -15,18 +15,23 @@ const SOCIALS = [
 
 const GROUPS = [
   {
-    key: "learn",
-    label: "Learn",
+    key: "explore",
+    label: "Explore",
     links: [
+      // Builds doesn't have a listing page yet (Wave 2) — point at the same
+      // ?type= filter scheme Browse already uses for the other three types,
+      // so this link starts working the moment Builds ships.
+      { href: "/browse?type=builds", label: "Builds" },
       { href: "/browse?type=skills", label: "Skills" },
       { href: "/browse?type=connectors", label: "Connectors" },
+      { href: "/browse?type=workshops", label: "Workshops" },
     ],
   },
   {
-    key: "live",
-    label: "Live",
+    key: "work",
+    label: "Work with me",
     links: [
-      { href: "/browse?type=workshops", label: "Workshops" },
+      { href: "/session", label: "Book a session" },
       { href: LINKS.join, label: "Vibe Marketers →", external: true },
     ],
   },
@@ -34,14 +39,13 @@ const GROUPS = [
     key: "more",
     label: "More",
     links: [
-      { href: "/about", label: "About" },
       { href: "/browse", label: "Browse all" },
       { href: "/newsletter", label: "Newsletter" },
     ],
   },
   {
-    key: "formats",
-    label: "Formats",
+    key: "agents",
+    label: "Agents",
     links: [
       // Machine-readable surfaces (docs/AI-SEO.md Layer 3) — non-HTML route
       // handlers, not app pages, so these render as plain anchors, filenames

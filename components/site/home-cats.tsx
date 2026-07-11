@@ -5,18 +5,10 @@ import Link from "next/link"
 import { Unfold } from "./unfold"
 import { CoverCard, type Cover } from "./cover-card"
 import { TypeIcon } from "./type-icon"
-import { TYPE_COLORS, type Category, type ContentTypeKey } from "@/lib/site-content"
+import { TYPE_COLORS, type Category } from "@/lib/site-content"
 
 export interface CategoryRow extends Category {
   covers: Cover[]
-}
-
-/** The shine-sweep twin for each row's link text (globals.css tokens). */
-const SHINE_COLORS: Record<ContentTypeKey, string> = {
-  posts: "var(--shine-post)",
-  skills: "var(--shine-skill)",
-  connectors: "var(--shine-connector)",
-  workshops: "var(--shine-workshop)",
 }
 
 /**
@@ -39,7 +31,6 @@ export function HomeCats({ rows }: { rows: CategoryRow[] }) {
           style={
             {
               "--type-color": TYPE_COLORS[cat.key],
-              "--shine-color": SHINE_COLORS[cat.key],
               animationDelay: `${(0.38 + idx * 0.06).toFixed(2)}s`,
             } as CSSProperties
           }
@@ -76,7 +67,7 @@ export function HomeCats({ rows }: { rows: CategoryRow[] }) {
                   ))}
                 </div>
               ) : null}
-              <Link href={cat.href} className="home-cat-link shine">
+              <Link href={cat.href} className="home-cat-link">
                 {cat.linkText}
               </Link>
             </div>

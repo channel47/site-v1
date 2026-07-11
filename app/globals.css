@@ -40,6 +40,9 @@
   --hairline-soft: rgba(22, 23, 24, 0.07);
   --hairline-code: rgba(22, 23, 24, 0.08);
   --field-border: rgba(22, 23, 24, 0.22);
+  /* hairline-bordered ghost CTA (nav "Book a session") — a step heavier than
+     --field-border, per the v2 nav spec */
+  --nav-ghost-border: rgba(22, 23, 24, 0.28);
   --underline: rgba(22, 23, 24, 0.3);
   --code-bg: rgba(22, 23, 24, 0.045);
   --backdrop: rgba(22, 23, 24, 0.25);
@@ -94,8 +97,10 @@
   --h1-size-workshop-d: 38px;
   --body-size-d: 15px;
 
-  /* shine-sweep colours for the Home row links — each row's link text
-     ripples from its type colour through this brighter twin and back */
+  /* brighter twin of each type colour — used for the nav-drawer icon's
+     pixel build-in bit-flash (type-icon.tsx). The Home row link shimmer that
+     used to consume these too was retired in v2 (globals.css .home-cat-link
+     is now a static accent-colored link, no animation). */
   --shine-post: #c79e41;
   --shine-skill: #e6867b;
   --shine-connector: #29bdac;
@@ -122,6 +127,7 @@
     --hairline-soft: rgba(236, 236, 234, 0.07);
     --hairline-code: rgba(236, 236, 234, 0.08);
     --field-border: rgba(236, 236, 234, 0.25);
+    --nav-ghost-border: rgba(236, 236, 234, 0.32);
     --underline: rgba(236, 236, 234, 0.3);
     --code-bg: rgba(236, 236, 234, 0.07);
     --backdrop: rgba(0, 0, 0, 0.5);
@@ -151,6 +157,7 @@
   --hairline-soft: rgba(236, 236, 234, 0.07);
   --hairline-code: rgba(236, 236, 234, 0.08);
   --field-border: rgba(236, 236, 234, 0.25);
+  --nav-ghost-border: rgba(236, 236, 234, 0.32);
   --underline: rgba(236, 236, 234, 0.3);
   --code-bg: rgba(236, 236, 234, 0.07);
   --backdrop: rgba(0, 0, 0, 0.5);
@@ -248,17 +255,6 @@ button {
 }
 .an-blur {
   animation: an-blur 0.9s 0.05s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-}
-
-/* Home row links (desktop) — a gradient sweep through the row's shine
-   twin, looping while the row stays open. */
-@keyframes shine {
-  from {
-    background-position: 100% 0;
-  }
-  to {
-    background-position: 0% 0;
-  }
 }
 
 @keyframes popIn {
@@ -496,9 +492,16 @@ button {
     transform: translateY(0);
   }
 }
+/* Utility links (Browse all / Newsletter / Book a session) — the drawer's
+   three non-category destinations, per spec 01. */
+.nd-utility {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 32px;
+}
 .nd-browse-all {
   display: inline-block;
-  margin-top: 32px;
   font-size: 13px;
   font-weight: 500;
   color: var(--muted);
@@ -513,8 +516,14 @@ button {
 .nd-browse-all:hover {
   color: var(--ink);
 }
+.nd-browse-all-accent:hover {
+  color: var(--c-post);
+}
 
 /* ---- desktop primary nav (≥768px) — replaces the burger/drawer ---- */
+/* v2 nav is locked to four destinations: home (logo) + Browse all +
+   Newsletter + Book a session (a hairline-bordered ghost, not a filled
+   button — filled is reserved for the Cal.com action on /session). */
 .sh-nav {
   display: none;
 }
@@ -525,13 +534,26 @@ button {
   transition: color 0.2s;
 }
 .sh-nav-link:hover {
-  color: var(--type-color, var(--ink));
-}
-.sh-nav-browse {
-  color: var(--muted);
-}
-.sh-nav-browse:hover {
   color: var(--ink);
+}
+.sh-nav-link-accent:hover {
+  color: var(--c-post);
+}
+.sh-nav-ghost {
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+  padding: 7px 15px;
+  border: 1px solid var(--nav-ghost-border);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.sh-nav-ghost:hover {
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  border-color: var(--btn-bg);
 }
 @media (min-width: 768px) {
   .sh {
@@ -1495,7 +1517,8 @@ a:focus-visible,
 button:focus-visible,
 input:focus-visible {
   outline: 2px solid var(--ink);
-  outline-offset: 3px;
+  outline-offset: 2px;
+  border-radius: 1px;
 }
 
 /* ---- home ---------------------------------------------------------- */
@@ -1591,26 +1614,13 @@ input:focus-visible {
   flex-direction: column;
   gap: 12px;
 }
+/* v2: a static accent-colored link, no shimmer/sweep animation. */
 .home-cat-link {
   display: inline-block;
   margin-top: 14px;
   font-size: 13px;
   font-weight: 500;
   color: var(--type-color);
-}
-.home-cat-link.shine {
-  background-image: linear-gradient(
-    90deg,
-    var(--type-color) 0%,
-    var(--type-color) 38%,
-    var(--shine-color) 50%,
-    var(--type-color) 62%,
-    var(--type-color) 100%
-  );
-  background-size: 250% 100%;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shine 5s linear infinite;
 }
 
 /* cover card — a riso-hatch card in the row's identity colour, corner-tagged

@@ -19,6 +19,9 @@ const nextConfig = {
     // as every other content type (docs/PLAN.md §5) — session detail pages
     // at /workshops/:slug are unaffected.
     return [
+      // /about retired in the v2 repositioning — content folded into the
+      // home hero/bio; nothing else replaces it (docs/PLAN.md).
+      { source: "/about", destination: "/", permanent: true },
       { source: "/stories", destination: "/browse?type=posts", permanent: true },
       { source: "/stories/:slug", destination: "/posts/:slug", permanent: true },
       { source: "/workshops", destination: "/browse?type=workshops", permanent: true },

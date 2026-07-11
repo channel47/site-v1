@@ -29,9 +29,9 @@ export const PUBLIC_PAGES = [
     description: "Subscribe for channel47 updates.",
   },
   {
-    path: "/about",
-    title: "About channel47 / Jackson Dean",
-    description: "Who maintains channel47.",
+    path: "/session",
+    title: "Agentic Systems Working Session",
+    description: "Book a one-to-one working session with Jackson Dean.",
   },
   {
     path: "/privacy",

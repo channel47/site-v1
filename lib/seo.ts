@@ -70,7 +70,7 @@ export function baseGraph() {
         "@type": "Person",
         "@id": PERSON_ID,
         name: AUTHOR_NAME,
-        url: `${SITE_URL}/about`,
+        url: SITE_URL,
         description:
           "Media buyer and Vibe Marketers mentor who publishes open-source marketing skills and MCP connectors at channel47.",
         worksFor: orgRef,

@@ -74,7 +74,7 @@ export function GET() {
     ),
     "",
     "## Optional",
-    ...PUBLIC_PAGES.filter((page) => page.path === "/about").map(
+    ...PUBLIC_PAGES.filter((page) => page.path === "/session").map(
       (page) => `- [${page.title}](${absoluteUrl(SITE_URL, page.path)}): ${page.description}`,
     ),
     `- [Workshop archive](${absoluteUrl(SITE_URL, CONTENT_COLLECTION.workshops.indexPath)}): sessions hosted inside Vibe Marketers`,
