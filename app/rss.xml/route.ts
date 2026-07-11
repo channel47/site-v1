@@ -6,6 +6,7 @@ import {
   type Post,
   type Workshop,
 } from "@/lib/content"
+import { CONTENT_COLLECTION, absoluteUrl } from "@/lib/discovery"
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo"
 
 /**
@@ -53,14 +54,23 @@ function entry(item: Post | Asset | Workshop, url: string): FeedEntry {
 
 export function GET() {
   const entries: FeedEntry[] = [
-    ...getAllPosts().map((p) => entry(p, `${SITE_URL}/posts/${p.slug}`)),
-    ...getAssets("skill").map((a) => entry(a, `${SITE_URL}/skills/${a.slug}`)),
+    ...getAllPosts().map((p) =>
+      entry(p, absoluteUrl(SITE_URL, `${CONTENT_COLLECTION.posts.basePath}/${p.slug}`)),
+    ),
+    ...getAssets("skill").map((a) =>
+      entry(a, absoluteUrl(SITE_URL, `${CONTENT_COLLECTION.skills.basePath}/${a.slug}`)),
+    ),
     ...getAssets("connector").map((a) =>
-      entry(a, `${SITE_URL}/connectors/${a.slug}`),
+      entry(
+        a,
+        absoluteUrl(SITE_URL, `${CONTENT_COLLECTION.connectors.basePath}/${a.slug}`),
+      ),
     ),
     ...getWorkshops()
       .filter((w) => w.status === "past")
-      .map((w) => entry(w, `${SITE_URL}/workshops/${w.slug}`)),
+      .map((w) =>
+        entry(w, absoluteUrl(SITE_URL, `${CONTENT_COLLECTION.workshops.basePath}/${w.slug}`)),
+      ),
   ].sort((a, b) => b.date.localeCompare(a.date))
 
   const rfc822 = (iso: string) => new Date(`${iso}T12:00:00Z`).toUTCString()

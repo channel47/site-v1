@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server"
+import { CONTENT_ROUTE_PATTERN } from "@/lib/discovery"
 
 /**
  * Machine-format routing for content URLs (docs/AI-SEO.md, Layer 3).
@@ -13,10 +14,8 @@ import { NextResponse, type NextRequest } from "next/server"
  * a browser or HTML to an agent that negotiated.
  */
 
-const CONTENT_ROUTE = /^\/(posts|skills|connectors|workshops)\/([a-z0-9-]+)(\.md)?$/
-
 export function proxy(req: NextRequest) {
-  const match = CONTENT_ROUTE.exec(req.nextUrl.pathname)
+  const match = CONTENT_ROUTE_PATTERN.exec(req.nextUrl.pathname)
   if (!match) return NextResponse.next()
 
   const [, section, slug, mdSuffix] = match

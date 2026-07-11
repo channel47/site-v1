@@ -56,6 +56,10 @@ The templates enforce the plumbing; the content rules live with the writer:
     before consensus forms and maintained (real `dateModified`).
 
 ### Layer 3 — Agent-native infrastructure
+Route-family and evergreen-page definitions live in `lib/discovery.ts`; the
+surfaces below import that registry so static pages, content route patterns,
+and machine endpoint lists do not drift independently.
+
 | Surface | File | Notes |
 |---|---|---|
 | `robots.txt` | `app/robots.ts` | All AI crawlers explicitly welcomed; `/api/subscribe` and `/md/` excluded |
@@ -67,6 +71,11 @@ The templates enforce the plumbing; the content rules live with the writer:
 | `rss.xml` | `app/rss.xml/route.ts` | Full-content feed of everything, newest first (workshops join once recorded) |
 | `/api` | `app/api/route.ts` | Versioned JSON discovery document with `nextActions` |
 | `/api/search?q=` | `app/api/search/route.ts` | Public JSON search — the site as a callable tool |
+
+Run `pnpm check:seo-surfaces` before deploys that add, remove, or rename
+routes. It fails when a static App Router page is missing from the registry,
+when a registry page has no matching route, or when drift-prone machine
+surfaces stop importing the shared definitions.
 
 ### Layer 4 — Distribution
 - **"Copy page"** (the markdown-twin copy button) on every post, asset, and

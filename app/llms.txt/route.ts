@@ -1,4 +1,11 @@
 import { getAllPosts, getAssets, getWorkshops } from "@/lib/content"
+import {
+  CONTENT_COLLECTION,
+  CONTENT_COLLECTIONS,
+  MACHINE_SURFACES,
+  PUBLIC_PAGES,
+  absoluteUrl,
+} from "@/lib/discovery"
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo"
 
 /**
@@ -25,18 +32,16 @@ export function GET() {
     `> ${SITE_DESCRIPTION}`,
     "",
     "Start here:",
-    `- ${SITE_URL}/api : public JSON discovery document (formats, route families, next actions)`,
-    `- ${SITE_URL}/sitemap.md : markdown discovery index of every public URL`,
-    `- ${SITE_URL}/sitemap.xml : XML sitemap for crawlers`,
-    `- ${SITE_URL}/rss.xml : full-content RSS feed`,
+    ...MACHINE_SURFACES.filter((surface) => surface.path !== "/llms.txt").map(
+      (surface) =>
+        `- ${absoluteUrl(SITE_URL, surface.path)} : ${surface.label} (${surface.description})`,
+    ),
     "",
     "Route families:",
-    `- Skills (installable agent skills): \`${SITE_URL}/skills/<slug>\``,
-    `- Connectors (MCP servers for ad platforms): \`${SITE_URL}/connectors/<slug>\``,
-    `- Workshops (session notes): \`${SITE_URL}/workshops/<slug>\``,
-    ...(posts.length > 0
-      ? [`- Posts: \`${SITE_URL}/posts/<slug>\``]
-      : []),
+    ...CONTENT_COLLECTIONS.map(
+      (collection) =>
+        `- ${collection.routeDescription}: \`${absoluteUrl(SITE_URL, collection.basePath)}/<slug>\``,
+    ),
     "",
     "Markdown twins:",
     "- Every content route above also serves clean markdown at the same URL + `.md`",
@@ -65,12 +70,14 @@ export function GET() {
       : []),
     "## Workshops",
     ...workshops.map(
-      (w) => `- [${w.title}](${SITE_URL}/workshops/${w.slug}): ${w.description}`,
+      (w) => `- [${w.title}](${SITE_URL}/workshops/${w.slug}.md): ${w.description}`,
     ),
     "",
     "## Optional",
-    `- [About](${SITE_URL}/about): who maintains Channel47`,
-    `- [Workshops](${SITE_URL}/browse?type=workshops): sessions hosted inside Vibe Marketers`,
+    ...PUBLIC_PAGES.filter((page) => page.path === "/about").map(
+      (page) => `- [${page.title}](${absoluteUrl(SITE_URL, page.path)}): ${page.description}`,
+    ),
+    `- [Workshop archive](${absoluteUrl(SITE_URL, CONTENT_COLLECTION.workshops.indexPath)}): sessions hosted inside Vibe Marketers`,
     "",
   ]
 

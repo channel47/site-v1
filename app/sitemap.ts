@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next"
 import { getAllPosts, getAssets, getWorkshops } from "@/lib/content"
+import { PUBLIC_PAGES, absoluteUrl } from "@/lib/discovery"
 import { SITE_URL } from "@/lib/seo"
 
 /**
@@ -26,12 +27,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
   )
 
   return [
-    { url: `${SITE_URL}/`, lastModified: newest },
-    { url: `${SITE_URL}/browse`, lastModified: newest },
-    { url: `${SITE_URL}/newsletter` },
-    { url: `${SITE_URL}/about` },
-    { url: `${SITE_URL}/privacy` },
-    { url: `${SITE_URL}/terms` },
+    ...PUBLIC_PAGES.map((page) => ({
+      url: absoluteUrl(SITE_URL, page.path),
+      lastModified:
+        "lastModified" in page && page.lastModified === "content"
+          ? newest
+          : undefined,
+    })),
     ...posts.map((p) => ({
       url: `${SITE_URL}/posts/${p.slug}`,
       lastModified: p.date,

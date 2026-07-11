@@ -6,6 +6,7 @@ import {
   getWorkshopBySlug,
   getWorkshops,
 } from "@/lib/content"
+import { CONTENT_COLLECTION } from "@/lib/discovery"
 import { assetTwin, postTwin, workshopTwin } from "@/lib/markdown-twin"
 
 /**
@@ -26,13 +27,22 @@ export const dynamicParams = false
 
 export function generateStaticParams() {
   return [
-    ...getAllPosts().map((p) => ({ section: "posts", slug: p.slug })),
-    ...getAssets("skill").map((a) => ({ section: "skills", slug: a.slug })),
-    ...getAssets("connector").map((a) => ({
-      section: "connectors",
+    ...getAllPosts().map((p) => ({
+      section: CONTENT_COLLECTION.posts.segment,
+      slug: p.slug,
+    })),
+    ...getAssets("skill").map((a) => ({
+      section: CONTENT_COLLECTION.skills.segment,
       slug: a.slug,
     })),
-    ...getWorkshops().map((w) => ({ section: "workshops", slug: w.slug })),
+    ...getAssets("connector").map((a) => ({
+      section: CONTENT_COLLECTION.connectors.segment,
+      slug: a.slug,
+    })),
+    ...getWorkshops().map((w) => ({
+      section: CONTENT_COLLECTION.workshops.segment,
+      slug: w.slug,
+    })),
   ]
 }
 
@@ -40,13 +50,19 @@ export async function GET(_req: Request, { params }: Params) {
   const { section, slug } = await params
 
   let twin: string | undefined
-  if (section === "posts") {
+  if (section === CONTENT_COLLECTION.posts.segment) {
     const post = getPostBySlug(slug)
     twin = post && postTwin(post)
-  } else if (section === "skills" || section === "connectors") {
-    const asset = getAssetBySlug(section === "skills" ? "skill" : "connector", slug)
+  } else if (
+    section === CONTENT_COLLECTION.skills.segment ||
+    section === CONTENT_COLLECTION.connectors.segment
+  ) {
+    const asset = getAssetBySlug(
+      section === CONTENT_COLLECTION.skills.segment ? "skill" : "connector",
+      slug,
+    )
     twin = asset && assetTwin(asset)
-  } else if (section === "workshops") {
+  } else if (section === CONTENT_COLLECTION.workshops.segment) {
     const workshop = getWorkshopBySlug(slug)
     twin = workshop && workshopTwin(workshop)
   }

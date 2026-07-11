@@ -1,4 +1,10 @@
 import { getAllPosts, getAssets, getWorkshops } from "@/lib/content"
+import {
+  CONTENT_COLLECTION,
+  MACHINE_SURFACES,
+  PUBLIC_PAGES,
+  absoluteUrl,
+} from "@/lib/discovery"
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo"
 
 /**
@@ -25,12 +31,7 @@ export function GET() {
     `> ${SITE_DESCRIPTION}`,
     "",
     "## Pages",
-    row(`${SITE_URL}/`, "Home"),
-    row(`${SITE_URL}/browse`, "Browse — the full library, filterable by type"),
-    row(`${SITE_URL}/newsletter`, "Newsletter"),
-    row(`${SITE_URL}/about`, "About Channel 47 / Jackson Dean"),
-    row(`${SITE_URL}/privacy`, "Privacy"),
-    row(`${SITE_URL}/terms`, "Terms"),
+    ...PUBLIC_PAGES.map((page) => row(absoluteUrl(SITE_URL, page.path), page.title)),
     "",
     "## Skills",
     ...skills.map((a) => row(`${SITE_URL}/skills/${a.slug}`, a.title, a.date)),
@@ -48,14 +49,14 @@ export function GET() {
         ]
       : []),
     "## Workshops",
-    row(`${SITE_URL}/browse?type=workshops`, "Workshop archive"),
+    row(absoluteUrl(SITE_URL, CONTENT_COLLECTION.workshops.indexPath), "Workshop archive"),
     ...workshops.map((w) => row(`${SITE_URL}/workshops/${w.slug}`, w.title, w.date)),
     "",
     "## Machine access",
     "",
-    "Every post, skill, and connector URL also serves clean markdown with YAML",
-    "frontmatter — append `.md`, or send `Accept: text/markdown` to the",
-    "canonical URL. JSON discovery and search are public and unauthenticated.",
+    "Every post, skill, connector, and workshop URL also serves clean markdown",
+    "with YAML frontmatter — append `.md`, or send `Accept: text/markdown`",
+    "to the canonical URL. JSON discovery and search are public and unauthenticated.",
     "",
     "```sh",
     `curl ${SITE_URL}/skills/creative-strategist.md`,
@@ -64,8 +65,9 @@ export function GET() {
     `curl '${SITE_URL}/api/search?q=google%20ads'`,
     "```",
     "",
-    `Other machine surfaces: [llms.txt](${SITE_URL}/llms.txt),`,
-    `[sitemap.xml](${SITE_URL}/sitemap.xml), [rss.xml](${SITE_URL}/rss.xml).`,
+    `Other machine surfaces: ${MACHINE_SURFACES.filter((surface) => surface.path !== "/sitemap.md")
+      .map((surface) => `[${surface.label}](${absoluteUrl(SITE_URL, surface.path)})`)
+      .join(", ")}.`,
     "",
   ]
 

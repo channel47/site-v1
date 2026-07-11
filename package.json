@@ -6,6 +6,7 @@
     "build": "next build",
     "dev": "next dev",
     "start": "next start",
+    "check:seo-surfaces": "node scripts/check_seo_surfaces.mjs",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

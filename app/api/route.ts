@@ -1,3 +1,4 @@
+import { CONTENT_COLLECTIONS, MACHINE_SURFACES } from "@/lib/discovery"
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo"
 
 /**
@@ -21,36 +22,16 @@ export function GET() {
         markdown: "text/markdown",
         json: "application/json",
       },
-      discovery: {
-        api: "/api",
-        llms: "/llms.txt",
-        sitemap: "/sitemap.xml",
-        sitemapMarkdown: "/sitemap.md",
-        rss: "/rss.xml",
-      },
-      resources: [
-        {
-          name: "skills",
-          description: "Installable agent skills for marketers",
-          htmlPattern: "/skills/:slug",
-          markdownPattern: "/skills/:slug.md",
-          visibility: "public",
-        },
-        {
-          name: "connectors",
-          description: "MCP servers for ad platforms",
-          htmlPattern: "/connectors/:slug",
-          markdownPattern: "/connectors/:slug.md",
-          visibility: "public",
-        },
-        {
-          name: "workshops",
-          description: "Recorded and upcoming live build sessions",
-          htmlPattern: "/workshops/:slug",
-          markdownPattern: "/workshops/:slug.md",
-          visibility: "public",
-        },
-      ],
+      discovery: Object.fromEntries(
+        MACHINE_SURFACES.map((surface) => [surface.key, surface.path]),
+      ),
+      resources: CONTENT_COLLECTIONS.map((collection) => ({
+        name: collection.key,
+        description: collection.description,
+        htmlPattern: collection.htmlPattern,
+        markdownPattern: collection.markdownPattern,
+        visibility: "public",
+      })),
       search: {
         endpoint: "/api/search",
         params: { q: "keyword query, required" },

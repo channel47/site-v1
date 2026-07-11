@@ -1,4 +1,9 @@
-import { getAllPosts, getAssets } from "@/lib/content"
+import { getAllPosts, getAssets, getWorkshops } from "@/lib/content"
+import {
+  CONTENT_COLLECTION,
+  type ContentCollection,
+  type SearchResultType,
+} from "@/lib/discovery"
 import { SITE_URL } from "@/lib/seo"
 
 /**
@@ -12,15 +17,14 @@ interface Doc {
   title: string
   url: string
   markdownUrl: string
-  type: "post" | "skill" | "connector"
+  type: SearchResultType
   description: string
   date: string
   haystack: { title: string; tags: string; description: string; body: string }
 }
 
 function doc(
-  type: Doc["type"],
-  path: string,
+  collection: ContentCollection,
   item: {
     title: string
     slug: string
@@ -30,12 +34,12 @@ function doc(
     markdown: string
   },
 ): Doc {
-  const url = `${SITE_URL}/${path}/${item.slug}`
+  const url = `${SITE_URL}${collection.basePath}/${item.slug}`
   return {
     title: item.title,
     url,
     markdownUrl: `${url}.md`,
-    type,
+    type: collection.searchType,
     description: item.description,
     date: item.date,
     haystack: {
@@ -49,9 +53,10 @@ function doc(
 
 function corpus(): Doc[] {
   return [
-    ...getAllPosts().map((p) => doc("post", "posts", p)),
-    ...getAssets("skill").map((a) => doc("skill", "skills", a)),
-    ...getAssets("connector").map((a) => doc("connector", "connectors", a)),
+    ...getAllPosts().map((p) => doc(CONTENT_COLLECTION.posts, p)),
+    ...getAssets("skill").map((a) => doc(CONTENT_COLLECTION.skills, a)),
+    ...getAssets("connector").map((a) => doc(CONTENT_COLLECTION.connectors, a)),
+    ...getWorkshops().map((w) => doc(CONTENT_COLLECTION.workshops, w)),
   ]
 }
 
