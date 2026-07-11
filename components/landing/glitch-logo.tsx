@@ -20,7 +20,8 @@ const BIT_COLORS = [
 interface GlitchLogoProps {
   /** Play the block build-in once on mount. */
   autoPlay?: boolean
-  /** Width in px (the mark keeps its 48:24 ratio). */
+  /** Width in px (the mark keeps its 48:24 ratio). Omit to use the
+   * responsive header size from .gl-logo in globals.css. */
   width?: number
   className?: string
 }
@@ -34,26 +35,28 @@ interface GlitchLogoProps {
  */
 export function GlitchLogo({
   autoPlay = false,
-  width = MARK_WIDTH,
+  width,
   className,
 }: GlitchLogoProps) {
   const [pulse, setPulse] = useState(0)
   const playing = autoPlay || pulse > 0
-  const height = (width * MARK_HEIGHT) / MARK_WIDTH
+  const size = width
+    ? { width, height: (width * MARK_HEIGHT) / MARK_WIDTH }
+    : undefined
 
   return (
     <button
       type="button"
       aria-label="channel47 — replay logo animation"
       className={`gl-logo${className ? ` ${className}` : ""}`}
-      style={{ width, height }}
+      style={size}
       onClick={() => setPulse((p) => p + 1)}
     >
       <svg
         className="gl gl-base"
         viewBox={MARK_VIEWBOX}
         fill="currentColor"
-        style={{ width, height }}
+        style={size}
       >
         {BLOCKS.map((b, i) => (
           <rect

@@ -21,7 +21,7 @@ export default function NewsletterPage() {
       <SiteHeader />
 
       <main className="st-shell st-shell-newsletter">
-        <header className="st-head">
+        <header className="st-head st-head-newsletter">
           <h1 className="serif st-h1 an-blur">Occasional updates from channel47.</h1>
           <p className="st-intro an-up" style={{ animationDelay: ".2s" }}>
             One email when I add a skill, connector, or workshop. Nothing on a

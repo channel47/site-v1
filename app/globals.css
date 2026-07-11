@@ -373,6 +373,18 @@ button {
   opacity: 1;
   transition: opacity 0.2s;
 }
+/* Same 30×16 → 36×19 sizing as .gl-logo — the SVG's 48×24 attributes are
+   the drawing grid, not the rendered size. */
+.st-mark svg {
+  width: 30px;
+  height: 16px;
+}
+@media (min-width: 768px) {
+  .st-mark svg {
+    width: 36px;
+    height: 19px;
+  }
+}
 .st-mark:hover {
   opacity: 0.55;
 }
@@ -684,8 +696,25 @@ button {
 }
 
 /* ---- header/detail page furniture --------------------------------- */
+/* Gap between the header and the page head — per-surface in the design:
+   detail spine 26px → 44px, Browse 44px → 64px, Newsletter 44px → 72px. */
 .st-head {
-  margin-top: 12px;
+  margin-top: 26px;
+}
+.st-head-browse,
+.st-head-newsletter {
+  margin-top: 44px;
+}
+@media (min-width: 768px) {
+  .st-head {
+    margin-top: 44px;
+  }
+  .st-head-browse {
+    margin-top: 64px;
+  }
+  .st-head-newsletter {
+    margin-top: 72px;
+  }
 }
 .dt-crumb {
   font-family: var(--font-label);
@@ -1423,11 +1452,13 @@ button {
 }
 
 /* ---- glitch logo --------------------------------------------------- */
+/* Mark size is the design's 30×16 → 36×19 (v2), not the 48×24 drawing
+   grid — the SVG viewBox stays 48:24 and scales down. */
 .gl-logo {
   position: relative;
   display: inline-block;
-  height: 24px;
-  width: 48px;
+  height: 16px;
+  width: 30px;
   background: none;
   border: none;
   padding: 0;
@@ -1447,10 +1478,16 @@ button {
 .gl-logo .gl {
   position: absolute;
   inset: 0;
-  height: 24px;
-  width: 48px;
+  height: 100%;
+  width: 100%;
   display: block;
   color: var(--ink);
+}
+@media (min-width: 768px) {
+  .gl-logo {
+    width: 36px;
+    height: 19px;
+  }
 }
 
 /* ---- keyboard focus --------------------------------------------- */
@@ -1462,8 +1499,9 @@ input:focus-visible {
 }
 
 /* ---- home ---------------------------------------------------------- */
+/* Hero breathing room below the header — the design's 56px → 88px. */
 .home-hero {
-  margin-top: 8px;
+  margin-top: 56px;
 }
 .home-h1 {
   font-size: var(--h1-size);
@@ -1487,7 +1525,7 @@ input:focus-visible {
 }
 
 .home-cats {
-  margin-top: 36px;
+  margin-top: 52px;
   border-top: 1px solid var(--hairline);
 }
 .home-cat {
@@ -1679,6 +1717,12 @@ input:focus-visible {
 }
 
 @media (min-width: 768px) {
+  .home-hero {
+    margin-top: 88px;
+  }
+  .home-cats {
+    margin-top: 76px;
+  }
   .home-h1 {
     font-size: var(--h1-hero-size-d);
     line-height: 1.05;

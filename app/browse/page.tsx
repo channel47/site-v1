@@ -47,7 +47,7 @@ export default async function BrowsePage({ searchParams }: Props) {
       <SiteHeader />
 
       <main className="st-shell st-shell-full">
-        <header className="st-head">
+        <header className="st-head st-head-browse">
           <h1 className="serif st-h1 an-blur">Browse</h1>
           <nav
             className="br-chips an-up"
