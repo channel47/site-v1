@@ -12,7 +12,7 @@ import { pageMetadata } from "@/lib/seo"
 export const metadata: Metadata = pageMetadata({
   title: "Browse",
   description:
-    "Browse channel47 skills, MCP connectors, and workshops for marketers.",
+    "Every skill, MCP connector, and workshop channel47 has published, in one filterable list.",
   path: "/browse",
 })
 

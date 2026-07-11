@@ -7,7 +7,7 @@ import { pageMetadata } from "@/lib/seo"
 export const metadata: Metadata = pageMetadata({
   title: "Newsletter",
   description:
-    "Occasional updates when channel47 adds a skill, connector, or workshop.",
+    "One email when channel47 ships a new skill, connector, or workshop.",
   path: "/newsletter",
 })
 
@@ -22,10 +22,10 @@ export default function NewsletterPage() {
 
       <main className="st-shell st-shell-newsletter">
         <header className="st-head st-head-newsletter">
-          <h1 className="serif st-h1 an-blur">Occasional updates from channel47.</h1>
+          <h1 className="serif st-h1 an-blur">One email when something new ships.</h1>
           <p className="st-intro an-up" style={{ animationDelay: ".2s" }}>
-            One email when I add a skill, connector, or workshop. Nothing on a
-            schedule.
+            When a skill, connector, or workshop lands in the library, you hear
+            about it. Nothing on a schedule.
           </p>
         </header>
 
@@ -35,8 +35,8 @@ export default function NewsletterPage() {
 
         <div className="st-prose">
           <p>
-            Updates cover additions to the public library and workshop
-            announcements from the Vibe Marketers community.
+            That covers new skills and connectors as they&apos;re published,
+            plus dates for live sessions in the Vibe Marketers community.
           </p>
           <p className="mono nl-rss">
             Feed readers can also follow <a href="/rss.xml">rss.xml</a>.

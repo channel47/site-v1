@@ -29,11 +29,12 @@ export default function AboutPage() {
 
         <div className="st-prose">
           <p>
-            channel47 is where I publish open-source skills and MCP connectors
-            for marketers working with AI agents.
+            channel47 is where I publish the open-source skills and MCP
+            connectors I use to run paid media with AI agents.
           </p>
           <p>
-            I&apos;m Jackson Dean, a media buyer and mentor in the{" "}
+            I&apos;m Jackson Dean — seven years buying media, and a mentor in
+            the{" "}
             <a
               href={LINKS.join}
               target="_blank"
@@ -42,19 +43,18 @@ export default function AboutPage() {
             >
               Vibe Marketers
             </a>{" "}
-            community. The workshop archive documents sessions I&apos;ve hosted
-            there.
+            community. The workshops here are sessions I&apos;ve hosted there.
           </p>
           <p>
-            The library is free to browse and install. You can view the{" "}
+            Everything here is free to browse and install. Start with the{" "}
             <Link
               href="/browse"
               className="st-accent-link"
               style={{ "--type-color": "var(--c-skill)" } as CSSProperties}
             >
-              available tools and workshops
+              skills, connectors, and workshops
             </Link>{" "}
-            or inspect the source in the{" "}
+            or read the source in the{" "}
             <a
               href="https://github.com/channel47"
               target="_blank"
