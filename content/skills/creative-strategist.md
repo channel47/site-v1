@@ -1,5 +1,5 @@
 ---
-title: Creative Strategist
+title: "/creative-strategist — Turn customer research into ads worth testing"
 slug: creative-strategist
 description: "A staged voice-of-customer workflow for research, personas, ad angles, and advertorial drafts."
 repo: https://github.com/channel47/skills/tree/main/skills/creative-strategy/creative-strategist

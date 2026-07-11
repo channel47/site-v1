@@ -1,5 +1,5 @@
 ---
-title: Brief Me
+title: "/brief-me — Give your agent the context it needs"
 slug: brief-me
 description: "Runs a structured discovery interview and writes shared brand context for other creative-strategy skills."
 repo: https://github.com/channel47/skills/tree/main/skills/creative-strategy/brief-me

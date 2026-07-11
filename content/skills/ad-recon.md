@@ -1,5 +1,5 @@
 ---
-title: Ad Recon
+title: "/ad-recon — See what your competitors are actually running"
 slug: ad-recon
 description: "Collects competitor ads from public libraries and maps the angles and formats competitors are using."
 repo: https://github.com/channel47/skills/tree/main/skills/creative-strategy/ad-recon
