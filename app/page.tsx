@@ -67,10 +67,10 @@ export default function Page() {
       <main className="st-shell st-shell-full">
         <div className="home-hero">
           <h1 className="home-h1 an-blur">{HOME.headline}</h1>
-          <p className="home-sub an-up" style={{ animationDelay: ".3s" }}>
+          <p className="home-sub an-up" style={{ animationDelay: ".2s" }}>
             {HOME.subhead}
           </p>
-          <div className="home-id an-up" style={{ animationDelay: ".45s" }}>
+          <div className="home-id an-up" style={{ animationDelay: ".32s" }}>
             <img
               src={HOME.avatar}
               alt=""

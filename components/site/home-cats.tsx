@@ -40,7 +40,7 @@ export function HomeCats({ rows }: { rows: CategoryRow[] }) {
             {
               "--type-color": TYPE_COLORS[cat.key],
               "--shine-color": SHINE_COLORS[cat.key],
-              animationDelay: `${(0.45 + idx * 0.08).toFixed(2)}s`,
+              animationDelay: `${(0.38 + idx * 0.06).toFixed(2)}s`,
             } as CSSProperties
           }
         >

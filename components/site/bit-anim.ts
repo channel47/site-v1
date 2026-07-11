@@ -15,7 +15,7 @@ export const BIT_EASE = "cubic-bezier(0.2, 0.7, 0.2, 1)"
 function bitDelay(i: number, pulse: number, extra: number): string {
   const h = Math.sin((i + 1) * 127.1 + (pulse + 1) * 311.7) * 43758.5453
   const r = h - Math.floor(h)
-  return `${(extra + i * 0.038 + r * 0.15).toFixed(3)}s`
+  return `${(extra + i * 0.034 + r * 0.12).toFixed(3)}s`
 }
 
 export function bitAnim(
@@ -26,7 +26,7 @@ export function bitAnim(
 ): CSSProperties {
   return {
     "--c47bit": color,
-    animation: `c47-logo-${pulse % 2 ? "b" : "a"} 0.45s ${BIT_EASE} ${bitDelay(
+    animation: `c47-logo-${pulse % 2 ? "b" : "a"} 0.4s ${BIT_EASE} ${bitDelay(
       i,
       pulse,
       extra,

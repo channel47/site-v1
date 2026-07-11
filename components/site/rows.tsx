@@ -24,7 +24,7 @@ export function Rows({
           <li
             key={item.href}
             className="an-up"
-            style={{ animationDelay: `${0.45 + Math.min(i * 0.05, 0.75)}s` }}
+            style={{ animationDelay: `${0.38 + Math.min(i * 0.04, 0.6)}s` }}
           >
             <Link
               href={item.href}

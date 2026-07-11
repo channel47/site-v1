@@ -51,7 +51,7 @@ export function NavDrawer() {
                 style={
                   {
                     "--type-color": TYPE_COLORS[row.type],
-                    animationDelay: `${0.16 + i * 0.055}s`,
+                    animationDelay: `${0.14 + i * 0.05}s`,
                   } as CSSProperties
                 }
                 tabIndex={open ? 0 : -1}
@@ -61,7 +61,7 @@ export function NavDrawer() {
                   type={row.type}
                   className="nd-row-icon"
                   pulse={open ? menuPulse : undefined}
-                  delay={0.24 + i * 0.055}
+                  delay={0.2 + i * 0.05}
                 />
                 {row.label}
               </Link>
@@ -71,7 +71,7 @@ export function NavDrawer() {
         <Link
           href="/browse"
           className="nd-browse-all"
-          style={{ animationDelay: "0.38s" } as CSSProperties}
+          style={{ animationDelay: "0.32s" } as CSSProperties}
           tabIndex={open ? 0 : -1}
           onClick={() => setOpen(false)}
         >

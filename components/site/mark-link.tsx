@@ -1,5 +1,10 @@
 import Link from "next/link"
-import { BLOCKS } from "@/components/site/mark-blocks"
+import {
+  BLOCKS,
+  MARK_HEIGHT,
+  MARK_VIEWBOX,
+  MARK_WIDTH,
+} from "@/components/site/mark-blocks"
 
 /**
  * Static "47" mark that links home. The landing page's GlitchLogo is a
@@ -11,9 +16,9 @@ export function MarkLink() {
   return (
     <Link href="/" aria-label="Channel 47 — home" className="st-mark">
       <svg
-        viewBox="0 0 46 24"
-        width={46}
-        height={24}
+        viewBox={MARK_VIEWBOX}
+        width={MARK_WIDTH}
+        height={MARK_HEIGHT}
         fill="currentColor"
         aria-hidden
       >

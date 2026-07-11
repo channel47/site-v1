@@ -88,7 +88,7 @@ export function SiteFooter() {
           {GROUPS.map((group) => (
             <div
               key={group.key}
-              className="uf-body sf-body"
+              className="uf-body"
               data-open={openGroup === group.key}
             >
               <div>

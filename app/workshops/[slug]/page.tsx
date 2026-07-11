@@ -84,10 +84,10 @@ export default async function WorkshopPage({ params }: Props) {
             leaf={w.slug}
           />
           <h1 className="serif st-h1 h1-workshop an-blur">{w.title}</h1>
-          <p className="dt-oneliner an-up" style={{ animationDelay: ".3s" }}>
+          <p className="dt-oneliner an-up" style={{ animationDelay: ".2s" }}>
             {w.description}
           </p>
-          <p className="dt-byline an-up" style={{ animationDelay: ".45s" }}>
+          <p className="dt-byline an-up" style={{ animationDelay: ".32s" }}>
             {w.status === "upcoming"
               ? `Hosted by ${w.author} · Live, then the replay lands inside`
               : `${w.author} · Recorded ${shortDate(w.date)} · ${w.duration}`}
@@ -95,7 +95,7 @@ export default async function WorkshopPage({ params }: Props) {
         </header>
 
         {w.status === "upcoming" ? (
-          <div className="ws-plate an-up" style={{ animationDelay: ".55s" }}>
+          <div className="ws-plate an-up" style={{ animationDelay: ".4s" }}>
             <div className="ws-plate-head">
               <span className="ws-plate-live mono">
                 <svg width="8" height="9" viewBox="0 0 8 9" fill="currentColor" aria-hidden>
@@ -115,7 +115,7 @@ export default async function WorkshopPage({ params }: Props) {
             </div>
           </div>
         ) : w.screenshot ? (
-          <figure className="dt-figure an-up" style={{ animationDelay: ".55s" }}>
+          <figure className="dt-figure an-up" style={{ animationDelay: ".4s" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={w.screenshot} alt="" />
             {w.screenshotCaption ? (

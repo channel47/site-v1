@@ -39,10 +39,10 @@ export function AssetPage({ asset }: { asset: Asset }) {
             leaf={asset.slug}
           />
           <h1 className="serif st-h1 as-h1 an-blur">{asset.title}</h1>
-          <p className="dt-oneliner an-up" style={{ animationDelay: ".3s" }}>
+          <p className="dt-oneliner an-up" style={{ animationDelay: ".2s" }}>
             {asset.description}
           </p>
-          <p className="dt-byline an-up" style={{ animationDelay: ".45s" }}>
+          <p className="dt-byline an-up" style={{ animationDelay: ".32s" }}>
             {AUTHOR_NAME} · Shipped {shortDate(asset.date)} ·{" "}
             <a href={asset.repo} target="_blank" rel="noopener">
               Source on GitHub →
@@ -51,7 +51,7 @@ export function AssetPage({ asset }: { asset: Asset }) {
         </header>
 
         {asset.screenshot ? (
-          <figure className="dt-figure an-up" style={{ animationDelay: ".55s" }}>
+          <figure className="dt-figure an-up" style={{ animationDelay: ".4s" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={asset.screenshot} alt="" />
             {asset.screenshotCaption ? (
@@ -61,7 +61,7 @@ export function AssetPage({ asset }: { asset: Asset }) {
             ) : null}
           </figure>
         ) : asset.screenshotCaption ? (
-          <figure className="dt-figure an-up" style={{ animationDelay: ".55s" }}>
+          <figure className="dt-figure an-up" style={{ animationDelay: ".4s" }}>
             <div className="dt-figure-hatch" aria-hidden>
               <span className="dt-figure-tag mono">FIG. 01</span>
             </div>

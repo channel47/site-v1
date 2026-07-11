@@ -18,28 +18,28 @@ export const OG_CONTENT_TYPE = "image/png"
 
 const PAGE = "#fdfdfc"
 const INK = "#161718"
-const BODY = "rgba(22, 23, 24, 0.6)"
-const BRAND_MONO = "rgba(22, 23, 24, 0.5)"
+const BODY = "rgba(22, 23, 24, 0.55)"
+const BRAND_MONO = "rgba(22, 23, 24, 0.55)"
 
 /** Matches --c-skill/--c-connector/--c-post/--c-workshop in globals.css. */
 export const TYPE_ACCENTS = {
-  skill: "#b4574d",
-  connector: "#6db8b0",
-  post: "#b0913f",
-  workshop: "#b46a9e",
+  skill: "#bc6b62",
+  connector: "#18998b",
+  post: "#a27f30",
+  workshop: "#ad6b9b",
 } as const
 
 /** Matches --gradient in globals.css — the site-wide default's top bar. */
-const BRAND_GRADIENT = "linear-gradient(90deg, #b4574d, #b46a9e, #5a6aa8, #6db8b0, #7fae62, #cfc258)"
+const BRAND_GRADIENT = "linear-gradient(90deg, #bc6b62, #ad6b9b, #6583c4, #18998b, #699350, #938632)"
 
-/** Same six blocks as components/site/mark-link.tsx — the "47" mark. */
+/** Same six blocks as components/site/mark-blocks.ts — the "47" mark. */
 const MARK_BLOCKS = [
   { x: 0, y: 0, width: 7, height: 18 },
-  { x: 7, y: 12, width: 7, height: 6 },
+  { x: 7, y: 11, width: 7, height: 7 },
   { x: 14, y: 0, width: 7, height: 24 },
-  { x: 25, y: 0, width: 14, height: 6 },
-  { x: 39, y: 0, width: 7, height: 12 },
-  { x: 32, y: 12, width: 7, height: 12 },
+  { x: 27, y: 0, width: 14, height: 7 },
+  { x: 41, y: 0, width: 7, height: 12 },
+  { x: 34, y: 12, width: 7, height: 12 },
 ]
 
 let fonts: Awaited<ReturnType<typeof loadFonts>> | null = null
@@ -150,7 +150,7 @@ export async function renderOgImage({ kicker, title, description, accent = "grad
                 background: INK,
               }}
             >
-              <svg width={23} height={12} viewBox="0 0 46 24" fill="white">
+              <svg width={24} height={12} viewBox="0 0 48 24" fill="white">
                 {MARK_BLOCKS.map((b, i) => (
                   <rect key={i} x={b.x} y={b.y} width={b.width} height={b.height} />
                 ))}

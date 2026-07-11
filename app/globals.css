@@ -3,9 +3,12 @@
    Plain CSS, no framework. Tokens and component patterns
    transcribed from the "Channel47" Claude Design file, rounds
    12a (Home/Browse), 13a (the adopted detail fold), 14a (the
-   locked set) and 15a/15b (Workshops). System-first type, hard
-   edges (no rounding anywhere in the product), content-type
-   colour only on hover/press/selection — never at rest.
+   locked set), 15a/15b (Workshops), and the Jul 2026 polish pass
+   (oklch-harmonized accents, whole-px type scale, 4-level ink,
+   4px spacing grid, tightened motion, unified-stroke logo).
+   System-first type, hard edges (no rounding anywhere in the
+   product), content-type colour only on hover/press/selection —
+   never at rest.
 
    Light/dark now runs on an explicit toggle (see theme-toggle.tsx
    and the inline script in layout.tsx) rather than only following
@@ -26,12 +29,12 @@
   --ink: #161718;
   --body: rgba(22, 23, 24, 0.55);
   --body-strong: rgba(22, 23, 24, 0.78);
-  --byline: rgba(22, 23, 24, 0.62);
-  --muted: rgba(22, 23, 24, 0.45);
-  --faint: rgba(22, 23, 24, 0.4);
+  --byline: rgba(22, 23, 24, 0.55);
+  --muted: rgba(22, 23, 24, 0.42);
+  --faint: rgba(22, 23, 24, 0.42);
   --crumb-sep: rgba(22, 23, 24, 0.3);
-  --icon: rgba(22, 23, 24, 0.4);
-  --icon-hover: rgba(22, 23, 24, 0.75);
+  --icon: rgba(22, 23, 24, 0.42);
+  --icon-hover: rgba(22, 23, 24, 0.78);
 
   --hairline: rgba(22, 23, 24, 0.1);
   --hairline-soft: rgba(22, 23, 24, 0.07);
@@ -47,24 +50,24 @@
   --btn-fg: #fdfdfc;
 
   /* ---- content-type identity — ink at rest, colour on interaction -- */
-  --c-skill: #b4574d;
-  --c-connector: #6db8b0;
-  --c-post: #b0913f;
-  --c-workshop: #b46a9e;
+  --c-skill: #bc6b62;
+  --c-connector: #18998b;
+  --c-post: #a27f30;
+  --c-workshop: #ad6b9b;
   /* subscribe-confirm check — a universal success signal, deliberately not
      tied to whichever type-colour context surrounds it */
-  --success: #7fae62;
+  --success: #699350;
   /* form-validation failure — deliberately its own hue, not borrowed from
      any content-type colour */
   --error: #c1443c;
   --gradient: linear-gradient(
     90deg,
-    #b4574d,
-    #b46a9e,
-    #5a6aa8,
-    #6db8b0,
-    #7fae62,
-    #cfc258
+    #bc6b62,
+    #ad6b9b,
+    #6583c4,
+    #18998b,
+    #699350,
+    #938632
   );
 
   /* ---- type -------------------------------------------------------- */
@@ -73,28 +76,28 @@
   --font-body: var(--font-display);
   --font-label: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
-  --h1-size: 31px;
+  --h1-size: 32px;
   --h1-size-workshop: 27px;
   --h1-size-post: 24px;
-  --h1-ls: -0.022em;
-  --h1-lh: 1.18;
+  --h1-ls: -0.025em;
+  --h1-lh: 1.15;
 
-  --body-size: 14.5px;
+  --body-size: 15px;
   --body-lh: 1.7;
 
   /* desktop type scale — mirrors the mobile sizes above, ≥768px only */
-  --h1-hero-size-d: 52px;
+  --h1-hero-size-d: 54px;
   --h1-size-d: 44px;
   --h1-size-post-d: 34px;
   --h1-size-workshop-d: 38px;
-  --body-size-d: 15.5px;
+  --body-size-d: 15px;
 
   /* shine-sweep colours for the Home row links — each row's link text
      ripples from its type colour through this brighter twin and back */
-  --shine-post: #c9a44e;
-  --shine-skill: #c1764b;
-  --shine-connector: #6fb0c4;
-  --shine-workshop: #9a6cbd;
+  --shine-post: #c79e41;
+  --shine-skill: #e6867b;
+  --shine-connector: #29bdac;
+  --shine-workshop: #d586bf;
 
   --radius: 0px;
 }
@@ -107,12 +110,12 @@
     --ink: #ececea;
     --body: rgba(236, 236, 234, 0.55);
     --body-strong: rgba(236, 236, 234, 0.78);
-    --byline: rgba(236, 236, 234, 0.62);
-    --muted: rgba(236, 236, 234, 0.45);
-    --faint: rgba(236, 236, 234, 0.4);
+    --byline: rgba(236, 236, 234, 0.55);
+    --muted: rgba(236, 236, 234, 0.42);
+    --faint: rgba(236, 236, 234, 0.42);
     --crumb-sep: rgba(236, 236, 234, 0.3);
-    --icon: rgba(236, 236, 234, 0.4);
-    --icon-hover: rgba(236, 236, 234, 0.75);
+    --icon: rgba(236, 236, 234, 0.42);
+    --icon-hover: rgba(236, 236, 234, 0.78);
     --hairline: rgba(236, 236, 234, 0.1);
     --hairline-soft: rgba(236, 236, 234, 0.07);
     --hairline-code: rgba(236, 236, 234, 0.08);
@@ -134,12 +137,12 @@
   --ink: #ececea;
   --body: rgba(236, 236, 234, 0.55);
   --body-strong: rgba(236, 236, 234, 0.78);
-  --byline: rgba(236, 236, 234, 0.62);
-  --muted: rgba(236, 236, 234, 0.45);
-  --faint: rgba(236, 236, 234, 0.4);
+  --byline: rgba(236, 236, 234, 0.55);
+  --muted: rgba(236, 236, 234, 0.42);
+  --faint: rgba(236, 236, 234, 0.42);
   --crumb-sep: rgba(236, 236, 234, 0.3);
-  --icon: rgba(236, 236, 234, 0.4);
-  --icon-hover: rgba(236, 236, 234, 0.75);
+  --icon: rgba(236, 236, 234, 0.42);
+  --icon-hover: rgba(236, 236, 234, 0.78);
   --hairline: rgba(236, 236, 234, 0.1);
   --hairline-soft: rgba(236, 236, 234, 0.07);
   --hairline-code: rgba(236, 236, 234, 0.08);
@@ -232,13 +235,13 @@ button {
   }
 }
 .an-in {
-  animation: an-in 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation: an-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 .an-up {
-  animation: an-up 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation: an-up 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 .an-blur {
-  animation: an-blur 1.1s 0.1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation: an-blur 0.9s 0.05s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 
 /* Home row links (desktop) — a gradient sweep through the row's shine
@@ -320,8 +323,8 @@ button {
   max-width: 680px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 22px;
-  padding-right: 22px;
+  padding-left: 24px;
+  padding-right: 24px;
   box-sizing: border-box;
 }
 /* Full-bleed shell (header, footer, Home, Browse) — capped at the design's
@@ -373,8 +376,8 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 26px;
-  padding-bottom: 26px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   position: relative;
   z-index: 4;
 }
@@ -401,7 +404,7 @@ button {
   width: 20px;
   height: 2px;
   background: currentColor;
-  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1),
+  transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
     opacity 0.2s;
 }
 .nd-burger[aria-expanded="true"] span:first-child {
@@ -419,8 +422,8 @@ button {
   z-index: 3;
   background: var(--page);
   transform: translateY(-102%);
-  transition: transform 0.65s cubic-bezier(0.2, 0.7, 0.2, 1);
-  padding: 104px 22px 30px;
+  transition: transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1);
+  padding: 104px 24px 30px;
   overflow-y: auto;
 }
 .nd-panel[data-open="true"] {
@@ -487,7 +490,7 @@ button {
 }
 .nd-panel[data-open="true"] .nd-browse-all {
   animation: nd-row-in 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-  animation-delay: 0.38s;
+  animation-delay: 0.32s;
 }
 .nd-browse-all:hover {
   color: var(--ink);
@@ -498,7 +501,7 @@ button {
   display: none;
 }
 .sh-nav-link {
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--ink);
   transition: color 0.2s;
@@ -513,6 +516,10 @@ button {
   color: var(--ink);
 }
 @media (min-width: 768px) {
+  .sh {
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
   .sh-nav {
     display: flex;
     align-items: center;
@@ -543,10 +550,6 @@ button {
   display: flex;
   flex-direction: column;
 }
-/* The footer's collapse runs slightly tighter than Home's rows. */
-.sf-body {
-  transition-duration: 0.45s;
-}
 .sf-toggles {
   display: flex;
   gap: 24px;
@@ -564,7 +567,7 @@ button {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.02em;
   color: var(--faint);
@@ -575,7 +578,7 @@ button {
 }
 .sf-group-plus {
   font-weight: 400;
-  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 .sf-group-toggle[aria-expanded="true"] .sf-group-plus {
   transform: rotate(45deg);
@@ -645,12 +648,12 @@ button {
   flex-wrap: wrap;
 }
 .sf-legal p {
-  font-size: 10.5px;
+  font-size: 11px;
   letter-spacing: 0.02em;
   color: var(--faint);
 }
 .sf-legal .sf-link {
-  font-size: 10.5px;
+  font-size: 11px;
   color: var(--faint);
 }
 .sf-legal .sf-link:hover {
@@ -665,7 +668,7 @@ button {
 .uf-body {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition: grid-template-rows 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 .uf-body[data-open="true"] {
   grid-template-rows: 1fr;
@@ -698,7 +701,7 @@ button {
   margin: 0 5px;
 }
 .dt-crumb-leaf {
-  color: var(--muted);
+  color: var(--body);
 }
 
 .st-h1 {
@@ -722,6 +725,7 @@ button {
 @media (min-width: 768px) {
   .st-h1 {
     font-size: var(--h1-size-d);
+    letter-spacing: -0.03em;
   }
   .st-h1.h1-workshop {
     font-size: var(--h1-size-workshop-d);
@@ -731,7 +735,7 @@ button {
   }
   .st-intro,
   .dt-oneliner {
-    font-size: 16.5px;
+    font-size: 17px;
   }
   .st-prose {
     font-size: var(--body-size-d);
@@ -739,24 +743,22 @@ button {
   .st-prose h2 + ul > li {
     font-size: 14px;
   }
-  .as-pairing {
-    font-size: 13px;
-  }
+  .st-prose h2,
   .st-section-h2 {
-    font-size: 19px;
+    font-size: 20px;
   }
 }
 
 .st-byline {
   margin-top: 14px;
-  font-size: 12.5px;
+  font-size: 13px;
   color: var(--muted);
 }
 
 .st-intro,
 .dt-oneliner {
   margin-top: 14px;
-  font-size: 14.5px;
+  font-size: 15px;
   line-height: 1.6;
   color: var(--body);
   max-width: 560px;
@@ -766,7 +768,7 @@ button {
   margin-top: 18px;
   padding-bottom: 18px;
   border-bottom: 1px solid var(--hairline);
-  font-size: 12.5px;
+  font-size: 13px;
   color: var(--byline);
 }
 .dt-byline a {
@@ -802,7 +804,7 @@ button {
   position: absolute;
   top: 13px;
   left: 16px;
-  font-size: 9.5px;
+  font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.05em;
   color: var(--type-color);
@@ -818,7 +820,7 @@ button {
 /* prose — rendered markdown body */
 .st-prose {
   margin-top: 28px;
-  font-size: 14.5px;
+  font-size: 15px;
   line-height: 1.7;
   color: var(--body-strong);
 }
@@ -855,7 +857,7 @@ button {
   position: relative;
   padding: 14px 0 14px 30px;
   border-bottom: 1px solid var(--hairline-soft);
-  font-size: 13.5px;
+  font-size: 14px;
   line-height: 1.6;
 }
 .st-prose h2 + ul > li::before {
@@ -950,7 +952,7 @@ button {
 }
 .dt-qa-kicker {
   font-family: var(--font-label);
-  font-size: 8.5px;
+  font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -972,14 +974,14 @@ button {
   grid-template-columns: 1fr auto auto;
   column-gap: 14px;
   font-family: var(--font-label);
-  font-size: 10.5px;
+  font-size: 11px;
 }
 .dt-qa-table > div {
   padding: 8px 0;
   border-bottom: 1px solid var(--hairline-soft);
 }
 .dt-qa-table .dt-qa-head {
-  font-size: 8.5px;
+  font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -1013,7 +1015,7 @@ button {
 }
 .as-pairing {
   margin-top: 12px;
-  font-size: 12.5px;
+  font-size: 13px;
   line-height: 1.6;
   color: var(--body);
 }
@@ -1062,7 +1064,7 @@ button {
 }
 .dt-cross-title {
   margin-top: 6px;
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--ink);
 }
@@ -1085,7 +1087,7 @@ button {
 }
 .dt-share-label {
   font-family: var(--font-label);
-  font-size: 8.5px;
+  font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -1157,14 +1159,14 @@ button {
   align-items: center;
   gap: 6px;
   font-family: var(--font-label);
-  font-size: 8.5px;
+  font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--c-workshop);
 }
 .ws-plate-dur {
-  font-size: 8.5px;
+  font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.04em;
   color: var(--muted);
@@ -1216,7 +1218,7 @@ button {
   position: absolute;
   top: 13px;
   left: 16px;
-  font-size: 9.5px;
+  font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.02em;
   color: var(--c-workshop);
@@ -1267,7 +1269,7 @@ button {
      the hardcoded white text below must stay readable in both themes */
   background: var(--btn-color, #161718);
   color: #fff;
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 600;
   border: none;
   cursor: pointer;
@@ -1292,7 +1294,7 @@ button {
   align-items: flex-end;
 }
 .ea-helper {
-  font-size: 12.5px;
+  font-size: 13px;
   letter-spacing: 0.01em;
   color: var(--muted);
   margin-top: 11px;
@@ -1368,7 +1370,7 @@ button {
   position: relative;
   display: inline-block;
   height: 24px;
-  width: 46px;
+  width: 48px;
   background: none;
   border: none;
   padding: 0;
@@ -1382,14 +1384,14 @@ button {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: max(46px, 100%);
+  width: max(48px, 100%);
   height: 40px;
 }
 .gl-logo .gl {
   position: absolute;
   inset: 0;
   height: 24px;
-  width: 46px;
+  width: 48px;
   display: block;
   color: var(--ink);
 }
@@ -1416,7 +1418,7 @@ input:focus-visible {
 }
 .home-sub {
   margin-top: 16px;
-  font-size: 14.5px;
+  font-size: 15px;
   line-height: 1.6;
   color: var(--body);
   max-width: 290px;
@@ -1427,7 +1429,7 @@ input:focus-visible {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-top: 22px;
+  margin-top: 20px;
 }
 .home-id-avatar {
   flex: none;
@@ -1444,13 +1446,13 @@ input:focus-visible {
   gap: 2px;
 }
 .home-id-name {
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 600;
   line-height: 1.2;
   color: var(--body-strong);
 }
 .home-id-tag {
-  font-size: 10.5px;
+  font-size: 11px;
   line-height: 1.2;
   color: var(--muted);
 }
@@ -1467,22 +1469,14 @@ input:focus-visible {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 21px 0;
+  padding: 20px 0;
   background: none;
   border: none;
   text-align: left;
   cursor: pointer;
-  transition: padding-left 0.25s ease, box-shadow 0.25s ease;
 }
-/* Hover affordance only — hover-capable pointers, and never while the row
-   is open, so tapping (sticky :hover) or opening doesn't pin the eyebrow
-   bar + indent to the title. */
-@media (hover: hover) {
-  .home-cat-toggle:not([aria-expanded="true"]):hover {
-    padding-left: 30px;
-    box-shadow: inset 4px 0 0 var(--type-color);
-  }
-}
+/* Hover affordance is the icon + plus taking the row's type colour (below) —
+   no eyebrow bar or indent; the bar reads as selection, not affordance. */
 .home-cat-lead {
   display: flex;
   align-items: center;
@@ -1509,7 +1503,7 @@ input:focus-visible {
   font-size: 20px;
   font-weight: 300;
   color: var(--muted);
-  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), color 0.3s;
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), color 0.3s;
 }
 .home-cat-toggle[aria-expanded="true"] .home-cat-plus {
   transform: rotate(45deg);
@@ -1533,7 +1527,7 @@ input:focus-visible {
 .home-cat-link {
   display: inline-block;
   margin-top: 14px;
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--type-color);
 }
@@ -1578,7 +1572,7 @@ input:focus-visible {
   position: absolute;
   top: 13px;
   left: 16px;
-  font-size: 9.5px;
+  font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.05em;
   color: var(--type-color);
@@ -1591,16 +1585,16 @@ input:focus-visible {
   color: var(--ink);
 }
 .cover-card-meta {
-  font-size: 10.5px;
+  font-size: 11px;
   color: var(--muted);
 }
 
 .home-browse-all {
-  margin-top: 22px;
+  margin-top: 20px;
   padding-top: 0;
 }
 .home-browse-all-link {
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--muted);
   transition: color 0.2s;
@@ -1628,20 +1622,20 @@ input:focus-visible {
 @media (min-width: 768px) {
   .home-h1 {
     font-size: var(--h1-hero-size-d);
-    line-height: 1.08;
-    letter-spacing: -0.025em;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
     max-width: 700px;
   }
   .home-sub {
-    margin-top: 22px;
-    font-size: 16.5px;
+    margin-top: 20px;
+    font-size: 17px;
     max-width: 440px;
   }
   .home-id {
-    margin-top: 26px;
+    margin-top: 24px;
   }
   .home-cat-toggle {
-    padding: 26px 0;
+    padding: 24px 0;
   }
   .home-cat-label {
     font-size: 24px;
@@ -1661,6 +1655,7 @@ input:focus-visible {
   }
   .home-cat-desc {
     grid-area: desc;
+    font-size: 14px;
   }
   .home-cat-link {
     grid-area: link;
@@ -1683,8 +1678,8 @@ input:focus-visible {
 .br-chips {
   display: flex;
   gap: 8px;
-  margin: 22px -22px 0;
-  padding: 0 22px;
+  margin: 22px -24px 0;
+  padding: 0 24px;
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -1735,7 +1730,7 @@ input:focus-visible {
 /* index — grouped editorial rows (Browse / Home latest / related lists) */
 .st-group-title {
   font-family: var(--font-label);
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -1750,8 +1745,8 @@ input:focus-visible {
   display: grid;
   grid-template-areas: "main" "meta";
   gap: 6px;
-  padding: 16px 22px;
-  margin: 0 -22px;
+  padding: 16px 24px;
+  margin: 0 -24px;
   border-bottom: 1px solid var(--hairline);
   transition: background 0.2s;
 }
@@ -1779,7 +1774,7 @@ input:focus-visible {
 }
 .st-row-meta {
   grid-area: meta;
-  font-size: 10.5px;
+  font-size: 11px;
   letter-spacing: 0.01em;
   color: var(--muted);
   white-space: nowrap;
@@ -1795,10 +1790,10 @@ input:focus-visible {
     margin: 0 -48px;
   }
   .st-row-title {
-    font-size: 16.5px;
+    font-size: 17px;
   }
   .st-row-desc {
-    font-size: 12.5px;
+    font-size: 13px;
     line-height: 1.55;
     max-width: 760px;
   }
@@ -1927,7 +1922,7 @@ input:focus-visible {
   color: var(--faint);
 }
 .nl-send-title {
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: -0.005em;
   color: var(--body-strong);
@@ -1953,11 +1948,8 @@ input:focus-visible {
   .nl-send-date {
     width: 52px;
   }
-  .nl-send-title {
-    font-size: 14px;
-  }
   .nl-signoff {
-    font-size: 14.5px;
+    font-size: 15px;
   }
 }
 .st-post-capture {

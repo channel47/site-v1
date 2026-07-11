@@ -90,10 +90,10 @@ export default async function PostPage({ params }: Props) {
             leaf={post.slug}
           />
           <h1 className="serif st-h1 h1-post an-blur">{post.title}</h1>
-          <p className="dt-oneliner an-up" style={{ animationDelay: ".3s" }}>
+          <p className="dt-oneliner an-up" style={{ animationDelay: ".2s" }}>
             {post.description}
           </p>
-          <p className="dt-byline an-up" style={{ animationDelay: ".45s" }}>
+          <p className="dt-byline an-up" style={{ animationDelay: ".32s" }}>
             {post.author} · {shortDate(post.date)} · {readTime(post.markdown)} min
           </p>
         </header>

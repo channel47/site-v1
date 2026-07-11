@@ -10,12 +10,12 @@
     }
   </style>
   <rect class="background" width="180" height="180" rx="37" />
-  <g class="foreground" transform="translate(25.6 56.4) scale(2.8)">
+  <g class="foreground" transform="translate(22.8 56.4) scale(2.8)">
     <rect x="0" y="0" width="7" height="18" />
-    <rect x="7" y="12" width="7" height="6" />
+    <rect x="7" y="11" width="7" height="7" />
     <rect x="14" y="0" width="7" height="24" />
-    <rect x="25" y="0" width="14" height="6" />
-    <rect x="39" y="0" width="7" height="12" />
-    <rect x="32" y="12" width="7" height="12" />
+    <rect x="27" y="0" width="14" height="7" />
+    <rect x="41" y="0" width="7" height="12" />
+    <rect x="34" y="12" width="7" height="12" />
   </g>
 </svg>
