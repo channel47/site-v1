@@ -114,6 +114,10 @@ under a CSS drop-shadow. Alt text doubles as the visible figcaption.
 - Write alt text as a real caption — it's shown under the figure in mono.
 - The rendering is `marked.use()` in `lib/content.ts` + `.st-shot*` in `app/globals.css`.
 
+`##` headings no longer draw a hairline rule — section spacing alone marks the break.
+Use a markdown `---` (renders as `.st-prose hr`) when a piece genuinely needs a hard
+visual divider inside a section; it's a deliberate, occasional mark, not a default.
+
 ## Build-only markdown conventions
 
 Builds add four markdown conventions on top of the shared pipeline. All four are

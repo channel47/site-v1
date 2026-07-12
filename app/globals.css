@@ -949,9 +949,7 @@ button {
   letter-spacing: -0.015em;
   line-height: 1.3;
   color: var(--ink);
-  margin-top: 40px;
-  padding-top: 18px;
-  border-top: 1px solid var(--hairline);
+  margin-top: 58px;
 }
 .st-prose h3 {
   font-size: 16px;
@@ -985,6 +983,9 @@ button {
   font-size: 10px;
   font-weight: 600;
   color: var(--faint);
+}
+.st-prose h2 + ul > li:last-child {
+  border-bottom: none;
 }
 /* the same ledger row, but for an ordered list (Build "workflow at a
    glance" steps) — indices sit in the page's accent color rather than
@@ -1276,6 +1277,11 @@ button {
   color: var(--faint);
   border-bottom: 1px solid var(--hairline);
 }
+/* grid is 3 cells per row (label/value/value2) — suppress the last row's
+   cell borders so no line floats above the caption inside the box */
+.dt-qa-table > div:nth-last-child(-n + 3) {
+  border-bottom: none;
+}
 .dt-qa-caption {
   margin-top: 12px;
   font-family: var(--font-label);
@@ -1319,8 +1325,7 @@ button {
 }
 
 /* a real section heading used outside .st-prose (currently just "Grab it") —
-   same weight as the prose h2s, minus the hairline (the parent section
-   already supplies its own) */
+   same weight as the prose h2s */
 .st-section-h2 {
   font-size: 17px;
   font-weight: 600;
@@ -1359,9 +1364,7 @@ button {
 
 /* ---- share row ------------------------------------------------------ */
 .dt-share {
-  margin-top: 40px;
-  padding-top: 16px;
-  border-top: 1px solid var(--hairline);
+  margin-top: 56px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1515,45 +1518,6 @@ button {
   font-size: 13px;
   line-height: 1.5;
   color: var(--byline);
-}
-
-.ws-still {
-  position: relative;
-  aspect-ratio: 7 / 3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--hairline);
-  background: var(--still-bg);
-}
-
-/* past workshop, no real replay image yet — a mauve riso-hatch placeholder
-   with a centered play ring, same family as the skill/connector figure
-   placeholder (asset-page.tsx) but always in the workshop colour */
-.ws-still-hatch {
-  position: relative;
-  aspect-ratio: 7 / 3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--hairline);
-  background: repeating-linear-gradient(
-    -45deg,
-    color-mix(in srgb, var(--c-workshop) 20%, transparent) 0 5px,
-    color-mix(in srgb, var(--c-workshop) 8%, transparent) 5px 10px
-  );
-}
-.ws-still-tag {
-  position: absolute;
-  top: 13px;
-  left: 16px;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: var(--c-workshop);
-}
-.ws-still-play {
-  color: var(--c-workshop);
 }
 
 .ws-cta {
@@ -1986,7 +1950,6 @@ input:focus-visible {
 }
 .home-newsletter-inner {
   padding-top: 24px;
-  border-top: 1px solid var(--hairline);
 }
 .home-newsletter-h2 {
   font-size: 18px;
@@ -2339,77 +2302,12 @@ input:focus-visible {
 .ws-join {
   margin-top: 30px;
 }
-.ws-notify {
-  margin-top: 40px;
-  padding-top: 18px;
-  border-top: 1px solid var(--hairline);
-}
-.ws-notify .ea-formwrap {
-  margin-top: 16px;
-}
 .nl-capture {
   margin-top: 28px;
 }
 .nl-rss {
   margin-top: 26px;
   font-size: 10px;
-}
-.nl-sends {
-  margin-top: 44px;
-  padding-top: 20px;
-  border-top: 1px solid var(--hairline);
-}
-.nl-sends-list {
-  list-style: none;
-  margin-top: 4px;
-}
-.nl-send {
-  display: flex;
-  align-items: baseline;
-  gap: 16px;
-  padding: 13px 0;
-  border-top: 1px solid var(--hairline-soft);
-}
-.nl-send:first-child {
-  border-top: none;
-}
-.nl-send-date {
-  flex: none;
-  width: 46px;
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--faint);
-}
-.nl-send-title {
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: -0.005em;
-  color: var(--body-strong);
-  transition: color 0.2s;
-}
-.nl-send:hover .nl-send-title {
-  color: var(--ink);
-}
-.nl-signoff {
-  margin-top: 26px;
-  padding-top: 18px;
-  border-top: 1px solid var(--hairline);
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--byline);
-}
-.nl-signoff-sig {
-  font-size: 11px;
-  color: var(--muted);
-}
-
-@media (min-width: 768px) {
-  .nl-send-date {
-    width: 52px;
-  }
-  .nl-signoff {
-    font-size: 15px;
-  }
 }
 .st-post-capture {
   margin-top: 34px;
@@ -2470,8 +2368,8 @@ input:focus-visible {
   padding: 10px 0;
   border-top: 1px solid var(--hairline);
 }
-.session-card-row:last-child {
-  border-bottom: 1px solid var(--hairline);
+.session-card-row:first-child {
+  border-top: none;
 }
 .session-card-row-label {
   font-size: 10px;
@@ -2573,12 +2471,7 @@ input:focus-visible {
 }
 
 .session-h2 {
-  margin-top: 40px;
-  padding-top: 18px;
-  border-top: 1px solid var(--hairline);
-}
-.session-section:first-of-type .session-h2 {
-  margin-top: 32px;
+  margin-top: 58px;
 }
 
 .session-steps {
@@ -2693,9 +2586,7 @@ input:focus-visible {
 }
 
 .session-boundary {
-  margin-top: 32px;
-  padding-top: 20px;
-  border-top: 1px solid var(--hairline);
+  margin-top: 52px;
 }
 .session-boundary-label {
   font-size: 9px;
