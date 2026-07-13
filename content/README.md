@@ -34,7 +34,7 @@ content/
 Build (`content/builds/*.md`):
 
 ```yaml
-title: string          # headline, e.g. "A Simple Architecture for Agent-Assisted Recruiting"
+title: string          # headline, sentence case, e.g. "A simple architecture for agent-assisted recruiting"
 slug: string           # matches filename, used for routing
 description: string    # ≤160 chars — browse rows, index rows, meta description; also
                         # doubles as the article lede

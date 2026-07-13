@@ -1,5 +1,5 @@
 ---
-title: A Simple Architecture for Agent-Assisted Recruiting
+title: A simple architecture for agent-assisted recruiting
 slug: agent-assisted-recruiting
 description: A recruiting system that reads our open roles and a short list of companies we admire, pulls licensed candidate data, and drafts outreach for a person to approve. The first run surfaced 243 relevant candidates in about five minutes.
 date: 2026-07-11

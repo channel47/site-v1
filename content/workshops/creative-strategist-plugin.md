@@ -1,5 +1,5 @@
 ---
-title: "Skills Lab #2: Creative Strategist Plugin"
+title: "Chain research, personas, and ad angles into one plugin"
 slug: creative-strategist-plugin
 description: "A Vibe Marketers walkthrough of the Creative Strategist plugin and its research, persona, and angle workflow."
 status: past
