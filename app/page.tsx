@@ -11,7 +11,7 @@ import {
   getWorkshops,
   shortDate,
 } from "@/lib/content"
-import { CATEGORIES, HOME, HOME_NEWSLETTER, type ContentTypeKey } from "@/lib/site-content"
+import { CATEGORIES, HOME, type ContentTypeKey } from "@/lib/site-content"
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -61,10 +61,12 @@ function coversFor(key: ContentTypeKey): Cover[] {
 }
 
 /**
- * Home (v2 repositioning) — broadened hero with a quiet bordered "Book a
- * session" as the primary action (no filled button, no booking-metadata
- * line — that detail lives on /session), then category rows, the bio, and
- * the email capture relocated below the bio ahead of the footer.
+ * Home — broadened hero whose primary action is a lean inline email
+ * capture (subscribe, not booking). Below that: category rows, the
+ * "Browse all →" link, and the bio ahead of the footer — the hero capture
+ * is the page's only signup form. The working-session offer has been
+ * demoted from primary CTA and now lives only at /session, linked from
+ * the footer.
  */
 export default function Page() {
   const rows: CategoryRow[] = CATEGORIES.map((cat) => ({
@@ -82,13 +84,8 @@ export default function Page() {
           <p className="home-sub an-up" style={{ animationDelay: ".2s" }}>
             {HOME.subhead}
           </p>
-          <div className="home-hero-actions an-up" style={{ animationDelay: ".32s" }}>
-            <Link href="/session" className="home-hero-primary">
-              Book a session
-            </Link>
-            <Link href="/browse" className="home-hero-secondary">
-              Browse the workshop →
-            </Link>
+          <div className="home-hero-capture an-up" style={{ animationDelay: ".32s" }}>
+            <Capture helper={HOME.heroCaptureHelper} />
           </div>
         </div>
 
@@ -119,15 +116,6 @@ export default function Page() {
           </div>
         </section>
 
-        <section aria-label="Subscribe" className="home-newsletter">
-          <div className="home-newsletter-inner">
-            <h2 className="home-newsletter-h2">{HOME_NEWSLETTER.heading}</h2>
-            <p className="home-newsletter-sub">{HOME_NEWSLETTER.sub}</p>
-            <div className="home-newsletter-capture">
-              <Capture helper={HOME_NEWSLETTER.microcopy} />
-            </div>
-          </div>
-        </section>
       </main>
 
       <SiteFooter />

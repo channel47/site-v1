@@ -12,30 +12,26 @@ export const LINKS = {
   github: "https://github.com/ctrlswing",
   linkedin: "https://linkedin.com/in/ctrlswing",
   // More social profiles join the footer row as they're confirmed — never guess a URL.
-  // Not yet linked directly by nav/footer (both point at /session) — Wave 3's
-  // /session page consumes this for the Cal.com booking CTA.
+  // Consumed by /session for the Cal.com booking CTA. The session offer is
+  // demoted from primary CTA (2026-07): only the footer links to /session.
   booking: "https://cal.com/ctrlswing/15min",
 } as const
 
-/** Home hero — broadened positioning (v2 repositioning). The newsletter
- * capture moves out of the hero to below the bio; see home/page.tsx. */
+/** Home hero — broadened positioning. The hero carries a lean email
+ * capture as the primary action — the page's only signup form. See
+ * page.tsx. */
 export const HOME = {
   headline: "Building agentic systems for everyday work.",
   subhead:
     "Skills, connectors, workshops, and practical guidance for making recurring work easier with agents.",
+  /** One-line helper under the hero capture — the full newsletter pitch
+   * lives on /newsletter. */
+  heroCaptureHelper: "Occasional emails when something ships. Unsubscribe anytime.",
   /** The bio block between "Browse all" and the footer. */
   name: "Jackson Dean",
   tagline: "7 years buying media · building agentic systems",
   avatar: "/jackson.jpeg",
   bio: "Most of the systems here started with work I was tired of doing the same way twice. Some pull data together. Some help with research. Others turn a loose process into something an agent can run on a schedule. A lot of that work started in the ad accounts I run every day, and that history is still the deepest well of examples. When something works, I share the useful parts here.",
-} as const
-
-/** Newsletter capture relocated below the homepage bio (v2) — its own
- * heading/sub, distinct from the sitewide CAPTURE helper copy below. */
-export const HOME_NEWSLETTER = {
-  heading: "Occasional emails from the workshop.",
-  sub: "Notes about the systems I'm building, how they work, and the parts you can reuse in your own work. No cadence, no spam.",
-  microcopy: "When something ships, the list hears about it first. Unsubscribe anytime.",
 } as const
 
 /** Working-session offer page (/session, v2 repositioning) — spec 06.

@@ -16,7 +16,7 @@ import { HOME, TYPE_COLORS } from "@/lib/site-content"
  * → lede → byline (with the "sanitized example" tag) → body (rendered
  * markdown, which supplies its own figures/step-lists/results-strip/status-
  * strip via the lib/content.ts renderer hooks) → the end-of-Build
- * working-session invitation (template-level, not markdown) → share →
+ * newsletter invitation (template-level, not markdown) → share →
  * newsletter → back link. Builds share the Post gold accent.
  */
 export function BuildPage({ build }: { build: Build }) {

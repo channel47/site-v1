@@ -29,7 +29,7 @@ const GROUPS = [
   },
   {
     key: "work",
-    label: "Work with me",
+    label: "Live",
     links: [
       { href: "/session", label: "Book a session" },
       { href: LINKS.join, label: "Vibe Marketers →", external: true },

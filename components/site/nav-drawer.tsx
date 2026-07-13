@@ -19,8 +19,9 @@ const ROWS = CATEGORIES.map(({ title, href, key }) => ({
  *
  * The category rows (Skills/Connectors/Workshops — Builds joins in Wave 2)
  * are shortcuts into the Home rows, not additional nav destinations; the
- * drawer's actual destination set is home (logo) + the three utility links
- * below (Browse all, Newsletter, Book a session), per spec 01.
+ * drawer's actual destination set is home (logo) + the utility links below
+ * (Browse all, Newsletter). The session offer was demoted out of the
+ * drawer and is reachable via the footer.
  */
 export function NavDrawer() {
   const [open, setOpen] = useState(false)
@@ -85,21 +86,12 @@ export function NavDrawer() {
           </Link>
           <Link
             href="/newsletter"
-            className="nd-browse-all nd-browse-all-accent"
-            style={{ animationDelay: "0.32s" } as CSSProperties}
-            tabIndex={open ? 0 : -1}
-            onClick={() => setOpen(false)}
-          >
-            Newsletter →
-          </Link>
-          <Link
-            href="/session"
             className="nd-browse-all"
             style={{ animationDelay: "0.32s" } as CSSProperties}
             tabIndex={open ? 0 : -1}
             onClick={() => setOpen(false)}
           >
-            Book a session →
+            Newsletter →
           </Link>
         </div>
       </nav>

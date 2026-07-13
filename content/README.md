@@ -167,10 +167,10 @@ Ordinary prose never starts a line with `RESULTS ·`, `STATUS ·`, or `Ships wit
 build`, so all four hooks are inert everywhere else — posts, skills, connectors, and
 workshops render exactly as before.
 
-The end-of-Build working-session invitation ("Have a workflow you've been thinking
-about? … Learn about working sessions →") is **not** part of the markdown — it's a
-template-level component (`components/site/build-invitation.tsx`) rendered after every
-Build's article, so don't duplicate that CTA in the article body.
+The end-of-Build newsletter invitation ("Want the next build when it ships? … Get
+emails from the workshop →") is **not** part of the markdown — it's a template-level
+component (`components/site/build-invitation.tsx`) rendered after every Build's
+article, so don't duplicate that CTA in the article body.
 
 ## Editorial notes
 
