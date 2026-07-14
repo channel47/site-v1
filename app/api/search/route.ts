@@ -1,4 +1,4 @@
-import { getAllPosts, getAssets, getBuilds, getWorkshops } from "@/lib/content"
+import { getAllPosts, getAssets, getNotes, getWorkshops } from "@/lib/content"
 import {
   CONTENT_COLLECTION,
   type ContentCollection,
@@ -53,7 +53,7 @@ function doc(
 
 function corpus(): Doc[] {
   return [
-    ...getBuilds().map((b) => doc(CONTENT_COLLECTION.builds, b)),
+    ...getNotes().map((b) => doc(CONTENT_COLLECTION.notes, b)),
     ...getAllPosts().map((p) => doc(CONTENT_COLLECTION.posts, p)),
     ...getAssets("skill").map((a) => doc(CONTENT_COLLECTION.skills, a)),
     ...getAssets("connector").map((a) => doc(CONTENT_COLLECTION.connectors, a)),

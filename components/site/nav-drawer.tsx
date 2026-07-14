@@ -17,7 +17,7 @@ const ROWS = CATEGORIES.map(({ title, href, key }) => ({
  * open; rows stagger in on open, drop instantly on close since the panel
  * itself is already sliding off-screen.
  *
- * The category rows (Skills/Connectors/Workshops — Builds joins in Wave 2)
+ * The category rows (Notes/Skills/Connectors/Workshops)
  * are shortcuts into the Home rows, not additional nav destinations; the
  * drawer's actual destination set is home (logo) + the utility links below
  * (Browse all, Newsletter). The session offer was demoted out of the

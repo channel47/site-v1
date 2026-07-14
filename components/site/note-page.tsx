@@ -6,39 +6,39 @@ import { Capture } from "@/components/site/capture"
 import { Crumb } from "@/components/site/crumb"
 import { ShareRow } from "@/components/site/share-row"
 import { JsonLd } from "@/components/site/json-ld"
-import { BuildInvitation } from "@/components/site/build-invitation"
-import { buildGraph, SITE_URL, AUTHOR_NAME } from "@/lib/seo"
-import { shortDate, type Build } from "@/lib/content"
+import { NoteInvitation } from "@/components/site/note-invitation"
+import { noteGraph, SITE_URL, AUTHOR_NAME } from "@/lib/seo"
+import { shortDate, type Note } from "@/lib/content"
 import { HOME, TYPE_COLORS } from "@/lib/site-content"
 
 /**
- * Build detail (spec 05) — the fourth content-type template: crumb → title
+ * Note detail (spec 05) — the fourth content-type template: crumb → title
  * → lede → byline (with the "sanitized example" tag) → body (rendered
  * markdown, which supplies its own figures/step-lists/results-strip/status-
- * strip via the lib/content.ts renderer hooks) → the end-of-Build
+ * strip via the lib/content.ts renderer hooks) → the end-of-Note
  * newsletter invitation (template-level, not markdown) → share →
- * newsletter → back link. Builds share the Post gold accent.
+ * newsletter → back link. Notes share the Post gold accent.
  */
-export function BuildPage({ build }: { build: Build }) {
-  const href = `/builds/${build.slug}`
-  const typeColor = TYPE_COLORS.builds
+export function NotePage({ note }: { note: Note }) {
+  const href = `/notes/${note.slug}`
+  const typeColor = TYPE_COLORS.notes
 
   return (
     <div className="st-page">
       <SiteHeader />
 
       <article className="st-shell st-shell-article" style={{ "--type-color": typeColor } as CSSProperties}>
-        <JsonLd data={buildGraph(build)} />
+        <JsonLd data={noteGraph(note)} />
         <header className="st-head">
           <Crumb
-            typeLabel="Builds"
-            typeHref="/browse?type=builds"
+            typeLabel="Notes"
+            typeHref="/browse?type=notes"
             typeColor={typeColor}
-            leaf={build.slug}
+            leaf={note.slug}
           />
-          <h1 className="serif st-h1 h1-build an-blur">{build.title}</h1>
+          <h1 className="serif st-h1 h1-note an-blur">{note.title}</h1>
           <p className="dt-oneliner an-up" style={{ animationDelay: ".2s" }}>
-            {build.description}
+            {note.description}
           </p>
           <p
             className="dt-byline dt-byline-author an-up"
@@ -53,8 +53,8 @@ export function BuildPage({ build }: { build: Build }) {
             />
             <span>
               <span className="dt-byline-name">{AUTHOR_NAME}</span> ·{" "}
-              {shortDate(build.date)}
-              {build.sanitized ? (
+              {shortDate(note.date)}
+              {note.sanitized ? (
                 <>
                   {" "}
                   · <span className="dt-byline-tag">sanitized example</span>
@@ -66,28 +66,28 @@ export function BuildPage({ build }: { build: Build }) {
 
         <div
           className="st-prose"
-          // First-party markdown from content/builds — rendered at build
+          // First-party markdown from content/notes — rendered at build
           // time, including the placeholder-figure/results-strip/status-strip/
           // ships-artifact renderer hooks in lib/content.ts.
-          dangerouslySetInnerHTML={{ __html: build.html }}
+          dangerouslySetInnerHTML={{ __html: note.html }}
         />
 
-        <BuildInvitation />
+        <NoteInvitation />
 
         <ShareRow
-          mdPath={`/builds/${build.slug}.md`}
+          mdPath={`/notes/${note.slug}.md`}
           url={`${SITE_URL}${href}`}
-          title={build.title}
+          title={note.title}
         />
 
         <div className="st-post-capture">
           <Capture
-            helper="New builds, skills, and connectors as they ship. No spam."
+            helper="New notes, skills, and connectors as they ship. No spam."
           />
         </div>
 
         <p className="dt-back">
-          <Link href="/browse?type=builds">← All builds</Link>
+          <Link href="/browse?type=notes">← All notes</Link>
         </p>
       </article>
 

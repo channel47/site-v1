@@ -18,10 +18,9 @@ const GROUPS = [
     key: "explore",
     label: "Explore",
     links: [
-      // Builds doesn't have a listing page yet (Wave 2) — point at the same
-      // ?type= filter scheme Browse already uses for the other three types,
-      // so this link starts working the moment Builds ships.
-      { href: "/browse?type=builds", label: "Builds" },
+      // No dedicated per-type listing pages — Browse's ?type= filters are
+      // the canonical indexes for all four content types.
+      { href: "/browse?type=notes", label: "Notes" },
       { href: "/browse?type=skills", label: "Skills" },
       { href: "/browse?type=connectors", label: "Connectors" },
       { href: "/browse?type=workshops", label: "Workshops" },

@@ -12,7 +12,7 @@ import { pageMetadata } from "@/lib/seo"
 export const metadata: Metadata = pageMetadata({
   title: "Browse",
   description:
-    "Every build, skill, MCP connector, and workshop channel47 has published, in one filterable list.",
+    "Every note, skill, MCP connector, and workshop channel47 has published, in one filterable list.",
   path: "/browse",
 })
 
@@ -20,11 +20,11 @@ interface Props {
   searchParams: Promise<{ type?: string }>
 }
 
-/** Filter chips — All plus each populated type (round 12/14 Browse; Builds
+/** Filter chips — All plus each populated type (round 12/14 Browse; Notes
  * added in v2, first after All per the spec's row order). */
 const CHIPS = [
   { key: "all", label: "All" },
-  { key: "builds", label: "Builds" },
+  { key: "notes", label: "Notes" },
   { key: "skills", label: "Skills" },
   { key: "connectors", label: "Connectors" },
   { key: "workshops", label: "Workshops" },

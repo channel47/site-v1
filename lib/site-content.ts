@@ -50,12 +50,12 @@ export const SESSION = {
     "You leave with a concrete approach and the next few steps, in tools you already use.",
   ],
   /** Hardcoded proof-card entry for the weekly KPI-review build, which has
-   * no detail page yet. Append this after real getBuilds() results on
-   * /session; delete it the day that build ships as a real Build. */
+   * no detail page yet. Append this after real getNotes() results on
+   * /session; delete it the day that build ships as a real Note. */
   inProgressBuild: {
     tag: "Build · In progress",
     title: "The weekly KPI review, read before I open a dashboard",
-    href: "/browse?type=builds",
+    href: "/browse?type=notes",
   },
   offer: {
     label: "Book a working session",
@@ -100,17 +100,17 @@ export const CAPTURE = {
 
 /** Content-type identity — ink at rest, colour only on hover/press/selection
  * (round 12/13/14/15). Keys match `FeedItem["type"]` plus "workshops".
- * Builds reuse the Post gold accent (`--c-build` aliases `--c-post` in
+ * Notes reuse the Post gold accent (`--c-note` aliases `--c-post` in
  * globals.css) — they're distinguished by a pixel glyph, not a new hue. */
 export type ContentTypeKey =
-  | "builds"
+  | "notes"
   | "skills"
   | "connectors"
   | "posts"
   | "workshops"
 
 export const TYPE_COLORS: Record<ContentTypeKey, string> = {
-  builds: "var(--c-build)",
+  notes: "var(--c-note)",
   skills: "var(--c-skill)",
   connectors: "var(--c-connector)",
   posts: "var(--c-post)",
@@ -133,11 +133,11 @@ export interface Category {
 
 export const CATEGORIES: Category[] = [
   {
-    key: "builds",
-    title: "Builds",
+    key: "notes",
+    title: "Notes",
     desc: "Annotated blueprints for systems I've actually built and run — enough that you can make your own version, without the full tutorial.",
-    href: "/browse?type=builds",
-    linkText: "Browse all builds →",
+    href: "/browse?type=notes",
+    linkText: "Browse all notes →",
   },
   {
     key: "skills",

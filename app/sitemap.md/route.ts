@@ -1,4 +1,4 @@
-import { getAllPosts, getAssets, getBuilds, getWorkshops } from "@/lib/content"
+import { getAllPosts, getAssets, getNotes, getWorkshops } from "@/lib/content"
 import {
   CONTENT_COLLECTION,
   MACHINE_SURFACES,
@@ -17,7 +17,7 @@ import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo"
 export const dynamic = "force-static"
 
 export function GET() {
-  const builds = getBuilds()
+  const notes = getNotes()
   const posts = getAllPosts()
   const skills = getAssets("skill")
   const connectors = getAssets("connector")
@@ -34,8 +34,8 @@ export function GET() {
     "## Pages",
     ...PUBLIC_PAGES.map((page) => row(absoluteUrl(SITE_URL, page.path), page.title)),
     "",
-    "## Builds",
-    ...builds.map((b) => row(`${SITE_URL}/builds/${b.slug}`, b.title, b.date)),
+    "## Notes",
+    ...notes.map((b) => row(`${SITE_URL}/notes/${b.slug}`, b.title, b.date)),
     "",
     "## Skills",
     ...skills.map((a) => row(`${SITE_URL}/skills/${a.slug}`, a.title, a.date)),

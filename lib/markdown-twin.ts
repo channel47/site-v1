@@ -1,4 +1,4 @@
-import { ASSET_DIRS, type Asset, type Build, type Post, type Workshop } from "@/lib/content"
+import { ASSET_DIRS, type Asset, type Note, type Post, type Workshop } from "@/lib/content"
 import { AUTHOR_NAME, SITE_URL } from "@/lib/seo"
 
 /**
@@ -40,18 +40,18 @@ export function postTwin(post: Post): string {
   )
 }
 
-export function buildTwin(build: Build): string {
+export function noteTwin(note: Note): string {
   return (
     frontmatter({
-      title: build.title,
-      slug: build.slug,
-      type: "build",
-      description: build.description,
+      title: note.title,
+      slug: note.slug,
+      type: "note",
+      description: note.description,
       author: AUTHOR_NAME,
-      updatedAt: build.date,
-      canonical: `${SITE_URL}/builds/${build.slug}`,
+      updatedAt: note.date,
+      canonical: `${SITE_URL}/notes/${note.slug}`,
     }) +
-    `\n# ${build.title}\n\n${build.markdown}\n`
+    `\n# ${note.title}\n\n${note.markdown}\n`
   )
 }
 

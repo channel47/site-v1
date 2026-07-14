@@ -12,7 +12,7 @@ export interface CategoryRow extends Category {
 }
 
 /**
- * Home's four category rows (round 14, confirmed; Builds joins as the
+ * Home's four category rows (round 14, confirmed; Notes joins as the
  * default-open row in v2) — an exclusive accordion, one open at a time, each
  * opening onto a short description and up to two recent covers in the row's
  * identity colour.
@@ -22,7 +22,7 @@ export function HomeCats({
   defaultOpen,
 }: {
   rows: CategoryRow[]
-  /** Category key open on first render — spec 03: Builds opens by default. */
+  /** Category key open on first render — spec 03: Notes opens by default. */
   defaultOpen?: string
 }) {
   const [openKey, setOpenKey] = useState<string | null>(defaultOpen ?? null)

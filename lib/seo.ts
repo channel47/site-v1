@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { ASSET_DIRS, type Asset, type Build, type Post } from "@/lib/content"
+import { ASSET_DIRS, type Asset, type Note, type Post } from "@/lib/content"
 
 /**
  * Entity foundation + JSON-LD builders (docs/AI-SEO.md, Layer 1).
@@ -30,7 +30,7 @@ export const SITE_NAME = "channel47"
 /** The canonical positioning string: homepage meta description, WebSite/Org
  * schema description, and the llms.txt blockquote. One string, everywhere. */
 export const SITE_DESCRIPTION =
-  "Jackson Dean's public workshop for practical agentic systems: builds, skills, and MCP connectors, plus workshops hosted inside Vibe Marketers."
+  "Jackson Dean's public workshop for practical agentic systems: notes, skills, and MCP connectors, plus workshops hosted inside Vibe Marketers."
 
 export const AUTHOR_NAME = "Jackson Dean"
 
@@ -128,30 +128,30 @@ export function postGraph(post: Post) {
   }
 }
 
-/** Per-build graph: TechArticle + breadcrumb, anchored to the base entities.
- * TechArticle (not SoftwareSourceCode) — a Build is a writeup of a system,
+/** Per-note graph: TechArticle + breadcrumb, anchored to the base entities.
+ * TechArticle (not SoftwareSourceCode) — a Note is a writeup of a system,
  * not an installable artifact living in a repo. */
-export function buildGraph(build: Build) {
-  const url = `${SITE_URL}/builds/${build.slug}`
+export function noteGraph(note: Note) {
+  const url = `${SITE_URL}/notes/${note.slug}`
   return {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "TechArticle",
         "@id": `${url}#article`,
-        headline: build.title,
+        headline: note.title,
         url,
         mainEntityOfPage: { "@type": "WebPage", "@id": url },
-        description: build.description,
+        description: note.description,
         author: personRef,
         publisher: orgRef,
-        datePublished: build.date,
-        dateModified: build.date,
+        datePublished: note.date,
+        dateModified: note.date,
         isAccessibleForFree: true,
-        keywords: build.tags.join(", "),
+        keywords: note.tags.join(", "),
         isPartOf: { "@id": WEBSITE_ID },
       },
-      breadcrumb(url, { name: "Builds", url: `${SITE_URL}/browse?type=builds` }, build.title),
+      breadcrumb(url, { name: "Notes", url: `${SITE_URL}/browse?type=notes` }, note.title),
     ],
   }
 }

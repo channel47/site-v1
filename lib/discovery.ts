@@ -13,14 +13,14 @@ export const PUBLIC_PAGES = [
     path: "/",
     title: "Home",
     description:
-      "channel47 homepage: builds, skills, MCP connectors, and workshops for practical agentic systems.",
+      "channel47 homepage: notes, skills, MCP connectors, and workshops for practical agentic systems.",
     lastModified: "content",
   },
   {
     path: "/browse",
     title: "Browse — the full library, filterable by type",
     description:
-      "Browse channel47 builds, skills, MCP connectors, and workshops.",
+      "Browse channel47 notes, skills, MCP connectors, and workshops.",
     lastModified: "content",
   },
   {
@@ -46,18 +46,18 @@ export const PUBLIC_PAGES = [
 ] as const
 
 export const CONTENT_COLLECTION = {
-  builds: {
-    key: "builds",
-    segment: "builds",
-    searchType: "build",
-    label: "Builds",
-    singularLabel: "Build",
+  notes: {
+    key: "notes",
+    segment: "notes",
+    searchType: "note",
+    label: "Notes",
+    singularLabel: "Note",
     description: "Annotated blueprints for real agentic systems",
-    routeDescription: "Builds (annotated system blueprints)",
-    basePath: "/builds",
-    indexPath: "/browse?type=builds",
-    htmlPattern: "/builds/:slug",
-    markdownPattern: "/builds/:slug.md",
+    routeDescription: "Notes (annotated blueprints of real systems)",
+    basePath: "/notes",
+    indexPath: "/browse?type=notes",
+    htmlPattern: "/notes/:slug",
+    markdownPattern: "/notes/:slug.md",
   },
   posts: {
     key: "posts",

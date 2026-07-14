@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { SiteHeader } from "@/components/site/header"
 import { SiteFooter } from "@/components/site/footer"
-import { getBuilds } from "@/lib/content"
+import { getNotes } from "@/lib/content"
 import { pageMetadata } from "@/lib/seo"
 import { LINKS, SESSION } from "@/lib/site-content"
 
@@ -52,7 +52,7 @@ function OfferFacts({ showButton, className }: { showButton: boolean; className:
 }
 
 export default function SessionPage() {
-  const builds = getBuilds()
+  const notes = getNotes()
 
   return (
     <div className="st-page session-page">
@@ -61,7 +61,7 @@ export default function SessionPage() {
       <main className="st-shell st-shell-full session-layout">
         <div className="session-main">
           <header className="st-head">
-            <h1 className="st-h1 h1-build an-blur">{SESSION.title}</h1>
+            <h1 className="st-h1 h1-note an-blur">{SESSION.title}</h1>
             <p className="st-intro session-intro-desktop an-up" style={{ animationDelay: ".2s" }}>
               {SESSION.intro}
             </p>
@@ -94,15 +94,15 @@ export default function SessionPage() {
               Two builds that came out of the same approach we&apos;d use in a session:
             </p>
             <div className="session-proof-list">
-              {builds.map((build) => (
+              {notes.map((note) => (
                 <Link
-                  key={build.slug}
-                  href={`/builds/${build.slug}`}
+                  key={note.slug}
+                  href={`/notes/${note.slug}`}
                   className="session-proof-card"
                 >
                   <span>
                     <span className="mono session-proof-tag">Build</span>
-                    <span className="session-proof-title">{build.title}</span>
+                    <span className="session-proof-title">{note.title}</span>
                   </span>
                   <span className="session-proof-arrow" aria-hidden>
                     →
@@ -110,9 +110,9 @@ export default function SessionPage() {
                 </Link>
               ))}
               {/* Hardcoded in-progress entry for the weekly KPI-review build,
-                  which has no detail page yet. Remove this once a real Build
+                  which has no detail page yet. Remove this once a real Note
                   ships for it — the section will then come entirely from
-                  getBuilds() again. */}
+                  getNotes() again. */}
               <Link href={SESSION.inProgressBuild.href} className="session-proof-card">
                 <span>
                   <span className="mono session-proof-tag session-proof-tag-progress">

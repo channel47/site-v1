@@ -7,7 +7,7 @@ read at build time by `lib/content.ts`. Publishing is adding a file.
 
 ```
 content/
-├── builds/               Build detail pages (one per build)
+├── notes/                Note detail pages (one per documented build)
 ├── posts/
 │   ├── skills/          Posts introducing each skill in channel47/skills
 │   └── connectors/      Posts introducing each MCP server in channel47/mcps
@@ -15,11 +15,11 @@ content/
 └── connectors/          Connector asset pages (one per MCP server)
 ```
 
-- **Builds** (`/builds/[slug]`) — long-form writeups of a real agentic system Jackson
+- **Notes** (`/notes/[slug]`) — long-form writeups of a real agentic system Jackson
   has built and run: the problem, the workflow, the decisions that mattered, results,
-  and current status. One file per build; the filename is the slug. Builds share the
-  Post gold accent (`--c-build` aliases `--c-post`) and are told apart by a pixel glyph,
-  not a new colour.
+  and current status. One file per documented build; the filename is the slug. Notes
+  share the Post gold accent (`--c-note` aliases `--c-post`) and are told apart by a
+  pixel glyph, not a new colour.
 - **Posts** (`/posts/[slug]`) — first-person narratives from Jackson: opinion,
   behind-the-scenes, and asset introductions. One file per piece; the filename is the
   slug. Each asset-introduction post links to the standalone asset page it's about.
@@ -31,7 +31,7 @@ content/
 
 ## Frontmatter schemas
 
-Build (`content/builds/*.md`):
+Note (`content/notes/*.md`):
 
 ```yaml
 title: string          # headline, sentence case, e.g. "A simple architecture for agent-assisted recruiting"
@@ -41,7 +41,7 @@ description: string    # ≤160 chars — browse rows, index rows, meta descript
 date: YYYY-MM-DD
 tags: [string]
 sanitized: boolean      # optional — when true, the byline shows a "sanitized example"
-                        # tag (the Build convention for real-but-anonymized systems)
+                        # tag (the Note convention for real-but-anonymized systems)
 ```
 
 Post (`content/posts/{skills,connectors}/*.md`):
@@ -118,9 +118,9 @@ under a CSS drop-shadow. Alt text doubles as the visible figcaption.
 Use a markdown `---` (renders as `.st-prose hr`) when a piece genuinely needs a hard
 visual divider inside a section; it's a deliberate, occasional mark, not a default.
 
-## Build-only markdown conventions
+## Note-only markdown conventions
 
-Builds add four markdown conventions on top of the shared pipeline. All four are
+Notes add four markdown conventions on top of the shared pipeline. All four are
 implemented as small, additive hooks on the single shared `marked` instance in
 `lib/content.ts` (see the file's top comment — renderer changes there affect every
 content type, so each hook is written to be a no-op unless the exact pattern matches).
@@ -167,9 +167,9 @@ Ordinary prose never starts a line with `RESULTS ·`, `STATUS ·`, or `Ships wit
 build`, so all four hooks are inert everywhere else — posts, skills, connectors, and
 workshops render exactly as before.
 
-The end-of-Build newsletter invitation ("Want the next build when it ships? … Get
+The end-of-Note newsletter invitation ("Want the next build when it ships? … Get
 emails from the workshop →") is **not** part of the markdown — it's a template-level
-component (`components/site/build-invitation.tsx`) rendered after every Build's
+component (`components/site/note-invitation.tsx`) rendered after every Note's
 article, so don't duplicate that CTA in the article body.
 
 ## Editorial notes

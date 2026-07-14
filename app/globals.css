@@ -66,10 +66,10 @@
   --c-connector: #18998b;
   --c-post: #a27f30;
   --c-workshop: #ad6b9b;
-  /* Builds reuse the Post gold verbatim (locked design decision) — a
-     semantic alias, not a new hue, so Builds are told apart by their pixel
+  /* Notes reuse the Post gold verbatim (locked design decision) — a
+     semantic alias, not a new hue, so Notes are told apart by their pixel
      glyph instead. */
-  --c-build: var(--c-post);
+  --c-note: var(--c-post);
   /* subscribe-confirm check — a universal success signal, deliberately not
      tied to whichever type-colour context surrounds it */
   --success: #699350;
@@ -95,7 +95,7 @@
   --h1-size: 32px;
   --h1-size-workshop: 27px;
   --h1-size-post: 24px;
-  --h1-size-build: 27px;
+  --h1-size-note: 27px;
   --h1-ls: -0.025em;
   --h1-lh: 1.15;
 
@@ -107,9 +107,9 @@
   --h1-size-d: 44px;
   --h1-size-post-d: 34px;
   --h1-size-workshop-d: 38px;
-  /* Build titles are longer sentences, not headline-length — spec 05 uses
+  /* Note titles are longer sentences, not headline-length — spec 05 uses
      40px on desktop where interior pages otherwise use 44px. */
-  --h1-size-build-d: 40px;
+  --h1-size-note-d: 40px;
   --body-size-d: 15px;
 
   /* brighter twin of each type colour — used for the nav-drawer icon's
@@ -120,7 +120,7 @@
   --shine-skill: #e6867b;
   --shine-connector: #29bdac;
   --shine-workshop: #d586bf;
-  --shine-build: var(--shine-post);
+  --shine-note: var(--shine-post);
 
   --radius: 0px;
 }
@@ -799,8 +799,8 @@ button {
   font-size: var(--h1-size-post);
   line-height: 1.25;
 }
-.st-h1.h1-build {
-  font-size: var(--h1-size-build);
+.st-h1.h1-note {
+  font-size: var(--h1-size-note);
   line-height: 1.2;
 }
 
@@ -815,8 +815,8 @@ button {
   .st-h1.h1-post {
     font-size: var(--h1-size-post-d);
   }
-  .st-h1.h1-build {
-    font-size: var(--h1-size-build-d);
+  .st-h1.h1-note {
+    font-size: var(--h1-size-note-d);
     line-height: 1.12;
   }
   .st-intro,
@@ -883,7 +883,7 @@ button {
   font-weight: 500;
   color: var(--ink);
 }
-/* "sanitized example" tag — the Build byline convention (mono, muted). */
+/* "sanitized example" tag — the Note byline convention (mono, muted). */
 .dt-byline-tag {
   font-family: var(--font-label);
   font-size: 11px;
@@ -982,9 +982,9 @@ button {
 .st-prose h2 + ul > li:last-child {
   border-bottom: none;
 }
-/* the same ledger row, but for an ordered list (Build "workflow at a
+/* the same ledger row, but for an ordered list (Note "workflow at a
    glance" steps) — indices sit in the page's accent color rather than
-   faint ink, per the Build detail spec. Inert on posts/skills/connectors/
+   faint ink, per the Note detail spec. Inert on posts/skills/connectors/
    workshops since none of them open a section with a numbered list. */
 .st-prose h2 + ol {
   list-style: none;
@@ -1107,8 +1107,8 @@ button {
   color: var(--muted);
 }
 
-/* striped placeholder slot — interim treatment for a Build figure that
-   hasn't been captured yet (![caption](placeholder:tag) in content/builds).
+/* striped placeholder slot — interim treatment for a Note figure that
+   hasn't been captured yet (![caption](placeholder:tag) in content/notes).
    Swap to a real screenshot later by replacing the src; the surrounding
    .st-shot/figcaption markup is identical to a real framed still. */
 .st-placeholder-shot {
@@ -1116,11 +1116,11 @@ button {
   aspect-ratio: 7 / 3;
   background: repeating-linear-gradient(
     -45deg,
-    color-mix(in srgb, var(--type-color, var(--c-build)) 30%, transparent) 0 5px,
-    color-mix(in srgb, var(--type-color, var(--c-build)) 12%, transparent) 5px 10px
+    color-mix(in srgb, var(--type-color, var(--c-note)) 30%, transparent) 0 5px,
+    color-mix(in srgb, var(--type-color, var(--c-note)) 12%, transparent) 5px 10px
   );
   box-shadow: inset 0 0 0 1px
-    color-mix(in srgb, var(--type-color, var(--c-build)) 55%, transparent);
+    color-mix(in srgb, var(--type-color, var(--c-note)) 55%, transparent);
 }
 .st-placeholder-tag {
   position: absolute;
@@ -1129,25 +1129,25 @@ button {
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.05em;
-  color: var(--type-color, var(--c-build));
+  color: var(--type-color, var(--c-note));
   text-transform: lowercase;
 }
 
-/* ---- RESULTS strip (Build-specific) ---------------------------------- */
-.bd-results {
+/* ---- RESULTS strip (Note-specific) ---------------------------------- */
+.nt-results {
   margin-top: 26px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   border: 1px solid var(--hairline);
 }
-.bd-results-cell {
+.nt-results-cell {
   padding: 18px 20px;
   border-right: 1px solid var(--hairline);
 }
-.bd-results-cell:last-child {
+.nt-results-cell:last-child {
   border-right: none;
 }
-.bd-results-num {
+.nt-results-num {
   display: block;
   font-size: 29px;
   font-weight: 600;
@@ -1155,7 +1155,7 @@ button {
   line-height: 1;
   color: var(--ink);
 }
-.bd-results-label {
+.nt-results-label {
   display: block;
   margin-top: 6px;
   font-size: 10px;
@@ -1163,8 +1163,8 @@ button {
   color: var(--byline);
 }
 
-/* ---- STATUS strip (Build-specific) ------------------------------------ */
-.bd-status {
+/* ---- STATUS strip (Note-specific) ------------------------------------ */
+.nt-status {
   margin-top: 26px;
   display: flex;
   flex-wrap: wrap;
@@ -1174,24 +1174,24 @@ button {
   letter-spacing: 0.03em;
   color: var(--muted);
 }
-.bd-status-label {
+.nt-status-label {
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--faint);
 }
-.bd-status-step:not(:last-child)::after {
+.nt-status-step:not(:last-child)::after {
   content: "/";
   margin-left: 10px;
   color: var(--crumb-sep);
 }
 
-/* ---- "Ships with this build" artifact box (Build-specific) ------------
+/* ---- "Ships with this build" artifact box (Note-specific) ------------
    Triggered by the `### Ships with this build · sanitized` heading
-   convention (lib/content.ts marks the heading with .bd-ships-h2); the list
+   convention (lib/content.ts marks the heading with .nt-ships-h2); the list
    immediately after it becomes the bordered artifact box instead of a
    normal prose list. */
-.st-prose h3.bd-ships-h2 {
+.st-prose h3.nt-ships-h2 {
   margin-top: 44px;
   padding: 13px 16px;
   border: 1px solid var(--hairline);
@@ -1203,14 +1203,14 @@ button {
   text-transform: uppercase;
   color: var(--faint);
 }
-.st-prose h3.bd-ships-h2 + ul {
+.st-prose h3.nt-ships-h2 + ul {
   margin-top: 0;
   padding: 0;
   list-style: none;
   border: 1px solid var(--hairline);
   border-top: none;
 }
-.st-prose h3.bd-ships-h2 + ul > li {
+.st-prose h3.nt-ships-h2 + ul > li {
   margin-top: 0;
   padding: 11px 16px;
   font-family: var(--font-label);
@@ -1218,7 +1218,7 @@ button {
   color: var(--body-strong);
   border-top: 1px solid var(--hairline-soft);
 }
-.st-prose h3.bd-ships-h2 + ul > li:first-child {
+.st-prose h3.nt-ships-h2 + ul > li:first-child {
   border-top: none;
 }
 
@@ -1421,36 +1421,36 @@ button {
   opacity: 0.5;
 }
 
-/* ---- end-of-Build working-session invitation (template-level, every
-   Build) — quiet box, no fill, no button; a step heavier border than the
+/* ---- end-of-Note newsletter invitation (template-level, every
+   Note) — quiet box, no fill, no button; a step heavier border than the
    section hairlines, matching the offer-card/invitation weight from the
    v2 token spec. ------------------------------------------------------- */
-.bd-invite {
+.nt-invite {
   margin-top: 44px;
   padding: 26px 28px;
   border: 1px solid var(--nav-ghost-border);
 }
-.bd-invite-title {
+.nt-invite-title {
   font-size: 17px;
   font-weight: 600;
   letter-spacing: -0.012em;
   color: var(--ink);
 }
-.bd-invite-body {
+.nt-invite-body {
   margin-top: 10px;
   font-size: 14px;
   line-height: 1.6;
   color: var(--byline);
   max-width: 520px;
 }
-.bd-invite-link {
+.nt-invite-link {
   display: inline-block;
   margin-top: 16px;
   font-size: 14px;
   font-weight: 600;
   color: var(--ink);
 }
-.bd-invite-link:hover {
+.nt-invite-link:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -2432,7 +2432,7 @@ input:focus-visible {
   transition: border-color 0.2s;
 }
 .session-proof-card:hover {
-  border-color: var(--c-build);
+  border-color: var(--c-note);
 }
 .session-proof-tag {
   display: block;
@@ -2440,10 +2440,10 @@ input:focus-visible {
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--c-build);
+  color: var(--c-note);
 }
 /* In-progress proof card — no detail page yet, so the tag reads as faint
-   ink rather than the gold Build accent (spec 06). */
+   ink rather than the gold Note accent (spec 06). */
 .session-proof-tag-progress {
   color: var(--faint);
 }
