@@ -112,7 +112,7 @@
   --text-lede: 18px; /* hero/interior ledes · ink --body */
   --text-body: 18px; /* article body · lh 1.65 · ink --body-strong */
   --text-body-d: 17px; /* desktop body · lh 1.7 */
-  --text-h2: 22px; /* section h2 · 600 · lh 1.25 · both breakpoints */
+  --text-h2: 24px; /* section h2 · 600 · lh 1.2 · both breakpoints */
   --text-list: 16px; /* numbered rows, list items · lh 1.6 */
   --text-list-d: 15px;
   --text-meta: 15px; /* bylines, back links, pairing notes */
@@ -126,6 +126,7 @@
   --text-mono-index: 12px; /* mobile ledger indices read one step up */
 
   --body-lh: 1.65;
+  --section-gap: clamp(60px, 7vw, 68px);
 
   /* desktop type scale — mirrors the mobile sizes above, ≥768px only */
   --h1-hero-size-d: 54px;
@@ -856,9 +857,6 @@ button {
     font-size: var(--text-body-d);
     line-height: 1.7;
   }
-  .st-prose h2 {
-    margin-top: 44px;
-  }
   .st-prose h2 + ul > li,
   .st-prose h2 + ol > li {
     font-size: var(--text-list-d);
@@ -913,8 +911,7 @@ button {
 
 .dt-byline {
   margin-top: 16px;
-  padding-bottom: 18px;
-  border-bottom: 1px solid var(--hairline);
+  padding-bottom: 0;
   font-size: var(--text-meta);
   color: var(--byline);
 }
@@ -930,7 +927,7 @@ button {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding-bottom: 20px;
+  padding-bottom: 0;
 }
 .dt-byline-avatar {
   flex: none;
@@ -999,17 +996,19 @@ button {
 .st-prose p {
   margin-top: 18px;
 }
-/* section h2s carry their own hairline since the readability pass — the
-   divider and the heading are one move, not two */
+/* Editorial sections are separated by whitespace and type, not rules. */
 .st-prose h2 {
   font-size: var(--text-h2);
   font-weight: 600;
-  letter-spacing: -0.015em;
-  line-height: 1.25;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
   color: var(--ink);
-  margin-top: 48px;
-  padding-top: 20px;
-  border-top: 1px solid var(--hairline);
+  margin-top: var(--section-gap);
+  padding-top: 0;
+  border-top: none;
+}
+.st-prose h2 + p {
+  margin-top: 12px;
 }
 .st-prose h3 {
   font-size: 18px;
@@ -1023,7 +1022,7 @@ button {
 .st-prose h2 + ul,
 .st-prose h2 + ol {
   list-style: none;
-  margin-top: 4px;
+  margin-top: 10px;
   padding-left: 0;
   counter-reset: ledger;
 }
@@ -1031,7 +1030,7 @@ button {
 .st-prose h2 + ol > li {
   counter-increment: ledger;
   position: relative;
-  padding: 14px 0 14px 32px;
+  padding: 10px 0 10px 32px;
   border-bottom: 1px solid var(--hairline-soft);
   font-size: var(--text-list);
   line-height: 1.6;
@@ -1041,7 +1040,7 @@ button {
   content: counter(ledger, decimal-leading-zero);
   position: absolute;
   left: 0;
-  top: 17px;
+  top: 13px;
   font-family: var(--font-label);
   font-size: var(--text-mono-index);
   font-weight: 600;
@@ -1057,6 +1056,9 @@ button {
    section with a numbered list. */
 .st-prose h2 + ol > li::before {
   color: var(--type-color, var(--byline));
+}
+.st-prose h2 + ol > li {
+  border-bottom: none;
 }
 .st-prose ul,
 .st-prose ol {
@@ -1341,9 +1343,9 @@ button {
 
 /* ---- grab it / install block ---------------------------------------- */
 .as-grab {
-  margin-top: 48px;
-  padding-top: 20px;
-  border-top: 1px solid var(--hairline);
+  margin-top: var(--section-gap);
+  padding-top: 0;
+  border-top: none;
 }
 /* Boxed Install component (readability pass): sentence-case label + a copy
    button in the head, the command wrapping below — no horizontal scroll. */
@@ -1480,14 +1482,13 @@ button {
 }
 
 /* ---- share row ------------------------------------------------------ */
-/* Collapsed to one hairline row (readability pass): sentence-case "Share"
-   label left; Copy page + 36px icon boxes (copy link, X, LinkedIn) right.
-   The source repo moved to its own .dt-source row. */
+/* An unbounded utility cluster: the outlined controls provide their own
+   affordance, so the row does not need another pair of rules. */
 .dt-share {
   margin-top: 48px;
-  padding: 14px 0;
-  border-top: 1px solid var(--hairline);
-  border-bottom: 1px solid var(--hairline);
+  padding: 0;
+  border-top: none;
+  border-bottom: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1523,13 +1524,16 @@ button {
 }
 
 /* ---- end-of-Note newsletter invitation (template-level, every
-   Note) — quiet box, no fill, no button; a step heavier border than the
-   section hairlines, matching the offer-card/invitation weight from the
-   v2 token spec. ------------------------------------------------------- */
+   Note) — a quiet tonal field, distinct from bordered data/components. */
 .nt-invite {
   margin-top: 44px;
   padding: 26px 28px;
-  border: 1px solid var(--card-border);
+  border: none;
+  background: color-mix(
+    in srgb,
+    var(--type-color, var(--c-note)) 6%,
+    var(--page)
+  );
 }
 .nt-invite-title {
   font-size: 17px;
@@ -1974,14 +1978,14 @@ input:focus-visible {
 .home-browse-all-link:hover {
   color: var(--ink);
 }
-/* Bio block between "Browse all" and the footer — the person behind the
-   accounts, above a hairline. */
+/* Bio block between "Browse all" and the footer — whitespace separates it
+   from the index above. */
 .home-bio {
   margin-top: 44px;
 }
 .home-bio-inner {
-  padding-top: 26px;
-  border-top: 1px solid var(--hairline);
+  padding-top: 0;
+  border-top: none;
 }
 .home-bio-id {
   display: flex;
@@ -2047,7 +2051,7 @@ input:focus-visible {
   }
   .home-bio-inner {
     max-width: 640px;
-    padding-top: 28px;
+    padding-top: 0;
   }
   .home-bio-id {
     gap: 16px;
@@ -2164,7 +2168,7 @@ input:focus-visible {
 .st-rows {
   list-style: none;
   margin-top: 12px;
-  border-top: 1px solid var(--hairline);
+  border-top: none;
 }
 .st-row {
   display: grid;
@@ -2467,9 +2471,9 @@ input:focus-visible {
 }
 
 .session-h2 {
-  margin-top: 36px;
-  padding-top: 18px;
-  border-top: 1px solid var(--hairline);
+  margin-top: var(--section-gap);
+  padding-top: 0;
+  border-top: none;
 }
 
 .session-steps {
@@ -2478,8 +2482,8 @@ input:focus-visible {
 .session-step {
   display: flex;
   gap: 14px;
-  padding: 13px 0;
-  border-bottom: 1px solid var(--hairline-soft);
+  padding: 10px 0;
+  border-bottom: none;
 }
 .session-step:last-child {
   border-bottom: none;
@@ -2699,11 +2703,11 @@ input:focus-visible {
     display: none;
   }
   .session-h2 {
-    margin-top: 44px;
-    padding-top: 20px;
+    margin-top: var(--section-gap);
+    padding-top: 0;
   }
   .session-section:first-of-type .session-h2 {
-    margin-top: 44px;
+    margin-top: var(--section-gap);
   }
 }
 

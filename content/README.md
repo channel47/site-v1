@@ -130,6 +130,8 @@ CSS drop-shadow:
 `##` headings no longer draw a hairline rule — section spacing alone marks the break.
 Use a markdown `---` (renders as `.st-prose hr`) when a piece genuinely needs a hard
 visual divider inside a section; it's a deliberate, occasional mark, not a default.
+Across the site, hairlines are reserved for real containment or interaction — tables,
+controls, screenshots, and dense index rows — rather than general editorial hierarchy.
 
 ## Note-only markdown conventions
 

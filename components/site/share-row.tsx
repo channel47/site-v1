@@ -1,10 +1,8 @@
 import { CopyButton } from "./copy-button"
 import { XIcon, LinkedInIcon } from "./social-icons"
 
-/** The share block closing every detail page — collapsed to one hairline
- * row in the readability pass: sentence-case "Share" label left; Copy page,
- * Copy link, and the share-intent icons right, all 36px boxed actions.
- * The source repo moved out to its own row (see source-row.tsx). */
+/** The unbounded share utility closing every detail page. Individual actions
+ * keep their own outlines; source lives separately in source-row.tsx. */
 export function ShareRow({
   mdPath,
   url,

@@ -61,7 +61,7 @@ export function CopyButton({
   title: string
   /** Visible text — switches to the bordered labelled variant. */
   label?: string
-  /** Adds the share row's hairline box (icon-only variant). */
+  /** Adds the share row's quiet outlined control (icon-only variant). */
   boxed?: boolean
   /** Icon-only variant's glyph — "link" for URL copies. */
   glyph?: "copy" | "link"
