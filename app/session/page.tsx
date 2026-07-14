@@ -21,11 +21,11 @@ export const metadata: Metadata = pageMetadata({
 function OfferFacts({ showButton, className }: { showButton: boolean; className: string }) {
   return (
     <div className={className}>
-      <p className="mono session-card-label">{SESSION.offer.label}</p>
+      <p className="session-card-label">{SESSION.offer.label}</p>
       <dl className="session-card-table">
         {SESSION.offer.rows.map((row) => (
           <div className="session-card-row" key={row.label}>
-            <dt className="mono session-card-row-label">{row.label}</dt>
+            <dt className="session-card-row-label">{row.label}</dt>
             <dd className="session-card-row-value">{row.value}</dd>
           </div>
         ))}
@@ -40,7 +40,7 @@ function OfferFacts({ showButton, className }: { showButton: boolean; className:
           {SESSION.offer.cta}
         </a>
       ) : null}
-      <p className="mono session-card-microcopy">{SESSION.offer.microcopy}</p>
+      <p className="session-card-microcopy">{SESSION.offer.microcopy}</p>
       {showButton ? (
         <div className="session-card-testimonial">
           <p className="session-card-quote">&ldquo;{SESSION.testimonial.quote}&rdquo;</p>
@@ -101,7 +101,7 @@ export default function SessionPage() {
                   className="session-proof-card"
                 >
                   <span>
-                    <span className="mono session-proof-tag">Build</span>
+                    <span className="session-proof-tag">Note</span>
                     <span className="session-proof-title">{note.title}</span>
                   </span>
                   <span className="session-proof-arrow" aria-hidden>
@@ -115,7 +115,7 @@ export default function SessionPage() {
                   getNotes() again. */}
               <Link href={SESSION.inProgressBuild.href} className="session-proof-card">
                 <span>
-                  <span className="mono session-proof-tag session-proof-tag-progress">
+                  <span className="session-proof-tag session-proof-tag-progress">
                     {SESSION.inProgressBuild.tag}
                   </span>
                   <span className="session-proof-title">{SESSION.inProgressBuild.title}</span>
@@ -151,7 +151,7 @@ export default function SessionPage() {
           </section>
 
           <section className="session-boundary">
-            <p className="mono session-boundary-label">{SESSION.boundary.label}</p>
+            <p className="session-boundary-label">{SESSION.boundary.label}</p>
             <p className="session-boundary-body session-boundary-body-desktop">
               {SESSION.boundary.body}
             </p>
@@ -176,7 +176,7 @@ export default function SessionPage() {
       <div className="session-sticky-bar">
         <span className="session-sticky-price">
           $250<span className="session-sticky-price-unit"> / session</span>
-          <span className="mono session-sticky-meta">60 min · one to one, live</span>
+          <span className="session-sticky-meta">60 min · one to one, live</span>
         </span>
         <a
           href={LINKS.booking}

@@ -4,8 +4,10 @@ import { marked } from "marked"
 import { SiteHeader } from "./header"
 import { SiteFooter } from "./footer"
 import { Capture } from "@/components/site/capture"
+import { CopyButton } from "@/components/site/copy-button"
 import { Crumb } from "@/components/site/crumb"
 import { ShareRow } from "@/components/site/share-row"
+import { SourceRow } from "@/components/site/source-row"
 import { JsonLd } from "@/components/site/json-ld"
 import { assetGraph, SITE_URL, AUTHOR_NAME } from "@/lib/seo"
 import { ASSET_DIRS, shortDate, type Asset } from "@/lib/content"
@@ -79,7 +81,7 @@ export function AssetPage({ asset }: { asset: Asset }) {
         ) : asset.screenshotCaption ? (
           <figure className="dt-figure an-up" style={{ animationDelay: ".4s" }}>
             <div className="dt-figure-hatch" aria-hidden>
-              <span className="dt-figure-tag mono">FIG. 01</span>
+              <span className="dt-figure-tag mono">fig. 01</span>
             </div>
             <figcaption className="dt-figcaption">
               {asset.screenshotCaption}
@@ -96,11 +98,11 @@ export function AssetPage({ asset }: { asset: Asset }) {
         {asset.askAnswer ? (
           <div className="dt-qa" style={{ "--type-color": typeColor } as CSSProperties}>
             <div className="dt-qa-q">
-              <p className="dt-qa-kicker mono">You ask</p>
+              <p className="dt-qa-kicker">You ask</p>
               <p className="dt-qa-question">{asset.askAnswer.question}</p>
             </div>
             <div className="dt-qa-a">
-              <p className="dt-qa-kicker mono">It answers</p>
+              <p className="dt-qa-kicker">It answers</p>
               <div className="dt-qa-table">
                 {asset.askAnswer.columns ? (
                   <>
@@ -126,9 +128,16 @@ export function AssetPage({ asset }: { asset: Asset }) {
 
         <section className="as-grab" aria-label="Install">
           <h2 className="st-section-h2">Grab it</h2>
-          <pre className="as-install">
-            <code>{asset.install}</code>
-          </pre>
+          <div className="as-install">
+            <div className="as-install-head">
+              <span className="as-install-label">Install</span>
+              <CopyButton title="Copy command" text={asset.install} />
+            </div>
+            <pre className="as-install-cmd">
+              <code>{asset.install}</code>
+            </pre>
+          </div>
+          {asset.repo ? <SourceRow href={asset.repo} /> : null}
           {asset.pairing ? (
             <p
               className="as-pairing"
@@ -143,7 +152,6 @@ export function AssetPage({ asset }: { asset: Asset }) {
           mdPath={`/${section}/${asset.slug}.md`}
           url={`${SITE_URL}${href}`}
           title={asset.title}
-          sourceHref={asset.repo}
         />
 
         <div className="st-post-capture">

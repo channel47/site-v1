@@ -25,12 +25,14 @@
   color-scheme: light;
 
   /* ---- neutrals ---------------------------------------------------- */
+  /* Readability pass (Jul 2026): body ink rises .78 → .82, ledes/descs
+     .55 → .62, and small type floors at .55 — never small AND faint. */
   --page: #fdfdfc;
   --ink: #161718;
-  --body: rgba(22, 23, 24, 0.55);
-  --body-strong: rgba(22, 23, 24, 0.78);
+  --body: rgba(22, 23, 24, 0.62);
+  --body-strong: rgba(22, 23, 24, 0.82);
   --byline: rgba(22, 23, 24, 0.55);
-  --muted: rgba(22, 23, 24, 0.42);
+  --muted: var(--byline);
   --faint: rgba(22, 23, 24, 0.42);
   --crumb-sep: rgba(22, 23, 24, 0.3);
   --icon: rgba(22, 23, 24, 0.42);
@@ -53,6 +55,11 @@
   /* offer-card border weight — a step heavier than section hairlines
      (--hairline .1), lighter than input underlines (--underline .3) */
   --card-border: rgba(22, 23, 24, 0.14);
+  /* quiet boxed actions (share row, copy buttons): resting fg/border and
+     the shared hover border used by the source row + share boxes */
+  --quiet-fg: rgba(22, 23, 24, 0.7);
+  --quiet-border: rgba(22, 23, 24, 0.16);
+  --quiet-border-hover: rgba(22, 23, 24, 0.4);
   /* raised surface for the /session offer card + mobile booking card */
   --surface-raised: #ffffff;
   /* translucent sticky book bar background (mobile /session) */
@@ -92,15 +99,33 @@
   --font-body: var(--font-display);
   --font-label: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
-  --h1-size: 32px;
+  --h1-size: 34px;
   --h1-size-workshop: 27px;
-  --h1-size-post: 24px;
+  --h1-size-post: 27px;
   --h1-size-note: 27px;
   --h1-ls: -0.025em;
   --h1-lh: 1.15;
 
-  --body-size: 15px;
-  --body-lh: 1.7;
+  /* Jul 2026 readability pass — 6-step content scales, mobile first with a
+     desktop twin where the design diverges (mobile reads a step bigger).
+     Floor: nothing below 12px, and nothing small sits under .55 ink. */
+  --text-lede: 18px; /* hero/interior ledes · ink --body */
+  --text-body: 18px; /* article body · lh 1.65 · ink --body-strong */
+  --text-body-d: 17px; /* desktop body · lh 1.7 */
+  --text-h2: 22px; /* section h2 · 600 · lh 1.25 · both breakpoints */
+  --text-list: 16px; /* numbered rows, list items · lh 1.6 */
+  --text-list-d: 15px;
+  --text-meta: 15px; /* bylines, back links, pairing notes */
+  --text-meta-d: 14px;
+  --text-label: 14px; /* sentence-case labels: Share, breadcrumb, QA kickers */
+  --text-label-sm: 13px; /* smaller labels: Install, cross-link kickers */
+  --text-caption: 13px; /* figcaptions, form notes · ink --byline */
+  --text-caption-d: 12px;
+  --text-mono-body: 13px; /* code blocks, install commands */
+  --text-mono-label: 11px; /* fig tags, list indices, stat labels (11px floor) */
+  --text-mono-index: 12px; /* mobile ledger indices read one step up */
+
+  --body-lh: 1.65;
 
   /* desktop type scale — mirrors the mobile sizes above, ≥768px only */
   --h1-hero-size-d: 54px;
@@ -110,7 +135,6 @@
   /* Note titles are longer sentences, not headline-length — spec 05 uses
      40px on desktop where interior pages otherwise use 44px. */
   --h1-size-note-d: 40px;
-  --body-size-d: 15px;
 
   /* brighter twin of each type colour — used for the nav-drawer icon's
      pixel build-in bit-flash (type-icon.tsx). The Home row link shimmer that
@@ -131,10 +155,10 @@
     color-scheme: dark;
     --page: #0f1012;
     --ink: #ececea;
-    --body: rgba(236, 236, 234, 0.55);
-    --body-strong: rgba(236, 236, 234, 0.78);
+    --body: rgba(236, 236, 234, 0.62);
+    --body-strong: rgba(236, 236, 234, 0.82);
     --byline: rgba(236, 236, 234, 0.55);
-    --muted: rgba(236, 236, 234, 0.42);
+    --muted: var(--byline);
     --faint: rgba(236, 236, 234, 0.42);
     --crumb-sep: rgba(236, 236, 234, 0.3);
     --icon: rgba(236, 236, 234, 0.42);
@@ -152,6 +176,9 @@
     /* drop-shadow under a framed-still screenshot PNG */
     --shadow-ink: rgba(0, 0, 0, 0.55);
     --card-border: rgba(236, 236, 234, 0.16);
+    --quiet-fg: rgba(236, 236, 234, 0.7);
+    --quiet-border: rgba(236, 236, 234, 0.18);
+    --quiet-border-hover: rgba(236, 236, 234, 0.42);
     --surface-raised: #16171a;
     --sticky-bar-bg: rgba(15, 16, 18, 0.9);
     --btn-bg: #ececea;
@@ -164,10 +191,10 @@
   color-scheme: dark;
   --page: #0f1012;
   --ink: #ececea;
-  --body: rgba(236, 236, 234, 0.55);
-  --body-strong: rgba(236, 236, 234, 0.78);
+  --body: rgba(236, 236, 234, 0.62);
+  --body-strong: rgba(236, 236, 234, 0.82);
   --byline: rgba(236, 236, 234, 0.55);
-  --muted: rgba(236, 236, 234, 0.42);
+  --muted: var(--byline);
   --faint: rgba(236, 236, 234, 0.42);
   --crumb-sep: rgba(236, 236, 234, 0.3);
   --icon: rgba(236, 236, 234, 0.42);
@@ -185,6 +212,9 @@
   /* drop-shadow under a framed-still screenshot PNG */
   --shadow-ink: rgba(0, 0, 0, 0.55);
   --card-border: rgba(236, 236, 234, 0.16);
+  --quiet-fg: rgba(236, 236, 234, 0.7);
+  --quiet-border: rgba(236, 236, 234, 0.18);
+  --quiet-border-hover: rgba(236, 236, 234, 0.42);
   --surface-raised: #16171a;
   --sticky-bar-bg: rgba(15, 16, 18, 0.9);
   --btn-bg: #ececea;
@@ -529,7 +559,7 @@ button {
 }
 .nd-browse-all {
   display: inline-block;
-  font-size: 13px;
+  font-size: var(--text-meta);
   font-weight: 500;
   color: var(--muted);
   transition: color 0.2s;
@@ -759,31 +789,27 @@ button {
     margin-top: 72px;
   }
 }
+/* Sentence-case sans breadcrumb (readability pass) — the 9px uppercase
+   mono tag is retired site-wide; mono survives only in genuinely mono
+   contexts (fig tags, list indices, dates, code). */
 .dt-crumb {
-  font-family: var(--font-label);
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-.dt-crumb-type {
-  transition: opacity 0.2s;
+  font-size: var(--text-label);
+  font-weight: 500;
 }
 .dt-crumb-type:hover {
-  opacity: 0.7;
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 .dt-crumb-sep {
   color: var(--crumb-sep);
-  margin: 0 5px;
+  margin: 0 8px;
 }
 .dt-crumb-leaf {
-  color: var(--body);
+  color: var(--byline);
 }
 
 .st-h1 {
-  margin-top: 10px;
+  margin-top: 18px;
   font-size: var(--h1-size);
   line-height: var(--h1-lh);
   letter-spacing: var(--h1-ls);
@@ -806,8 +832,10 @@ button {
 
 @media (min-width: 768px) {
   .st-h1 {
+    margin-top: 20px;
     font-size: var(--h1-size-d);
     letter-spacing: -0.03em;
+    line-height: 1.1;
   }
   .st-h1.h1-workshop {
     font-size: var(--h1-size-workshop-d);
@@ -821,17 +849,50 @@ button {
   }
   .st-intro,
   .dt-oneliner {
-    font-size: 17px;
+    margin-top: 18px;
+    line-height: 1.6;
   }
   .st-prose {
-    font-size: var(--body-size-d);
+    font-size: var(--text-body-d);
+    line-height: 1.7;
   }
-  .st-prose h2 + ul > li {
-    font-size: 14px;
+  .st-prose h2 {
+    margin-top: 44px;
   }
-  .st-prose h2,
-  .st-section-h2 {
-    font-size: 20px;
+  .st-prose h2 + ul > li,
+  .st-prose h2 + ol > li {
+    font-size: var(--text-list-d);
+  }
+  .st-prose h2 + ul > li::before,
+  .st-prose h2 + ol > li::before {
+    font-size: var(--text-mono-label);
+  }
+  /* deliberately below --text-meta-d: the desktop byline reads at 13px in
+     the v3 frames (mobile rides the 15px meta step) */
+  .dt-byline {
+    margin-top: 18px;
+    font-size: 13px;
+  }
+  .dt-figcaption,
+  .st-shot-cap,
+  .dt-qa-caption,
+  .ws-cta-caption {
+    font-size: var(--text-caption-d);
+  }
+  .dt-back,
+  .as-pairing {
+    font-size: var(--text-meta-d);
+  }
+  .dt-qa-q,
+  .dt-qa-a {
+    padding: 18px 20px;
+  }
+  .dt-qa-table {
+    font-size: var(--text-mono-index);
+    column-gap: 24px;
+  }
+  .dt-qa-table .dt-qa-head {
+    font-size: var(--text-mono-label);
   }
 }
 
@@ -844,17 +905,17 @@ button {
 .st-intro,
 .dt-oneliner {
   margin-top: 14px;
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: var(--text-lede);
+  line-height: 1.55;
   color: var(--body);
   max-width: 560px;
 }
 
 .dt-byline {
-  margin-top: 18px;
+  margin-top: 16px;
   padding-bottom: 18px;
   border-bottom: 1px solid var(--hairline);
-  font-size: 13px;
+  font-size: var(--text-meta);
   color: var(--byline);
 }
 .dt-byline a {
@@ -877,17 +938,15 @@ button {
   height: 24px;
   border-radius: 99px;
   object-fit: cover;
-  object-position: 50% 22%;
 }
 .dt-byline-name {
   font-weight: 500;
   color: var(--ink);
 }
-/* "sanitized example" tag — the Note byline convention (mono, muted). */
+/* "sanitized example" tag — the Note byline convention. Reads inline with
+   the rest of the byline since the readability pass (no mono, no shrink). */
 .dt-byline-tag {
-  font-family: var(--font-label);
-  font-size: 11px;
-  color: var(--muted);
+  color: var(--byline);
 }
 
 /* figure — a real screenshot, or (when there's a caption but no image yet) a
@@ -915,39 +974,45 @@ button {
   position: absolute;
   top: 13px;
   left: 16px;
-  font-size: 10px;
+  font-size: var(--text-mono-label);
   font-weight: 600;
   letter-spacing: 0.05em;
+  text-transform: lowercase;
   color: var(--type-color);
 }
+/* figcaptions are readable sans since the readability pass — mono stays on
+   the fig tag inside the frame only */
 .dt-figcaption {
   margin-top: 10px;
-  font-family: var(--font-label);
-  font-size: 10px;
+  font-size: var(--text-caption);
   line-height: 1.55;
-  color: var(--muted);
+  color: var(--byline);
 }
 
 /* prose — rendered markdown body */
 .st-prose {
   margin-top: 28px;
-  font-size: 15px;
-  line-height: 1.7;
+  font-size: var(--text-body);
+  line-height: 1.65;
   color: var(--body-strong);
 }
 .st-prose p {
   margin-top: 18px;
 }
+/* section h2s carry their own hairline since the readability pass — the
+   divider and the heading are one move, not two */
 .st-prose h2 {
-  font-size: 17px;
+  font-size: var(--text-h2);
   font-weight: 600;
   letter-spacing: -0.015em;
-  line-height: 1.3;
+  line-height: 1.25;
   color: var(--ink);
-  margin-top: 58px;
+  margin-top: 48px;
+  padding-top: 20px;
+  border-top: 1px solid var(--hairline);
 }
 .st-prose h3 {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   color: var(--ink);
   margin-top: 28px;
@@ -955,64 +1020,43 @@ button {
 /* a list right after a section heading reads as a numbered ledger row —
    the "what it does" capability list, using the markdown that's already
    there rather than a new structured field. */
-.st-prose h2 + ul {
-  list-style: none;
-  margin-top: 4px;
-  padding-left: 0;
-  counter-reset: ledger;
-}
-.st-prose h2 + ul > li {
-  counter-increment: ledger;
-  position: relative;
-  padding: 14px 0 14px 30px;
-  border-bottom: 1px solid var(--hairline-soft);
-  font-size: 14px;
-  line-height: 1.6;
-}
-.st-prose h2 + ul > li::before {
-  content: counter(ledger, decimal-leading-zero);
-  position: absolute;
-  left: 0;
-  top: 15px;
-  font-family: var(--font-label);
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--faint);
-}
-.st-prose h2 + ul > li:last-child {
-  border-bottom: none;
-}
-/* the same ledger row, but for an ordered list (Note "workflow at a
-   glance" steps) — indices sit in the page's accent color rather than
-   faint ink, per the Note detail spec. Inert on posts/skills/connectors/
-   workshops since none of them open a section with a numbered list. */
+.st-prose h2 + ul,
 .st-prose h2 + ol {
   list-style: none;
   margin-top: 4px;
   padding-left: 0;
   counter-reset: ledger;
 }
+.st-prose h2 + ul > li,
 .st-prose h2 + ol > li {
   counter-increment: ledger;
   position: relative;
-  padding: 14px 0 14px 30px;
+  padding: 14px 0 14px 32px;
   border-bottom: 1px solid var(--hairline-soft);
-  font-size: 14px;
+  font-size: var(--text-list);
   line-height: 1.6;
-  color: var(--body-strong);
 }
-.st-prose h2 + ol > li:last-child {
-  border-bottom: none;
-}
+.st-prose h2 + ul > li::before,
 .st-prose h2 + ol > li::before {
   content: counter(ledger, decimal-leading-zero);
   position: absolute;
   left: 0;
-  top: 15px;
+  top: 17px;
   font-family: var(--font-label);
-  font-size: 10px;
+  font-size: var(--text-mono-index);
   font-weight: 600;
-  color: var(--type-color, var(--faint));
+  color: var(--byline);
+}
+.st-prose h2 + ul > li:last-child,
+.st-prose h2 + ol > li:last-child {
+  border-bottom: none;
+}
+/* ordered-list ledger indices (Note "workflow at a glance" steps) sit in
+   the page's accent color rather than muted ink, per the Note detail spec.
+   Inert on posts/skills/connectors/workshops since none of them open a
+   section with a numbered list. */
+.st-prose h2 + ol > li::before {
+  color: var(--type-color, var(--byline));
 }
 .st-prose ul,
 .st-prose ol {
@@ -1045,10 +1089,10 @@ button {
   padding: 24px 0;
   border-top: 1px solid var(--hairline);
   border-bottom: 1px solid var(--hairline);
-  font-size: 18.5px;
+  font-size: 20px;
   font-weight: 500;
   letter-spacing: -0.015em;
-  line-height: 1.4;
+  line-height: 1.45;
   color: var(--ink);
 }
 .st-prose blockquote p {
@@ -1073,7 +1117,7 @@ button {
   background: none;
   border: none;
   padding: 0;
-  font-size: 11px;
+  font-size: var(--text-mono-body);
   line-height: 1.6;
 }
 .st-prose hr {
@@ -1100,11 +1144,9 @@ button {
 }
 .st-shot-cap {
   margin-top: 10px;
-  font-family: var(--font-label);
-  font-size: 10px;
+  font-size: var(--text-caption);
   line-height: 1.55;
-  letter-spacing: 0.03em;
-  color: var(--muted);
+  color: var(--byline);
 }
 
 /* striped placeholder slot — interim treatment for a Note figure that
@@ -1126,7 +1168,8 @@ button {
   position: absolute;
   top: 14px;
   left: 17px;
-  font-size: 10px;
+  font-family: var(--font-label);
+  font-size: var(--text-mono-label);
   font-weight: 600;
   letter-spacing: 0.05em;
   color: var(--type-color, var(--c-note));
@@ -1158,7 +1201,8 @@ button {
 .nt-results-label {
   display: block;
   margin-top: 6px;
-  font-size: 10px;
+  font-family: var(--font-label);
+  font-size: var(--text-mono-label);
   letter-spacing: 0.02em;
   color: var(--byline);
 }
@@ -1170,15 +1214,11 @@ button {
   flex-wrap: wrap;
   align-items: baseline;
   gap: 6px 10px;
-  font-size: 10px;
-  letter-spacing: 0.03em;
-  color: var(--muted);
+  font-size: 12px;
+  color: var(--byline);
 }
 .nt-status-label {
   font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--faint);
 }
 .nt-status-step:not(:last-child)::after {
   content: "/";
@@ -1196,12 +1236,9 @@ button {
   padding: 13px 16px;
   border: 1px solid var(--hairline);
   border-bottom: none;
-  font-family: var(--font-label);
-  font-size: 9px;
+  font-size: var(--text-label-sm);
   font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--faint);
+  color: var(--byline);
 }
 .st-prose h3.nt-ships-h2 + ul {
   margin-top: 0;
@@ -1214,7 +1251,7 @@ button {
   margin-top: 0;
   padding: 11px 16px;
   font-family: var(--font-label);
-  font-size: 12px;
+  font-size: var(--text-mono-body);
   color: var(--body-strong);
   border-top: 1px solid var(--hairline-soft);
 }
@@ -1229,47 +1266,43 @@ button {
 }
 .dt-qa-q,
 .dt-qa-a {
-  padding: 18px 20px;
+  padding: 16px 18px;
 }
 .dt-qa-a {
   border-top: 1px solid var(--hairline);
 }
 .dt-qa-kicker {
-  font-family: var(--font-label);
-  font-size: 9px;
+  font-size: var(--text-label);
   font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--muted);
+  color: var(--byline);
 }
 .dt-qa-a .dt-qa-kicker {
   color: var(--type-color, var(--ink));
 }
 .dt-qa-question {
-  margin-top: 8px;
-  font-size: 15px;
+  margin-top: 9px;
+  font-size: 17px;
   font-weight: 500;
   letter-spacing: -0.01em;
+  line-height: 1.5;
   color: var(--ink);
 }
 .dt-qa-table {
   margin-top: 12px;
   display: grid;
   grid-template-columns: 1fr auto auto;
-  column-gap: 14px;
+  column-gap: 18px;
   font-family: var(--font-label);
-  font-size: 11px;
+  font-size: var(--text-mono-body);
 }
 .dt-qa-table > div {
   padding: 8px 0;
   border-bottom: 1px solid var(--hairline-soft);
 }
 .dt-qa-table .dt-qa-head {
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--faint);
+  font-size: var(--text-mono-index);
+  font-weight: 400;
+  color: var(--byline);
   border-bottom: 1px solid var(--hairline);
 }
 /* grid is 3 cells per row (label/value/value2) — suppress the last row's
@@ -1278,33 +1311,101 @@ button {
   border-bottom: none;
 }
 .dt-qa-caption {
-  margin-top: 12px;
-  font-family: var(--font-label);
-  font-size: 10px;
+  margin-top: 14px;
+  font-size: var(--text-caption);
   line-height: 1.55;
-  color: var(--muted);
+  color: var(--byline);
 }
 
 /* ---- grab it / install block ---------------------------------------- */
 .as-grab {
-  margin-top: 40px;
-  padding-top: 18px;
+  margin-top: 48px;
+  padding-top: 20px;
   border-top: 1px solid var(--hairline);
 }
+/* Boxed Install component (readability pass): sentence-case label + a copy
+   button in the head, the command wrapping below — no horizontal scroll. */
 .as-install {
-  margin-top: 14px;
-  padding: 14px 16px;
+  margin-top: 16px;
   background: var(--code-bg);
   border: 1px solid var(--hairline-code);
-  overflow-x: auto;
-  white-space: nowrap;
+}
+.as-install-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 18px 0;
+}
+.as-install-label {
+  font-size: var(--text-label-sm);
+  font-weight: 600;
+  color: var(--byline);
+}
+.as-install-cmd {
+  margin: 0;
+  padding: 6px 18px 15px;
   font-family: var(--font-label);
-  font-size: 11px;
-  line-height: 1.6;
+  font-size: var(--text-mono-body);
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+/* quiet 36px icon button — install-box copy + the share row's icon boxes
+   (the share variants add the --quiet-border box via .dt-share-btn) */
+.icon-btn {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: var(--byline);
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.icon-btn:hover {
+  color: var(--ink);
+}
+.icon-btn:active {
+  opacity: 0.6;
+}
+.as-install-head .icon-btn {
+  margin: -6px -10px 0 0;
+}
+/* GitHub source row — its own hairline row under the install box (moved
+   out of the share links in the readability pass) */
+.dt-source {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 14px 18px;
+  border: 1px solid var(--hairline);
+  color: var(--ink);
+  transition: border-color 0.2s;
+}
+.dt-source:hover {
+  border-color: var(--quiet-border-hover);
+}
+.dt-source-lead {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: var(--text-meta);
+  font-weight: 500;
+}
+.dt-source-arrow {
+  font-size: 14px;
+  color: var(--byline);
 }
 .as-pairing {
   margin-top: 12px;
-  font-size: 13px;
+  font-size: var(--text-meta);
   line-height: 1.6;
   color: var(--body);
 }
@@ -1322,10 +1423,10 @@ button {
 /* a real section heading used outside .st-prose (currently just "Grab it") —
    same weight as the prose h2s */
 .st-section-h2 {
-  font-size: 17px;
+  font-size: var(--text-h2);
   font-weight: 600;
   letter-spacing: -0.015em;
-  line-height: 1.3;
+  line-height: 1.25;
   color: var(--ink);
 }
 
@@ -1343,82 +1444,60 @@ button {
   border-color: var(--type-color, var(--ink));
 }
 .dt-cross-kicker {
-  font-family: var(--font-label);
-  font-size: 9px;
+  font-size: var(--text-label-sm);
   font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
   color: var(--type-color, var(--ink));
 }
 .dt-cross-title {
-  margin-top: 6px;
-  font-size: 15px;
+  margin-top: 4px;
+  font-size: 16px;
   font-weight: 600;
+  letter-spacing: -0.012em;
+  line-height: 1.3;
   color: var(--ink);
 }
 
 /* ---- share row ------------------------------------------------------ */
+/* Collapsed to one hairline row (readability pass): sentence-case "Share"
+   label left; Copy page + 36px icon boxes (copy link, X, LinkedIn) right.
+   The source repo moved to its own .dt-source row. */
 .dt-share {
-  margin-top: 56px;
+  margin-top: 48px;
+  padding: 14px 0;
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-.dt-share-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 .dt-share-label {
-  font-family: var(--font-label);
-  font-size: 9px;
+  font-size: var(--text-label);
   font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--muted);
+  color: var(--byline);
 }
-.dt-share-right {
+.dt-share-actions {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 8px;
 }
-.dt-share-link {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--body);
-  transition: color 0.2s;
+.dt-share-btn {
+  border: 1px solid var(--quiet-border);
+  color: var(--quiet-fg);
 }
-.dt-share-link:hover {
-  color: var(--ink);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+/* hover ink comes from .icon-btn:hover — only the border steps up here */
+.dt-share-btn:hover {
+  border-color: var(--quiet-border-hover);
 }
-/* The repo link moved out of the byline (v2) — leads the share links,
-   weighted and ink at rest. Declared after .dt-share-link so it wins the
-   same-specificity cascade. */
-.dt-share-link.dt-share-source {
+/* the labelled "Copy page" variant — same 36px height, text + icon */
+.dt-share-btn-label {
+  width: auto;
+  gap: 8px;
+  padding: 0 13px;
+  font-size: var(--text-label-sm);
   font-weight: 600;
-  color: var(--ink);
-}
-
-.btn-ghost {
-  padding: 6px 11px;
-  background: transparent;
-  border: 1px solid var(--field-border);
-  color: var(--body);
-  font-size: 11px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: color 0.2s, border-color 0.2s;
-}
-.btn-ghost:hover {
-  color: var(--ink);
-  border-color: var(--ink);
-}
-.btn-ghost:active {
-  opacity: 0.5;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
 }
 
 /* ---- end-of-Note newsletter invitation (template-level, every
@@ -1428,19 +1507,20 @@ button {
 .nt-invite {
   margin-top: 44px;
   padding: 26px 28px;
-  border: 1px solid var(--nav-ghost-border);
+  border: 1px solid var(--card-border);
 }
 .nt-invite-title {
   font-size: 17px;
   font-weight: 600;
   letter-spacing: -0.012em;
+  line-height: 1.3;
   color: var(--ink);
 }
 .nt-invite-body {
-  margin-top: 10px;
-  font-size: 14px;
+  margin-top: 9px;
+  font-size: 15px;
   line-height: 1.6;
-  color: var(--byline);
+  color: var(--body);
   max-width: 520px;
 }
 .nt-invite-link {
@@ -1456,8 +1536,8 @@ button {
 }
 
 .dt-back {
-  margin-top: 40px;
-  font-size: 13px;
+  margin-top: 32px;
+  font-size: var(--text-meta);
   font-weight: 500;
 }
 .dt-back a {
@@ -1485,18 +1565,14 @@ button {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-family: var(--font-label);
-  font-size: 9px;
+  font-size: var(--text-label-sm);
   font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
   color: var(--c-workshop);
 }
 .ws-plate-dur {
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.04em;
-  color: var(--muted);
+  color: var(--byline);
 }
 .ws-plate-body {
   padding: 16px;
@@ -1510,7 +1586,7 @@ button {
 }
 .ws-plate-time {
   margin-top: 8px;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.5;
   color: var(--byline);
 }
@@ -1522,23 +1598,22 @@ button {
   background: color-mix(in srgb, var(--c-workshop) 7%, transparent);
 }
 .ws-cta-title {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 600;
   letter-spacing: -0.012em;
   color: var(--ink);
 }
 .ws-cta-body {
   margin-top: 8px;
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.6;
-  color: var(--byline);
+  color: var(--body);
 }
 .ws-cta-caption {
   margin-top: 14px;
-  font-family: var(--font-label);
-  font-size: 10px;
+  font-size: var(--text-caption);
   line-height: 1.55;
-  color: var(--muted);
+  color: var(--byline);
 }
 /* the past-workshop CTA's "Notify me" button carries the workshop colour —
    the upcoming CTA's Join button already does via --btn-color */
@@ -1582,15 +1657,17 @@ button {
   align-items: flex-end;
 }
 .ea-helper {
-  font-size: 13px;
-  letter-spacing: 0.01em;
-  color: var(--muted);
-  margin-top: 11px;
+  font-size: var(--text-caption);
+  line-height: 1.55;
+  color: var(--byline);
+  margin-top: 10px;
 }
+/* 16px on mobile is deliberate — anything smaller makes iOS Safari zoom
+   the viewport on focus */
 .ea-in {
   width: 100%;
   font-family: var(--font-body);
-  font-size: 14px;
+  font-size: 16px;
   color: var(--ink);
   background: none;
   border: none;
@@ -1621,11 +1698,25 @@ button {
   border: none;
   color: inherit;
   padding: 8px 0;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   white-space: nowrap;
   cursor: pointer;
   transition: opacity 0.2s;
+}
+@media (min-width: 768px) {
+  .ea-in,
+  .ea-btn {
+    font-size: 15px;
+  }
+  .ea-helper {
+    font-size: var(--text-caption-d);
+  }
+}
+/* the hero capture's Subscribe reads a step heavier (design: 600 in the
+   hero chain, 500 in article-foot captures) */
+.home-hero-capture .ea-btn {
+  font-weight: 600;
 }
 .ea-btn:hover {
   text-decoration: underline;
@@ -1716,10 +1807,10 @@ input:focus-visible {
 }
 .home-sub {
   margin-top: 16px;
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: 17px;
+  line-height: 1.55;
   color: var(--body);
-  max-width: 290px;
+  max-width: 320px;
 }
 
 /* Hero capture (subscribe is the primary CTA again) — lean form + helper,
@@ -1784,10 +1875,10 @@ input:focus-visible {
   padding-bottom: 21px;
 }
 .home-cat-desc {
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.6;
   color: var(--body);
-  max-width: 290px;
+  max-width: 300px;
 }
 .home-cat-covers {
   margin-top: 16px;
@@ -1799,7 +1890,7 @@ input:focus-visible {
 .home-cat-link {
   display: inline-block;
   margin-top: 14px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--type-color);
 }
@@ -1830,9 +1921,10 @@ input:focus-visible {
   position: absolute;
   top: 13px;
   left: 16px;
-  font-size: 10px;
+  font-size: var(--text-mono-label);
   font-weight: 600;
   letter-spacing: 0.05em;
+  text-transform: lowercase;
   color: var(--type-color);
 }
 .cover-card-name {
@@ -1843,8 +1935,8 @@ input:focus-visible {
   color: var(--ink);
 }
 .cover-card-meta {
-  font-size: 11px;
-  color: var(--muted);
+  font-size: 12px;
+  color: var(--byline);
 }
 
 .home-browse-all {
@@ -1852,9 +1944,9 @@ input:focus-visible {
   padding-top: 0;
 }
 .home-browse-all-link {
-  font-size: 13px;
+  font-size: var(--text-meta);
   font-weight: 500;
-  color: var(--muted);
+  color: var(--byline);
   transition: color 0.2s;
 }
 .home-browse-all-link:hover {
@@ -1880,7 +1972,6 @@ input:focus-visible {
   height: 56px;
   border-radius: 99px;
   object-fit: cover;
-  object-position: 50% 22%;
   box-shadow: 0 0 0 1px var(--hairline);
 }
 .home-bio-text {
@@ -1896,14 +1987,14 @@ input:focus-visible {
   color: var(--ink);
 }
 .home-bio-tag {
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.3;
-  color: var(--body);
+  color: var(--byline);
 }
 .home-bio-note {
   margin-top: 15px;
-  font-size: 13px;
-  line-height: 1.6;
+  font-size: 15px;
+  line-height: 1.65;
   color: var(--body-strong);
 }
 
@@ -1949,8 +2040,6 @@ input:focus-visible {
   .home-bio-note {
     margin-top: 18px;
     max-width: 460px;
-    font-size: 14px;
-    line-height: 1.65;
   }
   .home-cat-toggle {
     padding: 24px 0;
@@ -1973,7 +2062,6 @@ input:focus-visible {
   }
   .home-cat-desc {
     grid-area: desc;
-    font-size: 14px;
   }
   .home-cat-link {
     grid-area: link;
@@ -2016,7 +2104,7 @@ input:focus-visible {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.02em;
   padding: 6px 11px;
@@ -2047,12 +2135,9 @@ input:focus-visible {
 
 /* index — grouped editorial rows (Browse / Home latest / related lists) */
 .st-group-title {
-  font-family: var(--font-label);
-  font-size: 11px;
+  font-size: var(--text-label-sm);
   font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
+  color: var(--byline);
 }
 .st-rows {
   list-style: none;
@@ -2079,22 +2164,22 @@ input:focus-visible {
   min-width: 0;
 }
 .st-row-title {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   letter-spacing: -0.012em;
   line-height: 1.35;
   color: var(--ink);
 }
 .st-row-desc {
-  font-size: 12px;
-  line-height: 1.5;
+  font-size: 13px;
+  line-height: 1.55;
   color: var(--body);
 }
 .st-row-meta {
   grid-area: meta;
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.01em;
-  color: var(--muted);
+  color: var(--byline);
   white-space: nowrap;
   transition: color 0.2s;
 }
@@ -2122,12 +2207,11 @@ input:focus-visible {
     font-size: 17px;
   }
   .st-row-desc {
-    font-size: 13px;
-    line-height: 1.55;
+    font-size: 14px;
     max-width: 760px;
   }
   .st-row-meta {
-    font-size: 11px;
+    font-size: 12px;
     padding-top: 4px;
     text-align: right;
   }
@@ -2154,20 +2238,6 @@ input:focus-visible {
   text-underline-offset: 3px;
 }
 
-/* "Copy as Markdown" / "Copy link" — quiet mono text-buttons */
-.st-copy-md {
-  border: none;
-  background: none;
-  padding: 0;
-  font-size: 13px;
-  letter-spacing: 0.01em;
-  color: var(--muted);
-  cursor: pointer;
-}
-.st-copy-md:hover {
-  color: var(--ink);
-}
-
 /* asset detail — legacy hooks retained for spacing */
 .as-h1 {
   margin-top: 10px;
@@ -2187,7 +2257,7 @@ input:focus-visible {
   background: none;
   border: none;
   padding: 0;
-  font-size: 10px;
+  font-size: 12px;
   text-decoration: underline;
   text-underline-offset: 2px;
   color: var(--muted);
@@ -2198,7 +2268,7 @@ input:focus-visible {
   color: var(--ink);
 }
 .ea-dormant {
-  font-size: var(--body-size);
+  font-size: var(--text-body);
   line-height: 1.55;
   color: var(--body);
 }
@@ -2219,7 +2289,7 @@ input:focus-visible {
 }
 .nl-rss {
   margin-top: 26px;
-  font-size: 10px;
+  font-size: 12px;
 }
 .st-post-capture {
   margin-top: 34px;
@@ -2235,10 +2305,6 @@ input:focus-visible {
   }
   .st-row-meta {
     white-space: normal;
-  }
-  .dt-share {
-    flex-direction: column;
-    align-items: flex-start;
   }
 }
 
@@ -2264,10 +2330,8 @@ input:focus-visible {
   color: var(--muted);
 }
 .session-card-label {
-  font-size: 9px;
+  font-size: var(--text-label-sm);
   font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
 }
 .session-card-table {
   margin-top: 14px;
@@ -2284,10 +2348,8 @@ input:focus-visible {
   border-top: none;
 }
 .session-card-row-label {
-  font-size: 10px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--body);
+  font-size: 13px;
+  color: var(--byline);
 }
 .session-card-row-value {
   font-size: 15px;
@@ -2297,7 +2359,7 @@ input:focus-visible {
 }
 .session-card-microcopy {
   margin-top: 12px;
-  font-size: 10.5px;
+  font-size: var(--text-caption);
   line-height: 1.55;
 }
 
@@ -2336,9 +2398,9 @@ input:focus-visible {
   color: var(--body-strong);
 }
 .session-card-attribution {
-  margin-top: 8px;
-  font-size: 11px;
-  color: var(--muted);
+  margin-top: 9px;
+  font-size: 12px;
+  color: var(--byline);
 }
 
 /* Desktop sidebar offer card — a raised surface, a step heavier border
@@ -2383,7 +2445,9 @@ input:focus-visible {
 }
 
 .session-h2 {
-  margin-top: 58px;
+  margin-top: 36px;
+  padding-top: 18px;
+  border-top: 1px solid var(--hairline);
 }
 
 .session-steps {
@@ -2400,20 +2464,21 @@ input:focus-visible {
 }
 .session-step-index {
   flex: none;
-  font-size: 10px;
+  font-size: var(--text-mono-index);
   font-weight: 600;
-  color: var(--faint);
-  padding-top: 2px;
+  color: var(--byline);
+  padding-top: 3px;
 }
 .session-step-text {
-  font-size: 14px;
+  font-size: var(--text-list);
   line-height: 1.6;
   color: var(--body-strong);
 }
 
 .session-proof-lede {
-  margin-top: 8px;
-  font-size: 13px;
+  margin-top: 12px;
+  font-size: 15px;
+  line-height: 1.6;
   color: var(--body);
 }
 .session-proof-list {
@@ -2436,22 +2501,22 @@ input:focus-visible {
 }
 .session-proof-tag {
   display: block;
-  font-size: 9px;
+  font-size: var(--text-label-sm);
   font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
   color: var(--c-note);
 }
-/* In-progress proof card — no detail page yet, so the tag reads as faint
+/* In-progress proof card — no detail page yet, so the tag reads as muted
    ink rather than the gold Note accent (spec 06). */
 .session-proof-tag-progress {
-  color: var(--faint);
+  color: var(--byline);
 }
 .session-proof-title {
   display: block;
   margin-top: 4px;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
+  letter-spacing: -0.012em;
+  line-height: 1.3;
   color: var(--ink);
 }
 .session-proof-arrow {
@@ -2472,7 +2537,6 @@ input:focus-visible {
   height: 60px;
   border-radius: 99px;
   object-fit: cover;
-  object-position: 50% 22%;
   box-shadow: 0 0 0 1px var(--hairline);
 }
 .session-personal-text {
@@ -2487,13 +2551,13 @@ input:focus-visible {
   color: var(--ink);
 }
 .session-personal-meta {
-  font-size: 12px;
-  color: var(--body);
+  font-size: 13px;
+  color: var(--byline);
 }
 .session-personal-bio {
   margin-top: 16px;
-  font-size: 14px;
-  line-height: 1.65;
+  font-size: var(--text-body-d);
+  line-height: 1.7;
   color: var(--body-strong);
 }
 
@@ -2501,16 +2565,14 @@ input:focus-visible {
   margin-top: 52px;
 }
 .session-boundary-label {
-  font-size: 9px;
+  font-size: var(--text-label-sm);
   font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--muted);
+  color: var(--byline);
 }
 .session-boundary-body {
   margin-top: 10px;
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: 16px;
+  line-height: 1.65;
   color: var(--body-strong);
 }
 
@@ -2546,9 +2608,8 @@ input:focus-visible {
   color: var(--body);
 }
 .session-sticky-meta {
-  font-size: 9.5px;
-  letter-spacing: 0.02em;
-  color: var(--body);
+  font-size: 12px;
+  color: var(--byline);
 }
 .session-sticky-btn {
   flex: none;
@@ -2618,7 +2679,6 @@ input:focus-visible {
   .session-h2 {
     margin-top: 44px;
     padding-top: 20px;
-    font-size: 20px;
   }
   .session-section:first-of-type .session-h2 {
     margin-top: 44px;

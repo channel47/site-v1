@@ -27,7 +27,7 @@ export function CoverCard({ cover }: { cover: Cover }) {
         <span className="cover-card-tag mono">{ART_LABEL[cover.type]}</span>
       </span>
       <span className="cover-card-name">{cover.title}</span>
-      <span className="cover-card-meta mono">{cover.meta}</span>
+      <span className="cover-card-meta">{cover.meta}</span>
     </Link>
   )
 }

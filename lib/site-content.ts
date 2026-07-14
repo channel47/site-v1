@@ -53,7 +53,7 @@ export const SESSION = {
    * no detail page yet. Append this after real getNotes() results on
    * /session; delete it the day that build ships as a real Note. */
   inProgressBuild: {
-    tag: "Build · In progress",
+    tag: "Note · in progress",
     title: "The weekly KPI review, read before I open a dashboard",
     href: "/browse?type=notes",
   },

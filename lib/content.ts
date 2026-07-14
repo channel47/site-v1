@@ -76,7 +76,7 @@ function renderStatusStrip(body: string): string {
     .filter(Boolean)
     .map((step) => `<span class="nt-status-step">${escapeHtml(step)}</span>`)
     .join("")
-  return `<div class="nt-status mono"><span class="nt-status-label">Status</span>${steps}</div>`
+  return `<div class="nt-status"><span class="nt-status-label">Status</span>${steps}</div>`
 }
 
 /** "Framed still" image treatment — every `![alt](src)` in content markdown

@@ -90,13 +90,13 @@ export default async function WorkshopPage({ params }: Props) {
         {w.status === "upcoming" ? (
           <div className="ws-plate an-up" style={{ animationDelay: ".4s" }}>
             <div className="ws-plate-head">
-              <span className="ws-plate-live mono">
+              <span className="ws-plate-live">
                 <svg width="8" height="9" viewBox="0 0 8 9" fill="currentColor" aria-hidden>
                   <path d="M0 0l8 4.5L0 9z" />
                 </svg>
                 Live session
               </span>
-              <span className="ws-plate-dur mono">{w.duration}</span>
+              <span className="ws-plate-dur">{w.duration}</span>
             </div>
             <div className="ws-plate-body">
               <p className="ws-plate-date serif">{longDate(w.date)}</p>
@@ -155,7 +155,7 @@ export default async function WorkshopPage({ params }: Props) {
               <SkoolIcon />
               Join Vibe Marketers →
             </a>
-            <p className="ws-cta-caption mono">
+            <p className="ws-cta-caption">
               Schedule and access are managed inside the community.
             </p>
           </div>
@@ -177,7 +177,7 @@ export default async function WorkshopPage({ params }: Props) {
             style={{ "--type-color": "var(--c-workshop)" } as CSSProperties}
           >
             <span>
-              <span className="dt-cross-kicker mono">{relatedLabel}</span>
+              <span className="dt-cross-kicker">{relatedLabel}</span>
               <p className="dt-cross-title">{related.title}</p>
             </span>
             <span aria-hidden>→</span>

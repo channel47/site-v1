@@ -30,7 +30,7 @@ export function Rows({
             className="st-row"
             style={{ "--type-color": TYPE_COLORS[item.type] } as CSSProperties}
           >
-            <span className="st-row-meta mono">
+            <span className="st-row-meta">
               <span className="st-row-meta-type">{item.typeLabel}</span>
               <span className="st-row-meta-date"> · {shortDate(item.date)}</span>
             </span>
