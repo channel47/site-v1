@@ -404,6 +404,16 @@ export const getWorkshopBySlug = cache((slug: string): Workshop | undefined => {
 
 // ---------------------------------------------------------------- notes
 
+/** Optional source video for a Note. Paths are root-relative public assets;
+ * duration uses ISO 8601 so the same value can feed VideoObject JSON-LD. */
+export interface NoteVideo {
+  src: string
+  poster: string
+  captions: string
+  duration: string
+  caption?: string
+}
+
 /** A Note — a long-form, single-page writeup of a real agentic system
  * Jackson has built and run, with results/status strips instead of the
  * install-facts frontmatter an Asset carries. Own shape (not an AssetType)
@@ -417,6 +427,8 @@ export interface NoteMeta {
   /** Shown in the byline as "sanitized example" when true (the Note
    * convention for real-but-anonymized production systems). */
   sanitized?: boolean
+  /** Real walkthrough footage, rendered near the top of the Note when set. */
+  video?: NoteVideo
 }
 
 export interface Note extends NoteMeta {

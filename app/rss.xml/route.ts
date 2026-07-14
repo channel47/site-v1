@@ -44,6 +44,32 @@ function cdata(html: string): string {
   return `<![CDATA[${html.replaceAll("]]>", "]]]]><![CDATA[>")}]]>`
 }
 
+function attr(text: string): string {
+  return esc(text).replaceAll('"', "&quot;")
+}
+
+function noteVideoHtml(note: Note): string {
+  if (!note.video) return ""
+
+  const src = absoluteUrl(SITE_URL, note.video.src)
+  const poster = absoluteUrl(SITE_URL, note.video.poster)
+  const captions = absoluteUrl(SITE_URL, note.video.captions)
+  const caption = note.video.caption
+    ? `<figcaption>${esc(note.video.caption)}</figcaption>`
+    : ""
+
+  return [
+    "<figure>",
+    `<video controls playsinline preload="metadata" poster="${attr(poster)}">`,
+    `<source src="${attr(src)}" type="video/mp4">`,
+    `<track src="${attr(captions)}" kind="captions" srclang="en" label="English">`,
+    `<p><a href="${attr(src)}">Open the walkthrough.</a></p>`,
+    "</video>",
+    caption,
+    "</figure>",
+  ].join("")
+}
+
 function entry(item: Post | Asset | Workshop | Note, url: string): FeedEntry {
   return {
     title: item.title,
@@ -54,10 +80,18 @@ function entry(item: Post | Asset | Workshop | Note, url: string): FeedEntry {
   }
 }
 
+function noteEntry(note: Note, url: string): FeedEntry {
+  const base = entry(note, url)
+  return { ...base, html: `${noteVideoHtml(note)}${base.html}` }
+}
+
 export function GET() {
   const entries: FeedEntry[] = [
-    ...getNotes().map((b) =>
-      entry(b, absoluteUrl(SITE_URL, `${CONTENT_COLLECTION.notes.basePath}/${b.slug}`)),
+    ...getNotes().map((note) =>
+      noteEntry(
+        note,
+        absoluteUrl(SITE_URL, `${CONTENT_COLLECTION.notes.basePath}/${note.slug}`),
+      ),
     ),
     ...getAllPosts().map((p) =>
       entry(p, absoluteUrl(SITE_URL, `${CONTENT_COLLECTION.posts.basePath}/${p.slug}`)),

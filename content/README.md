@@ -42,6 +42,12 @@ date: YYYY-MM-DD
 tags: [string]
 sanitized: boolean      # optional — when true, the byline shows a "sanitized example"
                         # tag (the Note convention for real-but-anonymized systems)
+video:                   # optional — real walkthrough footage shown near the top
+  src: string            # root-relative MP4 path under public/
+  poster: string         # root-relative poster image
+  captions: string       # root-relative WebVTT captions (not SRT)
+  duration: string       # ISO 8601 duration, e.g. PT4M17S
+  caption: string        # optional visible caption below the player
 ```
 
 Post (`content/posts/{skills,connectors}/*.md`):

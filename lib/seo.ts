@@ -133,6 +133,7 @@ export function postGraph(post: Post) {
  * not an installable artifact living in a repo. */
 export function noteGraph(note: Note) {
   const url = `${SITE_URL}/notes/${note.slug}`
+  const videoId = `${url}#video`
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -150,8 +151,24 @@ export function noteGraph(note: Note) {
         isAccessibleForFree: true,
         keywords: note.tags.join(", "),
         isPartOf: { "@id": WEBSITE_ID },
+        ...(note.video ? { video: { "@id": videoId } } : {}),
       },
       breadcrumb(url, { name: "Notes", url: `${SITE_URL}/browse?type=notes` }, note.title),
+      ...(note.video
+        ? [
+            {
+              "@type": "VideoObject",
+              "@id": videoId,
+              name: note.title,
+              description: note.video.caption ?? note.description,
+              contentUrl: `${SITE_URL}${note.video.src}`,
+              thumbnailUrl: `${SITE_URL}${note.video.poster}`,
+              uploadDate: note.date,
+              duration: note.video.duration,
+              inLanguage: "en-US",
+            },
+          ]
+        : []),
     ],
   }
 }

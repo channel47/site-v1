@@ -50,6 +50,11 @@ export function noteTwin(note: Note): string {
       author: AUTHOR_NAME,
       updatedAt: note.date,
       canonical: `${SITE_URL}/notes/${note.slug}`,
+      video: note.video?.src,
+      videoPoster: note.video?.poster,
+      videoCaptions: note.video?.captions,
+      videoDuration: note.video?.duration,
+      videoCaption: note.video?.caption,
     }) +
     `\n# ${note.title}\n\n${note.markdown}\n`
   )

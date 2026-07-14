@@ -1149,6 +1149,24 @@ button {
   color: var(--byline);
 }
 
+/* Note walkthrough — the same tinted field and hard edge as framed stills,
+   with tighter padding so controls and captured UI remain legible. */
+.nt-video {
+  margin-top: 28px;
+}
+.nt-video-field {
+  border: 1px solid var(--hairline);
+  padding: clamp(8px, 2vw, 14px);
+  background: color-mix(in srgb, var(--type-color, var(--muted)) 9%, var(--page));
+}
+.nt-video video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
 /* striped placeholder slot — interim treatment for a Note figure that
    hasn't been captured yet (![caption](placeholder:tag) in content/notes).
    Swap to a real screenshot later by replacing the src; the surrounding
