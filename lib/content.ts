@@ -79,9 +79,10 @@ function renderStatusStrip(body: string): string {
   return `<div class="nt-status"><span class="nt-status-label">Status</span>${steps}</div>`
 }
 
-/** "Framed still" image treatment — every `![alt](src)` in content markdown
- * renders as a hard-edged figure (see `.st-shot` in globals.css) instead of
- * a bare `<img>`, with the alt text doubling as a small mono figcaption.
+/** Editorial image treatment — every `![alt](src)` in content markdown renders
+ * as a clean, unframed figure by default, with the alt text doubling as a small
+ * mono figcaption. Add the standard markdown title `"screenshot"` to opt into
+ * the hard-edged screenshot field: `![alt](src "screenshot")`.
  *
  * One exception: `![caption](placeholder:tag)` — used by Notes that haven't
  * captured real art yet — renders the striped accent placeholder slot
@@ -89,7 +90,7 @@ function renderStatusStrip(body: string): string {
  * this stays additive/inert for posts, skills, connectors, and workshops. */
 marked.use({
   renderer: {
-    image({ href, text }) {
+    image({ href, text, title }) {
       const alt = escapeHtml(text)
       const placeholderTag = PLACEHOLDER_SCHEME.exec(href)?.[1]
       if (placeholderTag) {
@@ -102,7 +103,11 @@ marked.use({
       const caption = text
         ? `<figcaption class="st-shot-cap">${alt}</figcaption>`
         : ""
-      return `<figure class="st-shot"><div class="st-shot-field"><img src="${href}" alt="${alt}" loading="lazy" /></div>${caption}</figure>`
+      const src = escapeHtml(href)
+      if (title?.trim().toLowerCase() === "screenshot") {
+        return `<figure class="st-shot"><div class="st-shot-field"><img src="${src}" alt="${alt}" loading="lazy" /></div>${caption}</figure>`
+      }
+      return `<figure class="st-media"><img src="${src}" alt="${alt}" loading="lazy" />${caption}</figure>`
     },
     // An image on its own line parses as a paragraph containing a single
     // image token — unwrap it so the figure isn't nested inside a <p>,

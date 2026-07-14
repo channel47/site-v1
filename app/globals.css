@@ -1126,8 +1126,18 @@ button {
   border-top: 1px solid var(--hairline);
 }
 
-/* framed still — a markdown image on a flat tint of the page's type colour;
-   the screenshot PNG carries its own rounded corners, the frame stays hard */
+/* editorial media is clean and edge-to-edge within the reading column */
+.st-media {
+  margin-top: 26px;
+}
+.st-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* framed screenshot — opt-in treatment for captured interfaces; the screenshot
+   PNG carries its own rounded corners while the surrounding field stays hard */
 .st-shot {
   margin-top: 26px;
 }
@@ -1149,15 +1159,9 @@ button {
   color: var(--byline);
 }
 
-/* Note walkthrough — the same tinted field and hard edge as framed stills,
-   with tighter padding so controls and captured UI remain legible. */
+/* Note walkthrough — clean editorial media, without screenshot chrome */
 .nt-video {
   margin-top: 28px;
-}
-.nt-video-field {
-  border: 1px solid var(--hairline);
-  padding: clamp(8px, 2vw, 14px);
-  background: color-mix(in srgb, var(--type-color, var(--muted)) 9%, var(--page));
 }
 .nt-video video {
   display: block;

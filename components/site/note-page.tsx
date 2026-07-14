@@ -66,25 +66,23 @@ export function NotePage({ note }: { note: Note }) {
 
         {note.video ? (
           <figure className="nt-video an-up" style={{ animationDelay: ".44s" }}>
-            <div className="nt-video-field">
-              <video
-                controls
-                playsInline
-                preload="metadata"
-                poster={note.video.poster}
-                aria-describedby={note.video.caption ? `${note.slug}-video-caption` : undefined}
-              >
-                <source src={note.video.src} type="video/mp4" />
-                <track
-                  src={note.video.captions}
-                  kind="captions"
-                  srcLang="en"
-                  label="English"
-                />
-                Your browser does not support embedded video. {" "}
-                <a href={note.video.src}>Open the walkthrough.</a>
-              </video>
-            </div>
+            <video
+              controls
+              playsInline
+              preload="metadata"
+              poster={note.video.poster}
+              aria-describedby={note.video.caption ? `${note.slug}-video-caption` : undefined}
+            >
+              <source src={note.video.src} type="video/mp4" />
+              <track
+                src={note.video.captions}
+                kind="captions"
+                srcLang="en"
+                label="English"
+              />
+              Your browser does not support embedded video. {" "}
+              <a href={note.video.src}>Open the walkthrough.</a>
+            </video>
             {note.video.caption ? (
               <figcaption
                 id={`${note.slug}-video-caption`}

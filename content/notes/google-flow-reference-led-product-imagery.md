@@ -6,7 +6,7 @@ date: 2026-07-14
 tags: [google-flow, creative-production, art-direction, product-imagery, dtc]
 video:
   src: /posts/google-flow-reference-led-product-imagery.mp4
-  poster: /posts/google-flow-blue-tablet-water-impact.jpg
+  poster: /posts/google-flow-walkthrough-poster.jpg
   captions: /posts/google-flow-reference-led-product-imagery.vtt
   duration: PT4M17S
   caption: The full four-minute walkthrough, including the outputs that worked and the packaging details that didn't.
