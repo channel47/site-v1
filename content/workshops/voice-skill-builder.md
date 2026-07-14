@@ -1,5 +1,5 @@
 ---
-title: "Skills Lab #1: Voice Skill Builder"
+title: "Build a brand-voice skill from real writing samples"
 slug: voice-skill-builder
 description: "A Vibe Marketers lab on building and testing a brand-voice skill in Claude Desktop."
 status: past

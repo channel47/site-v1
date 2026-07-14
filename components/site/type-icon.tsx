@@ -9,6 +9,11 @@ const BITS: Record<
   ContentTypeKey,
   ReadonlyArray<readonly [number, number, number, number]>
 > = {
+  notes: [
+    [1, 1, 6, 14],
+    [9, 1, 6, 6],
+    [9, 9, 6, 6],
+  ],
   posts: [
     [1, 1, 6, 14],
     [9, 1, 6, 6],
@@ -33,6 +38,7 @@ const BITS: Record<
 
 /** Build-in accent per type — the brighter shine twin of the type colour. */
 const SHINE: Record<ContentTypeKey, string> = {
+  notes: "var(--shine-note)",
   posts: "var(--shine-post)",
   skills: "var(--shine-skill)",
   connectors: "var(--shine-connector)",

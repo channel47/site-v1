@@ -15,18 +15,22 @@ const SOCIALS = [
 
 const GROUPS = [
   {
-    key: "learn",
-    label: "Learn",
+    key: "explore",
+    label: "Explore",
     links: [
+      // No dedicated per-type listing pages — Browse's ?type= filters are
+      // the canonical indexes for all four content types.
+      { href: "/browse?type=notes", label: "Notes" },
       { href: "/browse?type=skills", label: "Skills" },
       { href: "/browse?type=connectors", label: "Connectors" },
+      { href: "/browse?type=workshops", label: "Workshops" },
     ],
   },
   {
-    key: "live",
+    key: "work",
     label: "Live",
     links: [
-      { href: "/browse?type=workshops", label: "Workshops" },
+      { href: "/session", label: "Book a session" },
       { href: LINKS.join, label: "Vibe Marketers →", external: true },
     ],
   },
@@ -34,14 +38,13 @@ const GROUPS = [
     key: "more",
     label: "More",
     links: [
-      { href: "/about", label: "About" },
       { href: "/browse", label: "Browse all" },
       { href: "/newsletter", label: "Newsletter" },
     ],
   },
   {
-    key: "formats",
-    label: "Formats",
+    key: "agents",
+    label: "Agents",
     links: [
       // Machine-readable surfaces (docs/AI-SEO.md Layer 3) — non-HTML route
       // handlers, not app pages, so these render as plain anchors, filenames

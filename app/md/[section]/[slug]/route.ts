@@ -2,12 +2,14 @@ import {
   getAllPosts,
   getAssetBySlug,
   getAssets,
+  getNoteBySlug,
+  getNotes,
   getPostBySlug,
   getWorkshopBySlug,
   getWorkshops,
 } from "@/lib/content"
 import { CONTENT_COLLECTION } from "@/lib/discovery"
-import { assetTwin, postTwin, workshopTwin } from "@/lib/markdown-twin"
+import { assetTwin, noteTwin, postTwin, workshopTwin } from "@/lib/markdown-twin"
 
 /**
  * The markdown-twin endpoint. Agents reach it as `/posts/<slug>.md` (or via
@@ -27,6 +29,10 @@ export const dynamicParams = false
 
 export function generateStaticParams() {
   return [
+    ...getNotes().map((b) => ({
+      section: CONTENT_COLLECTION.notes.segment,
+      slug: b.slug,
+    })),
     ...getAllPosts().map((p) => ({
       section: CONTENT_COLLECTION.posts.segment,
       slug: p.slug,
@@ -50,7 +56,10 @@ export async function GET(_req: Request, { params }: Params) {
   const { section, slug } = await params
 
   let twin: string | undefined
-  if (section === CONTENT_COLLECTION.posts.segment) {
+  if (section === CONTENT_COLLECTION.notes.segment) {
+    const note = getNoteBySlug(slug)
+    twin = note && noteTwin(note)
+  } else if (section === CONTENT_COLLECTION.posts.segment) {
     const post = getPostBySlug(slug)
     twin = post && postTwin(post)
   } else if (

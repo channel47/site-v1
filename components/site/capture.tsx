@@ -88,7 +88,7 @@ export function Capture({
         <p className="ea-helper">{CAPTURE.successHelper}</p>
         <button
           type="button"
-          className="ea-reset mono"
+          className="ea-reset"
           onClick={() => {
             setStatus("idle")
             setEmail("")
@@ -138,7 +138,7 @@ export function Capture({
         </button>
       </form>
       {status === "error" ? (
-        <p className="mono ea-form-error">
+        <p className="ea-form-error">
           That didn&apos;t go through — check the address and try again.
         </p>
       ) : (

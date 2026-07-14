@@ -1,8 +1,10 @@
 import {
   getAllPosts,
   getAssets,
+  getNotes,
   getWorkshops,
   type Asset,
+  type Note,
   type Post,
   type Workshop,
 } from "@/lib/content"
@@ -42,7 +44,7 @@ function cdata(html: string): string {
   return `<![CDATA[${html.replaceAll("]]>", "]]]]><![CDATA[>")}]]>`
 }
 
-function entry(item: Post | Asset | Workshop, url: string): FeedEntry {
+function entry(item: Post | Asset | Workshop | Note, url: string): FeedEntry {
   return {
     title: item.title,
     url,
@@ -54,6 +56,9 @@ function entry(item: Post | Asset | Workshop, url: string): FeedEntry {
 
 export function GET() {
   const entries: FeedEntry[] = [
+    ...getNotes().map((b) =>
+      entry(b, absoluteUrl(SITE_URL, `${CONTENT_COLLECTION.notes.basePath}/${b.slug}`)),
+    ),
     ...getAllPosts().map((p) =>
       entry(p, absoluteUrl(SITE_URL, `${CONTENT_COLLECTION.posts.basePath}/${p.slug}`)),
     ),

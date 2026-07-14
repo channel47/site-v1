@@ -1,4 +1,4 @@
-import { getAllPosts, getAssets, getWorkshops } from "@/lib/content"
+import { getAllPosts, getAssets, getNotes, getWorkshops } from "@/lib/content"
 import {
   CONTENT_COLLECTION,
   CONTENT_COLLECTIONS,
@@ -21,6 +21,7 @@ import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo"
 export const dynamic = "force-static"
 
 export function GET() {
+  const notes = getNotes()
   const posts = getAllPosts()
   const skills = getAssets("skill")
   const connectors = getAssets("connector")
@@ -50,6 +51,11 @@ export function GET() {
     "Public JSON APIs:",
     `- ${SITE_URL}/api/search?q=<query> : keyword search over all public content`,
     "",
+    "## Notes",
+    ...notes.map(
+      (b) => `- [${b.title}](${SITE_URL}/notes/${b.slug}.md): ${b.description}`,
+    ),
+    "",
     "## Skills",
     ...skills.map(
       (a) => `- [${a.title}](${SITE_URL}/skills/${a.slug}.md): ${a.description}`,
@@ -74,7 +80,7 @@ export function GET() {
     ),
     "",
     "## Optional",
-    ...PUBLIC_PAGES.filter((page) => page.path === "/about").map(
+    ...PUBLIC_PAGES.filter((page) => page.path === "/session").map(
       (page) => `- [${page.title}](${absoluteUrl(SITE_URL, page.path)}): ${page.description}`,
     ),
     `- [Workshop archive](${absoluteUrl(SITE_URL, CONTENT_COLLECTION.workshops.indexPath)}): sessions hosted inside Vibe Marketers`,

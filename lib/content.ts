@@ -28,13 +28,77 @@ function escapeHtml(value: string): string {
     .replace(/"/g, "&quot;")
 }
 
+/** Matches `placeholder:visual-01` (or any slug) — the Note-content
+ * convention for a not-yet-shot figure. See content/README.md. */
+const PLACEHOLDER_SCHEME = /^placeholder:(.+)$/
+
+/** Matches a RESULTS-strip paragraph: `RESULTS · 243 · candidates, first run
+ * | ~5 min · to surface them | ~1 hr · total setup`. Cells are `|`-separated,
+ * each cell's big number and small label split on the first `·`. See
+ * content/README.md. */
+const RESULTS_STRIP = /^RESULTS\s*·\s*(.+)$/
+/** Matches a STATUS-strip paragraph: `STATUS · Sourcing complete / human
+ * review pending / outreach pending / interview results pending`. Steps are
+ * `/`-separated. See content/README.md. */
+const STATUS_STRIP = /^STATUS\s*·\s*(.+)$/
+
+/** Matches the "Ships with this build" heading convention: an H2/H3 whose
+ * text starts with "Ships with this build" (optionally "· sanitized" etc.) —
+ * the immediately-following list renders as the bordered artifact box
+ * instead of a normal prose list (`.nt-ships-h2 + ul` in globals.css). See
+ * content/README.md. */
+const SHIPS_HEADING = /^Ships with this build\b/
+
+/** `243 · candidates, first run` → number/label cell of a RESULTS strip;
+ * cells without a `·` render as a bare number with no label. */
+function renderResultsStrip(body: string): string {
+  const cells = body
+    .split("|")
+    .map((cell) => cell.trim())
+    .filter(Boolean)
+    .map((cell) => {
+      const [num, ...rest] = cell.split("·").map((part) => part.trim())
+      const label = rest.join("·")
+      return `<div class="nt-results-cell"><span class="nt-results-num">${escapeHtml(
+        num,
+      )}</span>${label ? `<span class="nt-results-label mono">${escapeHtml(label)}</span>` : ""}</div>`
+    })
+    .join("")
+  return `<div class="nt-results">${cells}</div>`
+}
+
+/** `Sourcing complete / human review pending / …` → the STATUS strip's
+ * slash-separated steps. */
+function renderStatusStrip(body: string): string {
+  const steps = body
+    .split("/")
+    .map((step) => step.trim())
+    .filter(Boolean)
+    .map((step) => `<span class="nt-status-step">${escapeHtml(step)}</span>`)
+    .join("")
+  return `<div class="nt-status"><span class="nt-status-label">Status</span>${steps}</div>`
+}
+
 /** "Framed still" image treatment — every `![alt](src)` in content markdown
  * renders as a hard-edged figure (see `.st-shot` in globals.css) instead of
- * a bare `<img>`, with the alt text doubling as a small mono figcaption. */
+ * a bare `<img>`, with the alt text doubling as a small mono figcaption.
+ *
+ * One exception: `![caption](placeholder:tag)` — used by Notes that haven't
+ * captured real art yet — renders the striped accent placeholder slot
+ * (`.st-placeholder-shot`) instead. Every other image src is untouched, so
+ * this stays additive/inert for posts, skills, connectors, and workshops. */
 marked.use({
   renderer: {
     image({ href, text }) {
       const alt = escapeHtml(text)
+      const placeholderTag = PLACEHOLDER_SCHEME.exec(href)?.[1]
+      if (placeholderTag) {
+        const tag = escapeHtml(placeholderTag)
+        const caption = text
+          ? `<figcaption class="st-shot-cap">${alt}</figcaption>`
+          : ""
+        return `<figure class="st-shot"><div class="st-placeholder-shot"><span class="st-placeholder-tag mono">${tag}</span></div>${caption}</figure>`
+      }
       const caption = text
         ? `<figcaption class="st-shot-cap">${alt}</figcaption>`
         : ""
@@ -43,11 +107,33 @@ marked.use({
     // An image on its own line parses as a paragraph containing a single
     // image token — unwrap it so the figure isn't nested inside a <p>,
     // which browsers treat as invalid and auto-close in weird places.
+    //
+    // A plain-text paragraph matching the RESULTS/STATUS strip convention
+    // (Note-specific, see content/README.md) renders as its structured
+    // strip instead of a <p> — inert for every other content type, since
+    // ordinary prose never starts a line with "RESULTS ·" or "STATUS ·".
     paragraph({ tokens }) {
       if (tokens.length === 1 && tokens[0].type === "image") {
         return this.parser.parseInline(tokens)
       }
+      if (tokens.length === 1 && tokens[0].type === "text") {
+        const raw = (tokens[0] as { text: string }).text
+        const results = RESULTS_STRIP.exec(raw)
+        if (results) return renderResultsStrip(results[1])
+        const status = STATUS_STRIP.exec(raw)
+        if (status) return renderStatusStrip(status[1])
+      }
       return `<p>${this.parser.parseInline(tokens)}</p>`
+    },
+    // The "Ships with this build" heading convention (Note-specific) tags
+    // itself with a class so the following list can pick up the artifact-box
+    // treatment via a `.nt-ships-h2 + ul` CSS sibling rule — every other
+    // heading renders exactly as marked's default, just with an empty class.
+    heading({ tokens, depth }) {
+      const text = this.parser.parseInline(tokens)
+      const raw = tokens.map((t) => ("text" in t ? (t as { text: string }).text : "")).join("")
+      const cls = SHIPS_HEADING.test(raw) ? ` class="nt-ships-h2"` : ""
+      return `<h${depth}${cls}>${text}</h${depth}>`
     },
   },
 })
@@ -316,6 +402,51 @@ export const getWorkshopBySlug = cache((slug: string): Workshop | undefined => {
   return getWorkshops().find((w) => w.slug === slug)
 })
 
+// ---------------------------------------------------------------- notes
+
+/** A Note — a long-form, single-page writeup of a real agentic system
+ * Jackson has built and run, with results/status strips instead of the
+ * install-facts frontmatter an Asset carries. Own shape (not an AssetType)
+ * since Notes aren't installable code — see content/README.md. */
+export interface NoteMeta {
+  title: string
+  slug: string
+  description: string
+  date: string
+  tags: string[]
+  /** Shown in the byline as "sanitized example" when true (the Note
+   * convention for real-but-anonymized production systems). */
+  sanitized?: boolean
+}
+
+export interface Note extends NoteMeta {
+  html: string
+  markdown: string
+}
+
+function loadNote(file: string): Note {
+  const raw = fs.readFileSync(path.join(CONTENT_DIR, "notes", file), "utf8")
+  const { data, content } = matter(raw)
+  const meta = data as Omit<NoteMeta, "date"> & { date: string | Date }
+  return {
+    ...meta,
+    tags: meta.tags ?? [],
+    date: isoDate(meta.date),
+    html: marked.parse(content, { async: false }),
+    markdown: content.trim(),
+  }
+}
+
+export const getNotes = cache((): Note[] => {
+  return markdownFiles("notes")
+    .map((f) => loadNote(f))
+    .sort((a, b) => b.date.localeCompare(a.date))
+})
+
+export const getNoteBySlug = cache((slug: string): Note | undefined => {
+  return getNotes().find((b) => b.slug === slug)
+})
+
 export const getAssetBySlug = cache(
   (type: AssetType, slug: string): Asset | undefined => {
     return getAssets(type).find((a) => a.slug === slug)
@@ -337,11 +468,19 @@ export interface FeedItem {
   /** Row meta label, e.g. "Post", "Skill", "Connector". */
   typeLabel: string
   /** Browse filter key. */
-  type: "posts" | "skills" | "connectors" | "workshops"
+  type: "posts" | "skills" | "connectors" | "workshops" | "notes"
   date: string
 }
 
 export const getFeedItems = cache((): FeedItem[] => {
+  const notes: FeedItem[] = getNotes().map((b) => ({
+    title: b.title,
+    description: b.description,
+    href: `/notes/${b.slug}`,
+    typeLabel: "Note",
+    type: "notes",
+    date: b.date,
+  }))
   const posts: FeedItem[] = getAllPosts().map((p) => ({
     title: p.title,
     description: p.description,
@@ -374,7 +513,7 @@ export const getFeedItems = cache((): FeedItem[] => {
     type: "workshops",
     date: w.date,
   }))
-  return [...posts, ...skills, ...connectors, ...workshops]
+  return [...notes, ...posts, ...skills, ...connectors, ...workshops]
 })
 
 /** Word count / 200wpm, rounded up to at least 1 — the post byline's read time. */

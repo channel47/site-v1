@@ -22,9 +22,9 @@ export default function TermsPage() {
 
         <div className="st-prose">
           <p>
-            channel47.dev publishes marketing systems, tools, and writing.
-            Using the site means agreeing to the following, all of it
-            unsurprising:
+            channel47.dev publishes agentic systems, tools, and writing, much
+            of it grown out of real marketing work. Using the site means
+            agreeing to the following, all of it unsurprising:
           </p>
           <ul>
             <li>

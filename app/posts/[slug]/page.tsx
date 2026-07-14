@@ -62,7 +62,7 @@ export default async function PostPage({ params }: Props) {
   const crossContent = (
     <>
       <span>
-        <span className="dt-cross-kicker mono">{ASSET_LABELS[assetKind]}</span>
+        <span className="dt-cross-kicker">{ASSET_LABELS[assetKind]}</span>
         <p className="dt-cross-title">{crossTitle}</p>
       </span>
       <span aria-hidden>→</span>

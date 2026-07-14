@@ -13,14 +13,14 @@ export const PUBLIC_PAGES = [
     path: "/",
     title: "Home",
     description:
-      "channel47 homepage for open-source marketing skills, MCP connectors, and workshops.",
+      "channel47 homepage: notes, skills, MCP connectors, and workshops for practical agentic systems.",
     lastModified: "content",
   },
   {
     path: "/browse",
     title: "Browse — the full library, filterable by type",
     description:
-      "Browse channel47 skills, MCP connectors, posts, and workshops.",
+      "Browse channel47 notes, skills, MCP connectors, and workshops.",
     lastModified: "content",
   },
   {
@@ -29,9 +29,9 @@ export const PUBLIC_PAGES = [
     description: "Subscribe for channel47 updates.",
   },
   {
-    path: "/about",
-    title: "About channel47 / Jackson Dean",
-    description: "Who maintains channel47.",
+    path: "/session",
+    title: "Agentic Systems Working Session",
+    description: "Book a one-to-one working session with Jackson Dean.",
   },
   {
     path: "/privacy",
@@ -46,6 +46,19 @@ export const PUBLIC_PAGES = [
 ] as const
 
 export const CONTENT_COLLECTION = {
+  notes: {
+    key: "notes",
+    segment: "notes",
+    searchType: "note",
+    label: "Notes",
+    singularLabel: "Note",
+    description: "Annotated blueprints for real agentic systems",
+    routeDescription: "Notes (annotated blueprints of real systems)",
+    basePath: "/notes",
+    indexPath: "/browse?type=notes",
+    htmlPattern: "/notes/:slug",
+    markdownPattern: "/notes/:slug.md",
+  },
   posts: {
     key: "posts",
     segment: "posts",
@@ -65,7 +78,7 @@ export const CONTENT_COLLECTION = {
     searchType: "skill",
     label: "Skills",
     singularLabel: "Skill",
-    description: "Installable agent skills for marketers",
+    description: "Installable agent skills, many born in real ad accounts",
     routeDescription: "Skills (installable agent skills)",
     basePath: "/skills",
     indexPath: "/browse?type=skills",
@@ -78,8 +91,8 @@ export const CONTENT_COLLECTION = {
     searchType: "connector",
     label: "Connectors",
     singularLabel: "Connector",
-    description: "MCP servers for ad platforms",
-    routeDescription: "Connectors (MCP servers for ad platforms)",
+    description: "MCP servers for the tools recurring work runs on, starting with ad platforms",
+    routeDescription: "Connectors (MCP servers for the tools recurring work runs on)",
     basePath: "/connectors",
     indexPath: "/browse?type=connectors",
     htmlPattern: "/connectors/:slug",

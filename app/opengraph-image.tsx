@@ -8,7 +8,7 @@ export const contentType = OG_CONTENT_TYPE
 
 /**
  * Site-wide default — Next.js falls back to this for any route that doesn't
- * define its own opengraph-image (about, browse, newsletter, privacy, terms).
+ * define its own opengraph-image (browse, newsletter, session, privacy, terms).
  */
 export default async function Image() {
   return renderOgImage({

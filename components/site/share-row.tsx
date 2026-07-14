@@ -1,20 +1,18 @@
-import { CopyMarkdown } from "./copy-markdown"
-import { CopyLink } from "./copy-link"
+import { CopyButton } from "./copy-button"
+import { XIcon, LinkedInIcon } from "./social-icons"
 
-/** The share block closing every detail page (round 13a, v2 byline pass):
- * copy actions on the left, the source repo (when the page has one) and
- * share-intent links on the right — real, functional URLs. */
+/** The share block closing every detail page — collapsed to one hairline
+ * row in the readability pass: sentence-case "Share" label left; Copy page,
+ * Copy link, and the share-intent icons right, all 36px boxed actions.
+ * The source repo moved out to its own row (see source-row.tsx). */
 export function ShareRow({
   mdPath,
   url,
   title,
-  sourceHref,
 }: {
   mdPath: string
   url: string
   title: string
-  /** Repo link — moved here from the byline (v2). Asset pages only. */
-  sourceHref?: string
 }) {
   const tweetHref = `https://twitter.com/intent/tweet?url=${encodeURIComponent(
     url,
@@ -25,37 +23,29 @@ export function ShareRow({
 
   return (
     <div className="dt-share">
-      <div className="dt-share-left">
-        <span className="dt-share-label mono">Share</span>
-        <CopyMarkdown path={mdPath} />
-        <CopyLink url={url} />
-      </div>
-      <div className="dt-share-right">
-        {sourceHref ? (
-          <a
-            href={sourceHref}
-            target="_blank"
-            rel="noopener"
-            className="dt-share-link dt-share-source"
-          >
-            Source on GitHub →
-          </a>
-        ) : null}
+      <span className="dt-share-label">Share</span>
+      <div className="dt-share-actions">
+        <CopyButton label="Copy page" title="Copy page as Markdown" fetchPath={mdPath} />
+        <CopyButton boxed glyph="link" title="Copy link" text={url} />
         <a
           href={tweetHref}
           target="_blank"
           rel="noopener"
-          className="dt-share-link"
+          className="icon-btn dt-share-btn"
+          title="Share on X"
+          aria-label="Share on X"
         >
-          X
+          <XIcon size={13} />
         </a>
         <a
           href={linkedinHref}
           target="_blank"
           rel="noopener"
-          className="dt-share-link"
+          className="icon-btn dt-share-btn"
+          title="Share on LinkedIn"
+          aria-label="Share on LinkedIn"
         >
-          LinkedIn
+          <LinkedInIcon size={13} />
         </a>
       </div>
     </div>

@@ -7,6 +7,7 @@ read at build time by `lib/content.ts`. Publishing is adding a file.
 
 ```
 content/
+├── notes/                Note detail pages (one per documented build)
 ├── posts/
 │   ├── skills/          Posts introducing each skill in channel47/skills
 │   └── connectors/      Posts introducing each MCP server in channel47/mcps
@@ -14,6 +15,11 @@ content/
 └── connectors/          Connector asset pages (one per MCP server)
 ```
 
+- **Notes** (`/notes/[slug]`) — long-form writeups of a real agentic system Jackson
+  has built and run: the problem, the workflow, the decisions that mattered, results,
+  and current status. One file per documented build; the filename is the slug. Notes
+  share the Post gold accent (`--c-note` aliases `--c-post`) and are told apart by a
+  pixel glyph, not a new colour.
 - **Posts** (`/posts/[slug]`) — first-person narratives from Jackson: opinion,
   behind-the-scenes, and asset introductions. One file per piece; the filename is the
   slug. Each asset-introduction post links to the standalone asset page it's about.
@@ -24,6 +30,19 @@ content/
   source repo.
 
 ## Frontmatter schemas
+
+Note (`content/notes/*.md`):
+
+```yaml
+title: string          # headline, sentence case, e.g. "A simple architecture for agent-assisted recruiting"
+slug: string           # matches filename, used for routing
+description: string    # ≤160 chars — browse rows, index rows, meta description; also
+                        # doubles as the article lede
+date: YYYY-MM-DD
+tags: [string]
+sanitized: boolean      # optional — when true, the byline shows a "sanitized example"
+                        # tag (the Note convention for real-but-anonymized systems)
+```
 
 Post (`content/posts/{skills,connectors}/*.md`):
 
@@ -94,6 +113,64 @@ under a CSS drop-shadow. Alt text doubles as the visible figcaption.
 - Files live in `public/posts/`; reference them root-relative. No double quotes in paths.
 - Write alt text as a real caption — it's shown under the figure in mono.
 - The rendering is `marked.use()` in `lib/content.ts` + `.st-shot*` in `app/globals.css`.
+
+`##` headings no longer draw a hairline rule — section spacing alone marks the break.
+Use a markdown `---` (renders as `.st-prose hr`) when a piece genuinely needs a hard
+visual divider inside a section; it's a deliberate, occasional mark, not a default.
+
+## Note-only markdown conventions
+
+Notes add four markdown conventions on top of the shared pipeline. All four are
+implemented as small, additive hooks on the single shared `marked` instance in
+`lib/content.ts` (see the file's top comment — renderer changes there affect every
+content type, so each hook is written to be a no-op unless the exact pattern matches).
+None of them require raw HTML in the markdown source.
+
+**Placeholder figures** — before a real screenshot exists, use the `placeholder:` src
+scheme instead of a real path:
+
+```markdown
+![A sanitized excerpt from the original message beside the instruction given to Claude](placeholder:visual-01)
+```
+
+Renders the striped accent placeholder slot (repeating 45° stripes, inset accent border,
+lowercase mono tag pulled from the `placeholder:` value) instead of a real `.st-shot`
+image. Swap to a real screenshot later by replacing the src with a real path and
+re-writing the alt text as the caption — no other markup changes.
+
+**RESULTS strip** — a paragraph that is *only* a `RESULTS · …` line, cells separated by
+`|`, each cell's big number and small label split on the first `·`:
+
+```markdown
+RESULTS · 243 · candidates, first run | ~5 min · to surface them | ~1 hr · total setup
+```
+
+**STATUS strip** — a paragraph that is *only* a `STATUS · …` line, steps separated by `/`:
+
+```markdown
+STATUS · Sourcing complete / human review pending / outreach pending / interview results pending
+```
+
+**"Ships with this build" artifact box** — an H3 whose text starts with "Ships with this
+build" (optionally followed by `· sanitized` or similar), immediately followed by a
+bullet list. The heading becomes the box's mono header row and the list becomes its
+bordered rows:
+
+```markdown
+### Ships with this build · sanitized
+
+- the original workflow proposal
+- the "interview me" prompt
+```
+
+Ordinary prose never starts a line with `RESULTS ·`, `STATUS ·`, or `Ships with this
+build`, so all four hooks are inert everywhere else — posts, skills, connectors, and
+workshops render exactly as before.
+
+The end-of-Note newsletter invitation ("Want the next build when it ships? … Get
+emails from the workshop →") is **not** part of the markdown — it's a template-level
+component (`components/site/note-invitation.tsx`) rendered after every Note's
+article, so don't duplicate that CTA in the article body.
 
 ## Editorial notes
 

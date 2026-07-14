@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { ASSET_DIRS, type Asset, type Post } from "@/lib/content"
+import { ASSET_DIRS, type Asset, type Note, type Post } from "@/lib/content"
 
 /**
  * Entity foundation + JSON-LD builders (docs/AI-SEO.md, Layer 1).
@@ -30,7 +30,7 @@ export const SITE_NAME = "channel47"
 /** The canonical positioning string: homepage meta description, WebSite/Org
  * schema description, and the llms.txt blockquote. One string, everywhere. */
 export const SITE_DESCRIPTION =
-  "Open-source skills and MCP connectors for marketers, plus workshops hosted inside Vibe Marketers."
+  "Jackson Dean's public workshop for practical agentic systems: notes, skills, and MCP connectors, plus workshops hosted inside Vibe Marketers."
 
 export const AUTHOR_NAME = "Jackson Dean"
 
@@ -70,9 +70,9 @@ export function baseGraph() {
         "@type": "Person",
         "@id": PERSON_ID,
         name: AUTHOR_NAME,
-        url: `${SITE_URL}/about`,
+        url: SITE_URL,
         description:
-          "Media buyer and Vibe Marketers mentor who publishes open-source marketing skills and MCP connectors at channel47.",
+          "Builds and shares agentic systems at channel47. 7 years buying media, and a mentor in the Vibe Marketers community.",
         worksFor: orgRef,
       },
       {
@@ -124,6 +124,34 @@ export function postGraph(post: Post) {
         isPartOf: { "@id": WEBSITE_ID },
       },
       breadcrumb(url, { name: "Posts", url: `${SITE_URL}/browse?type=posts` }, post.title),
+    ],
+  }
+}
+
+/** Per-note graph: TechArticle + breadcrumb, anchored to the base entities.
+ * TechArticle (not SoftwareSourceCode) — a Note is a writeup of a system,
+ * not an installable artifact living in a repo. */
+export function noteGraph(note: Note) {
+  const url = `${SITE_URL}/notes/${note.slug}`
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        "@id": `${url}#article`,
+        headline: note.title,
+        url,
+        mainEntityOfPage: { "@type": "WebPage", "@id": url },
+        description: note.description,
+        author: personRef,
+        publisher: orgRef,
+        datePublished: note.date,
+        dateModified: note.date,
+        isAccessibleForFree: true,
+        keywords: note.tags.join(", "),
+        isPartOf: { "@id": WEBSITE_ID },
+      },
+      breadcrumb(url, { name: "Notes", url: `${SITE_URL}/browse?type=notes` }, note.title),
     ],
   }
 }

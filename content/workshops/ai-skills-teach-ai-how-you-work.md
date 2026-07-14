@@ -1,5 +1,5 @@
 ---
-title: "AI Skills: Teach AI How You Work (So You Stop Repeating Yourself)"
+title: "Skills 101: teach your agent how you work"
 slug: ai-skills-teach-ai-how-you-work
 description: "A Vibe Marketers introduction to AI skills, related agent components, safety, and two live skill-building demonstrations."
 status: past

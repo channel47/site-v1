@@ -1,5 +1,5 @@
 ---
-title: "Advertorial Skills Lab: From Angles to Testable Pages"
+title: "Turn one researched angle into a testable advertorial"
 slug: advertorial-skills-lab
 description: "A Vibe Marketers lab on turning a researched marketing angle into an advertorial draft and supporting product imagery."
 status: past

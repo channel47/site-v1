@@ -34,5 +34,11 @@ export function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/posts/:slug*", "/skills/:slug*", "/connectors/:slug*", "/workshops/:slug*"],
+  matcher: [
+    "/notes/:slug*",
+    "/posts/:slug*",
+    "/skills/:slug*",
+    "/connectors/:slug*",
+    "/workshops/:slug*",
+  ],
 }

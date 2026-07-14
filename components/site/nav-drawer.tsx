@@ -16,6 +16,12 @@ const ROWS = CATEGORIES.map(({ title, href, key }) => ({
  * carries an inline nav instead — see header.tsx). Bars morph into an X while
  * open; rows stagger in on open, drop instantly on close since the panel
  * itself is already sliding off-screen.
+ *
+ * The category rows (Notes/Skills/Connectors/Workshops)
+ * are shortcuts into the Home rows, not additional nav destinations; the
+ * drawer's actual destination set is home (logo) + the utility links below
+ * (Browse all, Newsletter). The session offer was demoted out of the
+ * drawer and is reachable via the footer.
  */
 export function NavDrawer() {
   const [open, setOpen] = useState(false)
@@ -68,15 +74,26 @@ export function NavDrawer() {
             </li>
           ))}
         </ul>
-        <Link
-          href="/browse"
-          className="nd-browse-all"
-          style={{ animationDelay: "0.32s" } as CSSProperties}
-          tabIndex={open ? 0 : -1}
-          onClick={() => setOpen(false)}
-        >
-          Browse all →
-        </Link>
+        <div className="nd-utility">
+          <Link
+            href="/browse"
+            className="nd-browse-all"
+            style={{ animationDelay: "0.32s" } as CSSProperties}
+            tabIndex={open ? 0 : -1}
+            onClick={() => setOpen(false)}
+          >
+            Browse all →
+          </Link>
+          <Link
+            href="/newsletter"
+            className="nd-browse-all"
+            style={{ animationDelay: "0.32s" } as CSSProperties}
+            tabIndex={open ? 0 : -1}
+            onClick={() => setOpen(false)}
+          >
+            Newsletter →
+          </Link>
+        </div>
       </nav>
     </>
   )

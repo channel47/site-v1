@@ -5,27 +5,27 @@ import Link from "next/link"
 import { Unfold } from "./unfold"
 import { CoverCard, type Cover } from "./cover-card"
 import { TypeIcon } from "./type-icon"
-import { TYPE_COLORS, type Category, type ContentTypeKey } from "@/lib/site-content"
+import { TYPE_COLORS, type Category } from "@/lib/site-content"
 
 export interface CategoryRow extends Category {
   covers: Cover[]
 }
 
-/** The shine-sweep twin for each row's link text (globals.css tokens). */
-const SHINE_COLORS: Record<ContentTypeKey, string> = {
-  posts: "var(--shine-post)",
-  skills: "var(--shine-skill)",
-  connectors: "var(--shine-connector)",
-  workshops: "var(--shine-workshop)",
-}
-
 /**
- * Home's four category rows (round 14, confirmed) — an exclusive accordion,
- * one open at a time, each opening onto a short description and up to two
- * recent covers in the row's identity colour.
+ * Home's four category rows (round 14, confirmed; Notes joins as the
+ * default-open row in v2) — an exclusive accordion, one open at a time, each
+ * opening onto a short description and up to two recent covers in the row's
+ * identity colour.
  */
-export function HomeCats({ rows }: { rows: CategoryRow[] }) {
-  const [openKey, setOpenKey] = useState<string | null>(null)
+export function HomeCats({
+  rows,
+  defaultOpen,
+}: {
+  rows: CategoryRow[]
+  /** Category key open on first render — spec 03: Notes opens by default. */
+  defaultOpen?: string
+}) {
+  const [openKey, setOpenKey] = useState<string | null>(defaultOpen ?? null)
   // Bumped on every open so the open row's icon blocks rebuild each time,
   // not just the first — parity picks the keyframe, so it always replays.
   const [rowPulse, setRowPulse] = useState(0)
@@ -39,7 +39,6 @@ export function HomeCats({ rows }: { rows: CategoryRow[] }) {
           style={
             {
               "--type-color": TYPE_COLORS[cat.key],
-              "--shine-color": SHINE_COLORS[cat.key],
               animationDelay: `${(0.38 + idx * 0.06).toFixed(2)}s`,
             } as CSSProperties
           }
@@ -76,7 +75,7 @@ export function HomeCats({ rows }: { rows: CategoryRow[] }) {
                   ))}
                 </div>
               ) : null}
-              <Link href={cat.href} className="home-cat-link shine">
+              <Link href={cat.href} className="home-cat-link">
                 {cat.linkText}
               </Link>
             </div>
