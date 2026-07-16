@@ -1,5 +1,11 @@
 import type { Metadata } from "next"
-import { ASSET_DIRS, type Asset, type Note, type Post } from "@/lib/content"
+import {
+  ASSET_DIRS,
+  type Asset,
+  type FaqItem,
+  type Note,
+  type Post,
+} from "@/lib/content"
 
 /**
  * Entity foundation + JSON-LD builders (docs/AI-SEO.md, Layer 1).
@@ -128,6 +134,25 @@ export function postGraph(post: Post) {
   }
 }
 
+/** FAQPage node for a detail page's "Common questions" accordion — returns
+ * a zero-or-one element array so callers can spread it into a @graph. The
+ * Q&A strings come straight from frontmatter (the same strings the visible
+ * accordion renders), keeping the triple-consistency rule intact. */
+function faqNodes(url: string, faqs: FaqItem[] | undefined) {
+  if (!faqs?.length) return []
+  return [
+    {
+      "@type": "FAQPage",
+      "@id": `${url}#faq`,
+      mainEntity: faqs.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
+    },
+  ]
+}
+
 /** Per-note graph: TechArticle + breadcrumb, anchored to the base entities.
  * TechArticle (not SoftwareSourceCode) — a Note is a writeup of a system,
  * not an installable artifact living in a repo. */
@@ -169,6 +194,7 @@ export function noteGraph(note: Note) {
             },
           ]
         : []),
+      ...faqNodes(url, note.faqs),
     ],
   }
 }
@@ -202,6 +228,7 @@ export function assetGraph(asset: Asset) {
         isPartOf: { "@id": WEBSITE_ID },
       },
       breadcrumb(url, { name: section.name, url: section.indexUrl }, asset.title),
+      ...faqNodes(url, asset.faqs),
     ],
   }
 }

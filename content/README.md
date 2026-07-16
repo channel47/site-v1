@@ -97,7 +97,15 @@ askAnswer:              # optional — only add for a real worked example, never
       value: string
       value2: string    # optional
   caption: string
+faqs:                   # optional — the "Common questions" accordion, rendered
+  - q: string           # after the body and before the Share row (single-open
+    a: string           # unfold rows; first open by default). Also emitted as
+                        # FAQPage JSON-LD. Answers are real claims — write them
+                        # from the page's own facts, never from a template.
 ```
+
+Notes and workshops accept the same optional `faqs:` list; it renders the identical
+"Common questions" section on their detail templates (`components/site/faq.tsx`).
 
 ## Images (editorial media and framed screenshots)
 

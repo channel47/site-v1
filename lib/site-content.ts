@@ -117,6 +117,16 @@ export const TYPE_COLORS: Record<ContentTypeKey, string> = {
   workshops: "var(--c-workshop)",
 }
 
+/** Each type colour's brighter "shine" twin — build-in bit flashes (the
+ * type icons) and the cover art's ambient sweep. */
+export const TYPE_SHINES: Record<ContentTypeKey, string> = {
+  notes: "var(--shine-note)",
+  skills: "var(--shine-skill)",
+  connectors: "var(--shine-connector)",
+  posts: "var(--shine-post)",
+  workshops: "var(--shine-workshop)",
+}
+
 /**
  * The four Home category rows / drawer nav rows — one per populated content
  * type. Agents joins when its first real item ships.

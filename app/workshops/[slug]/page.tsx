@@ -6,6 +6,7 @@ import { SiteHeader } from "@/components/site/header"
 import { SiteFooter } from "@/components/site/footer"
 import { Capture } from "@/components/site/capture"
 import { Crumb } from "@/components/site/crumb"
+import { Faq } from "@/components/site/faq"
 import { ShareRow } from "@/components/site/share-row"
 import { SkoolIcon } from "@/components/site/social-icons"
 import {
@@ -183,6 +184,8 @@ export default async function WorkshopPage({ params }: Props) {
             <span aria-hidden>→</span>
           </Link>
         ) : null}
+
+        {w.faqs?.length ? <Faq items={w.faqs} /> : null}
 
         <ShareRow
           mdPath={`/workshops/${w.slug}.md`}

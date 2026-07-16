@@ -1,4 +1,4 @@
-import type { ContentTypeKey } from "@/lib/site-content"
+import { TYPE_SHINES, type ContentTypeKey } from "@/lib/site-content"
 import { bitAnim } from "./bit-anim"
 
 /** One 16×16 glyph per content type — three blocks arranged per type, shared
@@ -36,15 +36,6 @@ const BITS: Record<
   ],
 }
 
-/** Build-in accent per type — the brighter shine twin of the type colour. */
-const SHINE: Record<ContentTypeKey, string> = {
-  notes: "var(--shine-note)",
-  posts: "var(--shine-post)",
-  skills: "var(--shine-skill)",
-  connectors: "var(--shine-connector)",
-  workshops: "var(--shine-workshop)",
-}
-
 export function TypeIcon({
   type,
   className,
@@ -77,7 +68,7 @@ export function TypeIcon({
           height={h}
           style={
             pulse !== undefined
-              ? bitAnim(i, pulse, delay, SHINE[type])
+              ? bitAnim(i, pulse, delay, TYPE_SHINES[type])
               : undefined
           }
         />

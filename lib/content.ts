@@ -174,6 +174,16 @@ export interface Post extends PostMeta {
   markdown: string
 }
 
+// ---------------------------------------------------------------- shared
+
+/** One row of a detail page's "Common questions" accordion (faq.tsx).
+ * Author-supplied per piece in frontmatter — never generated from a
+ * template, so every answer is a real claim someone wrote deliberately. */
+export interface FaqItem {
+  q: string
+  a: string
+}
+
 // ---------------------------------------------------------------- assets
 
 export type AssetType = "skill" | "connector"
@@ -217,6 +227,9 @@ export interface AssetMeta {
    * connector a skill needs, or the skill a connector's queries come from.
    * May contain a single markdown link. Replaces the old repo/package row. */
   pairing?: string
+  /** Optional "Common questions" rows, rendered after the body and before
+   * the Share row. */
+  faqs?: FaqItem[]
 }
 
 export interface Asset extends AssetMeta {
@@ -377,6 +390,8 @@ export interface WorkshopMeta {
    * pages skip the figure rather than showing a placeholder. */
   screenshot?: string
   screenshotCaption?: string
+  /** Optional "Common questions" rows, rendered before the Share row. */
+  faqs?: FaqItem[]
 }
 
 export interface Workshop extends WorkshopMeta {
@@ -434,6 +449,9 @@ export interface NoteMeta {
   sanitized?: boolean
   /** Real walkthrough footage, rendered near the top of the Note when set. */
   video?: NoteVideo
+  /** Optional "Common questions" rows, rendered after the body and before
+   * the Share row. */
+  faqs?: FaqItem[]
 }
 
 export interface Note extends NoteMeta {

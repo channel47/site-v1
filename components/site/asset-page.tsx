@@ -6,6 +6,7 @@ import { SiteFooter } from "./footer"
 import { Capture } from "@/components/site/capture"
 import { CopyButton } from "@/components/site/copy-button"
 import { Crumb } from "@/components/site/crumb"
+import { Faq } from "@/components/site/faq"
 import { ShareRow } from "@/components/site/share-row"
 import { SourceRow } from "@/components/site/source-row"
 import { JsonLd } from "@/components/site/json-ld"
@@ -147,6 +148,8 @@ export function AssetPage({ asset }: { asset: Asset }) {
             />
           ) : null}
         </section>
+
+        {asset.faqs?.length ? <Faq items={asset.faqs} /> : null}
 
         <ShareRow
           mdPath={`/${section}/${asset.slug}.md`}

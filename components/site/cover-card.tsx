@@ -1,31 +1,24 @@
 import Link from "next/link"
-
-const ART_LABEL = {
-  notes: "cover",
-  posts: "hero img",
-  skills: "cover",
-  connectors: "logo",
-  workshops: "still",
-} as const
+import { CoverArt } from "./cover-art"
+import type { ContentTypeKey } from "@/lib/site-content"
 
 export interface Cover {
   title: string
   meta: string
   href: string
-  type: keyof typeof ART_LABEL
+  type: ContentTypeKey
 }
 
 /**
- * A Home category row's open-state item — a riso-hatch card in the row's
- * type colour, corner-tagged with what kind of art would live there once
- * a real asset exists (cover, logo, hero image, session still).
+ * A Home category row's open-state item — generative twinkle cover art in
+ * the row's type colour (see cover-art.tsx), hashed from the title so every
+ * piece gets a cover for free, over the tint field the design's round-3
+ * covers sit on.
  */
 export function CoverCard({ cover }: { cover: Cover }) {
   return (
     <Link href={cover.href} className="cover-card">
-      <span className="cover-card-art" aria-hidden>
-        <span className="cover-card-tag mono">{ART_LABEL[cover.type]}</span>
-      </span>
+      <CoverArt title={cover.title} type={cover.type} />
       <span className="cover-card-name">{cover.title}</span>
       <span className="cover-card-meta">{cover.meta}</span>
     </Link>

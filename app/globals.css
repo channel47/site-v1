@@ -368,6 +368,23 @@ button {
     fill: currentColor;
   }
 }
+/* Ambient twinkle for the Home cover art (cover-art.tsx) — cells fade in
+   and out on slow offset cycles, each on its own hashed duration and a
+   negative delay so it starts mid-cycle. The one sanctioned always-on
+   motion (Cover Art Directions, 3a "Twinkle") — the covers are the living
+   part of the page; everything else still follows the user-caused-it
+   doctrine above. Collapsed to a static frame under prefers-reduced-motion
+   with everything else. */
+@keyframes c47-cover-twinkle {
+  0%,
+  100% {
+    opacity: 0.08;
+  }
+  45%,
+  62% {
+    opacity: 1;
+  }
+}
 
 /* ---- page shell -------------------------------------------------- */
 /* One shared shell for every page (round 14 locks Home + Browse + every
@@ -1454,6 +1471,92 @@ button {
   color: var(--ink);
 }
 
+/* ---- common questions — the detail templates' FAQ accordion -------- */
+/* Transcribed from the Channel47 FAQ design file: sits after the body,
+   before the Share row. Single-open unfold rows on .07 hairlines, under
+   the standard section h2 (which carries a .1 border-top here); the
+   accent is the page's --type-color, used only on question hover and the
+   open × — never at rest. */
+.faq {
+  margin-top: var(--section-gap);
+}
+.faq-h2 {
+  padding-top: 20px;
+  border-top: 1px solid var(--hairline);
+}
+.faq-rows {
+  margin-top: 4px;
+}
+.faq-row {
+  border-bottom: 1px solid var(--hairline-soft);
+}
+.faq-row:last-child {
+  border-bottom: none;
+}
+.faq-q {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 18px 0;
+  background: transparent;
+  color: inherit;
+  border: none;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.faq-q:hover {
+  color: var(--type-color);
+}
+.faq-q:active {
+  opacity: 0.5;
+}
+.faq-q-text {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  line-height: 1.45;
+}
+.faq-plus {
+  flex: none;
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1;
+  padding-top: 2px;
+  color: var(--faint);
+  transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), color 0.2s;
+}
+.faq-q[aria-expanded="true"] .faq-plus {
+  transform: rotate(45deg);
+  color: var(--type-color);
+}
+.faq-a {
+  margin: 0;
+  padding: 1px 26px 20px 0;
+  font-size: var(--text-list);
+  line-height: 1.6;
+  color: var(--body);
+}
+@media (min-width: 768px) {
+  .faq-q {
+    padding: 17px 0;
+    gap: 18px;
+  }
+  .faq-rows {
+    margin-top: 6px;
+  }
+  .faq-a {
+    padding-right: 32px;
+    max-width: 600px;
+    font-size: var(--text-list-d);
+    line-height: 1.65;
+  }
+}
+
 /* related-content cross-link row */
 .dt-cross {
   display: flex;
@@ -1921,8 +2024,10 @@ input:focus-visible {
   color: var(--type-color);
 }
 
-/* cover card — a riso-hatch card in the row's identity colour, corner-tagged
-   with the kind of art that would live there */
+/* cover card — generative twinkle art in the row's identity colour over a
+   tint field (Cover Art Directions: 3a "Twinkle" at round-3 tint level).
+   The art is per-title SVG cells from cover-art.tsx; the twinkle keyframe
+   lives with the other c47 keyframes up top. */
 .cover-card {
   position: relative;
   display: flex;
@@ -1932,28 +2037,25 @@ input:focus-visible {
   aspect-ratio: 7 / 3;
   padding: 14px 16px;
   box-sizing: border-box;
-  background: repeating-linear-gradient(
-    -45deg,
-    color-mix(in srgb, var(--type-color) 20%, transparent) 0 5px,
-    color-mix(in srgb, var(--type-color) 8%, transparent) 5px 10px
-  );
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--type-color) 40%, transparent);
+  background: color-mix(in srgb, var(--type-color) 4%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--type-color) 33%, transparent);
   transition: box-shadow 0.2s;
 }
 .cover-card:hover {
   box-shadow: inset 0 0 0 2px var(--type-color);
 }
-.cover-card-tag {
+.cover-card-art {
   position: absolute;
-  top: 13px;
-  left: 16px;
-  font-size: var(--text-mono-label);
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: lowercase;
-  color: var(--type-color);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.cover-card-art rect {
+  fill: currentColor;
 }
 .cover-card-name {
+  position: relative;
   font-size: 15px;
   font-weight: 600;
   letter-spacing: -0.012em;
@@ -1961,6 +2063,7 @@ input:focus-visible {
   color: var(--ink);
 }
 .cover-card-meta {
+  position: relative;
   font-size: 12px;
   color: var(--byline);
 }

@@ -4,6 +4,7 @@ import { SiteHeader } from "./header"
 import { SiteFooter } from "./footer"
 import { Capture } from "@/components/site/capture"
 import { Crumb } from "@/components/site/crumb"
+import { Faq } from "@/components/site/faq"
 import { ShareRow } from "@/components/site/share-row"
 import { JsonLd } from "@/components/site/json-ld"
 import { NoteInvitation } from "@/components/site/note-invitation"
@@ -101,6 +102,8 @@ export function NotePage({ note }: { note: Note }) {
           // ships-artifact renderer hooks in lib/content.ts.
           dangerouslySetInnerHTML={{ __html: note.html }}
         />
+
+        {note.faqs?.length ? <Faq items={note.faqs} /> : null}
 
         <NoteInvitation />
 
