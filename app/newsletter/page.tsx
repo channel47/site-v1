@@ -3,6 +3,7 @@ import { SiteHeader } from "@/components/site/header"
 import { SiteFooter } from "@/components/site/footer"
 import { Capture } from "@/components/site/capture"
 import { pageMetadata } from "@/lib/seo"
+import { HOME } from "@/lib/site-content"
 
 export const metadata: Metadata = pageMetadata({
   title: "Newsletter",
@@ -11,17 +12,14 @@ export const metadata: Metadata = pageMetadata({
   path: "/newsletter",
 })
 
-const WHAT_LANDS = [
-  "A build breakdown: a system I actually use, and the decisions behind it.",
-  "A small workflow idea worth trying, even without a full build.",
-  "A new skill, connector, or workshop, explained through the problem it solves.",
-  "Nothing else. No roundups, no sponsors, no generic AI commentary.",
-]
-
 /**
- * The dedicated subscribe page (v2 repositioning) — the subscriber promise
- * is the strategy-approved headline; each email is meant to stand on its
- * own, not withhold the useful idea behind a click.
+ * The dedicated subscribe page (v2 repositioning). The headline is a
+ * tightened cut of the strategy-approved subscriber promise — the full
+ * promise still ships verbatim in the meta description. Below the capture,
+ * "Who the heck am I?" puts a face on the ask: the site deliberately has
+ * no About page, so identity lives in page sections like this one, and the
+ * old "What lands in it" ledger is folded into the bio copy (the no-spam
+ * trust line survives inside it).
  */
 export default function NewsletterPage() {
   return (
@@ -31,8 +29,8 @@ export default function NewsletterPage() {
       <main className="st-shell st-shell-newsletter">
         <header className="st-head st-head-newsletter">
           <h1 className="serif st-h1 an-blur">
-            Occasional emails about agentic systems I&apos;m building, how they
-            work, and the parts you can reuse in your own work.
+            Occasional emails about the agentic systems I&apos;m building, and
+            the parts you can reuse.
           </h1>
         </header>
 
@@ -40,23 +38,39 @@ export default function NewsletterPage() {
           <Capture helper="No spam, no cadence. It goes out when something worth sending ships. Unsubscribe anytime." />
         </div>
 
-        <div className="st-prose">
-          <h2>What lands in it</h2>
-          <ol>
-            {WHAT_LANDS.map((line) => (
-              <li key={line}>{line}</li>
-            ))}
-          </ol>
+        <section className="st-prose" aria-labelledby="nl-who-title">
+          <h2 id="nl-who-title">Who the heck am I?</h2>
+          <div className="nl-who-id">
+            <img
+              src={HOME.avatar}
+              alt={HOME.name}
+              width={64}
+              height={64}
+              className="nl-who-avatar"
+            />
+            <span className="nl-who-text">
+              <span className="nl-who-name">{HOME.name}</span>
+              <span className="nl-who-tag">{HOME.tagline}</span>
+            </span>
+          </div>
           <p>
-            Each email stands on its own. The useful idea is never withheld
-            behind a click. Website links go further, with screenshots,
-            complete prompts, system diagrams, and related tools.
+            Fair question. I run ad accounts for a living and build agentic
+            systems for the recurring work around them — most of which started
+            with something I was tired of doing the same way twice. When a
+            system earns its keep, I write up the useful parts here.
+          </p>
+          <p>
+            The emails are those write-ups: build breakdowns, small workflow
+            ideas, and new skills or connectors explained through the problem
+            they solve. No roundups, no sponsors, no generic AI commentary —
+            and if it ever stops being useful, unsubscribing takes one click
+            and zero hard feelings.
           </p>
           <p className="mono nl-rss">
             Agents and feed readers can follow everything the list gets at{" "}
             <a href="/rss.xml">rss.xml</a>.
           </p>
-        </div>
+        </section>
       </main>
 
       <SiteFooter />
