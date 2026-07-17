@@ -16,7 +16,7 @@ export const metadata: Metadata = pageMetadata({
  * The dedicated subscribe page (v2 repositioning). The headline is a
  * tightened cut of the strategy-approved subscriber promise — the full
  * promise still ships verbatim in the meta description. Below the capture,
- * "Who the heck am I?" puts a face on the ask: the site deliberately has
+ * "Right, who's sending these?" puts a face on the ask: the site deliberately has
  * no About page, so identity lives in page sections like this one, and the
  * old "What lands in it" ledger is folded into the bio copy (the no-spam
  * trust line survives inside it).
@@ -29,8 +29,7 @@ export default function NewsletterPage() {
       <main className="st-shell st-shell-newsletter">
         <header className="st-head st-head-newsletter">
           <h1 className="serif st-h1 an-blur">
-            Occasional emails about the agentic systems I&apos;m building, and
-            the parts you can reuse.
+            Occasional emails about the agentic systems I&apos;m building.
           </h1>
         </header>
 
@@ -39,7 +38,7 @@ export default function NewsletterPage() {
         </div>
 
         <section className="st-prose" aria-labelledby="nl-who-title">
-          <h2 id="nl-who-title">Who the heck am I?</h2>
+          <h2 id="nl-who-title">Right, who&apos;s sending these?</h2>
           <div className="nl-who-id">
             <img
               src={HOME.avatar}
