@@ -56,10 +56,9 @@ export default function NewsletterPage() {
           </div>
           <p>
             I&apos;ve scaled Meta ads to $50k a day. I&apos;ve put a blog on
-            page one of Google for &ldquo;magic mushrooms.&rdquo; My only
-            qualification was that I&apos;d eaten them. I&apos;ve built the
-            MCP servers this site hands out. I&apos;ve failed, a lot. And
-            learned more.
+            page one of Google for &ldquo;magic mushrooms.&rdquo; I&apos;ve
+            built the MCP servers this site hands out. I&apos;ve failed, a
+            lot. And learned more.
           </p>
           <p>
             channel47 is where I write up what worked. Each email is one build
