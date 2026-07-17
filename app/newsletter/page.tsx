@@ -13,13 +13,14 @@ export const metadata: Metadata = pageMetadata({
 })
 
 /**
- * The dedicated subscribe page (v2 repositioning). The headline is a
- * tightened cut of the strategy-approved subscriber promise — the full
- * promise still ships verbatim in the meta description. Below the capture,
- * "Right, who's sending these?" puts a face on the ask: the site deliberately has
- * no About page, so identity lives in page sections like this one, and the
- * old "What lands in it" ledger is folded into the bio copy (the no-spam
- * trust line survives inside it).
+ * The dedicated subscribe page (v2 repositioning). The H1 is a punchier
+ * riff on the strategy-approved subscriber promise — the full promise
+ * still ships verbatim in the meta description. Below the capture,
+ * "Right, who's sending these?" puts a face on the ask: the site
+ * deliberately has no About page, so identity lives in page sections like
+ * this one. The bio is a first-person track record ($50k days, the
+ * mushroom blog, MCP servers) that keeps the old ledger's no-roundups /
+ * no-sponsors trust line in its closing beat.
  */
 export default function NewsletterPage() {
   return (
@@ -29,7 +30,7 @@ export default function NewsletterPage() {
       <main className="st-shell st-shell-newsletter">
         <header className="st-head st-head-newsletter">
           <h1 className="serif st-h1 an-blur">
-            Occasional emails about the agentic systems I&apos;m building.
+            Occasional emails about agentic systems in the real world.
           </h1>
         </header>
 
@@ -53,17 +54,16 @@ export default function NewsletterPage() {
             </span>
           </div>
           <p>
-            Fair question. I run ad accounts for a living and build agentic
-            systems for the recurring work around them — most of which started
-            with something I was tired of doing the same way twice. When a
-            system earns its keep, I write up the useful parts here.
+            I&apos;ve scaled Meta ads to $50k a day. I&apos;ve taken a mushroom
+            blog to page one of Google for &ldquo;magic mushrooms&rdquo; —
+            knowing nothing about them except how to eat them. I&apos;ve built
+            my own MCP servers. I&apos;ve failed, a lot. And learned more.
           </p>
           <p>
-            The emails are those write-ups: build breakdowns, small workflow
-            ideas, and new skills or connectors explained through the problem
-            they solve. No roundups, no sponsors, no generic AI commentary —
-            and if it ever stops being useful, unsubscribing takes one click
-            and zero hard feelings.
+            channel47 is where I share what survived — the systems that earn
+            their keep, and the decisions behind them. The emails are the
+            freshest cut: one build or idea at a time, no roundups, no
+            sponsors, and no hard feelings if you unsubscribe.
           </p>
           <p className="mono nl-rss">
             Agents and feed readers can follow everything the list gets at{" "}
