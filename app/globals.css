@@ -2420,6 +2420,54 @@ input:focus-visible {
   margin-top: 26px;
   font-size: 12px;
 }
+/* Newsletter "Who the heck am I?" — the home-bio identity row re-cut for
+   the 640 reading column, so the subscribe ask comes with a face on it.
+   The circular avatar is the one sanctioned exception to hard edges,
+   matching .home-bio-avatar / .session-personal-avatar exactly. */
+.nl-who-id {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 20px;
+}
+.nl-who-avatar {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 99px;
+  object-fit: cover;
+  box-shadow: 0 0 0 1px var(--hairline);
+}
+.nl-who-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.nl-who-name {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.nl-who-tag {
+  font-size: 13px;
+  line-height: 1.3;
+  color: var(--byline);
+}
+@media (min-width: 768px) {
+  .nl-who-id {
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .nl-who-avatar {
+    width: 64px;
+    height: 64px;
+  }
+  .nl-who-name {
+    font-size: 17px;
+  }
+}
 .st-post-capture {
   margin-top: 34px;
 }
