@@ -56,16 +56,16 @@ export default function NewsletterPage() {
           </div>
           <p>
             I&apos;ve scaled Meta ads to $50k a day. I&apos;ve taken a mushroom
-            blog to page one of Google for &ldquo;magic mushrooms&rdquo; —
-            knowing nothing about them except how to eat them. I&apos;ve built
+            blog to page one of Google for &ldquo;magic mushrooms.&rdquo; I
+            knew nothing about them except how to eat them. I&apos;ve built
             the MCP servers this site hands out. I&apos;ve failed, a lot. And
             learned more.
           </p>
           <p>
-            channel47 is where I share what survived. The emails are the
-            freshest cut: one build or idea at a time, the whole thing in the
-            email — never a teaser for a click. No roundups, no sponsors, and
-            no hard feelings if you unsubscribe.
+            channel47 is where I write up what worked. Each email is one build
+            or one idea, and the useful part is always in the email itself,
+            not behind a click. No roundups, no sponsors, and no hard feelings
+            if you unsubscribe.
           </p>
           <p className="mono nl-rss">
             Agents and feed readers can follow everything the list gets at{" "}
