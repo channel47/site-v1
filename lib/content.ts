@@ -271,6 +271,7 @@ const ORDER: string[] = [
   "creative-strategist",
   "brief-me",
   "ad-recon",
+  "make-static-ads",
   "google-ads",
   "google-ads-mcp",
   "meta-ads",
