@@ -150,7 +150,7 @@ export default async function WorkshopPage({ params }: Props) {
             <p className="ws-cta-body">
               Occasional emails with new projects, experiments, and notes. No fixed schedule.
             </p>
-            <Capture />
+            <Capture placement="workshop" />
           </div>
         )}
 

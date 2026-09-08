@@ -1,11 +1,11 @@
 import { GitHubIcon } from "./social-icons"
+import { MeasuredLink } from "./measured-link"
 
-/** "Source on GitHub" as its own hairline row (readability pass) — it used
- * to trail the share links; now it sits with the install/grab section on
- * pages whose content ships from a repo. */
+/** A measured repository link beside the project's installation details. */
 export function SourceRow({ href }: { href: string }) {
   return (
-    <a
+    <MeasuredLink
+      event="repository_click"
       href={href}
       target="_blank"
       rel="noopener"
@@ -19,6 +19,6 @@ export function SourceRow({ href }: { href: string }) {
       <span className="dt-source-arrow" aria-hidden>
         →
       </span>
-    </a>
+    </MeasuredLink>
   )
 }

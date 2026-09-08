@@ -1,7 +1,8 @@
 "use client"
 
 import { useId, useState } from "react"
-import { track } from "@vercel/analytics"
+import { measure } from "./measurement"
+import type { CapturePlacement } from "@/lib/measurement"
 import { CAPTURE, LINKS } from "@/lib/site-content"
 
 type Status = "idle" | "sending" | "subscribed" | "dormant" | "error"
@@ -13,9 +14,11 @@ type Status = "idle" | "sending" | "subscribed" | "dormant" | "error"
  * never fake a "you're on the list".
  */
 export function Capture({
+  placement,
   helper = CAPTURE.helper,
   cta = CAPTURE.cta,
 }: {
+  placement: CapturePlacement
   helper?: string
   cta?: string
 
@@ -28,11 +31,11 @@ export function Capture({
     e.preventDefault()
     if (status === "sending") return
     if (!/.+@.+\..+/.test(email.trim())) {
-      track("newsletter_subscribe", { status: "invalid", intent: "warm" })
+      measure("newsletter_result", { status: "invalid", placement })
       setStatus("error")
       return
     }
-    track("newsletter_submit", { intent: "warm" })
+    measure("newsletter_submit", { placement })
     setStatus("sending")
     try {
       const r = await fetch("/api/subscribe", {
@@ -45,17 +48,17 @@ export function Capture({
         code?: string
       }
       if (r.ok && data.ok) {
-        track("newsletter_subscribe", { status: "success", intent: "warm" })
+        measure("newsletter_result", { status: "accepted", placement })
         setStatus("subscribed")
       } else if (data.code === "unconfigured") {
-        track("newsletter_subscribe", { status: "dormant", intent: "warm" })
+        measure("newsletter_result", { status: "unavailable", placement })
         setStatus("dormant")
       } else {
-        track("newsletter_subscribe", { status: "error", intent: "warm" })
+        measure("newsletter_result", { status: "failed", placement })
         setStatus("error")
       }
     } catch {
-      track("newsletter_subscribe", { status: "network_error", intent: "warm" })
+      measure("newsletter_result", { status: "network_error", placement })
       setStatus("error")
     }
   }

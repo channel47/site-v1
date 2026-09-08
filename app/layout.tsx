@@ -1,8 +1,10 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Analytics } from "@vercel/analytics/next"
 import { JsonLd } from "@/components/site/json-ld"
 import { BrowseNavigation } from "@/components/site/browse-navigation"
+import { SiteMeasurement } from "@/components/site/measurement"
+import { getFeedItems } from "@/lib/content"
+import { PUBLIC_PAGES } from "@/lib/discovery"
 import { PostHogAnalytics } from "@/components/site/posthog"
 import { baseGraph, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo"
 import "./globals.css"
@@ -58,9 +60,9 @@ export default function RootLayout({
         />
         {/* Site-wide entity graph (Organization + Person + WebSite) — see lib/seo.ts. */}
         <JsonLd data={baseGraph()} />
+        <SiteMeasurement paths={[...PUBLIC_PAGES.map((page) => page.path), ...getFeedItems().map((item) => item.href)]} />
         <BrowseNavigation>{children}</BrowseNavigation>
         <PostHogAnalytics />
-        <Analytics />
       </body>
     </html>
   )

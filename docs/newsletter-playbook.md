@@ -82,6 +82,13 @@ to survive a future template change without being rewritten.
 
 ## Draft-to-send workflow
 
+For an existing published piece, `pnpm share:pack /notes/SLUG` prepares local
+sharing text, an existing image reference, and an email starter using its
+opening paragraphs. It also supplies tagged links using the piece's slug as
+the campaign. Review and edit the starter as needed; it has not been posted or
+created in Kit. Command details live in the site's README. Keep the same
+campaign when sharing the piece elsewhere so source comparisons remain useful.
+
 The reusable request is:
 
 > Turn this Channel47 note, build, or conversation into the next broadcast.

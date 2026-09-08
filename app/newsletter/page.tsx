@@ -25,7 +25,7 @@ export default function NewsletterPage() {
         </header>
 
         <div className="nl-capture">
-          <Capture helper={`${CAPTURE.helper} Unsubscribe anytime.`} />
+          <Capture placement="newsletter" helper={`${CAPTURE.helper} Unsubscribe anytime.`} />
         </div>
 
         <section className="st-prose" aria-labelledby="nl-who-title">

@@ -21,6 +21,7 @@ pnpm typecheck
 pnpm check:seo-surfaces
 pnpm build
 pnpm test:content
+pnpm test:measurement
 # Against a running local server:
 python3 scripts/check-content-surfaces.py http://localhost:3100
 ```
@@ -96,3 +97,64 @@ These are references for specific decisions, not templates to reproduce:
 | [Emil Kowalski](https://emilkowal.ski/ui/you-dont-need-animations) | Purposeful motion; routine filtering does not replay entrances |
 | [GOV.UK back links](https://design-system.service.gov.uk/components/back-link/) | Return to the previous results with state intact |
 | [Simon Willison](https://simonwillison.net/2024/Dec/22/link-blog/) | Low-overhead publishing without a required essay or cover |
+
+### Measurement
+
+`components/site/measurement.tsx` uses the existing Vercel Analytics SDK.
+`lib/measurement.ts` owns the attribution and sharing vocabulary. No additional
+analytics provider or database is required.
+
+| Event | Meaning |
+| --- | --- |
+| `content_open` | A project or note opened; one per route entry |
+| `related_click` | The suggested next piece was clicked; includes `target_path` |
+| `repository_click` | The project's source link was clicked |
+| `install_copy` | An install command was successfully copied |
+| `page_copy`, `link_copy` | Markdown or the page URL was successfully copied |
+| `newsletter_submit` | A valid form submission was attempted |
+| `newsletter_result` | `accepted`, `invalid`, `unavailable`, `failed`, or `network_error` |
+
+Events include the current `page`, first `landing_path`, a bounded `source`
+and `medium`, and an optional `campaign` matching a published entry's slug.
+Signup events include `placement`: `home`, `newsletter`, `article_end`, or
+`workshop`. `last_content_path` identifies the most recently opened piece
+during client navigation, including when the reader continues to `/newsletter`.
+It is context, not proof that a particular article caused a signup.
+
+Attribution lasts for this browser tab, through session storage with an
+in-memory fallback when storage is denied. A tagged arrival resets it. There
+is no visitor ID or cross-device identity. Event URLs have query strings and
+fragments removed; properties exclude email, form values, raw referrers, and
+unrecognized campaign values. Content openings are deduplicated for repeated
+effects, but a return visit to a page counts as another opening.
+
+`newsletter_result: accepted` means the existing API accepted the request. It
+does **not** mean a new subscriber, confirmed opt-in, or a delivered email.
+Use Kit for active/new subscriber counts. Confirmation-level source attribution
+would require a separately verified provider workflow; it is not implemented
+by these browser events. Do not add acceptance events to historical
+`newsletter_subscribe: success` events as though they were new people.
+
+After deployment, establish a 28-day baseline in Vercel Analytics: traffic by
+source, content openings, related clicks, successful command copies, and signup
+attempts/results by placement. Report underlying event counts with any ratios;
+these are actions, not deduplicated readers or verified software installs.
+Compare the corresponding Kit subscriber change separately. Local SDK debug
+output and mocked tests do not represent production visitors.
+
+### Prepare sharing material
+
+```sh
+pnpm share:pack /notes/codex-static-ads-google-flow
+python3 scripts/kit-broadcast.py render output/sharing/notes/codex-static-ads-google-flow/newsletter.html --output output/sharing/notes/codex-static-ads-google-flow/newsletter-preview.html
+```
+
+The first command creates `share.md` and `newsletter.html` under ignored
+`output/sharing/`. It reuses the published title, description, opening
+paragraphs, and a real image reference when one exists. It supplies tagged
+links for X, LinkedIn, GitHub, and email, using the entry slug as the campaign.
+The site's X and LinkedIn share buttons use the same tagged-link convention;
+the generic copy-link button retains the canonical URL.
+Existing review files are protected; pass `--force` only to replace them.
+No command in this preparation step posts, uploads, creates a Kit broadcast,
+or sends anything. Follow the newsletter playbook for review and sending.

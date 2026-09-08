@@ -104,7 +104,7 @@ export default async function PostPage({ params }: Props) {
         />
 
         <div className="st-post-capture">
-          <Capture />
+          <Capture placement="article_end" />
         </div>
 
         <p className="dt-back">

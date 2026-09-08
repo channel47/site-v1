@@ -96,7 +96,7 @@ export default function Page() {
           </div>
           <div className="home-subscribe">
             <h2>Follow what I’m working on.</h2>
-            <Capture />
+            <Capture placement="home" />
             <Link href="/rss.xml" className="rss-alternative">Or subscribe via RSS <span aria-hidden="true">↗</span></Link>
           </div>
         </section>

@@ -8,7 +8,9 @@
     "start": "next start",
     "check:seo-surfaces": "node scripts/check_seo_surfaces.mjs",
     "typecheck": "tsc --noEmit",
-    "test:content": "node scripts/test-content-model.cjs"
+    "test:content": "node scripts/test-content-model.cjs",
+    "share:pack": "node scripts/share-pack.cjs",
+    "test:measurement": "node scripts/test-measurement.cjs"
   },
   "dependencies": {
     "@vercel/analytics": "1.3.1",

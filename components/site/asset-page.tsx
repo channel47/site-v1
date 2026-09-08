@@ -55,7 +55,7 @@ export function AssetPage({ asset }: { asset: Asset }) {
             <div className="as-install">
               <div className="as-install-head">
                 <span className="as-install-label">Install</span>
-                <CopyButton title="Copy command" text={asset.install} />
+                <CopyButton event="install_copy" title="Copy command" text={asset.install} />
               </div>
               <pre className="as-install-cmd">
                 <code>{asset.install}</code>

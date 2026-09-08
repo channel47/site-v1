@@ -14,14 +14,17 @@ export function useCopyAction(getText: () => Promise<string> | string) {
   useEffect(() => () => clearTimeout(reset.current), [])
 
   async function copy() {
+    let copied = false
     try {
       await navigator.clipboard.writeText(await getText())
       setState("copied")
+      copied = true
     } catch {
       setState("failed")
     }
     clearTimeout(reset.current)
     reset.current = setTimeout(() => setState("idle"), 2000)
+    return copied
   }
 
   return { state, copy }

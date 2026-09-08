@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react"
 import { useCopyAction } from "./use-copy-action"
+import { measure } from "./measurement"
 
 function Glyph({ size, children }: { size: number; children: ReactNode }) {
   return (
@@ -44,6 +45,7 @@ const PATHS = {
  * labelled variant swaps its text too.
  */
 export function CopyButton({
+  event,
   text,
   fetchPath,
   title,
@@ -51,6 +53,7 @@ export function CopyButton({
   boxed = false,
   glyph = "copy",
 }: {
+  event?: "install_copy" | "page_copy" | "link_copy"
   /** Literal text to copy (install command, page URL)… */
   text?: string
   /** …or a same-origin path fetched on click (the page's .md twin).
@@ -74,13 +77,18 @@ export function CopyButton({
     }
     return text ?? ""
   })
+  const handleCopy = async () => {
+    if (await copy()) {
+      if (event) measure(event)
+    }
+  }
 
   if (label) {
     return (
       <button
         type="button"
         className="icon-btn dt-share-btn dt-share-btn-label"
-        onClick={copy}
+        onClick={handleCopy}
         title={title}
         data-state={state}
         aria-live="polite"
@@ -95,7 +103,7 @@ export function CopyButton({
     <button
       type="button"
       className={boxed ? "icon-btn dt-share-btn" : "icon-btn"}
-      onClick={copy}
+      onClick={handleCopy}
       title={title}
       data-state={state}
       aria-label={state === "copied" ? "Copied" : state === "failed" ? "Couldn’t copy. Try again." : title}
