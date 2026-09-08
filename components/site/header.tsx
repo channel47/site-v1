@@ -1,4 +1,4 @@
-import { GlitchLogo } from "@/components/landing/glitch-logo"
+import { GlitchLogo } from "./glitch-logo"
 import { MarkLink } from "./mark-link"
 import { NavDrawer } from "./nav-drawer"
 import { DesktopNav } from "./desktop-nav"

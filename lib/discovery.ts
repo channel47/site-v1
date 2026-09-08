@@ -5,7 +5,7 @@
  * truth for route families, static pages, and machine endpoints that otherwise
  * tend to drift across llms.txt, sitemaps, /api, middleware, and docs.
  *
- * Keep this module edge-safe: no filesystem-backed content loaders here.
+ * Keep this registry independent of filesystem-backed content loaders.
  */
 
 export const PUBLIC_PAGES = [
@@ -116,8 +116,6 @@ export const CONTENT_COLLECTION = {
 export const CONTENT_COLLECTIONS = Object.values(CONTENT_COLLECTION)
 
 export type ContentCollection = (typeof CONTENT_COLLECTIONS)[number]
-export type ContentCollectionKey = keyof typeof CONTENT_COLLECTION
-export type ContentSection = ContentCollection["segment"]
 export type SearchResultType = ContentCollection["searchType"]
 
 const CONTENT_SECTION_PATTERN = CONTENT_COLLECTIONS.map((c) => c.segment).join("|")

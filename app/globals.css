@@ -47,8 +47,6 @@
   --nav-ghost-border: rgba(22, 23, 24, 0.28);
   --underline: rgba(22, 23, 24, 0.3);
   --code-bg: rgba(22, 23, 24, 0.045);
-  --backdrop: rgba(22, 23, 24, 0.25);
-  --still-bg: rgba(22, 23, 24, 0.03);
   --row-hover: rgba(22, 23, 24, 0.03);
   /* drop-shadow under a framed-still screenshot PNG */
   --shadow-ink: rgba(12, 13, 14, 0.32);
@@ -83,15 +81,6 @@
   /* form-validation failure — deliberately its own hue, not borrowed from
      any content-type colour */
   --error: #c1443c;
-  --gradient: linear-gradient(
-    90deg,
-    #bc6b62,
-    #ad6b9b,
-    #6583c4,
-    #18998b,
-    #699350,
-    #938632
-  );
 
   /* ---- type -------------------------------------------------------- */
   --font-display: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
@@ -125,7 +114,6 @@
   --text-mono-label: 11px; /* fig tags, list indices, stat labels (11px floor) */
   --text-mono-index: 12px; /* mobile ledger indices read one step up */
 
-  --body-lh: 1.65;
   --section-gap: clamp(60px, 7vw, 68px);
 
   /* desktop type scale — mirrors the mobile sizes above, ≥768px only */
@@ -147,7 +135,6 @@
   --shine-workshop: #d586bf;
   --shine-note: var(--shine-post);
 
-  --radius: 0px;
 }
 
 /* dark, via OS preference — blocked once the visitor explicitly picks light */
@@ -171,8 +158,6 @@
     --nav-ghost-border: rgba(236, 236, 234, 0.32);
     --underline: rgba(236, 236, 234, 0.3);
     --code-bg: rgba(236, 236, 234, 0.07);
-    --backdrop: rgba(0, 0, 0, 0.5);
-    --still-bg: rgba(236, 236, 234, 0.04);
     --row-hover: rgba(236, 236, 234, 0.05);
     /* drop-shadow under a framed-still screenshot PNG */
     --shadow-ink: rgba(0, 0, 0, 0.55);
@@ -207,8 +192,6 @@
   --nav-ghost-border: rgba(236, 236, 234, 0.32);
   --underline: rgba(236, 236, 234, 0.3);
   --code-bg: rgba(236, 236, 234, 0.07);
-  --backdrop: rgba(0, 0, 0, 0.5);
-  --still-bg: rgba(236, 236, 234, 0.04);
   --row-hover: rgba(236, 236, 234, 0.05);
   /* drop-shadow under a framed-still screenshot PNG */
   --shadow-ink: rgba(0, 0, 0, 0.55);
@@ -280,7 +263,7 @@ button {
 }
 
 /* ---- keyframes -------------------------------------------------- */
-/* Animation doctrine (docs/PLAN.md §4): nothing on the page moves unless the
+/* Animation doctrine: nothing on the page moves unless the
    user caused it or it confirms an action. What plays on load: a plain
    fade-in for breadcrumbs (an-in), a blur+fade for H1s (an-blur), and a
    slide-up+fade for everything else in the fold (an-up) — staggered down
@@ -2263,11 +2246,6 @@ input:focus-visible {
 }
 
 /* index — grouped editorial rows (Browse / Home latest / related lists) */
-.st-group-title {
-  font-size: var(--text-label-sm);
-  font-weight: 600;
-  color: var(--byline);
-}
 .st-rows {
   list-style: none;
   margin-top: 12px;
@@ -2346,28 +2324,7 @@ input:focus-visible {
   }
 }
 
-/* footer note used on the story/asset foot rows */
-.st-foot {
-  margin-top: 48px;
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-.st-foot-note {
-  font-size: 13px;
-  font-weight: 500;
-}
-.st-accent-link {
-  color: var(--type-color, var(--ink));
-}
-.st-accent-link:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-/* asset detail — legacy hooks retained for spacing */
+/* asset detail heading spacing */
 .as-h1 {
   margin-top: 10px;
 }
@@ -2410,9 +2367,6 @@ input:focus-visible {
   margin-top: 9px;
 }
 
-.ws-join {
-  margin-top: 30px;
-}
 .nl-capture {
   margin-top: 28px;
 }
@@ -2470,9 +2424,6 @@ input:focus-visible {
 }
 .st-post-capture {
   margin-top: 34px;
-}
-.si-rows {
-  margin-top: 16px;
 }
 
 @media (max-width: 560px) {

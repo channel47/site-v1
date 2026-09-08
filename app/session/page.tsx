@@ -91,7 +91,7 @@ export default function SessionPage() {
           <section className="session-section">
             <h2 className="session-h2 st-section-h2">Systems I&apos;ve actually built</h2>
             <p className="session-proof-lede">
-              Two builds that came out of the same approach we&apos;d use in a session:
+              Builds that came out of the same approach we&apos;d use in a session:
             </p>
             <div className="session-proof-list">
               {notes.map((note) => (

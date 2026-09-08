@@ -1,11 +1,12 @@
 import { readFileSync } from "node:fs"
 import { join } from "node:path"
 import { ImageResponse } from "next/og"
+import { BLOCKS, MARK_VIEWBOX } from "@/components/site/mark-blocks"
 
 /**
- * Shared renderer for every route's dynamic opengraph-image.tsx (docs/PLAN.md
- * content types: posts, skills, connectors, workshops, plus the site-wide
- * default). One card layout, one font load, so every route file stays a
+ * Shared renderer for every route's opengraph-image.tsx: notes, posts,
+ * skills, connectors, workshops, and the site-wide default.
+ * One card layout, one font load, so every route file stays a
  * thin `getX(slug) → renderOgImage(...)` call.
  *
  * Colours are hardcoded rather than imported from globals.css: Satori (the
@@ -31,18 +32,8 @@ export const TYPE_ACCENTS = {
   note: "#a27f30",
 } as const
 
-/** Matches --gradient in globals.css — the site-wide default's top bar. */
+/** Brand palette for the site-wide social preview's top bar. */
 const BRAND_GRADIENT = "linear-gradient(90deg, #bc6b62, #ad6b9b, #6583c4, #18998b, #699350, #938632)"
-
-/** Same six blocks as components/site/mark-blocks.ts — the "47" mark. */
-const MARK_BLOCKS = [
-  { x: 0, y: 0, width: 7, height: 18 },
-  { x: 7, y: 11, width: 7, height: 7 },
-  { x: 14, y: 0, width: 7, height: 24 },
-  { x: 27, y: 0, width: 14, height: 7 },
-  { x: 41, y: 0, width: 7, height: 12 },
-  { x: 34, y: 12, width: 7, height: 12 },
-]
 
 let fonts: Awaited<ReturnType<typeof loadFonts>> | null = null
 
@@ -152,8 +143,8 @@ export async function renderOgImage({ kicker, title, description, accent = "grad
                 background: INK,
               }}
             >
-              <svg width={24} height={12} viewBox="0 0 48 24" fill="white">
-                {MARK_BLOCKS.map((b, i) => (
+              <svg width={24} height={12} viewBox={MARK_VIEWBOX} fill="white">
+                {BLOCKS.map((b, i) => (
                   <rect key={i} x={b.x} y={b.y} width={b.width} height={b.height} />
                 ))}
               </svg>

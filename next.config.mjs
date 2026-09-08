@@ -13,21 +13,16 @@ const nextConfig = {
     ]
   },
   async redirects() {
-    // Stories became Posts in the taxonomy (docs/PLAN.md §2) — the old URLs
-    // 301 to their new homes so inbound links and crawl equity carry over.
-    // Workshops' dedicated index folded into Browse as a type filter, same
-    // as every other content type (docs/PLAN.md §5) — session detail pages
-    // at /workshops/:slug are unaffected.
+    // Preserve inbound links from retired indexes and the former Stories
+    // taxonomy. Workshop detail pages remain at /workshops/:slug.
     return [
-      // /about retired in the v2 repositioning — content folded into the
-      // home hero/bio; nothing else replaces it (docs/PLAN.md).
+      // The former About page is now the homepage bio.
       { source: "/about", destination: "/", permanent: true },
       { source: "/stories", destination: "/browse?type=posts", permanent: true },
       { source: "/stories/:slug", destination: "/posts/:slug", permanent: true },
       { source: "/workshops", destination: "/browse?type=workshops", permanent: true },
-      // All 12 posts unpublished (moved to content/_unpublished/posts/) — an
-      // explicit list per known slug, not a blanket /posts/:slug rule, so a
-      // future post at a fresh slug isn't shadowed by this takedown.
+      // The 12 removed posts redirect by known slug so future posts at new
+      // slugs can still publish. Their old content remains in Git history.
       { source: "/posts/content-miner", destination: "/browse?type=posts", permanent: true },
       { source: "/posts/creative-strategist", destination: "/browse?type=posts", permanent: true },
       { source: "/posts/gaql", destination: "/browse?type=posts", permanent: true },

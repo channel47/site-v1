@@ -34,8 +34,8 @@ The premises the whole system rests on:
   "— {SITE_NAME}" every other route gets.
 - Site-wide Organization + WebSite + Person JSON-LD (`app/layout.tsx`),
   server-rendered — never client-injected.
-- `BlogPosting` + breadcrumbs on every post; `SoftwareSourceCode` +
-  breadcrumbs on every skill/connector page; `ItemList` on `/skills`.
+- `BlogPosting` + breadcrumbs on notes and posts; `SoftwareSourceCode` +
+  breadcrumbs on every skill/connector page.
 - All descriptions come from content frontmatter — the same string is the
   meta description and the schema description (triple consistency; asset
   pages also render it as the visible intro).
@@ -59,7 +59,7 @@ The templates enforce the plumbing; the content rules live with the writer:
   `title.template` do the rest. Keep frontmatter titles under ~50 characters
   so `title — channel47` (or the longer asset-page suffix) still fits
   Google's ~60-character SERP truncation.
-- Roadmap (unlocks on content, per the empty-shelf rule — see PLAN §6):
+- Roadmap (publish each surface when its content exists):
   - **Definitional posts** for the category's queries ("What is an agent
     skill?", "What is an MCP connector?", "Skills vs. MCP servers") — flat
     slugs, 400–800 dense words, answer in the first sentence.
@@ -78,7 +78,7 @@ and machine endpoint lists do not drift independently.
 |---|---|---|
 | `robots.txt` | `app/robots.ts` | All AI crawlers explicitly welcomed; `/api/subscribe` and `/md/` excluded |
 | `llms.txt` | `app/llms.txt/route.ts` | Curated agent map + operator hints, generated from content |
-| Markdown twins | `proxy.ts` + `app/md/[section]/[slug]/route.ts` | Every post/skill/connector/workshop at `<url>.md`, YAML frontmatter, built from the same source as the HTML — cannot drift |
+| Markdown twins | `proxy.ts` + `app/md/[section]/[slug]/route.ts` | Every note/post/skill/connector/workshop at `<url>.md`, YAML frontmatter, built from the same source as the HTML — cannot drift |
 | Content negotiation | `proxy.ts` | `Accept: text/markdown` on canonical URLs returns the twin |
 | `sitemap.xml` | `app/sitemap.ts` | Real lastmod from frontmatter; evergreen pages omit it rather than fake it |
 | `sitemap.md` | `app/sitemap.md/route.ts` | Exhaustive agent-readable index + curl examples |
@@ -95,8 +95,8 @@ when a capitalized "Channel 47"/"Channel47" literal leaks outside
 `lib/seo.ts`'s `alternateName` (see Brand naming, below).
 
 ### Layer 4 — Distribution
-- **"Copy page"** (the markdown-twin copy button) on every post, asset, and
-  workshop page (`components/site/copy-markdown.tsx`) — readers paste our
+- **"Copy page"** (the markdown-twin copy button) on every note, post, asset, and
+  workshop page (`components/site/share-row.tsx` and `copy-button.tsx`) — readers paste our
   exact framing into their own AI chats; distribution no crawler reaches.
 - The installable artifacts already exist (`channel47/skills`,
   `channel47/mcps` + npm packages) — they are the flywheel. Keep install
@@ -138,8 +138,8 @@ when a capitalized "Channel 47"/"Channel47" literal leaks outside
 
 1. Verify live: `curl https://channel47.dev/robots.txt`, `/llms.txt`,
    `/skills/creative-strategist.md`, `curl -H 'Accept: text/markdown'
-   https://channel47.dev/posts/gaql`, `/api`, `/api/search?q=google+ads`.
-   Or re-run the auditor: `python scripts/audit_ai_readiness.py
+   https://channel47.dev/notes/google-ads-mcp`, `/api`, `/api/search?q=google+ads`.
+   Or re-run the auditor: `python3 scripts/audit_ai_readiness.py
    https://channel47.dev` (baseline before this work: **3/14, 21%** —
    2026-07-03).
 2. **Submit `sitemap.xml` to Google Search Console AND Bing Webmaster

@@ -6,8 +6,8 @@ import {
   MARK_HEIGHT,
   MARK_VIEWBOX,
   MARK_WIDTH,
-} from "@/components/site/mark-blocks"
-import { bitAnim } from "@/components/site/bit-anim"
+} from "./mark-blocks"
+import { bitAnim } from "./bit-anim"
 
 /** Build-in accent per block — the four content-type colours, cycled. */
 const BIT_COLORS = [

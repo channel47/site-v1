@@ -1,6 +1,6 @@
 /**
  * Sitewide copy and structural data — single source of truth for everything
- * the chrome and Home render (docs/PLAN.md is the spec). Kept here rather
+ * the chrome and Home render. Kept here rather
  * than inline so copy edits never touch presentation.
  */
 
@@ -89,7 +89,7 @@ export const SESSION = {
   },
 } as const
 
-/** Sitewide email-capture copy (PLAN §5 Newsletter framing). */
+/** Sitewide email-capture copy. */
 export const CAPTURE = {
   cta: "Subscribe",
   helper:
@@ -152,7 +152,7 @@ export const CATEGORIES: Category[] = [
   {
     key: "skills",
     title: "Skills",
-    desc: "Three skills for brand context, competitor ad research, and creative strategy.",
+    desc: "Skills for brand context, competitor ad research, creative strategy, and static ad production.",
     href: "/browse?type=skills",
     linkText: "Browse all skills →",
   },

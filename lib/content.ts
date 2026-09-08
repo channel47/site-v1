@@ -10,9 +10,11 @@ import { marked } from "marked"
  * routes are statically generated), so the markdown folders stay the source
  * of truth and publishing is just adding a file.
  *
- *   content/posts/{skills,connectors}/   Posts — first-person stories, one per asset
- *   content/skills/                      Skill asset pages (hand-authored web copy;
- *   content/connectors/                  technical facts live in frontmatter)
+ *   content/notes/                      Notes documenting real builds
+ *   content/skills/                     Skill asset pages
+ *   content/connectors/                 Connector asset pages
+ *   content/workshops/                  Recorded and upcoming sessions
+ *   content/posts/{skills,connectors}/  Optional post collections (currently empty)
  *
  * Frontmatter schemas are documented in `content/README.md`.
  */
@@ -264,8 +266,7 @@ export function postAssetKind(type: PostAsset["type"]): AssetType {
 /**
  * Curated display order — flagship first for skills, platforms by account
  * ubiquity for connectors. Anything not listed (future content) sorts after,
- * alphabetically, rather than breaking. Shared by posts and assets since the
- * two libraries mirror each other one-to-one today.
+ * alphabetically, rather than breaking. Shared by posts and assets.
  */
 const ORDER: string[] = [
   "creative-strategist",
@@ -370,9 +371,7 @@ export const getAssets = cache((type: AssetType): Asset[] => {
 
 // ---------------------------------------------------------------- workshops
 
-/** A dated workshop session — upcoming until it airs, past once recorded
- * (round 15). No sessions are pinned yet, so `content/workshops/` is empty
- * and these all return `[]`; nothing here is invented ahead of a real date. */
+/** A dated workshop session — upcoming until it airs, past once recorded. */
 export interface WorkshopMeta {
   title: string
   slug: string

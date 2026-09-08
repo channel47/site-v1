@@ -262,9 +262,9 @@ def recommendations(checks):
     fixmap = {
         "AI crawlers not blocked": "Unblock AI crawlers in robots.txt (or confirm blocking is a deliberate content-control decision).",
         "sitemap.xml present": "Generate and submit sitemap.xml to Google Search Console AND Bing Webmaster Tools (Bing feeds ChatGPT search).",
-        "llms.txt present": "Ship /llms.txt (see references/agent-native-infrastructure.md §2). Cheap insurance + agent documentation.",
-        "markdown twins (<url>.md)": "Serve markdown twins at <url>.md — the highest-value agent surface (see agent-native-infrastructure.md §3).",
-        "Accept: text/markdown negotiation": "Add content negotiation so canonical URLs return markdown to agents (agent-native-infrastructure.md §4).",
+        "llms.txt present": "Ship /llms.txt with a site overview and links for agents.",
+        "markdown twins (<url>.md)": "Serve markdown twins at <url>.md so agents can read the same content as visitors.",
+        "Accept: text/markdown negotiation": "Add content negotiation so canonical URLs return markdown to agents.",
         "homepage JSON-LD in server HTML": "Server-render Organization + WebSite + Person JSON-LD (entity-and-schema.md §1). If a JS plugin injects it, move it server-side.",
         "JSON-LD on content pages (server HTML)": "Server-render Article/BlogPosting schema per page (entity-and-schema.md §2).",
         "canonical tags on content pages": "Add self-referencing canonicals to all unique pages.",

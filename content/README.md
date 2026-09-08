@@ -7,13 +7,15 @@ read at build time by `lib/content.ts`. Publishing is adding a file.
 
 ```
 content/
-├── notes/                Note detail pages (one per documented build)
-├── posts/
-│   ├── skills/          Posts introducing each skill in channel47/skills
-│   └── connectors/      Posts introducing each MCP server in channel47/mcps
+├── notes/               Note detail pages (one per documented build)
 ├── skills/              Skill asset pages (one per skill)
-└── connectors/          Connector asset pages (one per MCP server)
+├── connectors/          Connector asset pages (one per MCP server)
+└── workshops/           Recorded and upcoming workshop sessions
 ```
+
+The optional `posts/skills/` and `posts/connectors/` collections currently have no
+published content. The loader and `/posts/[slug]` routes remain available for
+future posts; known retired post URLs redirect through `next.config.mjs`.
 
 - **Notes** (`/notes/[slug]`) — long-form writeups of a real agentic system Jackson
   has built and run: the problem, the workflow, the decisions that mattered, results,
@@ -24,10 +26,12 @@ content/
   behind-the-scenes, and asset introductions. One file per piece; the filename is the
   slug. Each asset-introduction post links to the standalone asset page it's about.
 - **Assets** (`/skills/[slug]`, `/connectors/[slug]`) — hand-authored web copy for each
-  skill and connector (PLAN §2: the site's copy is written for the web, not lifted from
-  the source repos). Technical facts (repo URL, install command, package) live in
+  skill and connector. The site's copy is written for the web; technical facts
+  (repo URL, install command, package) live in
   frontmatter so templates render them consistently; slugs match the asset's name in its
   source repo.
+- **Workshops** (`/workshops/[slug]`) — dated sessions with `upcoming` or `past`
+  status, session details, and a registration or recording link.
 
 ## Frontmatter schemas
 
@@ -56,14 +60,12 @@ Post (`content/posts/{skills,connectors}/*.md`):
 title: string          # headline
 slug: string           # matches filename, used for routing
 description: string    # ≤160 chars — browse rows, meta description
-type: story            # legacy field, harmless
 category: skills | connectors
 asset:
   name: string         # asset slug — links the post to its asset page
   type: skill | mcp
   repo: string         # canonical GitHub URL
-  install: string      # one-line install command
-  package: string      # npm package (connectors only)
+  cardTitle: string    # optional title for the linked asset card
 author: Jackson Dean
 date: YYYY-MM-DD
 tags: [string]
