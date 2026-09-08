@@ -3,6 +3,7 @@ import path from "node:path"
 import { cache } from "react"
 import matter from "gray-matter"
 import { marked } from "marked"
+import { CONTENT_COLLECTION, type ContentFormat, type ContentGroup } from "./discovery"
 
 /**
  * Content loader — the single bridge between the markdown in `content/` and
@@ -10,7 +11,8 @@ import { marked } from "marked"
  * routes are statically generated), so the markdown folders stay the source
  * of truth and publishing is just adding a file.
  *
- *   content/notes/                      Notes documenting real builds
+ *   content/notes/                      Short notes and longer write-ups
+ *   content/projects/                   General project write-ups
  *   content/skills/                     Skill asset pages
  *   content/connectors/                 Connector asset pages
  *   content/workshops/                  Recorded and upcoming sessions
@@ -218,10 +220,7 @@ export interface AssetMeta {
   package?: string
   date: string
   tags: string[]
-  /** Real screenshot path (public/) — when present, renders as the figure.
-   * When absent but `screenshotCaption` is set, the figure still renders as
-   * a riso-hatch placeholder captioned with what a screenshot would show;
-   * when both are absent the figure is skipped entirely. */
+  /** Real screenshot path (public/). Without an image, omit the figure. */
   screenshot?: string
   screenshotCaption?: string
   askAnswer?: AskAnswer
@@ -434,16 +433,16 @@ export interface NoteVideo {
   caption?: string
 }
 
-/** A Note — a long-form, single-page writeup of a real agentic system
- * Jackson has built and run, with results/status strips instead of the
- * install-facts frontmatter an Asset carries. Own shape (not an AssetType)
- * since Notes aren't installable code — see content/README.md. */
+/** A short observation or longer write-up; all rich media is optional. */
 export interface NoteMeta {
   title: string
   slug: string
   description: string
   date: string
   tags: string[]
+  /** Optional real image for the homepage. Otherwise use the video's poster
+   * or the first image in the piece. No decorative cover is generated. */
+  preview?: { src: string; alt: string }
   /** Shown in the byline as "sanitized example" when true (the Note
    * convention for real-but-anonymized production systems). */
   sanitized?: boolean
@@ -465,6 +464,7 @@ function loadNote(file: string): Note {
   const meta = data as Omit<NoteMeta, "date"> & { date: string | Date }
   return {
     ...meta,
+    slug: meta.slug ?? file.replace(/\.md$/, ""),
     tags: meta.tags ?? [],
     date: isoDate(meta.date),
     html: marked.parse(content, { async: false }),
@@ -493,63 +493,92 @@ export const getAssetForPost = cache((post: Post): Asset | undefined => {
   return getAssetBySlug(postAssetKind(post.asset.type), post.asset.name)
 })
 
-// ---------------------------------------------------------------- feed
+// ---------------------------------------------------------------- projects
 
-/** One row in Browse / the Home "latest" feed — any content type. */
+export interface Project extends Note {
+  status?: "experiment" | "in-progress" | "available" | "archived"
+}
+
+export const PROJECT_STATUS_LABELS = {
+  experiment: "Experiment", "in-progress": "In progress", available: "Available", archived: "Archived",
+} as const
+
+export const getProjects = cache((): Project[] => markdownFiles("projects").map((file) => {
+  const { data, content } = matter(fs.readFileSync(path.join(CONTENT_DIR, "projects", file), "utf8"))
+  if (data.status && !Object.hasOwn(PROJECT_STATUS_LABELS, data.status)) {
+    throw new Error(`Invalid project status in ${file}: ${data.status}`)
+  }
+  return { ...data, slug: data.slug ?? file.replace(/\.md$/, ""), tags: data.tags ?? [],
+    date: isoDate(data.date), html: marked.parse(content, { async: false }), markdown: content.trim() } as Project
+}).sort((a, b) => b.date.localeCompare(a.date)))
+
+export const getProjectBySlug = cache((slug: string): Project | undefined => getProjects().find((p) => p.slug === slug))
+
+/** One inventory for human navigation, search, feeds, and machine indexes. */
+export const getContentEntries = cache(() => {
+  const entries = [
+  ...getProjects().map((item) => ({ collection: CONTENT_COLLECTION.projects, item })),
+  ...getNotes().map((item) => ({ collection: CONTENT_COLLECTION.notes, item })),
+  ...getAllPosts().map((item) => ({ collection: CONTENT_COLLECTION.posts, item })),
+  ...getAssets("skill").map((item) => ({ collection: CONTENT_COLLECTION.skills, item })),
+  ...getAssets("connector").map((item) => ({ collection: CONTENT_COLLECTION.connectors, item })),
+  ...getWorkshops().map((item) => ({ collection: CONTENT_COLLECTION.workshops, item })),
+].sort((a, b) => b.item.date.localeCompare(a.item.date) || a.item.title.localeCompare(b.item.title))
+  const urls = new Set<string>()
+  for (const { collection, item } of entries) {
+    const url = `${collection.basePath}/${item.slug}`
+    if (urls.has(url)) throw new Error(`Duplicate content URL: ${url}`)
+    urls.add(url)
+  }
+  return entries
+})
+
 export interface FeedItem {
   title: string
   description: string
   href: string
-  /** Row meta label, e.g. "Post", "Skill", "Connector". */
+  /** Format is useful metadata; group is the public navigation section. */
   typeLabel: string
-  /** Browse filter key. */
-  type: "posts" | "skills" | "connectors" | "workshops" | "notes"
+  type: ContentFormat
+  group: ContentGroup
   date: string
 }
 
-export const getFeedItems = cache((): FeedItem[] => {
-  const notes: FeedItem[] = getNotes().map((b) => ({
-    title: b.title,
-    description: b.description,
-    href: `/notes/${b.slug}`,
-    typeLabel: "Note",
-    type: "notes",
-    date: b.date,
-  }))
-  const posts: FeedItem[] = getAllPosts().map((p) => ({
-    title: p.title,
-    description: p.description,
-    href: `/posts/${p.slug}`,
-    typeLabel: "Post",
-    type: "posts",
-    date: p.date,
-  }))
-  const skills: FeedItem[] = getAssets("skill").map((a) => ({
-    title: a.title,
-    description: a.description,
-    href: `/skills/${a.slug}`,
-    typeLabel: "Skill",
-    type: "skills",
-    date: a.date,
-  }))
-  const connectors: FeedItem[] = getAssets("connector").map((a) => ({
-    title: a.title,
-    description: a.description,
-    href: `/connectors/${a.slug}`,
-    typeLabel: "Connector",
-    type: "connectors",
-    date: a.date,
-  }))
-  const workshops: FeedItem[] = getWorkshops().map((w) => ({
-    title: w.title,
-    description: w.description,
-    href: `/workshops/${w.slug}`,
-    typeLabel: "Workshop",
-    type: "workshops",
-    date: w.date,
-  }))
-  return [...notes, ...posts, ...skills, ...connectors, ...workshops]
-})
+export const getFeedItems = cache((): FeedItem[] => getContentEntries().map(({ collection, item }) => ({
+  title: item.title, description: item.description, href: `${collection.basePath}/${item.slug}`,
+  typeLabel: collection.singularLabel, type: collection.key, group: collection.group, date: item.date,
+})))
+
+/** The newest note leads automatically. An optional preview selects a real
+ * result; ordinary markdown images and video posters need no extra fields. */
+export function getEntryPreview(item: Note | Project): { src: string; alt: string } | undefined {
+  if (item.preview) return item.preview
+  if (item.video) return { src: item.video.poster, alt: item.video.caption ?? item.title }
+  let preview: { src: string; alt: string } | undefined
+  marked.walkTokens(marked.lexer(item.markdown), (token) => {
+    if (!preview && token.type === "image" && !PLACEHOLDER_SCHEME.test(token.href)) {
+      preview = { src: token.href, alt: token.text }
+    }
+  })
+  return preview
+}
+
+/** Related reading uses authored links and shared tags, with recency as a
+ * tie-breaker. Prefer a note about the work; never suggest the current page. */
+export function getNextRead(href: string): FeedItem | undefined {
+  const entries = getContentEntries()
+  const current = entries.find(({ collection, item }) => `${collection.basePath}/${item.slug}` === href)
+  if (!current) return undefined
+  const candidates = entries.flatMap(({ collection, item }) => {
+    const candidateHref = `${collection.basePath}/${item.slug}`
+    if (candidateHref === href) return []
+    const score = item.tags.filter((tag) => current.item.tags.includes(tag)).length
+      + (current.item.markdown.includes(`](${candidateHref})`) ? 4 : 0)
+      + (item.markdown.includes(`](${href})`) ? 4 : 0)
+    return score ? [{ href: candidateHref, group: collection.group, score }] : []
+  }).sort((a, b) => Number(b.group === "notes") - Number(a.group === "notes") || b.score - a.score)
+  return getFeedItems().find((item) => item.href === candidates[0]?.href)
+}
 
 /** Word count / 200wpm, rounded up to at least 1 — the post byline's read time. */
 export function readTime(markdown: string): number {

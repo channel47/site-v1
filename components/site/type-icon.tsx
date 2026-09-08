@@ -9,6 +9,7 @@ const BITS: Record<
   ContentTypeKey,
   ReadonlyArray<readonly [number, number, number, number]>
 > = {
+  projects: [[1, 1, 14, 6], [1, 9, 6, 6], [9, 9, 6, 6]],
   notes: [
     [1, 1, 6, 14],
     [9, 1, 6, 6],

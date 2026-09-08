@@ -6,11 +6,11 @@ export const alt = SITE_NAME
 export const size = OG_SIZE
 export const contentType = OG_CONTENT_TYPE
 export function generateStaticParams() {
-  return getContentEntries().filter((e) => e.collection.group === "notes").map(({ item }) => ({ slug: item.slug }))
+  return getContentEntries().filter((e) => e.collection.group === "projects").map(({ item }) => ({ slug: item.slug }))
 }
 export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const entry = getContentEntries().find((e) => e.collection.group === "notes" && e.item.slug === slug)
+  const entry = getContentEntries().find((e) => e.collection.group === "projects" && e.item.slug === slug)
   if (!entry) notFound()
-  return renderOgImage({ kicker: "Note", title: entry.item.title, description: entry.item.description, accent: TYPE_ACCENTS.note })
+  return renderOgImage({ kicker: "Project", title: entry.item.title, description: entry.item.description, accent: TYPE_ACCENTS.skill })
 }

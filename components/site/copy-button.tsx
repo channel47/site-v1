@@ -82,9 +82,10 @@ export function CopyButton({
         className="icon-btn dt-share-btn dt-share-btn-label"
         onClick={copy}
         title={title}
+        data-state={state}
         aria-live="polite"
       >
-        <Glyph size={13}>{PATHS.copy}</Glyph>
+        <Glyph size={13}>{state === "copied" ? PATHS.check : PATHS.copy}</Glyph>
         {state === "copied" ? "Copied ✓" : state === "failed" ? "Couldn't copy" : label}
       </button>
     )
@@ -96,7 +97,8 @@ export function CopyButton({
       className={boxed ? "icon-btn dt-share-btn" : "icon-btn"}
       onClick={copy}
       title={title}
-      aria-label={title}
+      data-state={state}
+      aria-label={state === "copied" ? "Copied" : state === "failed" ? "Couldn’t copy. Try again." : title}
       aria-live="polite"
     >
       <Glyph size={14}>{state === "copied" ? PATHS.check : PATHS[glyph]}</Glyph>

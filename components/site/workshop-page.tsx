@@ -1,5 +1,4 @@
 import type { CSSProperties } from "react"
-import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { SiteHeader } from "@/components/site/header"
@@ -10,34 +9,19 @@ import { Faq } from "@/components/site/faq"
 import { ShareRow } from "@/components/site/share-row"
 import { SkoolIcon } from "@/components/site/social-icons"
 import {
-  ASSET_DIRS,
   ASSET_LABELS,
   getAssetBySlug,
   getWorkshopBySlug,
-  getWorkshops,
   shortDate,
 } from "@/lib/content"
 import { LINKS, TYPE_COLORS } from "@/lib/site-content"
-import { pageMetadata, SITE_URL } from "@/lib/seo"
+import { JsonLd } from "./json-ld"
+import { noteGraph, SITE_URL } from "@/lib/seo"
 
 interface Props {
   params: Promise<{ slug: string }>
 }
 
-export function generateStaticParams() {
-  return getWorkshops().map((w) => ({ slug: w.slug }))
-}
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params
-  const w = getWorkshopBySlug(slug)
-  if (!w) return {}
-  return pageMetadata({
-    title: w.title,
-    description: w.description,
-    path: `/workshops/${w.slug}`,
-  })
-}
 
 function longDate(iso: string): string {
   const d = new Date(`${iso}T00:00:00Z`)
@@ -61,19 +45,20 @@ export default async function WorkshopPage({ params }: Props) {
   if (!w) notFound()
   const relatedKind = w.relatedAsset?.type
   const related = w.relatedAsset ? getAssetBySlug(w.relatedAsset.type, w.relatedAsset.slug) : undefined
-  const relatedHref = related && relatedKind ? `/${ASSET_DIRS[relatedKind]}/${related.slug}` : undefined
+  const relatedHref = related && relatedKind ? `/projects/${related.slug}` : undefined
   const relatedLabel = relatedKind ? ASSET_LABELS[relatedKind] : undefined
-  const href = `/workshops/${w.slug}`
+  const href = `/notes/${w.slug}`
 
   return (
     <div className="st-page">
       <SiteHeader />
 
       <article className="st-shell" style={{ "--type-color": TYPE_COLORS.workshops } as CSSProperties}>
+        <JsonLd data={noteGraph(w)} />
         <header className="st-head">
           <Crumb
-            typeLabel="Workshops"
-            typeHref="/browse?type=workshops"
+            typeLabel="Notes"
+            typeHref="/browse?type=notes"
             typeColor={TYPE_COLORS.workshops}
             leaf={w.slug}
           />
@@ -151,8 +136,7 @@ export default async function WorkshopPage({ params }: Props) {
               target="_blank"
               rel="noopener"
               className="btn-solid"
-              style={{ "--btn-color": "var(--c-workshop)" } as CSSProperties}
-            >
+              >
               <SkoolIcon />
               Join Vibe Marketers →
             </a>
@@ -164,10 +148,9 @@ export default async function WorkshopPage({ params }: Props) {
           <div className="ws-cta">
             <p className="ws-cta-title">Get channel47 updates.</p>
             <p className="ws-cta-body">
-              Subscribe for occasional updates when I add a skill, connector,
-              or workshop.
+              Occasional emails with new projects, experiments, and notes. No fixed schedule.
             </p>
-            <Capture focusVariant="mauve" />
+            <Capture />
           </div>
         )}
 
@@ -188,13 +171,13 @@ export default async function WorkshopPage({ params }: Props) {
         {w.faqs?.length ? <Faq items={w.faqs} /> : null}
 
         <ShareRow
-          mdPath={`/workshops/${w.slug}.md`}
+          mdPath={`/notes/${w.slug}.md`}
           url={`${SITE_URL}${href}`}
           title={w.title}
         />
 
         <p className="dt-back">
-          <Link href="/browse?type=workshops">← All workshops</Link>
+          <Link href="/browse?type=notes">← All notes</Link>
         </p>
       </article>
 

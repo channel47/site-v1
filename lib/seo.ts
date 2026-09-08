@@ -1,6 +1,5 @@
 import type { Metadata } from "next"
 import {
-  ASSET_DIRS,
   type Asset,
   type FaqItem,
   type Note,
@@ -36,7 +35,7 @@ export const SITE_NAME = "channel47"
 /** The canonical positioning string: homepage meta description, WebSite/Org
  * schema description, and the llms.txt blockquote. One string, everywhere. */
 export const SITE_DESCRIPTION =
-  "Jackson Dean's public workshop for practical agentic systems: notes, skills, and MCP connectors, plus workshops hosted inside Vibe Marketers."
+  "Projects and notes by Jackson Dean. Software, AI experiments, and things I’m making and figuring out."
 
 export const AUTHOR_NAME = "Jackson Dean"
 
@@ -78,7 +77,7 @@ export function baseGraph() {
         name: AUTHOR_NAME,
         url: SITE_URL,
         description:
-          "Builds and shares agentic systems at channel47. 7 years buying media, and a mentor in the Vibe Marketers community.",
+          "Builds software, experiments with AI, and shares projects and notes at channel47. Buys media for a living.",
         worksFor: orgRef,
       },
       {
@@ -110,7 +109,7 @@ function breadcrumb(pageUrl: string, section: { name: string; url: string }, nam
 
 /** Per-post graph: BlogPosting + breadcrumb, anchored to the base entities. */
 export function postGraph(post: Post) {
-  const url = `${SITE_URL}/posts/${post.slug}`
+  const url = `${SITE_URL}/notes/${post.slug}`
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -129,7 +128,7 @@ export function postGraph(post: Post) {
         keywords: post.tags.join(", "),
         isPartOf: { "@id": WEBSITE_ID },
       },
-      breadcrumb(url, { name: "Posts", url: `${SITE_URL}/browse?type=posts` }, post.title),
+      breadcrumb(url, { name: "Notes", url: `${SITE_URL}/browse?type=notes` }, post.title),
     ],
   }
 }
@@ -153,17 +152,15 @@ function faqNodes(url: string, faqs: FaqItem[] | undefined) {
   ]
 }
 
-/** Per-note graph: TechArticle + breadcrumb, anchored to the base entities.
- * TechArticle (not SoftwareSourceCode) — a Note is a writeup of a system,
- * not an installable artifact living in a repo. */
-export function noteGraph(note: Note) {
-  const url = `${SITE_URL}/notes/${note.slug}`
+/** Writing uses Article, which also covers short, nontechnical notes. */
+export function noteGraph(note: Note, section: "notes" | "projects" = "notes") {
+  const url = `${SITE_URL}/${section}/${note.slug}`
   const videoId = `${url}#video`
   return {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "TechArticle",
+        "@type": "Article",
         "@id": `${url}#article`,
         headline: note.title,
         url,
@@ -178,7 +175,7 @@ export function noteGraph(note: Note) {
         isPartOf: { "@id": WEBSITE_ID },
         ...(note.video ? { video: { "@id": videoId } } : {}),
       },
-      breadcrumb(url, { name: "Notes", url: `${SITE_URL}/browse?type=notes` }, note.title),
+      breadcrumb(url, { name: section === "projects" ? "Projects" : "Notes", url: `${SITE_URL}/browse?type=${section}` }, note.title),
       ...(note.video
         ? [
             {
@@ -203,12 +200,7 @@ export function noteGraph(note: Note) {
  * SoftwareSourceCode is the honest type — these are installable source
  * artifacts living in a repo, not hosted applications. */
 export function assetGraph(asset: Asset) {
-  const path = ASSET_DIRS[asset.type]
-  const section =
-    asset.type === "skill"
-      ? { path, name: "Skills", indexUrl: `${SITE_URL}/browse?type=skills` }
-      : { path, name: "Connectors", indexUrl: `${SITE_URL}/browse?type=connectors` }
-  const url = `${SITE_URL}/${section.path}/${asset.slug}`
+  const url = `${SITE_URL}/projects/${asset.slug}`
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -227,7 +219,7 @@ export function assetGraph(asset: Asset) {
         keywords: asset.tags.join(", "),
         isPartOf: { "@id": WEBSITE_ID },
       },
-      breadcrumb(url, { name: section.name, url: section.indexUrl }, asset.title),
+      breadcrumb(url, { name: "Projects", url: `${SITE_URL}/browse?type=projects` }, asset.title),
       ...faqNodes(url, asset.faqs),
     ],
   }
@@ -266,28 +258,6 @@ export function pageMetadata({
       url,
       siteName: SITE_NAME,
       type: ogType,
-    },
-  }
-}
-
-/** Shared `generateMetadata` shape for the Skill/Connector detail routes —
- * identical except for the kind word in the title ("skill" / "MCP connector").
- * Uses `title.absolute` rather than a plain string: this suffix ("— a
- * {SITE_NAME} skill") differs from the root layout's plain "%s — {SITE_NAME}"
- * template, so it must bypass that template instead of being wrapped by it. */
-export function assetMetadata(asset: Asset, kindLabel: string): Metadata {
-  const path = ASSET_DIRS[asset.type]
-  const canonical = `/${path}/${asset.slug}`
-  return {
-    title: { absolute: `${asset.title} — a ${SITE_NAME} ${kindLabel}` },
-    description: asset.description,
-    alternates: { canonical },
-    openGraph: {
-      title: asset.title,
-      description: asset.description,
-      url: `${SITE_URL}${canonical}`,
-      siteName: SITE_NAME,
-      type: "website",
     },
   }
 }

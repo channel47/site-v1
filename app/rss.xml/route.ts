@@ -1,14 +1,11 @@
 import {
-  getAllPosts,
-  getAssets,
-  getNotes,
-  getWorkshops,
+  getContentEntries,
   type Asset,
   type Note,
   type Post,
   type Workshop,
 } from "@/lib/content"
-import { CONTENT_COLLECTION, absoluteUrl } from "@/lib/discovery"
+import { absoluteUrl } from "@/lib/discovery"
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo"
 
 /**
@@ -27,6 +24,7 @@ export const dynamic = "force-static"
 interface FeedEntry {
   title: string
   url: string
+  guid?: string
   description: string
   html: string
   date: string
@@ -86,31 +84,14 @@ function noteEntry(note: Note, url: string): FeedEntry {
 }
 
 export function GET() {
-  const entries: FeedEntry[] = [
-    ...getNotes().map((note) =>
-      noteEntry(
-        note,
-        absoluteUrl(SITE_URL, `${CONTENT_COLLECTION.notes.basePath}/${note.slug}`),
-      ),
-    ),
-    ...getAllPosts().map((p) =>
-      entry(p, absoluteUrl(SITE_URL, `${CONTENT_COLLECTION.posts.basePath}/${p.slug}`)),
-    ),
-    ...getAssets("skill").map((a) =>
-      entry(a, absoluteUrl(SITE_URL, `${CONTENT_COLLECTION.skills.basePath}/${a.slug}`)),
-    ),
-    ...getAssets("connector").map((a) =>
-      entry(
-        a,
-        absoluteUrl(SITE_URL, `${CONTENT_COLLECTION.connectors.basePath}/${a.slug}`),
-      ),
-    ),
-    ...getWorkshops()
-      .filter((w) => w.status === "past")
-      .map((w) =>
-        entry(w, absoluteUrl(SITE_URL, `${CONTENT_COLLECTION.workshops.basePath}/${w.slug}`)),
-      ),
-  ].sort((a, b) => b.date.localeCompare(a.date))
+  const entries: FeedEntry[] = getContentEntries()
+    .filter(({ item }) => !("duration" in item) || item.status === "past")
+    .map(({ collection, item }) => {
+      const url = absoluteUrl(SITE_URL, `${collection.basePath}/${item.slug}`)
+      const result = "video" in item ? noteEntry(item, url) : entry(item, url)
+      // Keep historical RSS identity so URL consolidation does not republish old entries.
+      return { ...result, guid: `${SITE_URL}/${collection.key}/${item.slug}` }
+    })
 
   const rfc822 = (iso: string) => new Date(`${iso}T12:00:00Z`).toUTCString()
 
@@ -120,7 +101,7 @@ export function GET() {
         "    <item>",
         `      <title>${esc(e.title)}</title>`,
         `      <link>${e.url}</link>`,
-        `      <guid isPermaLink="true">${e.url}</guid>`,
+        `      <guid isPermaLink="true">${e.guid ?? e.url}</guid>`,
         `      <pubDate>${rfc822(e.date)}</pubDate>`,
         `      <description>${esc(e.description)}</description>`,
         `      <content:encoded>${cdata(e.html)}</content:encoded>`,

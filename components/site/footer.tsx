@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { LINKS } from "@/lib/site-content"
+import { CATEGORIES, LINKS } from "@/lib/site-content"
 import { ThemeToggle } from "./theme-toggle"
 import { XIcon, GitHubIcon, LinkedInIcon, SkoolIcon } from "./social-icons"
 
@@ -17,14 +17,7 @@ const GROUPS = [
   {
     key: "explore",
     label: "Explore",
-    links: [
-      // No dedicated per-type listing pages — Browse's ?type= filters are
-      // the canonical indexes for all four content types.
-      { href: "/browse?type=notes", label: "Notes" },
-      { href: "/browse?type=skills", label: "Skills" },
-      { href: "/browse?type=connectors", label: "Connectors" },
-      { href: "/browse?type=workshops", label: "Workshops" },
-    ],
+    links: CATEGORIES.map(({ href, title }) => ({ href, label: title })),
   },
   {
     key: "work",
@@ -93,6 +86,8 @@ export function SiteFooter() {
               key={group.key}
               className="uf-body"
               data-open={openGroup === group.key}
+              inert={openGroup !== group.key}
+              aria-hidden={openGroup !== group.key}
             >
               <div>
                 <div className="sf-group-links">

@@ -137,7 +137,7 @@ when a capitalized "Channel 47"/"Channel47" literal leaks outside
 ## Post-deploy checklist (one-time)
 
 1. Verify live: `curl https://channel47.dev/robots.txt`, `/llms.txt`,
-   `/skills/creative-strategist.md`, `curl -H 'Accept: text/markdown'
+   `/projects/creative-strategist.md`, `curl -H 'Accept: text/markdown'
    https://channel47.dev/notes/google-ads-mcp`, `/api`, `/api/search?q=google+ads`.
    Or re-run the auditor: `python3 scripts/audit_ai_readiness.py
    https://channel47.dev` (baseline before this work: **3/14, 21%** —
@@ -203,3 +203,11 @@ real agent traffic consumes these today. Speculative but near-free:
 Nobody can promise "you will be ChatGPT's answer" — the promise is maximal
 retrievability, extractability, and corroboration, plus a monthly loop that
 shows whether the needle moves.
+
+## Current content taxonomy
+
+The public sections are Projects and Notes. `lib/discovery.ts` maps retained
+source formats into these two sections; `getContentEntries()` provides the
+shared inventory. Search retains its format `type` and adds `group` for section
+membership. Canonical HTML, markdown, and social images use `/projects/` or
+`/notes/`; old detail URLs redirect.

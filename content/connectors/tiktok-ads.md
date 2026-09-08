@@ -1,5 +1,5 @@
 ---
-title: "tiktok-ads-mcp — Let your agent read and manage TikTok Ads"
+title: "TikTok Ads MCP"
 slug: tiktok-ads
 description: "An MCP server for TikTok advertising accounts, campaign entities, reporting, and previewed mutations."
 repo: https://github.com/channel47/mcps/tree/main/tiktok-ads

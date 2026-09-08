@@ -3,121 +3,104 @@ import Link from "next/link"
 import { SiteHeader } from "@/components/site/header"
 import { SiteFooter } from "@/components/site/footer"
 import { Capture } from "@/components/site/capture"
-import { HomeCats, type CategoryRow } from "@/components/site/home-cats"
-import type { Cover } from "@/components/site/cover-card"
-import {
-  getAssets,
-  getNotes,
-  getWorkshops,
-  shortDate,
-} from "@/lib/content"
-import { CATEGORIES, HOME, type ContentTypeKey } from "@/lib/site-content"
+import { TypeIcon } from "@/components/site/type-icon"
+import { getEntryPreview, getFeedItems, getNotes, shortDate } from "@/lib/content"
+import { HOME } from "@/lib/site-content"
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/" },
-}
+export const metadata: Metadata = { alternates: { canonical: "/" } }
 
-/** Two most recent covers per active content type. */
-function coversFor(key: ContentTypeKey): Cover[] {
-  if (key === "notes") {
-    return getNotes()
-      .slice(0, 2)
-      .map((b) => ({
-        title: b.title,
-        meta: `Note · ${shortDate(b.date)}`,
-        href: `/notes/${b.slug}`,
-        type: "notes" as const,
-      }))
-  }
-  if (key === "skills") {
-    return getAssets("skill")
-      .slice(0, 2)
-      .map((a) => ({
-        title: a.title,
-        meta: `Skill · ${shortDate(a.date)}`,
-        href: `/skills/${a.slug}`,
-        type: "skills" as const,
-      }))
-  }
-  if (key === "connectors") {
-    return getAssets("connector")
-      .slice(0, 2)
-      .map((a) => ({
-        title: a.title,
-        meta: `Connector · ${shortDate(a.date)}`,
-        href: `/connectors/${a.slug}`,
-        type: "connectors" as const,
-      }))
-  }
-  if (key === "posts") return []
-  return getWorkshops()
-    .slice(0, 2)
-    .map((w) => ({
-      title: w.title,
-      meta: `Workshop · ${shortDate(w.date)}`,
-      href: `/workshops/${w.slug}`,
-      type: "workshops" as const,
-    }))
-}
-
-/**
- * Home — broadened hero whose primary action is a lean inline email
- * capture (subscribe, not booking). Below that: category rows, the
- * "Browse all →" link, and the bio ahead of the footer — the hero capture
- * is the page's only signup form. The working-session offer has been
- * demoted from primary CTA and now lives only at /session, linked from
- * the footer.
- */
 export default function Page() {
-  const rows: CategoryRow[] = CATEGORIES.map((cat) => ({
-    ...cat,
-    covers: coversFor(cat.key),
-  }))
+  const items = getFeedItems()
+  const latest = getNotes()[0]
+  const preview = latest ? getEntryPreview(latest) : undefined
+  const latestHref = latest ? `/notes/${latest.slug}` : undefined
+  const notes = items.filter((item) => item.group === "notes" && item.href !== latestHref).slice(0, 3)
+  const projects = items.filter((item) => item.group === "projects")
+  const selected = HOME.selectedProjects.flatMap((slug) => projects.filter((item) => item.href === `/projects/${slug}`))
+  const selectedProjects = [...selected, ...projects.filter((item) => !selected.includes(item))].slice(0, 3)
 
   return (
     <div className="st-page">
       <SiteHeader home />
+      <main className="st-shell st-shell-full editorial-home">
+        <header className="home-intro">
+          <h1 className="an-blur">{HOME.headline}</h1>
+          <p className="an-up" style={{ animationDelay: ".2s" }}>{HOME.subhead}</p>
+        </header>
 
-      <main className="st-shell st-shell-full">
-        <div className="home-hero">
-          <h1 className="home-h1 an-blur">{HOME.headline}</h1>
-          <p className="home-sub an-up" style={{ animationDelay: ".2s" }}>
-            {HOME.subhead}
-          </p>
-          <div className="home-hero-capture an-up" style={{ animationDelay: ".32s" }}>
-            <Capture helper={HOME.heroCaptureHelper} />
-          </div>
+        {latest ? (
+          <section className="home-feature an-up" style={{ animationDelay: ".32s" }} aria-labelledby="latest-heading">
+            <p className="editorial-label" id="latest-heading"><TypeIcon type="notes" /> Latest note</p>
+            <Link href={latestHref!} className={`feature-link${preview ? " feature-with-image" : ""}`} aria-labelledby="featured-title">
+              <div className="feature-copy">
+                <h2 id="featured-title">{latest.title}</h2>
+                <p>{latest.description}</p>
+                <span className="feature-foot"><time dateTime={latest.date}>{shortDate(latest.date)}</time><span className="feature-read">Read the note <span aria-hidden="true">↗</span></span></span>
+              </div>
+              {preview ? (
+                <figure className="feature-image">
+                  <img src={preview.src} alt={preview.alt} fetchPriority="high" />
+                </figure>
+              ) : null}
+            </Link>
+          </section>
+        ) : null}
+
+        <div className="home-collections">
+          {notes.length ? (
+            <section className="home-note-selection" aria-labelledby="notes-heading">
+              <div className="collection-heading">
+                <h2 id="notes-heading">More notes</h2>
+                <Link href="/browse?type=notes">All notes <span aria-hidden="true">↗</span></Link>
+              </div>
+              <ul className="selected-notes">
+                {notes.map((item) => (
+                  <li key={item.href}>
+                    <Link href={item.href} className="selected-note">
+                      <h3>{item.title}</h3>
+                      <p>{item.description}</p>
+                      <time dateTime={item.date}>{shortDate(item.date)}</time>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
+          {selectedProjects.length ? (
+            <section className="home-project-selection" aria-labelledby="projects-heading">
+              <div className="collection-heading">
+                <h2 id="projects-heading">Selected projects</h2>
+                <Link href="/browse?type=projects">All projects <span aria-hidden="true">↗</span></Link>
+              </div>
+              <ul className="selected-projects">
+                {selectedProjects.map((item) => (
+                  <li key={item.href}>
+                    <Link href={item.href} className="selected-project">
+                      <TypeIcon type={item.type} className="selected-project-icon" />
+                      <span><span className="selected-project-title">{item.title}<span aria-hidden="true"> ↗</span></span><span className="selected-project-description">{item.description}</span></span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
         </div>
 
-        <HomeCats rows={rows} defaultOpen="notes" />
-
-        <p className="home-browse-all">
-          <Link href="/browse" className="home-browse-all-link">
-            Browse all →
-          </Link>
-        </p>
-
-        <section aria-label="About Jackson" className="home-bio">
-          <div className="home-bio-inner">
+        <section className="home-correspondence" aria-label="About Jackson and email updates">
+          <div>
             <div className="home-bio-id">
-              <img
-                src={HOME.avatar}
-                alt={HOME.name}
-                width={64}
-                height={64}
-                className="home-bio-avatar"
-              />
-              <span className="home-bio-text">
-                <span className="home-bio-name">{HOME.name}</span>
-                <span className="home-bio-tag">{HOME.tagline}</span>
-              </span>
+              <img src={HOME.avatar} alt="" width={48} height={48} className="home-bio-avatar" />
+              <span className="home-bio-text"><span className="home-bio-name">{HOME.name}</span><span className="home-bio-tag">{HOME.tagline}</span></span>
             </div>
             <p className="home-bio-note">{HOME.bio}</p>
           </div>
+          <div className="home-subscribe">
+            <h2>Follow what I’m working on.</h2>
+            <Capture />
+            <Link href="/rss.xml" className="rss-alternative">Or subscribe via RSS <span aria-hidden="true">↗</span></Link>
+          </div>
         </section>
-
       </main>
-
       <SiteFooter />
     </div>
   )

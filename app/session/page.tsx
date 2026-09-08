@@ -41,12 +41,6 @@ function OfferFacts({ showButton, className }: { showButton: boolean; className:
         </a>
       ) : null}
       <p className="session-card-microcopy">{SESSION.offer.microcopy}</p>
-      {showButton ? (
-        <div className="session-card-testimonial">
-          <p className="session-card-quote">&ldquo;{SESSION.testimonial.quote}&rdquo;</p>
-          <p className="session-card-attribution">{SESSION.testimonial.attribution}</p>
-        </div>
-      ) : null}
     </div>
   )
 }
@@ -89,9 +83,9 @@ export default function SessionPage() {
           </section>
 
           <section className="session-section">
-            <h2 className="session-h2 st-section-h2">Systems I&apos;ve actually built</h2>
+            <h2 className="session-h2 st-section-h2">From my own work</h2>
             <p className="session-proof-lede">
-              Builds that came out of the same approach we&apos;d use in a session:
+              Notes on tools I’ve built and experiments I’ve worked through:
             </p>
             <div className="session-proof-list">
               {notes.map((note) => (
@@ -109,21 +103,6 @@ export default function SessionPage() {
                   </span>
                 </Link>
               ))}
-              {/* Hardcoded in-progress entry for the weekly KPI-review build,
-                  which has no detail page yet. Remove this once a real Note
-                  ships for it — the section will then come entirely from
-                  getNotes() again. */}
-              <Link href={SESSION.inProgressBuild.href} className="session-proof-card">
-                <span>
-                  <span className="session-proof-tag session-proof-tag-progress">
-                    {SESSION.inProgressBuild.tag}
-                  </span>
-                  <span className="session-proof-title">{SESSION.inProgressBuild.title}</span>
-                </span>
-                <span className="session-proof-arrow" aria-hidden>
-                  →
-                </span>
-              </Link>
             </div>
           </section>
 

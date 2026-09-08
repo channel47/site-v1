@@ -1,6 +1,6 @@
-import { getAllPosts, getAssets, getNotes, getWorkshops } from "@/lib/content"
+import { getContentEntries } from "@/lib/content"
 import {
-  CONTENT_COLLECTION,
+  type ContentGroup,
   type ContentCollection,
   type SearchResultType,
 } from "@/lib/discovery"
@@ -18,6 +18,7 @@ interface Doc {
   url: string
   markdownUrl: string
   type: SearchResultType
+  group: ContentGroup
   description: string
   date: string
   haystack: { title: string; tags: string; description: string; body: string }
@@ -40,6 +41,7 @@ function doc(
     url,
     markdownUrl: `${url}.md`,
     type: collection.searchType,
+    group: collection.group,
     description: item.description,
     date: item.date,
     haystack: {
@@ -52,13 +54,7 @@ function doc(
 }
 
 function corpus(): Doc[] {
-  return [
-    ...getNotes().map((b) => doc(CONTENT_COLLECTION.notes, b)),
-    ...getAllPosts().map((p) => doc(CONTENT_COLLECTION.posts, p)),
-    ...getAssets("skill").map((a) => doc(CONTENT_COLLECTION.skills, a)),
-    ...getAssets("connector").map((a) => doc(CONTENT_COLLECTION.connectors, a)),
-    ...getWorkshops().map((w) => doc(CONTENT_COLLECTION.workshops, w)),
-  ]
+  return getContentEntries().map(({ collection, item }) => doc(collection, item))
 }
 
 /** Per-term field scoring; a doc must match every term somewhere to rank. */
@@ -96,6 +92,7 @@ export async function GET(req: Request) {
       url: d.url,
       markdownUrl: d.markdownUrl,
       type: d.type,
+      group: d.group,
       description: d.description,
       date: d.date,
     }))

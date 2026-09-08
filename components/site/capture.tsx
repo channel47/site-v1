@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useId, useState } from "react"
 import { track } from "@vercel/analytics"
 import { CAPTURE, LINKS } from "@/lib/site-content"
 
@@ -15,19 +15,18 @@ type Status = "idle" | "sending" | "subscribed" | "dormant" | "error"
 export function Capture({
   helper = CAPTURE.helper,
   cta = CAPTURE.cta,
-  focusVariant = "gradient",
 }: {
   helper?: string
   cta?: string
-  /** The focus underline: the sitewide 6-stop gradient, or a single-hue
-   * mauve variant for Workshops-specific capture contexts. */
-  focusVariant?: "gradient" | "mauve"
+
 }) {
+  const messageId = useId()
   const [email, setEmail] = useState("")
   const [status, setStatus] = useState<Status>("idle")
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (status === "sending") return
     if (!/.+@.+\..+/.test(email.trim())) {
       track("newsletter_subscribe", { status: "invalid", intent: "warm" })
       setStatus("error")
@@ -64,7 +63,7 @@ export function Capture({
   if (status === "subscribed") {
     return (
       <div className="ea-formwrap">
-        <div className="ea-ok">
+        <div className="ea-ok" role="status">
           <svg
             className="ok-check"
             width="20"
@@ -120,9 +119,14 @@ export function Capture({
 
   return (
     <div className="ea-formwrap">
-      <form className="ea-formrow" onSubmit={submit}>
+      <form className="ea-formrow" onSubmit={submit} aria-busy={status === "sending"}>
         <input
-          className={`ea-in${focusVariant === "mauve" ? " ea-in-mauve" : ""}`}
+          className="ea-in"
+          autoComplete="email"
+          name="email"
+          required
+          aria-invalid={status === "error"}
+          aria-describedby={messageId}
           type="email"
           value={email}
           onChange={(e) => {
@@ -134,15 +138,16 @@ export function Capture({
           style={{ flex: 1, minWidth: 0 }}
         />
         <button type="submit" className="ea-btn" disabled={status === "sending"}>
-          {status === "sending" ? "…" : cta}
+          <span style={{ visibility: status === "sending" ? "hidden" : undefined }}>{cta}</span>
+          {status === "sending" ? <span className="ea-sending" role="status">Sending…</span> : null}
         </button>
       </form>
       {status === "error" ? (
-        <p className="ea-form-error">
+        <p className="ea-form-error" id={messageId} role="alert">
           That didn&apos;t go through — check the address and try again.
         </p>
       ) : (
-        <p className="ea-helper">{helper}</p>
+        <p className="ea-helper" id={messageId}>{helper}</p>
       )}
     </div>
   )

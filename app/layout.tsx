@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Analytics } from "@vercel/analytics/next"
 import { JsonLd } from "@/components/site/json-ld"
+import { BrowseNavigation } from "@/components/site/browse-navigation"
 import { PostHogAnalytics } from "@/components/site/posthog"
 import { baseGraph, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo"
 import "./globals.css"
@@ -9,12 +10,12 @@ import "./globals.css"
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} — practical agentic systems for everyday work`,
+    default: `${SITE_NAME} — things I’m making and figuring out`,
     template: `%s — ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
   openGraph: {
-    title: `${SITE_NAME} — practical agentic systems for everyday work`,
+    title: `${SITE_NAME} — things I’m making and figuring out`,
     description: SITE_DESCRIPTION,
     url: SITE_URL,
     siteName: SITE_NAME,
@@ -57,7 +58,7 @@ export default function RootLayout({
         />
         {/* Site-wide entity graph (Organization + Person + WebSite) — see lib/seo.ts. */}
         <JsonLd data={baseGraph()} />
-        {children}
+        <BrowseNavigation>{children}</BrowseNavigation>
         <PostHogAnalytics />
         <Analytics />
       </body>

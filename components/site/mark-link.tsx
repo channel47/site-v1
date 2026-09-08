@@ -15,6 +15,7 @@ import {
 export function MarkLink() {
   return (
     <Link href="/" aria-label="channel47 — home" className="st-mark">
+      <span className="brand-word" aria-hidden="true">channel</span>
       <svg
         viewBox={MARK_VIEWBOX}
         width={MARK_WIDTH}

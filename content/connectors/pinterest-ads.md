@@ -1,5 +1,5 @@
 ---
-title: "pinterest-ads-mcp — Query performance with attribution intact"
+title: "Pinterest Ads MCP"
 slug: pinterest-ads
 description: "An MCP server for Pinterest advertising accounts, campaign entities, analytics, and previewed mutations."
 repo: https://github.com/channel47/mcps/tree/main/pinterest-ads

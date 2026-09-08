@@ -13,14 +13,14 @@ export const PUBLIC_PAGES = [
     path: "/",
     title: "Home",
     description:
-      "channel47 homepage: notes, skills, MCP connectors, and workshops for practical agentic systems.",
+      "Projects and notes by Jackson Dean: software, experiments, and things learned along the way.",
     lastModified: "content",
   },
   {
     path: "/browse",
     title: "Browse — the full library, filterable by type",
     description:
-      "Browse channel47 notes, skills, MCP connectors, and workshops.",
+      "Browse channel47 projects and notes.",
     lastModified: "content",
   },
   {
@@ -45,15 +45,31 @@ export const PUBLIC_PAGES = [
   },
 ] as const
 
+/** Public sections are independent of the formats retained at existing URLs. */
+export const CONTENT_GROUPS = [
+  { key: "projects", title: "Projects", icon: "projects", href: "/browse?type=projects",
+    desc: "Software, tools, and experiments. Things I’m making for myself and sharing along the way.", linkText: "Browse all projects →" },
+  { key: "notes", title: "Notes", icon: "notes", href: "/browse?type=notes",
+    desc: "What I’m trying, learning, and figuring out. Short observations and longer write-ups about the work.", linkText: "Browse all notes →" },
+] as const
+export type ContentGroup = (typeof CONTENT_GROUPS)[number]["key"]
+
 export const CONTENT_COLLECTION = {
+  projects: {
+    key: "projects", group: "projects", segment: "projects", searchType: "project",
+    label: "Projects", singularLabel: "Project", description: "Software, tools, and experiments",
+    routeDescription: "Projects", basePath: "/projects", indexPath: "/browse?type=projects",
+    htmlPattern: "/projects/:slug", markdownPattern: "/projects/:slug.md",
+  },
   notes: {
     key: "notes",
+    group: "notes",
     segment: "notes",
     searchType: "note",
     label: "Notes",
     singularLabel: "Note",
-    description: "Annotated blueprints for real agentic systems",
-    routeDescription: "Notes (annotated blueprints of real systems)",
+    description: "Observations, experiments, and write-ups",
+    routeDescription: "Notes (observations, experiments, and write-ups)",
     basePath: "/notes",
     indexPath: "/browse?type=notes",
     htmlPattern: "/notes/:slug",
@@ -61,55 +77,59 @@ export const CONTENT_COLLECTION = {
   },
   posts: {
     key: "posts",
+    group: "notes",
     segment: "posts",
     searchType: "post",
     label: "Posts",
     singularLabel: "Post",
     description: "First-person stories and updates",
     routeDescription: "Posts",
-    basePath: "/posts",
-    indexPath: "/browse?type=posts",
-    htmlPattern: "/posts/:slug",
-    markdownPattern: "/posts/:slug.md",
+    basePath: "/notes",
+    indexPath: "/browse?type=notes",
+    htmlPattern: "/notes/:slug",
+    markdownPattern: "/notes/:slug.md",
   },
   skills: {
     key: "skills",
+    group: "projects",
     segment: "skills",
     searchType: "skill",
     label: "Skills",
     singularLabel: "Skill",
-    description: "Installable agent skills, many born in real ad accounts",
+    description: "Installable agent skills for research and creative production",
     routeDescription: "Skills (installable agent skills)",
-    basePath: "/skills",
-    indexPath: "/browse?type=skills",
-    htmlPattern: "/skills/:slug",
-    markdownPattern: "/skills/:slug.md",
+    basePath: "/projects",
+    indexPath: "/browse?type=projects",
+    htmlPattern: "/projects/:slug",
+    markdownPattern: "/projects/:slug.md",
   },
   connectors: {
     key: "connectors",
+    group: "projects",
     segment: "connectors",
     searchType: "connector",
     label: "Connectors",
     singularLabel: "Connector",
-    description: "MCP servers for the tools recurring work runs on, starting with ad platforms",
-    routeDescription: "Connectors (MCP servers for the tools recurring work runs on)",
-    basePath: "/connectors",
-    indexPath: "/browse?type=connectors",
-    htmlPattern: "/connectors/:slug",
-    markdownPattern: "/connectors/:slug.md",
+    description: "MCP servers for advertising platforms",
+    routeDescription: "Connectors (MCP servers for advertising platforms)",
+    basePath: "/projects",
+    indexPath: "/browse?type=projects",
+    htmlPattern: "/projects/:slug",
+    markdownPattern: "/projects/:slug.md",
   },
   workshops: {
     key: "workshops",
+    group: "notes",
     segment: "workshops",
     searchType: "workshop",
     label: "Workshops",
     singularLabel: "Workshop",
     description: "Recorded and upcoming live build sessions",
     routeDescription: "Workshops (session notes)",
-    basePath: "/workshops",
-    indexPath: "/browse?type=workshops",
-    htmlPattern: "/workshops/:slug",
-    markdownPattern: "/workshops/:slug.md",
+    basePath: "/notes",
+    indexPath: "/browse?type=notes",
+    htmlPattern: "/notes/:slug",
+    markdownPattern: "/notes/:slug.md",
   },
 } as const
 
@@ -117,6 +137,15 @@ export const CONTENT_COLLECTIONS = Object.values(CONTENT_COLLECTION)
 
 export type ContentCollection = (typeof CONTENT_COLLECTIONS)[number]
 export type SearchResultType = ContentCollection["searchType"]
+export type ContentFormat = ContentCollection["key"]
+
+export function contentGroup(format: ContentFormat): ContentGroup {
+  return CONTENT_COLLECTION[format].group
+}
+
+export function isContentFormat(value: string): value is ContentFormat {
+  return Object.hasOwn(CONTENT_COLLECTION, value)
+}
 
 const CONTENT_SECTION_PATTERN = CONTENT_COLLECTIONS.map((c) => c.segment).join("|")
 

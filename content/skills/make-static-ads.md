@@ -1,7 +1,7 @@
 ---
-title: "/make-static-ads — Push image generation past the safe default"
+title: "Make Static Ads"
 slug: make-static-ads
-description: "Develops complete static ad concepts, generates native pilots, protects product fidelity, and packages adaptive platform assets."
+description: "Generates complete static ads from brand references, checks product details, and adapts approved concepts for different placements."
 repo: https://github.com/channel47/skills/tree/main/skills/creative-production/make-static-ads
 install: npx skills add channel47/skills --skill make-static-ads
 date: 2026-07-24
@@ -10,8 +10,8 @@ pairing: "See the experiment that produced it in [I was using Codex to write pro
 ---
 
 Make Static Ads turns a campaign brief and real brand references into complete
-static ad concepts, approved pilots, adaptive platform formats, and a packaged
-delivery folder.
+static ad concepts, then adapts approved images for different placements and
+organizes the files for delivery.
 
 ## Workflow
 

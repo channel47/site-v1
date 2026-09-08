@@ -1,5 +1,5 @@
 ---
-title: "meta-ads-mcp — Give your agent a live view of Meta Ads"
+title: "Meta Ads MCP"
 slug: meta-ads
 description: "An MCP server for Meta advertising accounts, campaign entities, insights, and previewed mutations."
 repo: https://github.com/channel47/mcps/tree/main/meta-ads

@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next"
-import { getAllPosts, getAssets, getNotes, getWorkshops } from "@/lib/content"
+import { getFeedItems } from "@/lib/content"
 import { PUBLIC_PAGES, absoluteUrl } from "@/lib/discovery"
 import { SITE_URL } from "@/lib/seo"
 
@@ -18,14 +18,8 @@ function latestDate(dates: string[]): string | undefined {
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const notes = getNotes()
-  const posts = getAllPosts()
-  const skills = getAssets("skill")
-  const connectors = getAssets("connector")
-  const workshops = getWorkshops()
-  const newest = latestDate(
-    [...notes, ...posts, ...skills, ...connectors, ...workshops].map((i) => i.date),
-  )
+  const items = getFeedItems()
+  const newest = latestDate(items.map((item) => item.date))
 
   return [
     ...PUBLIC_PAGES.map((page) => ({
@@ -35,25 +29,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
           ? newest
           : undefined,
     })),
-    ...notes.map((b) => ({
-      url: `${SITE_URL}/notes/${b.slug}`,
-      lastModified: b.date,
-    })),
-    ...posts.map((p) => ({
-      url: `${SITE_URL}/posts/${p.slug}`,
-      lastModified: p.date,
-    })),
-    ...skills.map((a) => ({
-      url: `${SITE_URL}/skills/${a.slug}`,
-      lastModified: a.date,
-    })),
-    ...connectors.map((a) => ({
-      url: `${SITE_URL}/connectors/${a.slug}`,
-      lastModified: a.date,
-    })),
-    ...workshops.map((w) => ({
-      url: `${SITE_URL}/workshops/${w.slug}`,
-      lastModified: w.date,
-    })),
+    ...items.map((item) => ({ url: `${SITE_URL}${item.href}`, lastModified: item.date })),
   ]
 }

@@ -17,23 +17,18 @@ import { BLOCKS, MARK_VIEWBOX } from "@/components/site/mark-blocks"
 export const OG_SIZE = { width: 1200, height: 630 }
 export const OG_CONTENT_TYPE = "image/png"
 
-const PAGE = "#fdfdfc"
-const INK = "#161718"
-const BODY = "rgba(22, 23, 24, 0.55)"
-const BRAND_MONO = "rgba(22, 23, 24, 0.55)"
+const PAGE = "#fafafa"
+const INK = "#191a1c"
+const BODY = "#65676c"
 
-/** Matches --c-skill/--c-connector/--c-post/--c-workshop/--c-note in
- * globals.css. Note reuses the post gold — same literal, no new hue. */
+/** Light-scheme section inks; Satori requires literal colors. */
 export const TYPE_ACCENTS = {
-  skill: "#bc6b62",
-  connector: "#18998b",
-  post: "#a27f30",
-  workshop: "#ad6b9b",
-  note: "#a27f30",
+  skill: "#264fd5",
+  connector: "#264fd5",
+  post: "#264fd5",
+  workshop: "#264fd5",
+  note: "#264fd5",
 } as const
-
-/** Brand palette for the site-wide social preview's top bar. */
-const BRAND_GRADIENT = "linear-gradient(90deg, #bc6b62, #ad6b9b, #6583c4, #18998b, #699350, #938632)"
 
 let fonts: Awaited<ReturnType<typeof loadFonts>> | null = null
 
@@ -51,121 +46,35 @@ interface OgImageProps {
   kicker?: string
   title: string
   description?: string
-  /** A TYPE_ACCENTS value, or "gradient" for the site-wide default's brand bar. */
+  /** Optional accent for the small content-type label. */
   accent?: string
 }
 
-export async function renderOgImage({ kicker, title, description, accent = "gradient" }: OgImageProps) {
+export async function renderOgImage({ kicker, title, description, accent = INK }: OgImageProps) {
   fonts ??= await loadFonts()
-  const isGradient = accent === "gradient"
 
   return new ImageResponse(
-    (
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          background: PAGE,
-          fontFamily: "Geist",
-        }}
-      >
-        <div style={{ display: "flex", width: "100%", height: 10, background: isGradient ? BRAND_GRADIENT : accent }} />
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            flex: 1,
-            justifyContent: "space-between",
-            padding: "64px 76px",
-          }}
-        >
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            {kicker ? (
-              <div
-                style={{
-                  display: "flex",
-                  fontFamily: "Geist Mono",
-                  fontWeight: 500,
-                  fontSize: 22,
-                  letterSpacing: "0.08em",
-                  textTransform: "uppercase",
-                  color: isGradient ? INK : accent,
-                  marginBottom: 28,
-                }}
-              >
-                {kicker}
-              </div>
-            ) : null}
-            <div
-              style={{
-                display: "-webkit-box",
-                WebkitBoxOrient: "vertical",
-                WebkitLineClamp: 3,
-                overflow: "hidden",
-                fontWeight: 700,
-                fontSize: 58,
-                lineHeight: 1.15,
-                letterSpacing: "-0.02em",
-                color: INK,
-              }}
-            >
-              {title}
-            </div>
-            {description ? (
-              <div
-                style={{
-                  display: "-webkit-box",
-                  WebkitBoxOrient: "vertical",
-                  WebkitLineClamp: 2,
-                  overflow: "hidden",
-                  marginTop: 26,
-                  fontWeight: 400,
-                  fontSize: 27,
-                  lineHeight: 1.5,
-                  color: BODY,
-                }}
-              >
-                {description}
-              </div>
-            ) : null}
-          </div>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: 48,
-                height: 48,
-                borderRadius: 11,
-                background: INK,
-              }}
-            >
-              <svg width={24} height={12} viewBox={MARK_VIEWBOX} fill="white">
-                {BLOCKS.map((b, i) => (
-                  <rect key={i} x={b.x} y={b.y} width={b.width} height={b.height} />
-                ))}
-              </svg>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                fontFamily: "Geist Mono",
-                fontWeight: 500,
-                fontSize: 22,
-                letterSpacing: "0.02em",
-                color: BRAND_MONO,
-                marginLeft: 16,
-              }}
-            >
-              channel47.dev
-            </div>
-          </div>
+    <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", background: PAGE, color: INK, padding: "44px 56px", fontFamily: "Geist" }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingBottom: 28 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span style={{ fontSize: 34, fontWeight: 700, letterSpacing: "-0.05em" }}>channel</span>
+          <svg width={54} height={27} viewBox={MARK_VIEWBOX} fill={INK}>
+            {BLOCKS.map((b, i) => <rect key={i} {...b} />)}
+          </svg>
         </div>
+        <span style={{ fontFamily: "Geist Mono", fontSize: 17, color: accent }}>{kicker === "channel47" ? "Projects & notes" : kicker ?? "Projects & notes"}</span>
       </div>
-    ),
-    { ...OG_SIZE, fonts }
+      <div style={{ display: "flex", flex: 1, alignItems: "center", gap: 40 }}>
+        <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+          <div style={{ display: "-webkit-box", WebkitBoxOrient: "vertical", WebkitLineClamp: 3, overflow: "hidden", fontSize: title.length > 90 ? 54 : 64, fontWeight: 700, letterSpacing: "-0.035em", lineHeight: 1.12 }}>{title}</div>
+          {description ? <div style={{ display: "-webkit-box", WebkitBoxOrient: "vertical", WebkitLineClamp: 2, overflow: "hidden", marginTop: 24, fontSize: 23, lineHeight: 1.45, color: BODY }}>{description}</div> : null}
+        </div>
+
+      </div>
+      <div style={{ display: "flex", justifyContent: "space-between", paddingTop: 22, fontFamily: "Geist Mono", fontSize: 17, color: BODY }}>
+        <span>Jackson Dean</span><span>channel47.dev</span>
+      </div>
+    </div>,
+    { ...OG_SIZE, fonts },
   )
 }

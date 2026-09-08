@@ -1,3 +1,6 @@
+import { CONTENT_GROUPS, type ContentFormat } from "./discovery"
+export { contentGroup } from "./discovery"
+
 /**
  * Sitewide copy and structural data — single source of truth for everything
  * the chrome and Home render. Kept here rather
@@ -17,46 +20,32 @@ export const LINKS = {
   booking: "https://cal.com/ctrlswing/15min",
 } as const
 
-/** Home hero — broadened positioning. The hero carries a lean email
- * capture as the primary action — the page's only signup form. See
- * page.tsx. */
+/** Home copy and a small project selection. The latest note is automatic. */
 export const HOME = {
-  headline: "Building agentic systems for everyday work.",
+  headline: "Things I’m making and figuring out.",
   subhead:
-    "Skills, connectors, workshops, and practical guidance for making recurring work easier with agents.",
-  /** One-line helper under the hero capture — the full newsletter pitch
-   * lives on /newsletter. */
-  heroCaptureHelper: "Occasional emails when something ships. Unsubscribe anytime.",
+    "I’m Jackson. I build software, experiment with AI, and write about what I learn along the way. channel47 is where I share the work.",
+  selectedProjects: ["make-static-ads", "google-ads", "creative-strategist"],
   /** The bio block between "Browse all" and the footer. */
   name: "Jackson Dean",
-  tagline: "7 years buying media · building agentic systems",
+  tagline: "Buying media · making software · following my curiosity",
   avatar: "/jackson.jpeg",
-  bio: "Most of the systems here started with work I was tired of doing the same way twice. Some pull data together. Some help with research. Others turn a loose process into something an agent can run on a schedule. A lot of that work started in the ad accounts I run every day, and that history is still the deepest well of examples. When something works, I share the useful parts here.",
+  bio: "I buy media for a living. Along the way, I build tools for myself, try out ideas, and follow the ones that catch my attention. Some become useful software. Others leave me with something worth sharing. This is where I keep both, including the work in progress.",
 } as const
 
-/** Working-session offer page (/session, v2 repositioning) — spec 06.
- * Offer facts ($250 / 60 min / four a month) are strategy-locked; the
- * testimonial is an explicit placeholder pending approval, never invented. */
+/** Working-session offer page. Keep the published offer facts intact. */
 export const SESSION = {
   title: "Agentic Systems Working Session",
   intro:
     "Bring one recurring workflow from your work or business. We'll think through how agents could make it easier, using tools that fit the way you already work: conversation, diagrams, tool recommendations, process mapping, or live experimentation. A finished build isn't required for the hour to be useful.",
   introShort:
-    "Bring one recurring workflow. In sixty minutes we map it together and find where an agent earns its place, and where it doesn't.",
+    "Bring one recurring workflow. In sixty minutes we map it together and decide where an agent could help.",
   steps: [
     "You bring one recurring workflow, and the tools already involved.",
     "We map how it works today, and where the time goes.",
     "We find where an agent could help, and where it shouldn't.",
     "You leave with a concrete approach and the next few steps, in tools you already use.",
   ],
-  /** Hardcoded proof-card entry for the weekly KPI-review build, which has
-   * no detail page yet. Append this after real getNotes() results on
-   * /session; delete it the day that build ships as a real Note. */
-  inProgressBuild: {
-    tag: "Note · in progress",
-    title: "The weekly KPI review, read before I open a dashboard",
-    href: "/browse?type=notes",
-  },
   offer: {
     label: "Book a working session",
     rows: [
@@ -72,17 +61,12 @@ export const SESSION = {
   personal: {
     name: "Jackson Dean",
     meta: "7 years buying media · building agentic systems",
-    bio: "I run ad accounts for a living and build agentic systems for the recurring work around them. The useful pattern is the same everywhere: find work you repeat, give an agent a real role in it, and save time that compounds over weeks and months. I share the useful parts here.",
+    bio: "I run ad accounts for a living and build agentic systems for the recurring work around them. I use agents for recurring tasks, such as pulling account data and preparing weekly reports. I share what I learn here.",
     bioShort:
-      "I run ad accounts for a living and build agentic systems for the recurring work around them. Find work you repeat, give an agent a real role in it, and save time that compounds.",
-  },
-  testimonial: {
-    quote:
-      "One recurring report used to eat my Monday morning. I had a working version by the end of the week.",
-    attribution: "Testimonial pending approval, placeholder",
+      "I run ad accounts for a living and build agentic systems for the recurring work around them. I use agents to pull account data and prepare weekly reports.",
   },
   boundary: {
-    label: "One honest note",
+    label: "What the session covers",
     body: "It's probably not the right fit if you primarily need someone to debug an existing automation or implement a large project during the call. The hour is for thinking through one workflow together.",
     bodyShort:
       "Not the right fit if you mainly need someone to debug an existing automation or ship a large project during the call. The hour is for thinking through one workflow together.",
@@ -93,33 +77,26 @@ export const SESSION = {
 export const CAPTURE = {
   cta: "Subscribe",
   helper:
-    "Occasional updates when a skill, connector, or workshop is added.",
+    "Occasional emails with new projects, experiments, and notes. No fixed schedule.",
   successTitle: "You're on the list.",
   successHelper: "You'll hear from me when there is something new to share.",
 } as const
 
-/** Content-type identity — ink at rest, colour only on hover/press/selection
- * (round 12/13/14/15). Keys match `FeedItem["type"]` plus "workshops".
- * Notes reuse the Post gold accent (`--c-note` aliases `--c-post` in
- * globals.css) — they're distinguished by a pixel glyph, not a new hue. */
-export type ContentTypeKey =
-  | "notes"
-  | "skills"
-  | "connectors"
-  | "posts"
-  | "workshops"
+/** Shared blue ink; retained source formats inherit their parent section. */
+export type ContentTypeKey = ContentFormat
 
 export const TYPE_COLORS: Record<ContentTypeKey, string> = {
+  projects: "var(--c-project)",
   notes: "var(--c-note)",
-  skills: "var(--c-skill)",
-  connectors: "var(--c-connector)",
-  posts: "var(--c-post)",
-  workshops: "var(--c-workshop)",
+  skills: "var(--c-project)",
+  connectors: "var(--c-project)",
+  posts: "var(--c-note)",
+  workshops: "var(--c-note)",
 }
 
-/** Each type colour's brighter "shine" twin — build-in bit flashes (the
- * type icons) and the cover art's ambient sweep. */
+/** Section ink for a brief pixel reveal when a disclosure opens. */
 export const TYPE_SHINES: Record<ContentTypeKey, string> = {
+  projects: "var(--shine-skill)",
   notes: "var(--shine-note)",
   skills: "var(--shine-skill)",
   connectors: "var(--shine-connector)",
@@ -127,47 +104,6 @@ export const TYPE_SHINES: Record<ContentTypeKey, string> = {
   workshops: "var(--shine-workshop)",
 }
 
-/**
- * The four Home category rows / drawer nav rows — one per populated content
- * type. Agents joins when its first real item ships.
- */
-export interface Category {
-  key: ContentTypeKey
-  title: string
-  desc: string
-  href: string
-  /** The shine-link copy closing the row's open body — specific to what the
-   * type actually contains, not a generic "Browse {type} →". */
-  linkText: string
-}
-
-export const CATEGORIES: Category[] = [
-  {
-    key: "notes",
-    title: "Notes",
-    desc: "Annotated blueprints for systems I've actually built and run — enough that you can make your own version, without the full tutorial.",
-    href: "/browse?type=notes",
-    linkText: "Browse all notes →",
-  },
-  {
-    key: "skills",
-    title: "Skills",
-    desc: "Skills for brand context, competitor ad research, creative strategy, and static ad production.",
-    href: "/browse?type=skills",
-    linkText: "Browse all skills →",
-  },
-  {
-    key: "connectors",
-    title: "Connectors",
-    desc: "MCP servers for Google, Meta, Bing, LinkedIn, TikTok, and Pinterest Ads.",
-    href: "/browse?type=connectors",
-    linkText: "Browse all connectors →",
-  },
-  {
-    key: "workshops",
-    title: "Workshops",
-    desc: "Sessions and build-alongs hosted inside the Vibe Marketers community.",
-    href: "/browse?type=workshops",
-    linkText: "Browse workshops →",
-  },
-]
+/** Shared section definitions drive every navigation surface. */
+export type Category = (typeof CONTENT_GROUPS)[number]
+export const CATEGORIES = CONTENT_GROUPS

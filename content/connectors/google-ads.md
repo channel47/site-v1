@@ -1,5 +1,5 @@
 ---
-title: "google-ads-mcp — Put Google Ads inside your agent"
+title: "Google Ads MCP"
 slug: google-ads
 description: "An MCP server for listing Google Ads accounts, running GAQL queries, and previewing or applying mutations."
 repo: https://github.com/channel47/mcps/tree/main/google-ads

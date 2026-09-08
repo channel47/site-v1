@@ -1,14 +1,5 @@
-import {
-  getAllPosts,
-  getAssetBySlug,
-  getAssets,
-  getNoteBySlug,
-  getNotes,
-  getPostBySlug,
-  getWorkshopBySlug,
-  getWorkshops,
-} from "@/lib/content"
-import { CONTENT_COLLECTION } from "@/lib/discovery"
+import { getContentEntries } from "@/lib/content"
+import { CONTENT_GROUPS } from "@/lib/discovery"
 import { assetTwin, noteTwin, postTwin, workshopTwin } from "@/lib/markdown-twin"
 
 /**
@@ -28,52 +19,20 @@ interface Params {
 export const dynamicParams = false
 
 export function generateStaticParams() {
-  return [
-    ...getNotes().map((b) => ({
-      section: CONTENT_COLLECTION.notes.segment,
-      slug: b.slug,
-    })),
-    ...getAllPosts().map((p) => ({
-      section: CONTENT_COLLECTION.posts.segment,
-      slug: p.slug,
-    })),
-    ...getAssets("skill").map((a) => ({
-      section: CONTENT_COLLECTION.skills.segment,
-      slug: a.slug,
-    })),
-    ...getAssets("connector").map((a) => ({
-      section: CONTENT_COLLECTION.connectors.segment,
-      slug: a.slug,
-    })),
-    ...getWorkshops().map((w) => ({
-      section: CONTENT_COLLECTION.workshops.segment,
-      slug: w.slug,
-    })),
-  ]
+  return getContentEntries().map(({ collection, item }) => ({ section: collection.group, slug: item.slug }))
 }
 
 export async function GET(_req: Request, { params }: Params) {
   const { section, slug } = await params
-
+  if (!CONTENT_GROUPS.some((group) => group.key === section)) return new Response("Not found", { status: 404 })
+  const entry = getContentEntries().find((e) => e.collection.group === section && e.item.slug === slug)
   let twin: string | undefined
-  if (section === CONTENT_COLLECTION.notes.segment) {
-    const note = getNoteBySlug(slug)
-    twin = note && noteTwin(note)
-  } else if (section === CONTENT_COLLECTION.posts.segment) {
-    const post = getPostBySlug(slug)
-    twin = post && postTwin(post)
-  } else if (
-    section === CONTENT_COLLECTION.skills.segment ||
-    section === CONTENT_COLLECTION.connectors.segment
-  ) {
-    const asset = getAssetBySlug(
-      section === CONTENT_COLLECTION.skills.segment ? "skill" : "connector",
-      slug,
-    )
-    twin = asset && assetTwin(asset)
-  } else if (section === CONTENT_COLLECTION.workshops.segment) {
-    const workshop = getWorkshopBySlug(slug)
-    twin = workshop && workshopTwin(workshop)
+  if (entry) {
+    const item = entry.item
+    if ("type" in item) twin = assetTwin(item)
+    else if ("asset" in item) twin = postTwin(item)
+    else if ("duration" in item) twin = workshopTwin(item)
+    else twin = noteTwin(item, section as "notes" | "projects")
   }
   if (!twin) return new Response("Not found", { status: 404 })
 

@@ -51,7 +51,8 @@ export function ThemeToggle() {
       onClick={toggle}
       className="sf-theme"
       title={`${nextLabel} mode`}
-      aria-label="Switch color scheme"
+      aria-label={`Switch to ${nextLabel.toLowerCase()} mode`}
+      data-mode={current}
     >
       <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden>
         <circle

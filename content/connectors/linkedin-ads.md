@@ -1,5 +1,5 @@
 ---
-title: "linkedin-ads-mcp — Bring B2B campaign data into the conversation"
+title: "LinkedIn Ads MCP"
 slug: linkedin-ads
 description: "An MCP server for LinkedIn advertising accounts, campaign entities, analytics, and previewed mutations."
 repo: https://github.com/channel47/mcps/tree/main/linkedin-ads

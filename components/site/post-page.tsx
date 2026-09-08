@@ -1,5 +1,4 @@
 import type { CSSProperties } from "react"
-import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { SiteHeader } from "@/components/site/header"
@@ -8,11 +7,10 @@ import { Capture } from "@/components/site/capture"
 import { Crumb } from "@/components/site/crumb"
 import { ShareRow } from "@/components/site/share-row"
 import { JsonLd } from "@/components/site/json-ld"
-import { pageMetadata, postGraph, SITE_URL } from "@/lib/seo"
+import { postGraph, SITE_URL } from "@/lib/seo"
 import {
   ASSET_DIRS,
   ASSET_LABELS,
-  getAllPosts,
   getAssetForPost,
   getPostBySlug,
   postAssetKind,
@@ -25,21 +23,6 @@ interface Props {
   params: Promise<{ slug: string }>
 }
 
-export function generateStaticParams() {
-  return getAllPosts().map((p) => ({ slug: p.slug }))
-}
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params
-  const post = getPostBySlug(slug)
-  if (!post) return {}
-  return pageMetadata({
-    title: post.title,
-    description: post.description,
-    path: `/posts/${post.slug}`,
-    ogType: "article",
-  })
-}
 
 /**
  * Post detail (round 14, confirmed): crumb → headline-length title →
@@ -54,7 +37,7 @@ export default async function PostPage({ params }: Props) {
   const asset = getAssetForPost(post)
   const assetKind = postAssetKind(post.asset.type)
   const assetType = ASSET_DIRS[assetKind]
-  const assetHref = asset ? `/${assetType}/${asset.slug}` : post.asset.repo
+  const assetHref = asset ? `/projects/${asset.slug}` : post.asset.repo
   const crossTitle =
     post.asset.cardTitle ??
     `${post.asset.name} — the ${assetKind} this story ships with`
@@ -68,7 +51,7 @@ export default async function PostPage({ params }: Props) {
       <span aria-hidden>→</span>
     </>
   )
-  const href = `/posts/${post.slug}`
+  const href = `/notes/${post.slug}`
 
   return (
     <div className="st-page">
@@ -78,8 +61,8 @@ export default async function PostPage({ params }: Props) {
         <JsonLd data={postGraph(post)} />
         <header className="st-head">
           <Crumb
-            typeLabel="Posts"
-            typeHref="/browse?type=posts"
+            typeLabel="Notes"
+            typeHref="/browse?type=notes"
             typeColor={TYPE_COLORS.posts}
             leaf={post.slug}
           />
@@ -115,7 +98,7 @@ export default async function PostPage({ params }: Props) {
         )}
 
         <ShareRow
-          mdPath={`/posts/${post.slug}.md`}
+          mdPath={`/notes/${post.slug}.md`}
           url={`${SITE_URL}${href}`}
           title={post.title}
         />
@@ -125,7 +108,7 @@ export default async function PostPage({ params }: Props) {
         </div>
 
         <p className="dt-back">
-          <Link href="/browse?type=posts">← All posts</Link>
+          <Link href="/browse?type=notes">← All notes</Link>
         </p>
       </article>
 

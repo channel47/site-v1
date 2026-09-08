@@ -1,4 +1,4 @@
-import { ASSET_DIRS, type Asset, type Note, type Post, type Workshop } from "@/lib/content"
+import { type Asset, type Note, type Post, type Workshop, type Project } from "@/lib/content"
 import { AUTHOR_NAME, SITE_URL } from "@/lib/seo"
 
 /**
@@ -29,10 +29,11 @@ export function postTwin(post: Post): string {
       title: post.title,
       slug: post.slug,
       type: "post",
+      group: "notes",
       description: post.description,
       author: AUTHOR_NAME,
       updatedAt: post.date,
-      canonical: `${SITE_URL}/posts/${post.slug}`,
+      canonical: `${SITE_URL}/notes/${post.slug}`,
       asset: post.asset.name,
       assetRepo: post.asset.repo,
     }) +
@@ -40,16 +41,18 @@ export function postTwin(post: Post): string {
   )
 }
 
-export function noteTwin(note: Note): string {
+export function noteTwin(note: Note | Project, section: "notes" | "projects" = "notes"): string {
   return (
     frontmatter({
       title: note.title,
       slug: note.slug,
-      type: "note",
+      type: section === "projects" ? "project" : "note",
+      group: section,
+      status: "status" in note ? note.status : undefined,
       description: note.description,
       author: AUTHOR_NAME,
       updatedAt: note.date,
-      canonical: `${SITE_URL}/notes/${note.slug}`,
+      canonical: `${SITE_URL}/${section}/${note.slug}`,
       video: note.video?.src,
       videoPoster: note.video?.poster,
       videoCaptions: note.video?.captions,
@@ -66,10 +69,11 @@ export function workshopTwin(workshop: Workshop): string {
       title: workshop.title,
       slug: workshop.slug,
       type: "workshop",
+      group: "notes",
       description: workshop.description,
       author: AUTHOR_NAME,
       updatedAt: workshop.date,
-      canonical: `${SITE_URL}/workshops/${workshop.slug}`,
+      canonical: `${SITE_URL}/notes/${workshop.slug}`,
       status: workshop.status,
       duration: workshop.duration,
     }) +
@@ -78,16 +82,16 @@ export function workshopTwin(workshop: Workshop): string {
 }
 
 export function assetTwin(asset: Asset): string {
-  const section = ASSET_DIRS[asset.type]
   return (
     frontmatter({
       title: asset.title,
       slug: asset.slug,
       type: asset.type,
+      group: "projects",
       description: asset.description,
       author: AUTHOR_NAME,
       updatedAt: asset.date,
-      canonical: `${SITE_URL}/${section}/${asset.slug}`,
+      canonical: `${SITE_URL}/projects/${asset.slug}`,
       repo: asset.repo,
       install: asset.install,
       package: asset.package,

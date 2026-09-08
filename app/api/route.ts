@@ -1,11 +1,10 @@
-import { CONTENT_COLLECTIONS, MACHINE_SURFACES } from "@/lib/discovery"
+import { CONTENT_GROUPS, CONTENT_COLLECTIONS, MACHINE_SURFACES } from "@/lib/discovery"
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo"
 
 /**
  * /api — the machine discovery document (docs/AI-SEO.md, Layer 3): a stable,
  * versioned JSON declaration of what surfaces exist, in which formats, and
- * what an agent should do next. Bump `version` only on breaking shape
- * changes; additive fields are fine.
+ * what an agent should do next. Resource patterns now describe the two canonical public sections.
  */
 
 export const dynamic = "force-static"
@@ -13,7 +12,7 @@ export const dynamic = "force-static"
 export function GET() {
   return Response.json(
     {
-      version: 1,
+      version: 2,
       name: `${SITE_NAME} Public API Discovery`,
       description: SITE_DESCRIPTION,
       baseUrl: SITE_URL,
@@ -25,17 +24,18 @@ export function GET() {
       discovery: Object.fromEntries(
         MACHINE_SURFACES.map((surface) => [surface.key, surface.path]),
       ),
-      resources: CONTENT_COLLECTIONS.map((collection) => ({
-        name: collection.key,
-        description: collection.description,
-        htmlPattern: collection.htmlPattern,
-        markdownPattern: collection.markdownPattern,
+      resources: CONTENT_GROUPS.map((group) => ({
+        name: group.key,
+        description: group.desc,
+        htmlPattern: `/${group.key}/:slug`,
+        markdownPattern: `/${group.key}/:slug.md`,
+        formats: CONTENT_COLLECTIONS.filter((collection) => collection.group === group.key).map((collection) => collection.searchType),
         visibility: "public",
       })),
       search: {
         endpoint: "/api/search",
         params: { q: "keyword query, required" },
-        returns: "{ version, query, count, results: [{title, url, markdownUrl, type, description, date}] }",
+        returns: "{ version, query, count, results: [{title, url, markdownUrl, type, group, description, date}] }",
       },
       nextActions: [
         "Read /sitemap.md for a markdown-oriented index of every public URL.",

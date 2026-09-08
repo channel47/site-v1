@@ -1,9 +1,12 @@
 ---
 title: I was using Codex to write prompts for Google Flow
 slug: codex-static-ads-google-flow
-description: I was using Codex to write prompts for Google Flow, then realized Codex could generate the complete static ads itself.
+description: I tried generating complete static ads in Codex, including the products and typography, instead of handing its prompts to Google Flow.
 date: 2026-07-24
 tags: [codex, google-flow, image-generation, static-ads, skills, creative-production]
+preview:
+  src: /posts/codex-static-ads-native-pass.jpg
+  alt: Two static ad concepts with the products, scenes, and typography generated together.
 ---
 
 I had been using [Google Flow](/notes/google-flow-reference-led-product-imagery) to make static ads through the agent inside it. It worked, but it was super unreliable.
@@ -34,10 +37,8 @@ Almost immediately after I figured out Codex could do this, I was like, "This is
 
 It wasn't really the sequence of steps I wanted to save. It was the judgment I'd had to give the agent. Don't assume the text, CTA, and product packaging need to be handled separately. Push the image generator further and try making the complete ad first.
 
-I didn't want to have to teach it that again every time.
-
 I think that's probably the more interesting part of the skill for me. The steps are useful, but the judgment is the part I don't want to teach again.
 
 ### Ships with this build
 
-- [Make Static Ads](/skills/make-static-ads), the public skill that keeps the more ambitious native-generation default in the workflow.
+- [Make Static Ads](/projects/make-static-ads), the public skill that asks the image model to generate the complete ad, including typography and product packaging.

@@ -1,13 +1,11 @@
 "use client"
 
-import { useState, type ReactNode } from "react"
+import { useId, useState, type ReactNode } from "react"
 
 /**
  * Shared disclosure pattern via a `grid-template-rows: 0fr → 1fr` transition.
- * Uncontrolled by default (each instance opens/closes independently, as
- * Home's category rows once did). Pass `open` + `onToggle` to run it as one
- * row in an exclusive accordion instead — Home's category rows and the
- * footer's link groups both do this now, one open at a time.
+ * Uncontrolled by default. Pass `open` + `onToggle` to run it as one row
+ * in an exclusive accordion, as used by the footer's link groups.
  */
 export function Unfold({
   trigger,
@@ -34,6 +32,7 @@ export function Unfold({
    * even while collapsed to zero height. */
   className?: string
 }) {
+  const panelId = useId()
   const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen)
   const isControlled = controlledOpen !== undefined
   const open = isControlled ? controlledOpen : uncontrolledOpen
@@ -52,11 +51,12 @@ export function Unfold({
         type="button"
         className={triggerClassName}
         aria-expanded={open}
+        aria-controls={panelId}
         onClick={handleClick}
       >
         {trigger}
       </button>
-      <div className="uf-body" data-open={open}>
+      <div id={panelId} className="uf-body" data-open={open} inert={!open} aria-hidden={!open}>
         <div>{children}</div>
       </div>
     </div>

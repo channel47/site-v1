@@ -6,8 +6,7 @@ separate content machine.
 
 ## Subscriber promise
 
-> Occasional emails about agentic systems I'm building, how they work, and the
-> parts you can reuse in your own work.
+> Occasional emails with new projects, experiments, and notes. No fixed schedule.
 
 Every email should stand on its own. A reader should get the useful idea without
 clicking. Links are for screenshots, full prompts, diagrams, downloadable
@@ -22,7 +21,7 @@ Good triggers include:
 - a recurring workflow that became easier
 - an implementation decision worth reusing
 - a failure that changed the approach
-- a new skill, connector, note, or workshop with a clear problem behind it
+- a project, experiment, or note worth sharing, even while unfinished
 - a reader workflow breakdown shared with permission
 
 There is no required weekly cadence. One worthwhile email beats a roundup sent
@@ -33,9 +32,9 @@ to satisfy a schedule.
 Use this sequence as a guide, not a rigid template:
 
 1. Open on a concrete problem, observation, or moment from the work.
-2. Explain the system or workflow Jackson tried.
+2. Show what Jackson tried, made, or noticed.
 3. Focus on one decision that mattered.
-4. Give the reader a reusable prompt, framework, or takeaway.
+4. Share what was interesting or useful; a reusable artifact is optional.
 5. Link to the complete note or relevant asset when one exists.
 6. Mention working-session availability only when it naturally follows from
    the topic.
@@ -46,10 +45,13 @@ than a summary of what the reader just read.
 
 ## Editorial standard
 
+Apply the [site’s direct-language guidance](../content/README.md#direct-language)
+to newsletter drafts as well.
+
 - Write in first person and from work that actually happened.
 - Prefer specific decisions, constraints, commands, numbers, and failure modes
   over general advice.
-- Explain agentic systems in plain language. Avoid AI hype and inflated claims.
+- Explain the work in plain language. Avoid AI hype and inflated claims.
 - Do not invent proof, outcomes, testimonials, or capabilities.
 - Do not withhold the useful part to manufacture a click.
 - Keep HTML email-safe: paragraphs, headings, links, emphasis, short lists, and

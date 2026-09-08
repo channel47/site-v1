@@ -7,7 +7,8 @@
     "dev": "next dev",
     "start": "next start",
     "check:seo-surfaces": "node scripts/check_seo_surfaces.mjs",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:content": "node scripts/test-content-model.cjs"
   },
   "dependencies": {
     "@vercel/analytics": "1.3.1",
