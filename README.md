@@ -36,10 +36,22 @@ pnpm build
 | `lib/og-image.tsx` | Shared social preview renderer |
 | `assets/fonts/` | Fonts used to generate social previews |
 | `public/` | Published images, video, captions, and icons |
+| `newsletter/` | Kit email template, issue drafts, and source artwork; see [newsletter/README.md](newsletter/README.md) |
 | `scripts/` | Project checks and maintenance tools |
+| `tests/` | Local newsletter regression tests with mocked Kit API calls |
 
 The parent `AGENTS.md` is the canonical guide for the Channel47 workspace.
 Current code and published content take precedence over historical design plans.
+
+The newsletter CLI uses Python 3. Run its local checks with:
+
+```sh
+python3 -m unittest discover -s tests -p 'test_kit_broadcast.py'
+```
+
+Pillow is only needed to regenerate the email logo. Newsletter editorial guidance
+lives in [docs/newsletter-playbook.md](docs/newsletter-playbook.md); template setup
+and CLI commands live in [newsletter/README.md](newsletter/README.md).
 
 ## Content and design
 

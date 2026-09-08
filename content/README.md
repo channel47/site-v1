@@ -114,6 +114,8 @@ Notes and workshops accept the same optional `faqs:` list; it renders the identi
 Markdown images render as clean, unframed editorial figures by default. Alt text
 doubles as the visible figcaption.
 
+Whiteboard illustrations follow the [infographic style system](../docs/infographic-style-system.md).
+
 ```markdown
 ![One of Flow's generated product directions.](/posts/flow-direction.jpg)
 ```

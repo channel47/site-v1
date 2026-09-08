@@ -1,0 +1,42 @@
+---
+subject: The dry run wasn’t dry
+preview_text: The server said no changes were made. The ad was live.
+description: A failed Google Ads MCP dry run and the guardrails it changed
+primary_url: https://channel47.dev/notes/google-ads-mcp
+---
+<p style="margin:0 0 20px;line-height:170%;">It’s been a while, so a quick refresher. I’m Jackson, the person behind Channel47. You signed up for agent skills, Claude plugins, and ways to use both in day-to-day work.</p>
+<p style="margin:0 0 20px;line-height:170%;">That’s still mostly what I write about. The difference now is that I’m building more of the tools myself, using them on real projects, and writing about what breaks. You can <a href="https://channel47.dev" style="color:#161718;text-decoration:underline;">see what Channel47 looks like now</a>, or <a href="{{ unsubscribe_url }}" style="color:#161718;text-decoration:underline;">unsubscribe</a> if this no longer sounds like your thing. I’ll do my best to keep these useful and quick.</p>
+<h2 style="margin:28px 0 14px;font-size:23px;line-height:130%;">The dry run wasn’t dry</h2>
+<h3 style="margin:28px 0 14px;font-size:19px;line-height:140%;">2 manager accounts, 14 ad accounts, and about 12 offers</h3>
+<p style="margin:0 0 20px;line-height:170%;">That was my new Google Ads setup after starting a new job. Bing looked similar, but Google was the powerhouse.</p>
+<p style="margin:0 0 20px;line-height:170%;">A few months earlier, I’d discovered this thing known as an API while trying to give a coding agent access to Drip, an email platform.</p>
+<p style="margin:0 0 20px;line-height:170%;">Drip exposed endpoints, little back doors that let an agent do the clicking for me. It could only do what Drip chose to expose, but it worked.</p>
+<p style="margin:0 0 20px;line-height:170%;">Now I had a wall of ad accounts running at different budgets and doing God knows what.</p>
+<p style="margin:0 0 20px;line-height:170%;">“Let me see what kind of API Google has.”</p>
+<p style="margin:0 0 20px;line-height:170%;">Turns out, a really good one.</p>
+<p style="margin:0 0 20px;line-height:170%;">Practically anything I could do in the UI, an agent could do through the API.</p>
+<h3 style="margin:28px 0 14px;font-size:19px;line-height:140%;">I built it without writing the code</h3>
+<p style="margin:0 0 20px;line-height:170%;">An MCP is basically a wrapper that lets tools like Claude Code, Codex, and Cursor use an API.</p>
+<p style="margin:0 0 20px;line-height:170%;">When to use one instead of letting an agent hit the API directly is a question I’m not qualified to answer. Twitter is full of people who are.</p>
+<p style="margin:0 0 20px;line-height:170%;">I couldn’t find a reliable MCP server for Google Ads. To build one, you’d have to know Python and a whole bunch of other technical crap.</p>
+<p style="margin:0 0 20px;line-height:170%;"><strong>Or you could just have Claude do it.</strong></p>
+<p style="margin:0 0 20px;line-height:170%;">That’s what I did.</p>
+<p style="margin:0 0 20px;line-height:170%;">I used Anthropic’s MCP Builder skill, pulled together OAuth credentials from Google Cloud and a developer token from the API Center in Google Ads, blindly followed the agent’s instructions, and somehow ended up with a working <a href="https://channel47.dev/connectors/google-ads" style="color:#161718;text-decoration:underline;">Google Ads MCP</a>.</p>
+<p style="margin:0 0 20px;line-height:170%;">It had 13 tools for highly specific jobs. Pull search terms. Check campaign performance. That kind of thing.</p>
+<p style="margin:0 0 20px;line-height:170%;">Just loading those 13 tools consumed around 50,000 tokens before I’d sent a prompt.</p>
+<p style="margin:0 0 20px;line-height:170%;">The big AI labs have since fixed this, but at the time it was a real problem.</p>
+<p style="margin:0 0 20px;line-height:170%;">So I cut 13 specialists down to 3 generalists.</p>
+<p style="margin:0 0 12px;line-height:170%;">Those 3 tools could</p>
+<ul style="margin:0 0 20px;padding-left:24px;">
+  <li style="margin:0 0 8px;line-height:170%;">list accounts</li>
+  <li style="margin:0 0 8px;line-height:170%;">query almost anything available through GAQL</li>
+  <li style="margin:0 0 8px;line-height:170%;">make changes to an ad account with <code style="font-family:Consolas,'Courier New',monospace;font-size:90%;word-break:break-word;">mutate</code></li>
+</ul>
+<p style="margin:0 0 20px;line-height:170%;">I felt like a hacker. I love feeling like a hacker.</p>
+<p style="margin:0 0 20px;line-height:170%;">About a week after publishing it, I asked the MCP to validate a new ad without publishing it.</p>
+<p style="margin:0 0 12px;line-height:170%;">The server said</p>
+<blockquote style="margin:0 0 20px;padding:0 0 0 18px;border-left:3px solid #dddddc;line-height:170%;">No changes were made.</blockquote>
+<p style="margin:0 0 20px;line-height:170%;">I checked the account.</p>
+<p style="margin:0 0 20px;line-height:170%;"><strong>The ad was live.</strong></p>
+<p style="margin:0 0 20px;line-height:170%;">The problem came down to two safety settings written in a format the connection to Google ignored. Nothing crashed. The guardrails simply never reached Google.</p>
+<p style="margin:0;line-height:170%;">I wrote more about what broke and the guardrails I added <a href="https://channel47.dev/notes/google-ads-mcp" style="color:#161718;text-decoration:underline;">here</a>.</p>

@@ -27,6 +27,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# python
+__pycache__/
+*.py[cod]
+
 # local Claude settings
 .claude/
 
@@ -37,4 +41,3 @@ skills-lock.json
 # macOS
 .DS_Store
 output/
-
