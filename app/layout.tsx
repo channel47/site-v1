@@ -9,7 +9,6 @@ import { MotionBootstrap } from "@/components/site/motion-bootstrap";
 import { SiteMeasurement } from "@/components/site/measurement";
 import { getFeedItems } from "@/lib/content";
 import { PUBLIC_PAGES } from "@/lib/discovery";
-import { PostHogAnalytics } from "@/components/site/posthog";
 import { baseGraph, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo";
 import "./globals.css";
 
@@ -95,7 +94,6 @@ export default function RootLayout({
           {children}
           <PageMotion />
         </BrowseNavigation>
-        <PostHogAnalytics />
       </body>
     </html>
   );

@@ -3,6 +3,8 @@ title: Turning customer research into ad angles with Claude
 slug: customer-research-ad-angles-claude
 description: A worked example of using Claude for customer research, keeping ad angles tied to real sources, and turning a promising idea into a creative brief.
 date: 2026-09-09
+updated: 2026-09-10
+newsletter: More worked examples of customer research and ad creative, with source quotes, prompts, and creative briefs.
 tags: [claude, customer-research, creative-strategy, ad-angles, skills, static-ads, creative-production]
 preview:
   src: /collection/research-lens.webp
@@ -74,7 +76,7 @@ The packing habit helps choose the ad. An invented age, income, or personality p
 
 ![Q1 and Q2 suggest retrieving one outfit. Q3 suggests handling fewer cubes. Each calls for a different demonstration.](/posts/customer-research-two-angles.webp)
 
-Ask Claude to explain what each group would need to see before believing the benefit. For the first group, that might be a demonstration of removing one night's clothes without unpacking the rest. For the second, it might be a complete packing routine using fewer containers.
+Ask Claude what each group would need to see before believing the benefit, and keep the answer tied to the quoted behavior.
 
 If two proposed personas would respond to the same demonstration, objection handling, and offer, there may be no useful reason to keep them separate.
 

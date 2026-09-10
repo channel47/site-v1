@@ -89,7 +89,7 @@ export function Capture({
   }
 
   return (
-    <div className="ea-formwrap">
+    <div className="ea-formwrap" data-capture-placement={placement}>
       <form className="ea-formrow" onSubmit={submit} aria-busy={status === "sending"}>
         <input
           className="ea-in"

@@ -3,6 +3,8 @@ title: From Google Flow to making whole ads in Codex
 slug: codex-static-ads-google-flow
 description: I started with product references in Google Flow, then moved into Codex to generate complete static ads with the products and typography together.
 date: 2026-07-24
+updated: 2026-09-10
+newsletter: I share creative experiments and the prompts, outputs, and corrections that mattered.
 tags: [codex, google-flow, image-generation, static-ads, skills, creative-production, product-imagery, art-direction]
 preview:
   src: /posts/codex-static-ads-native-pass.jpg
@@ -24,9 +26,7 @@ In the same prompt, I told it I wanted that visual language for X-All. The agent
 
 ## Starting with references
 
-The first prompt wasn't "make a premium product shot." It was a request to describe two images I already liked. Flow described the lighting and composition so I could use those details in the next prompt.
-
-The style references set the visual direction. The product photos gave Flow the actual products to work with. Instead of treating every prompt as a one-off, I could keep the direction in the conversation and let the next answer build on the last one.
+The style references set the visual direction. The product photos gave Flow the actual products to work with. I used the lighting and composition details from that first answer in the next prompt, keeping the direction in the conversation as we went.
 
 The first useful surprise was how far the agent moved beyond a literal product-on-a-table shot. It built action scenes around the toilet-cleaning foam powder, tried a bubbly version of the X-All logo, froze tablets against water, and turned a stack of cleaning products into a whole blue visual system.
 
@@ -66,6 +66,8 @@ Once it did that, the results felt more like complete concepts than generated sc
 
 They still weren't perfect. There were some visual artifacts, and certain outputs were clearly stronger than others. But the process felt a lot easier to work with than Flow. The UI was cleaner, the product references seemed to carry through more consistently, and when I asked it to correct something, it usually did.
 
+Before using an output, check the packaging text, product shape, color, and any claims in the ad against the actual product. A convincing composition can still get those details wrong.
+
 I still use Flow, just far less than I did. It can still produce something incredible, so I haven't written it off. Codex has just become a much easier place to work through the idea.
 
 ## The part I wanted to save
@@ -75,5 +77,7 @@ Almost immediately after I figured out Codex could do this, I was like, "This is
 It wasn't really the sequence of steps I wanted to save. It was the judgment I'd had to give the agent. Don't assume the text, CTA, and product packaging need to be handled separately. Push the image generator further and try making the complete ad first.
 
 That's what I put into [Make Static Ads](https://github.com/channel47/skills/tree/main/skills/creative-production/make-static-ads), the public skill that asks the image model to generate the complete ad, including typography and product packaging.
+
+For the step before image generation, the [customer-research walkthrough](/notes/customer-research-ad-angles-claude) follows a source quote into a reason to buy and a demonstration the ad needs to show.
 
 I think that's probably the more interesting part of the skill for me. The steps are useful, but the judgment is the part I don't want to teach again.

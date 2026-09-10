@@ -21,11 +21,19 @@ Replace these examples with actual content and its real date. Follow the [direct
 
 ## Direct language
 
-Say what you mean. Prefer a literal phrase when it conveys the idea clearly.
-Do not substitute metaphor, flourish, or a clever turn of phrase for an exact
-statement. For example, write “where an agent could help” instead of “where an
-agent earns its place,” and “save time on recurring work” instead of “save time
-that compounds.”
+Jackson supplied the following **mannered-prose** prompt as the editorial
+reference. Apply it when drafting or editing site copy, articles, newsletters,
+and sharing text. Preserve his conversational syntax and meaningful qualifiers;
+direct language does not mean making every sentence short or formal.
+
+> Mannered prose substitutes metaphor and flourish for direct statement. Instead
+> of "a parameter worth varying," the mannered writer produces "a dial worth
+> turning." Instead of "this point still matters," they write "this point earns
+> its keep." The phrases exist to display the writer, not to convey the idea,
+> and readers can tell. That is why mannered prose irritates: it makes the
+> reader work harder so the writer can perform. It is also imprecise. Metaphors
+> drag in connotations the writer did not choose and cannot control. The fix is
+> to say what you mean. When a literal phrase is available, use it.
 
 During review, ask what each phrase tells the reader. Replace decorative
 metaphors, vague promises, staged revelations, and repeated conclusions with
@@ -49,6 +57,8 @@ distinct creative treatments when the article compares ideas.
 | Field | Purpose |
 | --- | --- |
 | `slug` | Lowercase letters, numbers and hyphens. |
+| `updated` | Date of a substantive revision, on or after `date`. Used by sitemap and structured data; does not change publication order or RSS identity. Do not bump it for routine builds. |
+| `newsletter` | A short, article-specific reason to subscribe. The reading template adds the shared occasional-email cadence. |
 | `preview: { src, alt }` | An existing image selected instead of the first Markdown image or video poster. |
 | `video: { src, poster, captions, duration, caption, uploadDate }` | Actual MP4, poster, English WebVTT, ISO8601 duration and optional visible caption. Optional quoted `uploadDate` preserves the video's original date when moved to another article. |
 | `faqs: [{ q, a }]` | Authored questions/answers. Rendered visibly and in structured data. |

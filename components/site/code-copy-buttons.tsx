@@ -27,7 +27,7 @@ export function CodeCopyButtons() {
     <>
       <span ref={anchor} hidden />
       {blocks.map(({ target, text, title }, index) =>
-        createPortal(<CopyButton text={text} title={title} />, target, String(index)),
+        createPortal(<CopyButton text={text} title={title} event={title === "Copy prompt" ? "prompt_copy" : "code_copy"} />, target, String(index)),
       )}
     </>
   );

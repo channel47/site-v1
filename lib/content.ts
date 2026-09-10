@@ -89,6 +89,10 @@ export interface Note {
   slug: string;
   description: string;
   date: string;
+  /** Date of a substantive revision; publication order and RSS identity stay put. */
+  updated?: string;
+  /** The specific reason to follow this piece, followed by the shared cadence. */
+  newsletter?: string;
   tags: string[];
   preview?: { src: string; alt: string };
   video?: NoteVideo;
@@ -137,14 +141,18 @@ function loadCollection<T extends Note>(section: ContentGroup): T[] {
       for (const key of ["title", "description", "date"]) {
         if (!data[key]) throw new Error(`Missing ${key} in ${section}/${file}`);
       }
+      const date = data.date instanceof Date ? data.date.toISOString().slice(0, 10) : String(data.date);
+      const updated = data.updated instanceof Date ? data.updated.toISOString().slice(0, 10) : data.updated;
+      if (updated !== undefined && (typeof updated !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(updated)
+        || !Number.isFinite(Date.parse(updated)) || new Date(updated).toISOString().slice(0, 10) !== updated || updated < date)) {
+        throw new Error(`Invalid revision date in ${section}/${file}`);
+      }
       return {
         ...data,
         slug,
         tags: data.tags ?? [],
-        date:
-          data.date instanceof Date
-            ? data.date.toISOString().slice(0, 10)
-            : String(data.date),
+        date,
+        updated,
         html: marked.parse(content, { async: false }),
         markdown: content.trim(),
       } as T;
@@ -194,6 +202,7 @@ export interface FeedItem {
   type: ContentFormat;
   group: ContentGroup;
   date: string;
+  updated?: string;
 }
 
 export const getFeedItems = cache((): FeedItem[] =>
@@ -205,6 +214,7 @@ export const getFeedItems = cache((): FeedItem[] =>
     type: collection.key,
     group: collection.group,
     date: item.date,
+    updated: item.updated,
   })),
 );
 

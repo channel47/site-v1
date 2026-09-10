@@ -38,6 +38,18 @@ try {
   fs.writeFileSync(quickNote, '---\ntitle: Quick note\ndescription: A real observation\ndate: 2026-09-07\n---\nOne paragraph.\n')
   const note = content.getNoteBySlug('quick-note')
   assert.equal(note.slug, 'quick-note')
+  assert.equal(note.updated, undefined)
+  fixture('notes', 'revised-note', 'updated: 2026-09-10\nnewsletter: More worked examples.\n')
+  const revised = content.getNoteBySlug('revised-note')
+  assert.equal(revised.date, '2026-09-07', 'A revision must not replace the publication date')
+  assert.equal(revised.updated, '2026-09-10')
+  assert.equal(revised.newsletter, 'More worked examples.')
+  assert.equal(content.getFeedItems().find(item => item.href === '/notes/revised-note').updated, '2026-09-10')
+  for (const updated of ['2026-09-06', '2026-13-10', '2026-02-31', 'yesterday']) {
+    fixture('notes', 'invalid-revision', `updated: "${updated}"\n`)
+    assert.throws(() => content.getNotes(), /Invalid revision date/)
+    fs.unlinkSync(path.join(temp, 'content/notes/invalid-revision.md'))
+  }
   assert.deepEqual(note.tags, [])
   assert.equal(content.getEntryPreview(note), undefined)
   assert.equal(content.getNextRead('/notes/quick-note'), undefined, 'Unrelated pieces should not be recommended')
