@@ -1,5 +1,5 @@
 import type React from "react";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { JsonLd } from "@/components/site/json-ld";
 import { BrowseNavigation } from "@/components/site/browse-navigation";
@@ -32,6 +32,11 @@ const serif = localFont({
   variable: "--font-instrument-serif",
   display: "swap",
 });
+
+export const viewport: Viewport = {
+  viewportFit: "cover",
+  themeColor: "#f4f4f0",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

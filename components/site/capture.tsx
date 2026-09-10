@@ -123,12 +123,15 @@ export function Capture({
           aria-invalid={status === "error"}
           aria-describedby={messageId}
           type="email"
+          inputMode="email"
+          autoCapitalize="none"
+          spellCheck={false}
           value={email}
           onChange={(e) => {
             setEmail(e.target.value)
             if (status === "error") setStatus("idle")
           }}
-          placeholder="you@company.com"
+          placeholder="Your email"
           aria-label="Email address"
           style={{ flex: 1, minWidth: 0 }}
         />

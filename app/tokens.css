@@ -40,11 +40,14 @@
   --space-8: 72px;
   --space-9: 96px;
   --space-10: 144px;
-  --page-gutter: clamp(24px, 4.6vw, 80px);
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-inline: max(env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
+  --page-gutter: max(clamp(24px, 4.6vw, 80px), var(--safe-inline));
   --reading-width: 660px;
   --media-width: 960px;
   --collection-width: 980px;
-  --header-height: 112px;
+  --header-height: calc(112px + var(--safe-top));
   --control-size: 48px;
   --radius-control: 999px;
   --radius-surface: 16px;

@@ -1,12 +1,25 @@
-# 47 refinement QA
+# 47 mobile refinement QA
 
-Reviewed September 9, 2026 (America/Los_Angeles). Current scope: the eleven annotated refinements to menu motion, directional cues, utility icons, newsletter bio and article endings. Changes are local and uncommitted.
+Reviewed September 9, 2026 (America/Los_Angeles). Current scope: mobile composition and usability, building on the eleven annotated refinements below. Publication target: the `codex/object-collection` preview branch.
 
 ## Result
 
 Implementation, functional browser checks and automated checks pass. Pixel-level visual verification has capture limitations described below; this report does not claim measured frame rate or physical-device certification.
 
-## Feedback resolved
+## Mobile changes and checks
+
+- Phones up to 520px display large, alternating objects with a single visible title. At 388px, objects are approximately 303px wide. All four responsive images load, and a single activation opens a piece.
+- Tablet and desktop keep two columns. Checked 656 × 895 and 1910 × 1074 CSS pixels; desktop captions remain hidden until interaction.
+- Landscape at 843 × 388 keeps approximately 362px objects instead of shrinking them to fit the viewport height. The menu uses a 72px header and 64px footer, with its scroll region fitting between them.
+- Article headings, introductions and paragraphs have shorter mobile intervals. The article body, project installation panel, sharing controls and related-reading columns fit at phone widths without horizontal page overflow.
+- Index entries use their full available width, with type/date metadata underneath. The Projects filter returns one item and retains its URL state.
+- At 358 × 746, the newsletter field, submit action, portrait and footer fit. The field remains 16px with email keyboard and capitalization attributes; the input and button are 48px high. No email was submitted.
+- The menu covers the viewport in portrait and landscape. Native scrolling and arrow keys move through destinations without moving the outer dialog. Collection's direction cue fits at 358px. Menu navigation opens Index, Letters and Work together.
+- Returning from Google Ads MCP restores the collection's scroll position and focus to that object.
+- The mobile booking action fits at 358px and retains a 48px target. No booking was made.
+- Safe-area padding and reduced-motion rules were inspected in code. Physical touch, virtual keyboard behavior and iPhone safe-area values still require device testing.
+
+## Prior annotated feedback retained
 
 | Feedback | Result |
 | --- | --- |
@@ -44,6 +57,7 @@ Implementation, functional browser checks and automated checks pass. Pixel-level
 
 - User’s eleven annotated screenshots are the source for this refinement pass.
 - `output/verification/newsletter-mobile-detail.png` shows the revised small-screen portrait, RSS helper and footer. `output/verification/menu-detail-refined.png` is diagnostic only: this session’s capture provider can resize/reposition a live scroller during full-page capture.
+- Current mobile evidence is in `output/verification/index-phone.png`, `newsletter-phone.png` and `collection-phone.png`. Index and newsletter full-page captures show the mobile composition; the collection capture clips the last object despite its complete image and valid page geometry.
 - Normal viewport captures were sometimes cropped into an oversized canvas; full-page captures sometimes changed layout during collection. Do not treat these as pixel-perfect references. DOM geometry and native interaction checks were recorded separately, and temporary viewport overrides were reset.
 - Prior gallery comparison remains at `output/verification/comparison-refined.png`; the four artworks were not changed in this pass. Artwork provenance and standards remain in `docs/cover-art.md`.
 - Reduced-motion rules were inspected in code: animations are disabled, the circle is fully open, and a finite link set replaces cyclic copies. A device-level preference toggle, hardware touch momentum and physical iPhone/Safari were not exercised.

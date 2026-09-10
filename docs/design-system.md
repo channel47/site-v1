@@ -16,7 +16,7 @@ Keep the geometric 47 as the visible identity. Reuse `components/site/mark-block
 | Reading / interface | **Instrument Sans**, variable 400–700. Body 18px desktop / 17px mobile at 1.75. Ledes are slightly larger, closer-tracked sans serif. |
 | Utility | Small Instrument Sans, 11–14px. Uppercase with `--tracking-label` only for short metadata. Code uses the system monospace stack. |
 | Font delivery | Local WOFF2 files in `app/fonts`, loaded through `next/font/local`. No runtime font-provider request. OFL licenses live beside the files. Social-preview fonts remain in `assets/fonts`. |
-| Heading scale | `--text-heading` is 42–72px, with a 1.02 line-height. The text index has a deliberately larger italic heading; its entries stay sans serif. The menu has its own viewport-scaled display size. |
+| Heading scale | `--text-heading` is 42–72px desktop / 40–56px mobile, with a 1.02 line-height. The text index has a deliberately larger italic heading; its entries stay sans serif. The menu has its own viewport-scaled display size. |
 | Reading measure | `--reading-width`: 660px. `--media-width`: 960px. Header, introduction, body, installation, sharing and reading-end blocks align. Images and video may widen. |
 | Spacing | `--space-1` through `--space-10`: 4, 8, 12, 16, 24, 36, 48, 72, 96, 144px. Small steps group related details; 72–144px intervals separate sections. Fluid page gutters respond to viewport width. Optical icon gaps and responsive adjustments may be smaller. |
 | Corners | `--radius-control`: 999px, for circular icon buttons and pill-shaped actions/fields. `--radius-surface`: 16px, for installation/code/utility insets. `--radius-detail`: 2px, only for tiny inline details and focus boundaries. Images retain their actual silhouettes. |
@@ -45,7 +45,7 @@ The menu scroll uses native browser momentum. Do not add wheel interception, con
 | `SiteHeader` | The real 47 mark and one three-dot trigger, identical across screen sizes. No empty video-preview control. |
 | `NavigationTakeover` | Native modal dialog with a transparent shell. A separate solid circle scales from the trigger to the farthest viewport corner; do not animate a clip over the entire dialog or blur the repeated reel. Partial words at the top and bottom suggest continuation without a written scroll instruction. Footer utilities are icons. Five visual copies support looping; only the central set is exposed to assistive technology and Tab navigation. All visible copies remain normal pointer links. |
 | Menu keyboard behavior | Opening focuses Close. Tab remains inside the native dialog. Arrow keys move between the four main links. Escape closes, restores the trigger and preserves page position. Navigating waits for the exit transition. Reduced motion closes immediately. |
-| `Collection` | Two columns, a maximum 980px width, with a viewport-height constraint on desktop to keep the small collection composed. Four square objects represent four pieces. Hover/focus reveals a compact caption and slowly lifts the object. Mobile opens with one tap. |
+| `Collection` | Two columns, a maximum 980px width, with a viewport-height constraint on tall desktop screens. Phones up to 520px use alternating five-of-six-column objects, one per row, with a short visible title. Four square objects represent four pieces. Hover/focus reveals the full caption and slowly lifts the object on larger screens. Mobile opens with one tap. |
 | `PiecePage` | One notes/projects template with aligned serif headline and sans-serif body. Optional full video, installation and FAQs. Original media remains documentary content; generated covers do not replace it. |
 | `BrowseEntryLink` / `BackToBrowse` | Real Next links remember their source and restore the index/collection scroll and focused link when returning. Show a small grid icon with Collection, or a list icon with Index. The accessible label describes returning; the visible label stays short. Direct arrivals use Collection. |
 | `Rows` | Spacious sans-serif titles with subordinate descriptions and compact type/date metadata. Filters stay in the URL. No row entrance replay on filtering. |
@@ -57,6 +57,14 @@ The menu scroll uses native browser momentum. Do not add wheel interception, con
 | `UtilityLink` | A 48px icon-only target with an accessible name and a compact label on hover/focus. Use the same Phosphor icon family as sharing. Work together uses a conversation icon; RSS uses its feed icon. Utility labels use Instrument Sans, never monospace. |
 | `SiteFooter` | The canonical geometric mark at 28 × 14px inside a 48px link. Legal links and a conversation icon sit opposite it, including on mobile. No repeated name or wordmark. |
 | Author portrait | A small rectangular photograph with the 2px detail radius and a restrained −3° angle, echoing the physical collection. The newsletter pairs it with the About Jackson heading and drops the repeated name/tagline. |
+
+## Mobile composition
+
+Give the artwork enough space to show its material and lighting. On phones, alternate objects toward the left and right of the shared surface; do not reduce the desktop grid to four thumbnails. Keep only the title beneath each object, without a category or arrow. The image and title are one link, with a slight compression on touch. Tablet widths retain two columns. Short landscape windows remove the collection's height constraint, so rotation never makes the objects tiny.
+
+Use 24px reading gutters, 17px body text and shorter 24–48px intervals within articles. Keep the headline and prose aligned. Mobile index entries stack their title, description and inline metadata instead of squeezing a date column beside the text. Sharing controls remain grouped; related reading keeps its arrow in a separate column.
+
+Safe-area tokens protect the header, menu utilities, footer and booking action in portrait and landscape. The modal uses dynamic viewport height, with a compact header and type scale in short landscape windows. Preserve native scrolling and the selected reel position on resize. All primary controls retain 48px targets. Email fields stay 16px, request the email keyboard and disable capitalization; never disable browser zoom.
 
 ## Content and artwork
 

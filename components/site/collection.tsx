@@ -28,7 +28,7 @@ export function Collection({ items }: { items: CollectionItem[] }) {
                 <img
                   src={item.src}
                   srcSet={item.srcSet}
-                  sizes="(max-width: 720px) 46vw, 440px"
+                  sizes="(max-width: 520px) 84vw, (max-width: 720px) 46vw, 440px"
                   width={960}
                   height={960}
                   alt=""
