@@ -64,19 +64,19 @@ Quotations are set as italic display text with breathing room, without a generic
 | `--accent` | Strong blue for actual links and focus. Saturated artwork does not become a category color. |
 | `--takeover` / `--takeover-ink` | Cobalt and light ink reserved for the full-screen menu. This is the main color event in the interface. |
 | Feedback | Success and error colors appear only for real feedback. |
-| Timing | Press 160ms, color/opacity 320ms, feedback 420ms, disclosures 560ms, object settling 860ms, page arrival 920ms with at most three 80ms stagger steps. The 1400ms logo assembly and 900ms/640ms menu wash retain their signature timing. Menu type arrives over 700ms, starting 36% into the wash; header/footer controls follow at 45%/55%. Menu content exits over 240ms. |
+| Timing | Press 160ms, color/opacity 320ms, feedback 420ms, disclosures 560ms, object settling 860ms, page arrival 1400ms with at most three 140ms stagger steps. The 1400ms logo assembly and 900ms/640ms menu wash retain their signature timing. Menu type arrives over 700ms, starting 36% into the wash; header/footer controls follow at 45%/55%. Menu content exits over 240ms. |
 | Reduced motion | CSS removes animations, transitions and control displacement. `PageMotion` starts no animations and cancels active or waiting arrivals if the preference changes. The menu presents one ordinary scrollable set of links, without cyclic copies or perspective. The full article video always requires user playback. |
 
 The menu scroll uses native browser momentum. Do not add wheel interception, constant autoplay, background drifting or a second animation library to recreate that behavior. Movement comes from the reader's input. Preserve the centered position when the viewport changes. Keyboard focus scrolls only the reel, never the outer dialog. An interrupted opening exits from the current circle transform and content opacity, without flashing to the completed state.
 
 ### Motion across a visit
 
-Assembly, immersion, focus, response. These are distinct movements with one settling rhythm, not a requirement to keep everything moving. `--ease-settle` gives objects and controls a soft finish; color uses `--ease-out`. The logo and wash keep their own established curves.
+Page arrivals use `--ease-arrival` to give the reveal a gradual start. `--ease-settle` gives objects and controls a faster response with a soft finish; color uses `--ease-out`. The logo and wash keep their own established curves.
 
 | Moment | Chosen behavior |
 | --- | --- |
 | Home mark | Preserve the six-piece blue-to-ink assembly and explicit replay. No perpetual glitch, hover replay or additional logo wobble. |
-| New page | `PageMotion` sequences the visible heading, introduction and first content blocks. Text resolves from 4px blur and 10px below; objects from 8px blur and 18px below. Only the first viewport participates. Static HTML remains visible without JavaScript. |
+| New page | `PageMotion` sequences the visible heading, introduction and first content blocks. Text resolves from 5px blur and 6px below; objects from 10px blur and 12px below. Both pass through 80% opacity, 2px blur and 2px displacement before settling. Visible artwork decodes and fonts finish loading before the sequence starts. Only the first viewport participates. |
 | More collection objects | Objects below the viewport resolve once when they enter. They never animate out or repeat on reverse scrolling. Focusing or pressing an arriving object settles it immediately. |
 | Returning / filtering | History restores fully visible content and the original scroll position. Index filters update without replaying rows. Cancelling a visit or entering the back-forward cache clears unfinished arrivals. |
 | Object focus | Artwork lifts 10px, keeps a trace of its original angle, and expands 2.5%; its caption follows 80ms later. The link target stays still. Touch compresses just 1.5% over 160ms, then settles. No cursor tracking or parallax. |
@@ -88,7 +88,11 @@ Assembly, immersion, focus, response. These are distinct movements with one sett
 | Copy / forms | A real confirmation, error or sending state gets one 420ms settle. Submit and booking buttons compress on press. No repeated pulse, spinner added for decoration, or shake on error. |
 | Reading / media / footer | Paragraphs, photos, code, video controls and footer stay still as the reader scrolls. No progress decoration, floating portrait, autoplay video, footer entrance or scroll-delayed prose. |
 
-Native Web Animations handle page arrivals; CSS handles controls and signatures. Keep values in `app/tokens.css`. Do not revive per-page `an-blur` classes, whole-page opacity wrappers or delayed link interception. Only the menu waits for its intentional exit.
+Native Web Animations handle page arrivals; CSS handles controls and signatures. Keep values in `app/tokens.css`. JavaScript must read durations through `motionMilliseconds`: CSS optimization can return seconds even when the token was authored in milliseconds. The menu closes once, after its actual closing animation or a correctly converted fallback timer.
+
+Article images reserve their intrinsic width and height before lazy loading. The shared Markdown renderer reads dimensions from local public assets, including SVGs, and refreshes that metadata when an asset changes. Keep these attributes when changing image presentation; a delayed download must not shift the following paragraphs.
+
+`MotionBootstrap` prepares the initial hidden state before body paint. Hydration replaces it with paused animation frames before releasing the guard. A missing or blocked script leaves static HTML visible; delayed hydration fails open after two seconds and never hides that visible page again. Font/image readiness has a separate 2.5-second limit. Failed assets still reveal their caption; timed-out or cancelled arrivals cannot restart when an old promise resolves. Reduced motion, fragment links and history loads skip the initial guard. Do not revive per-page `an-blur` classes, whole-page opacity wrappers or delayed link interception. Only the menu waits for its intentional exit.
 
 ## Components and states
 
@@ -123,6 +127,20 @@ Use 24px reading gutters, 17px body text and shorter 24–48px intervals within 
 Safe-area tokens protect the header, menu utilities, footer and booking action in portrait and landscape. The modal uses dynamic viewport height, with a compact header and type scale in short landscape windows. Preserve native scrolling and the selected reel position on resize. All primary controls retain 48px targets. Email fields stay 16px, request the email keyboard and disable capitalization; never disable browser zoom.
 
 ## Content and artwork
+
+Social previews use Instrument Serif headlines and Instrument Sans labels,
+with the canonical 47 mark. Piece cards reuse their collection cover; the
+site-wide card is typographic. Render local artwork through Sharp to PNG for
+Satori; retain the source files. The TTFs in `assets/fonts` are static versions
+of the same locally hosted fonts, with provenance recorded beside them.
+
+Article explanations use native SVGs with embedded site fonts, direct labels,
+and restrained color for the meaningful change. `pnpm art:build` regenerates
+the four Google Ads diagrams and packing storyboard from
+`scripts/build-article-art.mjs`. Keep the storyboard explicitly illustrative.
+Preserve older media URLs for feeds and sent links. The Flow video opens on
+the existing blue tablet output, cropped by the player to 16:9; the source
+recording and captions stay intact.
 
 `content/notes` and `content/projects` are the only published collections. `lib/content.ts` supplies pages, feeds, search and metadata. `lib/collection.ts` maps one artwork object to each retained piece. The Google Flow video lives inside its article, not as a duplicate gallery object. The Google Ads build story and setup share `/projects/google-ads`; former note URLs redirect there, including Markdown and social previews.
 

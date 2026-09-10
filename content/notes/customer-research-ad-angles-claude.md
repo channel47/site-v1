@@ -102,7 +102,7 @@ Now Claude has two directions to investigate. Its next research pass should look
 
 The first angle already suggests a simple creative treatment. An open bag holds several cubes. A hand removes the small one containing clothes for the overnight stop. The other contents stay where they are.
 
-![The shot plan for Concept A keeps the bag and its remaining contents in the same positions. Only the overnight cube moves.](/posts/customer-research-packing-storyboard.svg)
+![The shot plan for Concept A keeps the bag and its remaining contents in the same positions. Only the overnight cube moves.](/posts/customer-research-packing-storyboard-v2.svg)
 
 The brief can now be specific.
 

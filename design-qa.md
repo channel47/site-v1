@@ -4,6 +4,10 @@ Reviewed September 9, 2026 (America/Los_Angeles). Scope: menu presentation, poin
 
 Motion pass: preserved the logo assembly and menu wash; unified page arrivals, gallery settling, control response, disclosures and feedback. The complete inventory and deliberate static moments live in `docs/design-system.md`.
 
+Follow-up motion audit found the cause of the abrupt arrivals: optimized CSS returned `1.4s`, which `parseFloat` supplied to Web Animations as 1.4 milliseconds. The same assumption affected the menu fallback timer. Both now use a shared CSS-time conversion. The entrance also starts before first paint, waits for decoded artwork/fonts, and uses a slower initial curve. Missing hydration and stalled assets fail open instead of leaving invisible content.
+
+The independent combined review found that article images lacked intrinsic dimensions. The shared renderer now reserves space for local JPEG, WebP and SVG artwork before loading, including the five figures added in the editorial revision. Regression tests cover all three formats, replaced assets, missing/remote images and the public-directory boundary.
+
 ## Changes
 
 - The menu reel fades through a stationary mask at both edges. Focused links remain centered and clear; reduced motion removes the mask and repeated groups.
@@ -18,7 +22,10 @@ Motion pass: preserved the logo assembly and menu wash; unified page arrivals, g
 
 ## Verification
 
-- Motion lifecycle regression checks pass: ordinary navigation, no replay on history or filters, one-time off-screen artwork reveals, immediate settling on input, reduced-motion changes and cleanup on pagehide/unmount. These use browser doubles; they do not claim physical-device motion testing.
+- Motion lifecycle regression checks pass: optimized CSS seconds/milliseconds, pre-paint guard expiry, font/image readiness, failed and stalled assets, late promises after cancellation, Strict Mode replay, ordinary navigation, no replay on history or filters, one-time off-screen artwork reveals, immediate settling on input, reduced-motion changes and cleanup on pagehide/unmount. These use browser doubles; they do not claim physical-device motion testing.
+- A temporary passive frame sampler caught the 1.4ms bug in the real browser, then verified the correction on a fresh document. At approximately 100/300/500/1000ms the first object was 1%/18%/54%/95% opaque, settling fully at 1500ms. The first sampled frame was hidden, with no visible-to-hidden flash, and artwork was ready before progress. Timing instrumentation is removed before release.
+- Native browser animation events confirm the menu opens over 900ms and closes over 640ms. Interrupting its opening at about 267ms still completes a 640ms close and releases the modal/scroll lock. Phone-width fresh gallery/article arrivals and quiet browser-back restoration pass.
+- The final production build was checked at 358 CSS pixels: all five research-article figures reserve their correct dimensions, including four still-unloaded images; the page has no horizontal overflow and retains one display quote. The separate review agent rechecked the dimension fix and reported no remaining actionable findings across all three contributors' changes.
 - Browser checks confirm an off-screen gallery object waits, then resolves when scrolled into view. Returning restores the gallery’s scroll and keyboard focus with all objects visible. Copy reports success with one feedback animation; FAQ opening retains one active, non-inert panel. A quick menu open/close completes without a stranded overlay.
 
 - Typecheck, content model, measurement and SEO checks pass. Production build succeeds (27 routes).

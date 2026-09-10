@@ -97,7 +97,7 @@ try {
   assert(pack.image.url.endsWith('/posts/codex-static-ads-native-pass.jpg'))
   assert.throws(() => sharing.buildSharePack('/notes/not-published'), /No published entry/)
   const project = sharing.buildSharePack('/projects/google-ads')
-  assert(project.image.url.endsWith('/posts/google-ads-mcp-whiteboard-journey.jpg'))
+  assert(project.image.url.endsWith('/projects/google-ads/opengraph-image'))
   assert(project.email.includes('My first MCP'))
   assert.throws(() => sharing.buildSharePack('/notes/google-ads-mcp'), /No published entry/)
   assert(project.email.includes('Explore the project'))

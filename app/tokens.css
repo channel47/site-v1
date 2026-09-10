@@ -54,12 +54,13 @@
   --radius-detail: 2px;
   --ease-out: cubic-bezier(0.22, 0.68, 0.12, 1);
   --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-arrival: cubic-bezier(0.3, 0, 0.3, 1);
   --motion-press: 160ms;
   --motion-ui: 320ms;
   --motion-disclosure: 560ms;
   --motion-object: 860ms;
-  --motion-reveal: 920ms;
-  --motion-stagger: 80ms;
+  --motion-reveal: 1400ms;
+  --motion-stagger: 140ms;
   --motion-feedback: 420ms;
   --motion-logo: 1400ms;
   --ease-logo: cubic-bezier(0.16, 1, 0.3, 1);

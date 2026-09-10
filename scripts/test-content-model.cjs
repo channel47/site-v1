@@ -41,6 +41,24 @@ try {
   assert.deepEqual(note.tags, [])
   assert.equal(content.getEntryPreview(note), undefined)
   assert.equal(content.getNextRead('/notes/quick-note'), undefined, 'Unrelated pieces should not be recommended')
+  const media = path.join(temp, 'public/posts')
+  fs.mkdirSync(media, { recursive: true })
+  fs.writeFileSync(path.join(media, 'diagram.svg'), '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900"></svg>')
+  fs.copyFileSync(path.join(root, 'public/posts/customer-research-ad-overnight.webp'), path.join(media, 'ad.webp'))
+  fs.copyFileSync(path.join(root, 'public/posts/google-flow-tablet-grid-blue.jpg'), path.join(media, 'tablets.jpg'))
+  fs.writeFileSync(path.join(temp, 'outside.svg'), '<svg xmlns="http://www.w3.org/2000/svg" width="47" height="47"></svg>')
+  fs.appendFileSync(quickNote, '\n![Diagram](/posts/diagram.svg)\n\n![Ad](/posts/ad.webp)\n\n![Tablets](/posts/tablets.jpg)\n\n![Remote](https://example.com/image.jpg)\n\n![Missing](/posts/missing.jpg)\n\n![Outside](/%2e%2e/outside.svg)\n')
+  const illustrated = content.getNoteBySlug('quick-note').html
+  assert.match(illustrated, /alt="Diagram" width="1600" height="900"/, 'SVG layout is reserved before loading')
+  assert.match(illustrated, /alt="Ad" width="1122" height="1402"/, 'Portrait WebP layout is reserved before loading')
+  assert.match(illustrated, /alt="Tablets" width="1200" height="1200"/, 'JPEG layout is reserved before loading')
+  for (const alt of ['Remote', 'Missing', 'Outside']) {
+    assert.match(illustrated, new RegExp(`alt="${alt}" loading="lazy"`), 'External, missing or out-of-public paths do not read arbitrary files')
+  }
+  fs.writeFileSync(path.join(media, 'diagram.svg'), '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 1200"></svg>')
+  const changed = new Date(Date.now() + 2000)
+  fs.utimesSync(path.join(media, 'diagram.svg'), changed, changed)
+  assert.match(content.getNoteBySlug('quick-note').html, /alt="Diagram" width="1800" height="1200"/, 'Replacing artwork refreshes its cached dimensions')
   assert.deepEqual(content.getEntryPreview({ ...note, markdown: '![Draft](placeholder:later)\n\n![A result](/result.jpg)' }), { src: '/result.jpg', alt: 'A result' })
   assert.deepEqual(content.getEntryPreview({ ...note, video: { poster: '/poster.jpg', caption: 'A walkthrough' } }), { src: '/poster.jpg', alt: 'A walkthrough' })
   assert.deepEqual(content.getEntryPreview({ ...note, preview: { src: '/selected.jpg', alt: 'Selected result' }, markdown: '![Other](/other.jpg)' }), { src: '/selected.jpg', alt: 'Selected result' })
@@ -53,7 +71,7 @@ try {
   fs.unlinkSync(path.join(temp, 'content/projects/bad-status.md'))
   fs.writeFileSync(path.join(temp, 'content/projects/alias.md'), '---\ntitle: Alias\nslug: personal-tool\ndescription: Duplicate URL fixture\ndate: 2026-09-09\n---\nDuplicate.\n')
   assert.throws(() => content.getContentEntries(), /Duplicate content URL/)
-  console.log('Content model passed: sections, canonical paths, minimal publishing, preview fallbacks, related reading, status validation, collision detection.')
+  console.log('Content model passed: sections, canonical paths, image dimensions and local-path boundaries, minimal publishing, preview fallbacks, related reading, status validation, collision detection.')
 } finally {
   process.chdir(root)
   fs.rmSync(temp, { recursive: true, force: true })

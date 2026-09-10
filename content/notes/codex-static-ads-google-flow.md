@@ -9,7 +9,7 @@ preview:
   alt: Two static ad concepts with the products, scenes, and typography generated together.
 video:
   src: /posts/google-flow-reference-led-product-imagery.mp4
-  poster: /posts/google-flow-walkthrough-poster.jpg
+  poster: /posts/google-flow-tablet-grid-blue.jpg
   captions: /posts/google-flow-reference-led-product-imagery.vtt
   duration: PT4M17S
   uploadDate: "2026-07-14"

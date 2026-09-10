@@ -5,6 +5,7 @@ import { JsonLd } from "@/components/site/json-ld";
 import { BrowseNavigation } from "@/components/site/browse-navigation";
 import { SkipLink } from "@/components/site/skip-link";
 import { PageMotion } from "@/components/site/page-motion";
+import { MotionBootstrap } from "@/components/site/motion-bootstrap";
 import { SiteMeasurement } from "@/components/site/measurement";
 import { getFeedItems } from "@/lib/content";
 import { PUBLIC_PAGES } from "@/lib/discovery";
@@ -70,7 +71,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${sans.variable} ${serif.variable}`}>
+    <html lang="en" className={`${sans.variable} ${serif.variable}`} suppressHydrationWarning>
+      <head><MotionBootstrap /></head>
       <body>
         {/* Rendered here (not via `metadata.alternates`, which page-level
             canonicals would replace wholesale) — React hoists it to <head>. */}

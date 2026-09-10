@@ -493,7 +493,7 @@ pre {
 .collection-link:focus-visible .collection-caption {
   opacity: 1;
   transform: none;
-  transition-delay: var(--motion-stagger);
+  transition-delay: 80ms;
 }
 .collection-link:focus-visible .collection-art {
   transform: translateY(-10px) rotate(calc(var(--object-angle) * 0.2)) scale(1.025);
@@ -502,7 +502,7 @@ pre {
   .collection-link:hover .collection-caption {
     opacity: 1;
     transform: none;
-    transition-delay: var(--motion-stagger);
+    transition-delay: 80ms;
   }
   .collection-link:hover .collection-art {
     transform: translateY(-10px) rotate(calc(var(--object-angle) * 0.2)) scale(1.025);
@@ -732,6 +732,8 @@ pre {
 }
 .piece-video video {
   width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
   display: block;
   background: var(--ink);
 }

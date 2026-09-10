@@ -15,6 +15,7 @@ import { ChatCircle, RssSimple, X } from "@phosphor-icons/react";
 import { MarkLink } from "./mark-link";
 import { UtilityLink } from "./utility-link";
 import { SocialLinks } from "./social-links";
+import { motionMilliseconds } from "@/lib/motion";
 
 const LINKS = [
   { href: "/", title: "Collection" },
@@ -37,11 +38,14 @@ export function NavigationTakeover({ onDismiss, keyboard }: { onDismiss: () => v
   const closeButton = useRef<HTMLButtonElement>(null);
   const destination = useRef<string | null>(null);
   const closing = useRef(false);
+  const finished = useRef(false);
   const [exiting, setExiting] = useState(false);
   const [reduced, setReduced] = useState(false);
   const router = useRouter();
 
   const finish = useCallback(() => {
+    if (finished.current) return;
+    finished.current = true;
     dialog.current?.close();
     const href = destination.current;
     onDismiss();
@@ -137,7 +141,10 @@ export function NavigationTakeover({ onDismiss, keyboard }: { onDismiss: () => v
     sizeWash();
     window.addEventListener("resize", sizeWash);
     const media = matchMedia("(prefers-reduced-motion: reduce)");
-    const preference = () => setReduced(media.matches);
+    const preference = () => {
+      setReduced(media.matches);
+      if (media.matches && closing.current) finish();
+    };
     preference();
     media.addEventListener("change", preference);
     node.showModal();
@@ -150,17 +157,18 @@ export function NavigationTakeover({ onDismiss, keyboard }: { onDismiss: () => v
       document.body.style.paddingRight = previousPadding;
       node.close();
     };
-  }, [keyboard]);
+  }, [keyboard, finish]);
 
   // A fallback also closes the dialog if animations are disabled by an extension.
   useEffect(() => {
     if (!exiting) return;
-    const duration = parseFloat(
+    const duration = motionMilliseconds(
       getComputedStyle(dialog.current!).getPropertyValue("--motion-menu-close"),
+      640,
     );
     const timer = setTimeout(
       finish,
-      (Number.isFinite(duration) ? duration : 640) + 80,
+      duration + 80,
     );
     return () => clearTimeout(timer);
   }, [exiting, finish]);
@@ -250,7 +258,9 @@ export function NavigationTakeover({ onDismiss, keyboard }: { onDismiss: () => v
       <div
         className="takeover-wash"
         aria-hidden="true"
-        onAnimationEnd={() => { if (exiting) finish(); }}
+        onAnimationEnd={(event) => {
+          if (exiting && event.animationName === "takeover-close") finish();
+        }}
       />
       <h2 id="navigation-title" className="sr-only">
         Explore 47
