@@ -50,7 +50,7 @@ versioned email artwork unchanged so sent messages retain their original art.
 | Heading scale | `--text-heading` is 42–72px desktop / 40–56px mobile, with a 1.02 line-height. The text index has a deliberately larger italic heading; its entries stay sans serif. The menu has its own viewport-scaled display size. |
 | Reading measure | `--reading-width`: 660px. `--media-width`: 960px. Header, introduction, body, installation, sharing and reading-end blocks align. Images and video may widen. |
 | Spacing | `--space-1` through `--space-10`: 4, 8, 12, 16, 24, 36, 48, 72, 96, 144px. Small steps group related details; 72–144px intervals separate sections. Fluid page gutters respond to viewport width. Optical icon gaps and responsive adjustments may be smaller. |
-| Corners | `--radius-control`: 999px, for circular icon buttons and pill-shaped actions/fields. `--radius-surface`: 16px, for installation/code/utility insets. `--radius-detail`: 2px, only for tiny inline details and focus boundaries. Images retain their actual silhouettes. |
+| Corners | `--radius-control`: 999px, for circular icon buttons and pill-shaped actions/fields. `--radius-surface`: 16px, for installation/code/utility insets. `--radius-media`: 8px, for article photos, screenshots and video. `--radius-detail`: 2px, only for tiny inline details and focus boundaries. Collection objects retain their actual silhouettes. |
 | Controls | Minimum 48px hit area. Focus is a clear 2px outline; it changes to light ink inside the cobalt menu. The email input and submit action share one capsule, with a single focus treatment. |
 
 Quotations are set as italic display text with breathing room, without a generic tinted quote box. Body paragraphs remain sans serif for sustained reading. Never use a display flourish to rewrite the author's voice.
@@ -64,33 +64,33 @@ Quotations are set as italic display text with breathing room, without a generic
 | `--accent` | Strong blue for actual links and focus. Saturated artwork does not become a category color. |
 | `--takeover` / `--takeover-ink` | Cobalt and light ink reserved for the full-screen menu. This is the main color event in the interface. |
 | Feedback | Success and error colors appear only for real feedback. |
-| Timing | Press 160ms, color/opacity 320ms, feedback 420ms, disclosures 560ms, object settling 860ms, page arrival 1400ms with at most three 140ms stagger steps. The 1400ms logo assembly and 900ms/640ms menu wash retain their signature timing. Menu type arrives over 700ms, starting 36% into the wash; header/footer controls follow at 45%/55%. Menu content exits over 240ms. |
+| Timing | Press 160ms, color/opacity 320ms, feedback 420ms, disclosures 560ms, object settling 860ms, page arrival 720ms with at most three 60ms stagger steps. The 1400ms logo assembly and 900ms/640ms menu wash retain their signature timing. Menu type arrives over 700ms, starting 36% into the wash; header/footer controls follow at 45%/55%. Menu content exits over 240ms. |
 | Reduced motion | CSS removes animations, transitions and control displacement. `PageMotion` starts no animations and cancels active or waiting arrivals if the preference changes. The menu presents one ordinary scrollable set of links, without cyclic copies or perspective. The full article video always requires user playback. |
 
 The menu scroll uses native browser momentum. Do not add wheel interception, constant autoplay, background drifting or a second animation library to recreate that behavior. Movement comes from the reader's input. Preserve the centered position when the viewport changes. Keyboard focus scrolls only the reel, never the outer dialog. An interrupted opening exits from the current circle transform and content opacity, without flashing to the completed state.
 
 ### Motion across a visit
 
-Page arrivals use `--ease-arrival` to give the reveal a gradual start. `--ease-settle` gives objects and controls a faster response with a soft finish; color uses `--ease-out`. The logo and wash keep their own established curves.
+Page arrivals use `--ease-arrival` for an immediate response with a short, soft finish. Text becomes sharp early; the final fraction only settles opacity. `--ease-settle` gives objects and controls a faster response with a soft finish; color uses `--ease-out`. The logo and wash keep their own established curves.
 
 | Moment | Chosen behavior |
 | --- | --- |
 | Home mark | Preserve the six-piece blue-to-ink assembly and explicit replay. No perpetual glitch, hover replay or additional logo wobble. |
-| New page | `PageMotion` sequences the visible heading, introduction and first content blocks. Text resolves from 5px blur and 6px below; objects from 10px blur and 12px below. Both pass through 80% opacity, 2px blur and 2px displacement before settling. Visible artwork decodes and fonts finish loading before the sequence starts. Only the first viewport participates. |
+| New page | `PageMotion` sequences the visible heading, introduction and first content blocks. Text resolves from 3px blur and 3px below; objects from 6px blur and 8px below. At 75% eased progress both are sharp, in their final position and 96% opaque. The last few percent settle without a lingering blur. Visible artwork decodes and fonts finish loading before the sequence starts. Only the first viewport participates in long reading pages. Both About paragraphs and its follow row can arrive once on entering the viewport. |
 | More collection objects | Objects below the viewport resolve once when they enter. They never animate out or repeat on reverse scrolling. Focusing or pressing an arriving object settles it immediately. |
 | Returning / filtering | History restores fully visible content and the original scroll position. Index filters update without replaying rows. Cancelling a visit or entering the back-forward cache clears unfinished arrivals. |
 | Object focus | Artwork lifts 10px, keeps a trace of its original angle, and expands 2.5%; its caption follows 80ms later. The link target stays still. Touch compresses just 1.5% over 160ms, then settles. No cursor tracking or parallax. |
 | Menu trigger / wash | On desktop hover or keyboard focus, the three dots turn vertical to suggest the reel. The circle expands from that control. Type follows through a 24px rise; close freezes its current transform before fading, including an interrupted opening. |
 | Menu scrolling | Keep native momentum, perspective and edge fades. No automatic scroll, snap interception or lagging spring applied to the scroll position. |
 | Icon utilities | A circular surface expands underneath a stationary target. The glyph compresses slightly on press; labels arrive after a short dwell and leave promptly. The menu Close remains a bare X. |
-| Index / directional links | Index titles shift 4px on focus; the active filter draws a short underline. Back and next-reading glyphs move 3px in the direction of travel while their surfaces stay fixed. Body links and legal links remain still. |
+| Index / directional links | Index titles change to blue on hover/focus; the active filter draws a short underline. Back, next-reading and session-proof arrows stay fixed while their color or surrounding surface changes. Body links and legal links remain still. |
 | Questions | The panel opens over 560ms and fades over 320ms; the plus turns with the opening. Closing panels remain inert. No bounce or collapsing text scale. |
 | Copy / forms | A real confirmation, error or sending state gets one 420ms settle. Submit and booking buttons compress on press. No repeated pulse, spinner added for decoration, or shake on error. |
-| Reading / media / footer | Paragraphs, photos, code, video controls and footer stay still as the reader scrolls. No progress decoration, floating portrait, autoplay video, footer entrance or scroll-delayed prose. |
+| Reading / media / footer | Article paragraphs, photos, code, video controls and footer stay still as the reader scrolls. No progress decoration, floating portrait, autoplay video, footer entrance or scroll-delayed prose. |
 
 Native Web Animations handle page arrivals; CSS handles controls and signatures. Keep values in `app/tokens.css`. JavaScript must read durations through `motionMilliseconds`: CSS optimization can return seconds even when the token was authored in milliseconds. The menu closes once, after its actual closing animation or a correctly converted fallback timer.
 
-Article images reserve their intrinsic width and height before lazy loading. The shared Markdown renderer reads dimensions from local public assets, including SVGs, and refreshes that metadata when an asset changes. Keep these attributes when changing image presentation; a delayed download must not shift the following paragraphs.
+Article images reserve their intrinsic width and height before lazy loading. The shared Markdown renderer reads dimensions from local public assets, including SVGs, and refreshes that metadata when an asset changes. Keep these attributes when changing image presentation; a delayed download must not shift the following paragraphs. Portrait media also receives its aspect ratio as a CSS property: above 720px, the complete image fits within 72% of the viewport height, capped at 640px. Its explicit calculated width reserves the same space before loading. Never use two automatic dimensions or crop portrait ads to make them shorter. On phones the original full-width proportion remains.
 
 `MotionBootstrap` prepares the initial hidden state before body paint. Hydration replaces it with paused animation frames before releasing the guard. A missing or blocked script leaves static HTML visible; delayed hydration fails open after two seconds and never hides that visible page again. Font/image readiness has a separate 2.5-second limit. Failed assets still reveal their caption; timed-out or cancelled arrivals cannot restart when an old promise resolves. Reduced motion, fragment links and history loads skip the initial guard. Do not revive per-page `an-blur` classes, whole-page opacity wrappers or delayed link interception. Only the menu waits for its intentional exit.
 
@@ -104,13 +104,13 @@ Article images reserve their intrinsic width and height before lazy loading. The
 | Menu keyboard behavior | Keyboard opening focuses Close; pointer opening focuses the dialog itself. Close is a bare X, with a short underline for keyboard focus instead of a circle. Tab remains inside the native dialog. Arrow keys move between the four main links. Escape closes, restores the trigger and preserves page position. Navigating waits for the exit transition. Reduced motion closes immediately. |
 | `Collection` | Two columns, a maximum 980px width, with a viewport-height constraint on tall desktop screens. Phones up to 520px use alternating five-of-six-column objects, one per row, with a short visible title. Each square object represents one piece. Hover/focus reveals the full caption and slowly lifts the object on larger screens. Mobile opens with one tap. |
 | `PiecePage` | One notes/projects template with aligned serif headline and sans-serif body. Optional full video, installation and FAQs. The author’s name links to About beside a 44px portrait, with sentence-case date and reading metadata underneath. Installation follows the story. Original media remains documentary content; generated covers do not replace it. |
-| `BrowseEntryLink` / `BackToBrowse` | Real Next links remember their source and restore the index/collection scroll when returning. Restore the focused link only when the piece was opened with a keyboard or assistive technology; pointer/touch visits must not acquire a focus outline on return. Show a left arrow and Back. The accessible name identifies the return destination; the collection/list symbol is reserved for a destination, not history navigation. Direct arrivals use Collection. |
+| `BrowseEntryLink` / `BackToBrowse` | Real Next links remember their source and restore the index/collection scroll when returning. Restore the focused link only when the piece was opened with a keyboard or assistive technology; pointer/touch visits must not acquire a focus outline on return. Show only a stationary 20px Phosphor ArrowLeft inside the shared 48px icon control. The accessible name and tooltip identify the return destination; direct arrivals return to Collection. Align the glyph with the reading measure. |
 | `Rows` | Spacious sans-serif titles with subordinate descriptions and compact type/date metadata. Filters stay in the URL. No row entrance replay on filtering. |
-| `CopyButton` | One button implementation for text and icon variants. Reports actual success/failure with a check or warning icon. Measurement fires only after successful copying. |
+| `CopyButton` | One button implementation for text and icon variants, with the same 18px Phosphor glyph, 48px target, hover color and two-second feedback everywhere. Reports actual success/failure with a check or warning icon. Measurement fires only after successful copying. Installation and code blocks share their inset recipe, positioning copy at the same top-right inset. `CodeCopyButtons` enhances fenced blocks with Copy prompt or Copy code, preserving line breaks and excluding UI labels. Static HTML and feeds retain readable code without inert buttons. |
 | `Faq` | One answer open at a time. Buttons expose expanded state; closed panels are inert. Height/opacity settle gradually. |
 | `Capture` | Shared capsule input/action. Idle, sending, accepted, unavailable and error states remain real. No fabricated success for an unconfigured service. |
 | `ReadingEnd` | One actual related piece and one email invitation. The next title and direction cue occupy separate grid columns; the arrow never becomes an orphaned text glyph. Sharing stays grouped on the left with a 12px label gap. Copy, link and social actions use 18px Phosphor icons; the Copy page control keeps its width during feedback. |
-| `DirectionCue` | A regular 20px right arrow inside a stationary 48px circular surface. Internal navigation points right. Use it for next-reading and session-proof links. The glyph shifts 3px while the surface changes to blue. The menu is text only, with no arrows beside its links. Never scale arrows with headline type. |
+| `DirectionCue` | A regular 20px right arrow inside a stationary 48px circular surface. Internal navigation points right. Use it for next-reading and session-proof links. The glyph stays in place while the surface changes to blue. The menu is text only, with no arrows beside its links. Never scale arrows with headline type. |
 | `UtilityLink` | A 48px icon-only target with an accessible name and a compact label on hover/focus. Use the same Phosphor icon family as sharing and disclosures; do not add hand-drawn SVG alternatives. Work together uses a conversation icon; RSS uses its feed icon. Utility labels use Instrument Sans, never monospace. |
 | `SocialLinks` | One shared pair of 20px X and GitHub icons, each inside a 48px target. Blue on paper; light ink on the cobalt menu. Accessible profile names and labels on hover/focus supply context without persistent text or outbound arrows. Menu social profiles sit at lower left, opposite contact and RSS. External links keep native navigation. |
 | About follow row | One blue envelope and Occasional emails on the left; the shared icon-only X and GitHub links align to the right. Keep at least 24px between the two groups; all targets are 48px tall. Social profiles live here and in the menu, not in the footer. |
@@ -134,9 +134,25 @@ site-wide card is typographic. Render local artwork through Sharp to PNG for
 Satori; retain the source files. The TTFs in `assets/fonts` are static versions
 of the same locally hosted fonts, with provenance recorded beside them.
 
-Article explanations use native SVGs with embedded site fonts, direct labels,
-and restrained color for the meaningful change. `pnpm art:build` regenerates
-the four Google Ads diagrams and packing storyboard from
+Article imagery must answer a reader's question. Start with the relationship,
+comparison, or detail to explain, then choose objects that make it visible.
+Integrate a few useful labels into materials (engraving, cable sleeves, printed
+paper), keeping them legible at reading width. Keep the tactile lighting and
+composition of the collection, with room for context inside article images.
+Do not replace the prose with a photographed wall of text, add meaningless data
+marks, or use generic objects whose only purpose is decoration.
+
+Mix these illustrations with tightly framed real captures when the interface
+or original work is the evidence. Never generate fake screenshots or account
+results. Screenshots display directly with no frame, padding, surface or shadow;
+use the shared 8px media radius. Crop source captures to make relevant details
+readable without reconstructing their contents. Captions explain the takeaway and identify illustrative content;
+important information must remain in accessible prose as well. The Google Ads
+article uses a labeled connector and report still life, an actual MCP Inspector
+capture, and the original dry-run fix. Their prompts and source provenance live
+in [article-art-prompts.json](article-art-prompts.json).
+
+`pnpm art:build` regenerates the packing storyboard from
 `scripts/build-article-art.mjs`. Keep the storyboard explicitly illustrative.
 Preserve older media URLs for feeds and sent links. The Flow video opens on
 the existing blue tablet output, cropped by the player to 16:9; the source

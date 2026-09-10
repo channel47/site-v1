@@ -51,6 +51,8 @@ try {
   const illustrated = content.getNoteBySlug('quick-note').html
   assert.match(illustrated, /alt="Diagram" width="1600" height="900"/, 'SVG layout is reserved before loading')
   assert.match(illustrated, /alt="Ad" width="1122" height="1402"/, 'Portrait WebP layout is reserved before loading')
+  assert.match(illustrated, /alt="Ad"[^>]+data-orientation="portrait"/, 'Portrait media can fit a desktop viewport without cropping')
+  assert.doesNotMatch(illustrated, /alt="Diagram"[^>]+data-orientation/, 'Landscape diagrams retain their wide presentation')
   assert.match(illustrated, /alt="Tablets" width="1200" height="1200"/, 'JPEG layout is reserved before loading')
   for (const alt of ['Remote', 'Missing', 'Outside']) {
     assert.match(illustrated, new RegExp(`alt="${alt}" loading="lazy"`), 'External, missing or out-of-public paths do not read arbitrary files')
@@ -59,6 +61,10 @@ try {
   const changed = new Date(Date.now() + 2000)
   fs.utimesSync(path.join(media, 'diagram.svg'), changed, changed)
   assert.match(content.getNoteBySlug('quick-note').html, /alt="Diagram" width="1800" height="1200"/, 'Replacing artwork refreshes its cached dimensions')
+  fs.appendFileSync(quickNote, '\n```text\nKeep <source> & evidence.\n\nDo not invent claims.\n```\n\n```sh\nnpx example --help\n```\n')
+  const withCode = content.getNoteBySlug('quick-note').html
+  assert.match(withCode, /<div class="st-code"><pre><code class="language-text">Keep &lt;source&gt; &amp; evidence\./, 'Copyable prompts retain safe escaped Markdown rendering')
+  assert.equal((withCode.match(/<span class="code-copy"><\/span>/g) || []).length, 2, 'Each code block has one enhancement slot without inert buttons in feeds')
   assert.deepEqual(content.getEntryPreview({ ...note, markdown: '![Draft](placeholder:later)\n\n![A result](/result.jpg)' }), { src: '/result.jpg', alt: 'A result' })
   assert.deepEqual(content.getEntryPreview({ ...note, video: { poster: '/poster.jpg', caption: 'A walkthrough' } }), { src: '/poster.jpg', alt: 'A walkthrough' })
   assert.deepEqual(content.getEntryPreview({ ...note, preview: { src: '/selected.jpg', alt: 'Selected result' }, markdown: '![Other](/other.jpg)' }), { src: '/selected.jpg', alt: 'Selected result' })

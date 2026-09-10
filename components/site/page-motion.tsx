@@ -2,7 +2,7 @@
 
 import { useLayoutEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { ARRIVAL_SELECTOR, motionMilliseconds } from "@/lib/motion";
+import { ARRIVAL_SELECTOR, SCROLL_ARRIVAL_SELECTOR, motionMilliseconds } from "@/lib/motion";
 
 /** Enhance visible arrivals, never the act of reading or restoring a position.
  * Content is visible without JS; no hidden styles survive a cancelled animation. */
@@ -39,8 +39,8 @@ export function PageMotion() {
     const main = document.querySelector("main");
     if (!main) { releaseGuard(); return; }
     const tokens = getComputedStyle(root);
-    const duration = motionMilliseconds(tokens.getPropertyValue("--motion-reveal"), 1400);
-    const step = motionMilliseconds(tokens.getPropertyValue("--motion-stagger"), 140);
+    const duration = motionMilliseconds(tokens.getPropertyValue("--motion-reveal"), 720);
+    const step = motionMilliseconds(tokens.getPropertyValue("--motion-stagger"), 60);
     const easing = tokens.getPropertyValue("--ease-arrival").trim();
     const animations = new Map<Element, Animation>();
     const timers = new Set<ReturnType<typeof setTimeout>>();
@@ -83,11 +83,11 @@ export function PageMotion() {
       const object = node.matches(".collection-object");
       if (!object && bounds.height > innerHeight * 0.8) return;
       const visible = bounds.top < innerHeight;
-      if (!visible && !object) return;
+      if (!visible && !node.matches(SCROLL_ARRIVAL_SELECTOR)) return;
       const delay = visible ? Math.min(visibleIndex++, 3) * step : 0;
       const animation = node.animate([
-        { opacity: 0, filter: `blur(${object ? 10 : 5}px)`, transform: `translateY(${object ? 12 : 6}px)` },
-        { opacity: 0.8, filter: "blur(2px)", transform: "translateY(2px)", offset: 0.65 },
+        { opacity: 0, filter: `blur(${object ? 6 : 3}px)`, transform: `translateY(${object ? 8 : 3}px)` },
+        { opacity: 0.96, filter: "blur(0px)", transform: "translateY(0px)", offset: 0.75 },
         { opacity: 1, filter: "blur(0px)", transform: "translateY(0px)" },
       ], { duration, delay, easing, fill: "backwards", id: "47-arrive" });
       animation.pause();

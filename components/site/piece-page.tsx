@@ -3,6 +3,7 @@ import { SiteFooter } from "./footer";
 import { BackToBrowse } from "./browse-navigation";
 import { ReadingEnd } from "./reading-end";
 import { CopyButton } from "./copy-button";
+import { CodeCopyButtons } from "./code-copy-buttons";
 import { SourceRow } from "./source-row";
 import { Faq } from "./faq";
 import { ShareRow } from "./share-row";
@@ -88,10 +89,8 @@ export function PiecePage({
               ) : null}
             </figure>
           ) : null}
-          <div
-            className="st-prose"
-            dangerouslySetInnerHTML={{ __html: entry.html }}
-          />
+          <div className="st-prose" dangerouslySetInnerHTML={{ __html: entry.html }} />
+          <CodeCopyButtons key={href} />
           {project?.install ? (
             <section className="project-install" id="install" aria-label="Install">
               <div className="install-head">

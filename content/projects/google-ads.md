@@ -38,7 +38,7 @@ I started a new job in November and came across the Google Ads API. I'd managed 
 
 I remember looking through the documentation and thinking, I could do basically anything with this. I had a long list of account tasks I wanted to stop doing by hand.
 
-![The timeline from my first Drip experiment in 2025 to the Google Ads MCP release in January 2026.](/posts/google-ads-journey.svg)
+![An agent connects through the MCP to the Google Ads API. The physical objects are generated illustrations of that relationship.](/posts/google-ads-connection-v3.webp)
 
 ## Thirteen commands became three tools
 
@@ -50,7 +50,7 @@ I kept asking the coding agent to add one more until the MCP had 13 separate com
 - Read and report on the data with `query`.
 - Make a change with `mutate`.
 
-![Thirteen task-specific commands reduced to account discovery, queries, and mutations.](/posts/google-ads-three-tools.svg)
+![The three tools in MCP Inspector, with an example query for enabled campaigns. This shows the real tool interface; no account query was run.](/posts/google-ads-inspector-v2.webp "screenshot")
 
 The smaller version could still pull search terms, check budgets, find wasted spend, and update campaigns. The agent worked out the query or change from the job I described.
 
@@ -62,13 +62,13 @@ A week after release, I asked the MCP to validate a new ad without publishing it
 
 I checked the Google Ads account. The ad was sitting there. Then I ran what was supposed to be the real version, and that created a second one.
 
-![Both runs reported no changes, but the preview created one live ad and the second run created another.](/posts/google-ads-incident.svg)
-
 I couldn't have explained which part of the code had failed. I knew what I'd asked the system to do, and I could see what it had actually done.
 
 I brought it back to the coding agent. It traced the problem to two setting names written in a format the connection to Google Ads ignored. Nothing had crashed. The safety settings simply never reached Google.
 
-The agent fixed the names and added tests. My job was to check what happened in the account and bring back anything that didn't match what I'd asked for.
+The agent [fixed the names](https://github.com/channel47/google-ads-mcp-server/commit/3de539fa396183acfb59e76fdafbc514236a2402) and added tests. My job was to check what happened in the account and bring back anything that didn't match what I'd asked for.
+
+![The original fix: partialFailure and validateOnly became partial_failure and validate_only, so the API received the validation settings.](/posts/google-ads-dry-run-fix-v3.webp "screenshot")
 
 ## Adding previews and a read-only mode
 
@@ -84,7 +84,7 @@ Every Monday an agent moves through more than a dozen Google Ads accounts under 
 
 The MCP supplies the Google Ads data. The agent combines it with the CRM data as part of that reporting workflow.
 
-![Ads and CRM data organized into a report by offer, with spend, revenue, conversions, ROAS, and changes over time.](/posts/google-ads-kpi-scan.svg)
+![An illustrated report layout: Google Ads and CRM records come together by offer and campaign type, with spend, revenue, conversions, ROAS, and changes over time.](/posts/google-ads-monday-report-v2.webp)
 
 I ask for the report and judge it like a marketer. I can see which accounts need attention without opening them one by one.
 

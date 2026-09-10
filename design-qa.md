@@ -1,5 +1,9 @@
 # 47 refinement QA
 
+September 10 motion refinement (America/Los_Angeles): shortened page arrival to 720ms with 60ms stagger steps. Text starts with 3px blur and 3px displacement; objects use 6px/8px. The revised curve makes the first heading sharp at about 300ms, with a short opacity finish. A passive browser sampler measured 41%/77%/97% opacity at 100/200/300ms. Both About paragraphs participated; the second was sharp by 400ms. The logo assembly and cobalt menu timing are unchanged.
+
+Removed positional hover/focus motion from index titles, back arrows, next-reading arrows and session-proof arrows. Keyboard checks confirm stationary glyphs and text while color changes. Article prompt/code blocks now share the existing copy icon and feedback; actual browser copy/paste matched the second prompt exactly, including line breaks. Portrait media reserves its reduced layout even before downloading; at an 808 × 631 CSS viewport, all three tall research-article images fit at 454px high without cropping. The article and About page have no horizontal overflow at 388px. Temporary timing and clipboard instrumentation was removed after these checks.
+
 Reviewed September 9, 2026 (America/Los_Angeles). Scope: menu presentation, pointer/keyboard focus, author portraits, sentence-case UI, the ELT cover and Google Ads consolidation. Existing concurrent brand work is preserved.
 
 Motion pass: preserved the logo assembly and menu wash; unified page arrivals, gallery settling, control response, disclosures and feedback. The complete inventory and deliberate static moments live in `docs/design-system.md`.
@@ -11,7 +15,7 @@ The independent combined review found that article images lacked intrinsic dimen
 ## Changes
 
 - The menu reel fades through a stationary mask at both edges. Focused links remain centered and clear; reduced motion removes the mask and repeated groups.
-- Return links use an arrow and Back, with the destination in the accessible name. Returning restores scroll position for every visit and the selected link for keyboard-opened pieces. Pointer-opened pieces do not receive programmatic focus on return.
+- Return links use a single 20px Phosphor arrow in a 48px target, with the destination in the accessible name and tooltip. Returning restores scroll position for every visit and the selected link for keyboard-opened pieces. Pointer-opened pieces do not receive programmatic focus on return.
 - Menu links are text only. Close is a bare X; keyboard focus uses a short underline. Pointer opening focuses the dialog, keyboard opening focuses Close. The skip link reveals only after Tab input, never from pointer input or restored focus alone.
 - One AuthorPortrait component uses the original square photo with an upright circular crop. Portraits sit beside their related headings and beside the author on every content page. Article metadata is grouped below the linked author name.
 - Interface labels use sentence case and close tracking. Removed redundant legacy results/status strips from the two affected stories; actual artwork and acronyms retain their lettering.
@@ -22,6 +26,8 @@ The independent combined review found that article images lacked intrinsic dimen
 
 ## Verification
 
+- September 10 article-detail follow-up: code/prompt copy controls now match the install control's glyph, 48px target, hover surface, insets and success feedback. Both upper and lower arrow-only return links work; pointer return leaves no focused gallery item. Screenshots render directly without added frames or shadows, and article media has an 8px radius. The incident capture is cropped closer to make the changed lines larger; its source remains a compressed browser capture. The generated connector label now reads Google Ads. Checked the article at 1149px and 388px, with no horizontal overflow. Content, type, motion, measurement, SEO, production build and content-surface checks pass.
+- Google Ads article imagery: two contextual material renders and two real project captures replace the four type-only diagrams. All four load with intrinsic dimensions; desktop and 388px phone layouts have no horizontal overflow. The Inspector capture uses the published 1.2.0 tool schema and an unexecuted documented query; the incident capture is the original public two-line fix. No account data was accessed. Content, type, SEO, artwork generation and the 27-route production build pass.
 - Motion lifecycle regression checks pass: optimized CSS seconds/milliseconds, pre-paint guard expiry, font/image readiness, failed and stalled assets, late promises after cancellation, Strict Mode replay, ordinary navigation, no replay on history or filters, one-time off-screen artwork reveals, immediate settling on input, reduced-motion changes and cleanup on pagehide/unmount. These use browser doubles; they do not claim physical-device motion testing.
 - A temporary passive frame sampler caught the 1.4ms bug in the real browser, then verified the correction on a fresh document. At approximately 100/300/500/1000ms the first object was 1%/18%/54%/95% opaque, settling fully at 1500ms. The first sampled frame was hidden, with no visible-to-hidden flash, and artwork was ready before progress. Timing instrumentation is removed before release.
 - Native browser animation events confirm the menu opens over 900ms and closes over 640ms. Interrupting its opening at about 267ms still completes a 640ms close and releases the modal/scroll lock. Phone-width fresh gallery/article arrivals and quiet browser-back restoration pass.

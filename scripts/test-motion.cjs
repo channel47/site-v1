@@ -18,9 +18,9 @@ function app({ reduced = false, historyDocument = false, gate = 'pending', fonts
   }
   class Node {}
   class Element extends Node {
-    constructor(top, object = false) { super(); this.top = top; this.object = object; this.plays = [] }
+    constructor(top, object = false, about = false) { super(); this.top = top; this.object = object; this.about = about; this.plays = [] }
     getBoundingClientRect() { return { top: this.top, bottom: this.top + 100, height: 100 } }
-    matches() { return this.object }
+    matches(selector) { return this.object || (selector === motion.SCROLL_ARRIVAL_SELECTOR && this.about) }
     images = []
     querySelectorAll() { return this.images }
     contains(node) { return this === node }
@@ -89,7 +89,7 @@ function app({ reduced = false, historyDocument = false, gate = 'pending', fonts
   return {
     window, media, main, observers, root, timers,
     expire() { [...timers.values()].forEach(fn => fn()) },
-    node: (top, object) => new Element(top, object),
+    node: (top, object, about) => new Element(top, object, about),
     render(next, nextNodes, history = false) {
       location.pathname = next
       if (history) window.emit('popstate')
@@ -139,7 +139,7 @@ const a = app()
 const heading = a.node(100), proseBelow = a.node(1000), artworkBelow = a.node(1100, true)
 a.render('/', [heading, proseBelow, artworkBelow])
 assert.equal(heading.plays[0].state, 'paused', 'The initial frame is held until fonts and images are ready')
-assert.equal(heading.plays[0].options.duration, 1400, 'Optimized CSS seconds must not turn an arrival into a 1.4ms jump')
+assert.equal(heading.plays[0].options.duration, 720, 'Optimized CSS seconds must not turn an arrival into a sub-millisecond jump')
 assert.equal(heading.plays[0].options.easing, token('--ease-arrival'))
 assert.equal(a.root.dataset.arrival, 'ready', 'Paused animation takes over the first frame from the CSS guard')
 await flush()
@@ -191,7 +191,7 @@ const font = deferred(), image = deferred(), ready = app({ fonts: font.promise }
 const title = ready.node(100), art = ready.node(200, true)
 art.images.push({ decode: () => image.promise })
 ready.render('/', [title, art])
-assert.equal(art.plays[0].options.delay, 140)
+assert.equal(art.plays[0].options.delay, 60)
 await flush()
 assert.equal(title.plays[0].state, 'paused', 'A font still loading holds the entrance')
 font.resolve(); await flush()
@@ -224,6 +224,14 @@ strict.render('/', [replayed]); strict.replayEffects(); await flush()
 assert.equal(replayed.plays[0].state, 'cancelled')
 assert.equal(replayed.plays[1].state, 'running', 'Strict Mode cleanup/replay must retain a single working entrance')
 strict.unmount()
+
+const about = app(), paragraph = about.node(1000, false, true)
+about.render('/about', [about.node(100), paragraph])
+assert.equal(paragraph.plays[0].state, 'paused', 'Both About paragraphs participate, including one below the fold')
+about.observers[0].enter(paragraph); await flush()
+assert.equal(paragraph.plays[0].state, 'running')
+assert.equal(about.observers[0].targets.size, 0, 'About text arrives once and stays still on rereading')
+about.unmount()
 
 console.log('Motion passed: CSS time units, first-paint guards, font/image readiness, failed and stalled assets, Strict Mode, navigation, history, filters, input, reduced motion and cleanup.')
 }

@@ -104,8 +104,9 @@ export function BackToBrowse({
   return (
     <Link
       href={target}
-      className={className}
+      className={`icon-btn ${className ?? ""}`}
       aria-label={`Back to ${label.toLowerCase()}`}
+      title={`Back to ${label.toLowerCase()}`}
       onNavigate={
         returning
           ? (event) => {
@@ -115,8 +116,7 @@ export function BackToBrowse({
           : undefined
       }
     >
-      <ArrowLeft size={18} aria-hidden="true" />
-      <span>Back</span>
+      <ArrowLeft size={20} aria-hidden="true" />
     </Link>
   );
 }

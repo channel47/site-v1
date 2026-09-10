@@ -1,0 +1,31 @@
+{
+  "date": "2026-09-10",
+  "tool": "Built-in image generation",
+  "purpose": "Contextual Google Ads article illustrations. Conceptual objects, not product hardware or account results.",
+  "images": [
+    {
+      "key": "connectorContext",
+      "finalEdit": "Use case: text-localization. Edit this image with one precise change: the lettering on the golden-yellow metal box must read exactly \"Google Ads\" instead of \"Google Ads API\". Remove only the word \"API\"; keep \"Google Ads\" in the same dark industrial sans-serif style, size, perspective, printing and position. Reconstruct the matching brushed golden metal behind the removed word. Preserve everything else as closely as possible: the Agent cable sleeve, MCP lettering, blue braided cable, silver machined connector, exposed copper and circuit board, glass cover, composition, shadows, illumination, mineral tabletop and 1536x1024 landscape dimensions. Do not add or alter any other text, objects or framing.",
+      "prompt": "Use case: precise-object-edit. Edit this photographic editorial illustration so that its physical connection also explains a software relationship: an agent connects through an MCP server to the Google Ads API. Preserve the beautiful macro framing, cobalt braided cable, yellow enclosure, machined metal, exposed internal copper/circuit board, mineral table and directional lighting. Landscape 1536x1024.\nAdd just three exceptionally legible physical labels, integrated into the objects with correct material and perspective:\n1. A neat small ivory cable identification sleeve on the blue cable near its lower-left visible portion, printed \"Agent\" in graphite sans-serif.\n2. On the smooth silver collar immediately before the knurled middle, engrave and dark-infill \"MCP\".\n3. On the broad yellow front enclosure panel, print \"Google Ads API\" in dark charcoal industrial sans-serif, sized prominently enough to read at article width.\nThe cable, connector, and enclosure MUST make this ordering unambiguous; each label belongs to its own physical part. Reposition only enough to show labels clearly. No floating callouts, no headline, no diagram arrows or boxes, no extra captions or acronyms, no fake logo, no data/results. This remains a sophisticated tactile conceptual photograph. Clear print, exact spelling, no illegible filler lettering. Do not label copper components.",
+      "asset": "/posts/google-ads-connection-v3.webp"
+    },
+    {
+      "key": "reportContext",
+      "prompt": "Use case: precise-object-edit. Turn this elegant photographic still life into a USEFUL editorial explanation of a Monday reporting workflow, while preserving the loupe, translucent paper, sparse cobalt ink, single yellow clip, mineral tabletop, macro realism, directional light and landscape 1536x1024. Recompose the papers and loupe slightly as needed for very legible sparse lettering.\nRemove the meaningless abstract bars/grid marks. Instead arrange TWO distinct translucent source strips feeding under ONE central ivory report sheet, separated enough that their physical labels are readable: one source strip from left printed \"Google Ads\" with a smaller \"Accounts\"; a second source strip from upper right printed \"CRM\". The main report sheet is printed in refined clear graphite sans-serif: \"Monday report\" at top; a smaller organizing line \"Offer / Campaign type\"; then four generous field labels laid out in a spare 2-by-2 arrangement: \"Spend\", \"Revenue\", \"Conversions\", \"ROAS\". A small footer line on this paper reads \"7-day / 30-day change\". All text must be on actual paper surfaces with correct perspective. No other text.\nThe loupe lies toward lower-right, bringing one or two of the field names into enlarged focus but not obscuring/warping them beyond recognition. Leave the other labels fully readable. Do not fill this with a data table. No business numbers, no invented values, no claims or charts. This is an imagined physical report layout illustrating sources, grouping and measures, NOT actual account performance.\nKeep expressive angled layering, exquisite glass caustics and translucent material detail. The point is two named data sources become one report organized for the reader, with only these few useful labels. NOT a flat infographic, stock office scene, dashboard screenshot or slide.",
+      "asset": "/posts/google-ads-monday-report-v2.webp"
+    }
+  ],
+  "captures": [
+    {
+      "asset": "/posts/google-ads-inspector-v2.webp",
+      "source": "MCP Inspector 2.6.0 connected over stdio to the published @channel47/google-ads-mcp@1.2.0 package",
+      "method": "Browser screenshot of the actual tool schema. Placeholder credentials allowed local schema discovery only. Documented example query entered but not executed; no account data accessed.",
+      "exampleSource": "https://github.com/channel47/mcps/tree/main/google-ads#query"
+    },
+    {
+      "asset": "/posts/google-ads-dry-run-fix-v3.webp",
+      "source": "https://github.com/channel47/google-ads-mcp-server/commit/3de539fa396183acfb59e76fdafbc514236a2402",
+      "method": "Browser screenshot of the original file diff, cropped tightly to the changed lines for larger, more readable text. Captured 2026-09-10. No generated or reconstructed code."
+    }
+  ]
+}

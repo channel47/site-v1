@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { cache } from "react";
 import matter from "gray-matter";
-import { marked } from "marked";
+import { marked, Renderer } from "marked";
 import { imageSize } from "image-size";
 import {
   CONTENT_COLLECTION,
@@ -36,7 +36,9 @@ function localImageDimensions(href: string): string {
     if (!(width > 0 && height > 0)) return "";
     // Browsers apply EXIF rotation; orientations 5–8 exchange the two axes.
     const rotated = orientation !== undefined && orientation >= 5;
-    const attributes = ` width="${rotated ? height : width}" height="${rotated ? width : height}"`;
+    const displayWidth = rotated ? height : width;
+    const displayHeight = rotated ? width : height;
+    const attributes = ` width="${displayWidth}" height="${displayHeight}"${displayHeight > displayWidth ? ` data-orientation="portrait" style="--media-ratio:${displayWidth / displayHeight}"` : ""}`;
     imageDimensions.set(file, { modified, attributes });
     return attributes;
   } catch {
@@ -44,8 +46,12 @@ function localImageDimensions(href: string): string {
     return "";
   }
 }
+const codeRenderer = new Renderer();
 marked.use({
   renderer: {
+    code(token) {
+      return `<div class="st-code">${codeRenderer.code(token)}<span class="code-copy"></span></div>\n`;
+    },
     image({ href, text, title }) {
       const alt = escapeHtml(text);
       const src = escapeHtml(href);
@@ -54,7 +60,7 @@ marked.use({
         ? `<figcaption class="st-shot-cap">${alt}</figcaption>`
         : "";
       return title?.trim().toLowerCase() === "screenshot"
-        ? `<figure class="st-shot"><div class="st-shot-field">${image}</div>${caption}</figure>`
+        ? `<figure class="st-shot">${image}${caption}</figure>`
         : `<figure class="st-media">${image}${caption}</figure>`;
     },
     paragraph({ tokens }) {

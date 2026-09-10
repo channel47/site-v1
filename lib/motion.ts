@@ -9,8 +9,12 @@ export const ARRIVAL_SELECTOR = [
   ".collection-object",
   ".piece-head > h1", ".piece-lede", ".piece-byline",
   ".st-head", ".st-prose > :first-child", ".st-row",
+  ".about-page .st-prose > p",
   ".nl-capture", ".session-aside", ".about-follow",
 ].join(",");
+
+/** Short pages can finish their introduction on scroll; long articles stay still. */
+export const SCROLL_ARRIVAL_SELECTOR = ".collection-object, .about-page .st-prose > p, .about-follow";
 
 export const ARRIVAL_BOOT = `(() => {
   const root = document.documentElement;

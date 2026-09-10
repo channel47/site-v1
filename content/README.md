@@ -65,7 +65,7 @@ Images are editorial figures with their alt text repeated as a visible caption:
 ![A useful description of the actual image.](/posts/example.jpg)
 ```
 
-Use the optional `"screenshot"` Markdown title for a captured interface; it gives the image an inset surface and shadow. Omit unfinished figures rather than publishing placeholders. Standard Markdown handles paragraphs, headings, lists, code and blockquotes; the former custom results/status/ships-with grammars are gone.
+Use the optional `"screenshot"` Markdown title to identify a captured interface. Display it directly, without an added frame, inset background or shadow. Article images share a subtle 8px corner radius; collection objects retain their silhouettes. Capture screenshots at their native resolution rather than enlarging a compressed preview. Omit unfinished figures rather than publishing placeholders. Standard Markdown handles paragraphs, headings, lists, code and blockquotes; the former custom results/status/ships-with grammars are gone.
 
 Published media URLs under `public/posts/` and `public/email/` are kept stable, including images sent in newsletters. Do not delete an image solely because the current homepage does not use it.
 

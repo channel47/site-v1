@@ -322,7 +322,6 @@ pre {
   overflow: hidden;
   transition: background var(--motion-ui) var(--ease-out), color var(--motion-ui) var(--ease-out);
 }
-.direction-cue svg { transition: transform var(--motion-disclosure) var(--ease-settle); }
 .reel-row:hover .reel-word,
 .reel-row:focus-visible .reel-word { opacity: 1; }
 .takeover-footer {
@@ -550,25 +549,9 @@ pre {
 }
 .reading-back {
   color: var(--muted);
-  gap: var(--space-2);
-  padding-inline: var(--space-3);
-  margin-left: calc(-1 * var(--space-3));
-  border-radius: var(--radius-control);
-  transition: color var(--motion-ui) var(--ease-out), background var(--motion-ui) var(--ease-out);
-  display: inline-flex;
-  align-items: center;
-  min-height: var(--control-size);
-  font-size: var(--text-xs);
-  letter-spacing: 0.03em;
+  margin-left: calc((20px - var(--control-size)) / 2);
   margin-bottom: var(--space-7);
 }
-.reading-back:hover {
-  color: var(--ink);
-  background: var(--surface);
-}
-.reading-back svg { transition: transform var(--motion-disclosure) var(--ease-settle); }
-.reading-back:hover svg,
-.reading-back:focus-visible svg { transform: translateX(-3px); }
 .piece-lede {
   font-size: var(--text-lede);
   line-height: 1.6;
@@ -675,10 +658,34 @@ pre {
 }
 .st-prose pre code {
   padding: 0;
+  font-size: inherit;
 }
 .st-prose pre:has(code.language-text) {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
+}
+.st-code,
+.project-install {
+  --inset-block: var(--space-5);
+  --inset-inline: var(--space-6);
+  padding: var(--inset-block) var(--inset-inline);
+  background: var(--surface);
+  border-radius: var(--radius-surface);
+}
+.st-code {
+  position: relative;
+  margin-block: var(--space-6);
+}
+.st-code pre {
+  margin: 0;
+  padding: calc(var(--control-size) + var(--space-2)) 0 0;
+}
+.code-copy {
+  position: absolute;
+  top: var(--inset-block);
+  right: var(--inset-inline);
+  color: var(--muted);
+  line-height: 1;
 }
 .st-prose hr {
   border: 0;
@@ -709,14 +716,13 @@ pre {
   display: block;
   width: 100%;
   height: auto;
+  border-radius: var(--radius-media);
 }
-.st-shot-field {
-  background: var(--surface);
-  padding: var(--space-5);
-  border-radius: var(--radius-surface);
-}
-.st-shot-field img {
-  box-shadow: 0 10px 24px var(--shadow);
+@media (min-width: 721px) {
+  .st-media > img[data-orientation="portrait"] {
+    width: min(100%, calc(640px * var(--media-ratio)), calc(72svh * var(--media-ratio)));
+    margin-inline: auto;
+  }
 }
 .st-shot-cap,
 .piece-video figcaption {
@@ -736,11 +742,9 @@ pre {
   object-fit: cover;
   display: block;
   background: var(--ink);
+  border-radius: var(--radius-media);
 }
 .project-install {
-  background: var(--surface);
-  padding: var(--space-5) var(--space-6);
-  border-radius: var(--radius-surface);
   margin-bottom: var(--space-8);
   margin-top: var(--space-7);
   scroll-margin-top: var(--space-6);
@@ -828,10 +832,6 @@ pre {
   background: var(--accent);
   color: var(--selection-ink);
 }
-.next-read:hover .direction-cue svg,
-.next-read:focus-visible .direction-cue svg,
-.session-proof-link:hover .direction-cue svg,
-.session-proof-link:focus-visible .direction-cue svg { transform: translateX(3px); }
 .reading-subscribe {
   margin-block: var(--space-9) var(--space-7);
 }
@@ -951,7 +951,6 @@ pre {
 .st-row-main {
   display: grid;
   gap: var(--space-3);
-  transition: transform var(--motion-disclosure) var(--ease-settle);
 }
 .st-row-title {
   font-size: clamp(1.375rem, 2.7vw, 1.75rem);
@@ -978,10 +977,6 @@ pre {
 .st-row:hover .st-row-title,
 .st-row:focus-visible .st-row-title {
   color: var(--accent);
-}
-.st-row:focus-visible .st-row-main { transform: translateX(4px); }
-@media (hover: hover) and (pointer: fine) {
-  .st-row:hover .st-row-main { transform: translateX(4px); }
 }
 .ea-formrow {
   display: flex;
@@ -1310,8 +1305,12 @@ pre {
   .piece-video figcaption {
     padding-inline: var(--page-gutter);
   }
+  .st-code,
   .project-install {
-    padding: var(--space-4) var(--space-5);
+    --inset-block: var(--space-4);
+    --inset-inline: var(--space-5);
+  }
+  .project-install {
     margin-bottom: var(--space-7);
   }
   .st-prose p,
@@ -1323,7 +1322,7 @@ pre {
     padding: var(--space-5);
   }
   .st-prose pre { padding: var(--space-4); }
-  .st-shot-field { padding: var(--space-3); }
+  .st-code pre { padding: calc(var(--control-size) + var(--space-2)) 0 0; }
   .index-page .st-head { margin-bottom: var(--space-3); }
   .st-row {
     flex-direction: column;
@@ -1439,9 +1438,6 @@ pre {
     opacity: 1;
     filter: none;
   }
-  .st-row-main,
-  .direction-cue svg,
-  .reading-back svg,
   .icon-btn > svg,
   .ea-btn,
   .session-book-btn,
