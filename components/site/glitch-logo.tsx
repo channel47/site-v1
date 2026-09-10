@@ -1,19 +1,19 @@
 "use client";
 
-import { useState } from "react";
-import { AnimatedMark } from "./animated-mark";
+import { AnimatedMark, useMarkReplay } from "./animated-mark";
 
 /** A finite assembly on arrival and replay; the button keeps keyboard focus. */
 export function GlitchLogo() {
-  const [pulse, setPulse] = useState(0);
+  const { motion, replay, hover } = useMarkReplay("arrival");
   return (
     <button
       type="button"
       aria-label="Channel47 — replay logo animation"
       className="gl-logo"
-      onClick={() => setPulse((value) => value + 1)}
+      onClick={replay}
+      onPointerEnter={hover}
     >
-      <AnimatedMark play={pulse} />
+      <AnimatedMark {...motion} />
     </button>
   );
 }

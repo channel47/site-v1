@@ -1,6 +1,6 @@
 import { SiteHeader } from "./header";
 import { SiteFooter } from "./footer";
-import { BackToBrowse } from "./browse-navigation";
+import { ArticleBreadcrumb } from "./browse-navigation";
 import { ReadingEnd } from "./reading-end";
 import { CopyButton } from "./copy-button";
 import { CodeCopyButtons } from "./code-copy-buttons";
@@ -43,7 +43,7 @@ export function PiecePage({
             }
           />
           <header className="piece-head">
-            <BackToBrowse href="/" className="reading-back" />
+            <ArticleBreadcrumb section={section} title={entry.title} />
             <h1>{entry.title}</h1>
             <p className="piece-lede">{entry.description}</p>
             <div className="piece-byline">

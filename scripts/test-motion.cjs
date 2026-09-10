@@ -122,6 +122,37 @@ function boot({ reduced = false, history = false, hash = '' } = {}) {
 }
 
 async function verify() {
+// Exercise the real logo input handler: no timer queue, interrupted cycles,
+// synthetic touch hovers, or replays when reduced motion is requested.
+let markState, reduceMark = false, finePointer = true, activeMark = false
+const markModule = {}
+vm.runInNewContext(ts.transpileModule(fs.readFileSync('components/site/animated-mark.tsx', 'utf8'), {
+  compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX },
+}).outputText, {
+  exports: markModule,
+  matchMedia: query => ({ matches: query.includes('reduced-motion') ? reduceMark : finePointer }),
+  require: name => name === 'react' ? {
+    useState(initial) { markState ??= initial; return [markState, update => { markState = update(markState) }] },
+  } : {},
+})
+const pointer = type => ({ pointerType: type, currentTarget: { querySelector: () => ({
+  getAnimations: () => activeMark ? [{ playState: 'running' }] : [],
+}) } })
+const logo = markModule.useMarkReplay()
+logo.hover(pointer('mouse'))
+assert.equal(markState.mode, 'hover')
+assert.equal(markState.play, 1)
+activeMark = true; logo.hover(pointer('mouse'))
+assert.equal(markState.play, 1, 'Rapid re-entry cannot restart an unfinished logo')
+activeMark = false; logo.hover(pointer('mouse'))
+assert.equal(markState.play, 2, 'The next hover can replay a finished cycle')
+logo.hover(pointer('touch')); finePointer = false; logo.hover(pointer('mouse'))
+assert.equal(markState.play, 2, 'Touch and coarse pointers do not hover-replay')
+finePointer = true; reduceMark = true; logo.hover(pointer('mouse'))
+assert.equal(markState.play, 2, 'Reduced motion suppresses hover replay')
+reduceMark = false; logo.replay()
+assert.equal(markState.mode, 'arrival', 'Explicit home-button replay preserves the original assembly')
+
 for (const [value, expected] of [['1400ms', 1400], ['1.4s', 1400], [' .14s ', 140], ['0s', 0], ['', 640], ['invalid', 640]]) {
   assert.equal(motion.motionMilliseconds(value, 640), expected, `Read CSS time correctly: ${value}`)
 }

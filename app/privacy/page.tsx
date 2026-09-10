@@ -24,6 +24,11 @@ export default function PrivacyPage() {
           <p>channel47 collects as little as possible. Concretely:</p>
           <ul>
             <li>
+              <strong>Appearance.</strong> Your light or dark theme choice is
+              saved in this browser. Until you choose, the site follows your
+              device setting. Your choice is not sent to analytics.
+            </li>
+            <li>
               <strong>Email address.</strong> If you subscribe, your email is
               stored with Kit (ConvertKit), the service that sends the
               newsletter. It&apos;s used to send you the emails described at

@@ -9,6 +9,7 @@
   --body: #464740;
   --muted: #696b61;
   --accent: #2349dc;
+  --accent-ink: #ffffff;
   --takeover: #123ce5;
   --takeover-ink: #f5f4e9;
   --success: #287255;
@@ -16,8 +17,8 @@
   --selection: #264fd5;
   --selection-ink: #ffffff;
   --shadow: #16171816;
-  --font-display: var(--font-instrument-serif), "Times New Roman", serif;
-  --font-body: var(--font-instrument-sans), Arial, sans-serif;
+  --font-display: var(--font-instrument-serif, "Times New Roman"), serif;
+  --font-body: var(--font-instrument-sans, Arial), sans-serif;
   --font-label: ui-monospace, "SF Mono", Menlo, monospace;
   --text-xs: 0.6875rem;
   --text-sm: 0.875rem;
@@ -63,11 +64,30 @@
   --motion-reveal: 720ms;
   --motion-stagger: 60ms;
   --motion-feedback: 420ms;
+  --motion-theme: 720ms;
+  --ease-theme: cubic-bezier(0.25, 0.1, 0.25, 1);
   --motion-logo: 1400ms;
+  --motion-logo-hover: 960ms;
   --ease-logo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-menu: cubic-bezier(0.3, 0, 0.2, 1);
   --motion-menu-open: 900ms;
   --motion-menu-close: 640ms;
   --motion-menu-content: 700ms;
   --motion-menu-exit: 240ms;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #1b1c19;
+  --surface: #292b25;
+  --surface-raised: #32352d;
+  --ink: #f3f2e9;
+  --body: #cecec4;
+  --muted: #a5a79a;
+  --accent: #91a8ff;
+  --accent-ink: #1b1c19;
+  --success: #88cba9;
+  --error: #ff9ca4;
+  --shadow: #00000040;
+  --collection-blend: normal;
 }

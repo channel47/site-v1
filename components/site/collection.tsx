@@ -14,6 +14,7 @@ export function Collection({ items }: { items: CollectionItem[] }) {
           style={
             {
               "--object-angle": `${item.angle}deg`,
+              "--object-silhouette": item.silhouette,
             } as CSSProperties
           }
         >
