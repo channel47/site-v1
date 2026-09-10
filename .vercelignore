@@ -1,0 +1,15 @@
+# Keep CLI previews limited to source and published assets, like Git deployments.
+node_modules/
+.next/
+out/
+build/
+output/
+.env*
+!.env.example
+.claude/
+.agents/
+skills-lock.json
+*.tsbuildinfo
+__pycache__/
+*.py[cod]
+.DS_Store
