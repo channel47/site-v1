@@ -37,6 +37,13 @@ Apply this check to article titles and bodies, project descriptions, signup
 copy, and service pages. Avoid colons in titles and headings. This is an editing
 standard, not a requirement to make every piece sound formal or technical.
 
+State an illustrative example's status once, then keep qualifications where
+they change a reader's decision. Avoid repeating the same disclaimer in the
+body and captions. Reserve display blockquotes for a strong quotation;
+supporting excerpts can stay in ordinary prose, and reusable prompts belong
+in fenced `text` blocks. Use images to show the work as it develops, including
+distinct creative treatments when the article compares ideas.
+
 ## Optional fields
 
 | Field | Purpose |

@@ -676,6 +676,10 @@ pre {
 .st-prose pre code {
   padding: 0;
 }
+.st-prose pre:has(code.language-text) {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
 .st-prose hr {
   border: 0;
   height: var(--space-5);

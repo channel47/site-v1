@@ -19,17 +19,28 @@ That's more specific than asking Claude for ten ads about staying organized. It 
 
 The [Creative Strategist skill](https://github.com/channel47/skills/tree/main/skills/creative-strategy/creative-strategist) puts research, personas, and ad angles into one working document. Each quote gets an ID and a source. Later stages have to refer back to those IDs, so you can check how Claude arrived at a recommendation.
 
-Below is a small worked example using public packing-cube discussions. The comments are real. The angles and creative treatments are proposals developed for this article, with no campaign results attached. Three discussions are enough to explain the decisions, but they're only one source type and wouldn't satisfy the skill's full research requirements.
+This walkthrough uses three public discussions to develop two ad angles. The photography and ads are AI-generated concept studies made for the article.
+
+![The overnight-stop idea starts with a specific action. Take out one cube and leave the rest of the bag packed.](/posts/customer-research-overnight-study.webp)
 
 ## Give Claude a question worth researching
 
 For this example, the question is what people value about packing cubes after they start using them. Does the benefit change once they're traveling and repeatedly opening the bag?
 
-For an actual product, Claude also needs the product page, price, current offer, known competitors, and any claims you can substantiate. Include customer interviews, support tickets, returns feedback, or reviews you already have permission to use. Separate your assumptions from what customers have actually said.
+For an actual product, Claude also needs the product page, price, current offer, known competitors, and any claims you can substantiate. Include customer interviews, support tickets, returns feedback, or reviews from your own research. Separate your assumptions from what customers have actually said.
 
 A useful opening instruction would be something like this.
 
-> Research why people buy packing cubes and what they value or dislike after using them. Pay particular attention to trips with several overnight stops. Keep exact quotations and source links. Separate customer observations from your interpretation, and include evidence that contradicts the emerging idea. Don't write ads yet.
+```text
+Research why people buy packing cubes and what
+they value or dislike after using them. Focus
+on trips with several overnight stops.
+
+Keep exact quotations and source links.
+Separate observations from interpretation,
+and include contradictory evidence.
+Don't write ads yet.
+```
 
 The last part gives you a chance to inspect the research before a polished headline makes an idea feel more convincing than it is.
 
@@ -37,29 +48,31 @@ The last part gives you a chance to inspect the research before a polished headl
 
 Call the opening quote **Q1**. It describes selective access to clothes. A second comment, **Q2**, adds a particular use case.
 
-> Or if I'm going to an overnight stop, I put what I want for the next day in a small one, and that's all I have to take out of my bag for clothing, no digging around looking for the socks you want.
+“Or if I'm going to an overnight stop, I put what I want for the next day in a small one, and that's all I have to take out of my bag for clothing, no digging around looking for the socks you want.”
 
-[Q2 comes from a discussion about whether packing cubes are worth buying.](https://www.reddit.com/r/onebag/comments/1ntqa88/are_packing_cubes_worth_it/) The commenter is describing how they use an inexpensive set. Nothing here establishes that a premium cube would do this better.
+[Q2 comes from a discussion about whether packing cubes are worth buying.](https://www.reddit.com/r/onebag/comments/1ntqa88/are_packing_cubes_worth_it/) The commenter is describing an inexpensive set, which will matter when we get to the offer.
 
 Then there's **Q3**, from a reply in a discussion about changing accommodation every day.
 
-> Something that helped me was moving to fewer, larger cubes, with their own organisation. One cube for each task.
+“Something that helped me was moving to fewer, larger cubes, with their own organisation. One cube for each task.”
 
 [That thread is about making daily packing and unpacking less cumbersome.](https://www.reddit.com/r/onebag/comments/1e37pr6/packing_workflow_for_daily_change_of_accomodation/) It complicates the recommendation. Adding more compartments isn't automatically helpful. Someone who wants a separate place for everything may need a different setup from someone who finds all that sorting tedious.
 
 Those details should survive Claude's summary. If all three become “customers want convenience,” you've lost the distinction that could make the creative useful.
 
-In a working research file, keep the full source URL, the exact excerpt, its ID, and enough context to explain what the person was responding to. Keep your interpretation in a separate field. A sentence Claude writes to connect two observations must never quietly become another customer quote.
+In the research file, give each excerpt an ID, its source URL, and enough context to explain what the person was responding to. Keep Claude's interpretation beside the original wording so you can compare them.
 
-For a proper research pass, add other sources and look for disagreement. Product reviews can reveal failures after purchase. Support questions can reveal uncertainty before purchase. Interviews can help explain why someone chose one option over another. Note which sources Claude couldn't access, and don't let it fill those gaps with plausible reviews.
+For a full research pass, look beyond these discussions. Product reviews reveal failures after purchase. Support questions show uncertainty before purchase. Interviews help explain why someone chose one option over another. Ask Claude to report which sources it could access and where it needs more material.
 
 ## Group people by the decision they're making
 
 The useful distinction here is between packing habits.
 
-Q1 and Q2 suggest a traveler who wants to retrieve a particular set of clothes while leaving everything else alone. Q3 suggests someone who wants fewer separate things to handle. Those are provisional groups, based on a very small sample. They give you different demonstrations to explore.
+Q1 and Q2 suggest a traveler who wants to retrieve a particular set of clothes while leaving everything else alone. Q3 suggests someone who wants fewer separate things to handle. That gives you two different demonstrations to explore.
 
-There isn't evidence here for an age, income, lifestyle, or personality profile. Adding those details would make the persona longer without helping choose an ad.
+The packing habit helps choose the ad. An invented age, income, or personality profile wouldn't add much.
+
+![Q1 and Q2 suggest retrieving one outfit. Q3 suggests handling fewer cubes. Each calls for a different demonstration.](/posts/customer-research-two-angles.webp)
 
 Ask Claude to explain what each group would need to see before believing the benefit. For the first group, that might be a demonstration of removing one night's clothes without unpacking the rest. For the second, it might be a complete packing routine using fewer containers.
 
@@ -75,17 +88,21 @@ For the first group, the proposed angle is **pack for each stop so you can leave
 - “Tomorrow's clothes, in one cube.”
 - “Take out what you need for this stop.”
 
-These are draft lines, not customer quotations. They're also three versions of one idea. Treating them as three separate angles would overstate how much variety you've developed.
+Those are three hooks for one angle. You can vary the words while still testing the same reason to buy.
 
-A second angle, suggested by Q3, would be **make the packing routine simpler with fewer containers**. A draft hook might be “One cube for the clothes. One less thing to sort.” That idea needs a different demonstration and may suit a different product configuration.
+![Concept A uses the overnight-stop situation. The orange cube makes the action visible while the rest of the bag stays packed.](/posts/customer-research-ad-overnight.webp)
 
-Neither idea has earned a high-confidence recommendation yet. The first has two supporting excerpts. The second has one. The skill's angle rubric asks for a strong anchor quote, at least two supporting quotes, a fit with the intended buyer, and a competitor check. This example still needs more research, and dramatic wording wouldn't make its evidence stronger.
+A second angle, suggested by Q3, would be **make the packing routine simpler with fewer containers**. “One cube for the clothes” gives it a different emphasis. Show the clothing together in a single large compartment, with fewer separate pieces to handle.
+
+![Concept B emphasizes keeping the clothing together in one large cube. The composition changes because the reason to buy changes.](/posts/customer-research-ad-fewer-cubes.webp)
+
+Now Claude has two directions to investigate. Its next research pass should look for more accounts of these behaviors, the objections to each setup, and how competing brands already talk about them.
 
 ## Decide what the camera needs to show
 
 The first angle already suggests a simple creative treatment. An open bag holds several cubes. A hand removes the small one containing clothes for the overnight stop. The other contents stay where they are.
 
-![Proposed demonstration for the first angle. Remove the overnight cube and show that the remaining bag stays packed. This is a storyboard, not a product photograph or a tested ad.](/posts/customer-research-packing-storyboard.svg)
+![The shot plan for Concept A keeps the bag and its remaining contents in the same positions. Only the overnight cube moves.](/posts/customer-research-packing-storyboard.svg)
 
 The brief can now be specific.
 
@@ -93,11 +110,9 @@ The brief can now be specific.
 - **Message.** Keep that stop's clothes together so you can retrieve them separately.
 - **Visual proof.** Show the same bag before and after removing the cube, with the remaining contents visible.
 - **Product check.** Confirm the actual cube fits the advertised clothing load and the bag used in the demonstration.
-- **Evidence.** Q1 and Q2 support exploring this use case. They don't establish performance for the product being advertised.
+- **Research.** Keep Q1 and Q2 attached so the person making the ad can see where the idea came from.
 
-An attractive image of perfectly arranged luggage wouldn't answer all of that. The movement matters. If you're making a static ad, a before-and-after pair can show it, provided both images accurately represent the product and packing arrangement.
-
-The storyboard above only explains the shot. Any demonstration used as product evidence needs to be made with the actual product. Generated imagery can't establish its capacity or how easily it comes out of a packed bag.
+The movement matters here. A before-and-after pair could make it clearer in a static ad. When producing the final demonstration, use the actual product and check the clothing load, bag fit, and ease of removal.
 
 ## Check the reasons this idea might fail
 
@@ -111,9 +126,14 @@ The third issue is the promise. Nothing in this example supports “double your 
 
 A useful review instruction is this.
 
-> For each angle, list the supporting quote IDs, contradictory evidence, product facts that need checking, and the closest competing message you found. Mark any assumption explicitly. Cut hooks that promise more than we can demonstrate. If the evidence is too thin, tell me what to research next.
+```text
+Review each angle against its source quotes,
+contradictory evidence, product facts, and the
+closest competing message you found.
 
-This review may leave you with fewer ideas than you requested. That's a useful result if it prevents an unsupported idea from becoming a finished ad.
+Which hooks should we cut or change?
+What do we need to research next?
+```
 
 ## Run it in Claude with Creative Strategist
 
@@ -123,19 +143,15 @@ To use the public skill in Claude Code, run the installer from your project and 
 npx skills add channel47/skills --skill creative-strategist
 ```
 
-The [repository contains the skill and its stage instructions](https://github.com/channel47/skills/tree/main/skills/creative-strategy/creative-strategist). Web research requires access to the relevant sources through your Claude setup. Installing the skill supplies instructions, not access to otherwise unavailable reviews or ad libraries.
+The [repository contains the skill and its stage instructions](https://github.com/channel47/skills/tree/main/skills/creative-strategy/creative-strategist). Give Claude your product context and the research prompt above. Ask it to use Creative Strategist, save the work in the product dossier, and pause after each stage for review. Your Claude setup will need web access for the sources you want it to read.
 
-Give Claude your product context, then start with research only.
-
-> Use Creative Strategist to research this product and category. Save the work in the product dossier. Keep quotes verbatim with stable IDs and source links, report source coverage and gaps, and pause after research so I can review it.
-
-Once you've checked the sources, ask it to group the evidence by buying behavior. Review those groups before moving into angles. The shared file makes it easier to see whether a later recommendation still follows from the original material.
+Check the research, then the buying behaviors, then the angles. Working in one file lets you follow a recommendation back to the original material.
 
 For the angle stage, ask for different reasons to buy, along with the hook, demonstration, supporting evidence, and likely objection for each. Keep headline variations under their parent angle. Add your competitor examples before asking Claude to assess differentiation.
 
 ## Take one brief into production
 
-The next step for the packing-cube example would be to fill the evidence gaps, verify the product, and produce the overnight-stop demonstration. You'd then have a specific idea to compare with the current creative.
+For the packing-cube example, the next production task is the overnight-stop demonstration. The brief specifies what stays in the bag, what comes out, and why that action matters.
 
 Decide what result would justify continuing before launching. If the campaign's job is purchases, clicks alone won't establish success. Keep the offer and destination consistent where possible, and record which angle and treatment each ad uses. A result from one execution also doesn't settle whether every version of that angle would work.
 
