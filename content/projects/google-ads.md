@@ -10,6 +10,8 @@ repo: https://github.com/channel47/mcps/tree/main/google-ads
 install: npx @channel47/google-ads-mcp@latest
 package: "@channel47/google-ads-mcp"
 date: 2026-07-02
+updated: 2026-09-10
+newsletter: I write about the tools I build for media buying, including what breaks and what I change.
 tags: [google-ads, mcp, gaql, paid-media, automation, agents, guardrails]
 sanitized: true
 pairing: "Runs locally over stdio. Requires a Google Ads developer token and OAuth credentials. The [configuration guide](https://github.com/channel47/mcps/tree/main/google-ads#configuration) includes the environment variables and an MCP client example."
@@ -21,6 +23,8 @@ faqs:
   - q: "What can my agent actually do with it?"
     a: "List the accounts visible to the configured credentials, run GAQL queries with structured results, and preview or apply mutations."
 ---
+
+Every Monday, I use an agent to pull data from more than a dozen Google Ads accounts and compare it with our CRM. I can see which accounts need attention without opening them one by one.
 
 My first MCP wasn't for Google Ads. It was for Drip.
 
@@ -80,12 +84,12 @@ I kept optional write access because I use the server for hands-on account work.
 
 ## The report I use every Monday
 
-Every Monday an agent moves through more than a dozen Google Ads accounts under two manager accounts. It pulls the previous seven days, compares the ad data with our backend CRM, and organizes the report by offer and campaign type.
+The report covers the previous seven days across two manager accounts, grouped by offer and campaign type.
 
 The MCP supplies the Google Ads data. The agent combines it with the CRM data as part of that reporting workflow.
 
 ![An illustrated report layout: Google Ads and CRM records come together by offer and campaign type, with spend, revenue, conversions, ROAS, and changes over time.](/posts/google-ads-monday-report-v2.webp)
 
-I ask for the report and judge it like a marketer. I can see which accounts need attention without opening them one by one.
+I ask for the report and judge it like a marketer.
 
 Most weeks I never open the dashboards.

@@ -36,7 +36,7 @@ export function PiecePage({
     <div className="st-page">
       <SiteHeader />
       <main id="main-content" className="st-shell reading-page">
-        <article className="piece-article">
+        <article className="piece-article" data-reading-path={href}>
           <JsonLd
             data={
               project?.repo ? projectGraph(project) : noteGraph(entry, section)
@@ -123,7 +123,7 @@ export function PiecePage({
             title={entry.title}
           />
         </article>
-        <ReadingEnd href={href} />
+        <ReadingEnd href={href} newsletter={entry.newsletter} />
       </main>
       <SiteFooter />
     </div>

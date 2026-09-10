@@ -9,7 +9,20 @@ export const SHARE_CHANNELS = {
 
 export type ShareChannel = keyof typeof SHARE_CHANNELS
 export type CapturePlacement = "home" | "newsletter" | "article_end" | "workshop"
-export type MeasurementEvent = "content_open" | "related_click" | "repository_click" | "install_copy" | "page_copy" | "link_copy" | "newsletter_submit" | "newsletter_result"
+export type MeasurementEvent = "content_open" | "content_active" | "content_depth" | "content_end" | "prompt_copy" | "code_copy" | "related_click" | "repository_click" | "install_copy" | "page_copy" | "link_copy" | "newsletter_view" | "newsletter_submit" | "newsletter_result"
+export interface MeasurementDetails {
+  placement?: CapturePlacement
+  target_path?: string
+  status?: "accepted" | "invalid" | "unavailable" | "failed" | "network_error"
+  active_seconds?: 30 | 90 | 180 | 300
+  depth?: 50 | 90
+}
+
+/** Ordinary development and previews must not become reader data. */
+export function measurementTier(hostname: string, production: boolean, testMode: boolean) {
+  if (hostname === "channel47.dev" && production) return "production"
+  return testMode ? "development" : undefined
+}
 export type Source = ShareChannel | "direct" | "google" | "bing" | "duckduckgo" | "other"
 export interface Attribution {
   landing_path: string

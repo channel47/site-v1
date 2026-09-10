@@ -3,7 +3,7 @@ import { getNextRead } from "@/lib/content";
 import { Capture } from "./capture";
 import { BackToBrowse } from "./browse-navigation";
 import { DirectionCue } from "./direction-cue";
-export function ReadingEnd({ href }: { href: string }) {
+export function ReadingEnd({ href, newsletter }: { href: string; newsletter?: string }) {
   const next = getNextRead(href);
   return (
     <aside className="reading-end" aria-label="Keep exploring">
@@ -20,7 +20,7 @@ export function ReadingEnd({ href }: { href: string }) {
       ) : null}
       <section className="reading-subscribe" aria-label="Subscribe">
         <h2>Follow what I’m working on.</h2>
-        <Capture placement="article_end" />
+        <Capture placement="article_end" helper={newsletter ? `${newsletter} Occasional emails, no fixed schedule.` : undefined} />
       </section>
       <BackToBrowse href="/" className="reading-back" />
     </aside>

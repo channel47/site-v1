@@ -32,15 +32,22 @@ export default function PrivacyPage() {
               unsubscribing removes you.
             </li>
             <li>
-              <strong>Anonymous analytics.</strong> The site uses Vercel
-              Analytics to count page views and actions such as opening a
-              related piece, copying an install command, or requesting a
-              newsletter subscription. Custom events include the page and
+              <strong>Usage analytics.</strong> The site uses Vercel Analytics
+              for page views and Statsig for reading activity, such as time
+              with an article visible, reaching its end, copying a prompt,
+              opening a related piece, or requesting a newsletter subscription.
+              These are estimates of activity, not proof that someone read or
+              understood an article. Custom events include the page and
               a general source such as search, GitHub, or email. They do not
               include your email address, form text, or arbitrary URL parameters.
               The entry page and source are kept in session storage for this
               browser tab so internal navigation keeps the original source.
-              This does not create a visitor identifier or an advertising cookie.
+              Statsig receives a random identifier that lasts until the page
+              reloads, so actions during navigation can be counted together.
+              It is not saved to browser storage or linked to your email.
+              Session recording and automatic click capture are disabled.
+              Statsig events are skipped when your browser sends Do Not Track
+              or Global Privacy Control. No advertising cookies are set.
             </li>
           </ul>
           <p>

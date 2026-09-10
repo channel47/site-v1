@@ -6,7 +6,7 @@ import { measure } from "./measurement";
 
 type CopyState = "idle" | "copied" | "failed";
 type CopyButtonProps = {
-  event?: "install_copy" | "page_copy" | "link_copy";
+  event?: "install_copy" | "page_copy" | "link_copy" | "prompt_copy" | "code_copy";
   title: string;
   label?: string;
   glyph?: "copy" | "link";
