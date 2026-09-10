@@ -14,7 +14,7 @@ export function SiteHeader({ home = false }: { home?: boolean }) {
   }, []);
   return (
     <header className="site-header">
-      {home ? <GlitchLogo autoPlay /> : <MarkLink />}
+      {home ? <GlitchLogo /> : <MarkLink />}
       <button
         ref={trigger}
         type="button"

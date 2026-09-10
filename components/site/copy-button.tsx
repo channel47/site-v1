@@ -1,115 +1,69 @@
-"use client"
+"use client";
 
-import type { ReactNode } from "react"
-import { useCopyAction } from "./use-copy-action"
-import { measure } from "./measurement"
+import { Check, Copy, LinkSimple, WarningCircle } from "@phosphor-icons/react";
+import { useEffect, useRef, useState } from "react";
+import { measure } from "./measurement";
 
-function Glyph({ size, children }: { size: number; children: ReactNode }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      width={size}
-      height={size}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.9"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-    >
-      {children}
-    </svg>
-  )
-}
+type CopyState = "idle" | "copied" | "failed";
+type CopyButtonProps = {
+  event?: "install_copy" | "page_copy" | "link_copy";
+  title: string;
+  label?: string;
+  glyph?: "copy" | "link";
+} & (
+  | { text: string; fetchPath?: never }
+  | { fetchPath: string; text?: never }
+);
 
-const PATHS = {
-  copy: (
-    <>
-      <rect x="9" y="9" width="11" height="11" rx="1.6" />
-      <path d="M6 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1" />
-    </>
-  ),
-  link: (
-    <>
-      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-    </>
-  ),
-  check: <path d="M4 12.5 9.5 18 20 6.5" />,
-} as const
+/** Literal text or a Markdown twin; report and measure only real copy results. */
+export function CopyButton({ event, text, fetchPath, title, label, glyph = "copy" }: CopyButtonProps) {
+  const [state, setState] = useState<CopyState>("idle");
+  const reset = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  useEffect(() => () => clearTimeout(reset.current), []);
 
-/**
- * The quiet copy affordance of the readability pass — a 36px icon button
- * (install box, share row's "Copy link") or, with a `label`, the bordered
- * "Copy page" variant. The icon flips to a check for 2s on success; the
- * labelled variant swaps its text too.
- */
-export function CopyButton({
-  event,
-  text,
-  fetchPath,
-  title,
-  label,
-  boxed = false,
-  glyph = "copy",
-}: {
-  event?: "install_copy" | "page_copy" | "link_copy"
-  /** Literal text to copy (install command, page URL)… */
-  text?: string
-  /** …or a same-origin path fetched on click (the page's .md twin).
-   * Serializable alternatives to a function prop — this is a client
-   * component rendered from server templates. */
-  fetchPath?: string
-  /** Tooltip; also the accessible name of the icon-only variant. */
-  title: string
-  /** Visible text — switches to the bordered labelled variant. */
-  label?: string
-  /** Adds the share row's quiet outlined control (icon-only variant). */
-  boxed?: boolean
-  /** Icon-only variant's glyph — "link" for URL copies. */
-  glyph?: "copy" | "link"
-}) {
-  const { state, copy } = useCopyAction(async () => {
-    if (fetchPath) {
-      const res = await fetch(fetchPath)
-      if (!res.ok) throw new Error(String(res.status))
-      return res.text()
+  async function copy() {
+    try {
+      let value = text;
+      if (fetchPath) {
+        const response = await fetch(fetchPath);
+        if (!response.ok) throw new Error(`Copy request failed: ${response.status}`);
+        value = await response.text();
+      }
+      await navigator.clipboard.writeText(value!);
+      setState("copied");
+      if (event) measure(event);
+    } catch {
+      setState("failed");
     }
-    return text ?? ""
-  })
-  const handleCopy = async () => {
-    if (await copy()) {
-      if (event) measure(event)
-    }
+    clearTimeout(reset.current);
+    reset.current = setTimeout(() => setState("idle"), 2000);
   }
 
-  if (label) {
-    return (
-      <button
-        type="button"
-        className="icon-btn dt-share-btn dt-share-btn-label"
-        onClick={handleCopy}
-        title={title}
-        data-state={state}
-        aria-live="polite"
-      >
-        <Glyph size={13}>{state === "copied" ? PATHS.check : PATHS.copy}</Glyph>
-        {state === "copied" ? "Copied ✓" : state === "failed" ? "Couldn't copy" : label}
-      </button>
-    )
+  let Icon = glyph === "link" ? LinkSimple : Copy;
+  let caption = label;
+  let accessibleName = label ?? title;
+  if (state === "copied") {
+    Icon = Check;
+    caption = "Copied";
+    accessibleName = "Copied";
+  } else if (state === "failed") {
+    Icon = WarningCircle;
+    caption = "Try again";
+    accessibleName = "Couldn’t copy. Try again.";
   }
 
   return (
     <button
       type="button"
-      className={boxed ? "icon-btn dt-share-btn" : "icon-btn"}
-      onClick={handleCopy}
+      className={`icon-btn${label ? " copy-label" : ""}`}
+      onClick={copy}
       title={title}
       data-state={state}
-      aria-label={state === "copied" ? "Copied" : state === "failed" ? "Couldn’t copy. Try again." : title}
+      aria-label={accessibleName}
       aria-live="polite"
     >
-      <Glyph size={14}>{state === "copied" ? PATHS.check : PATHS[glyph]}</Glyph>
+      <Icon size={18} aria-hidden="true" />
+      {label ? caption : null}
     </button>
-  )
+  );
 }

@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { SiteHeader } from "@/components/site/header";
 import { SiteFooter } from "@/components/site/footer";
-import { HOME, LINKS } from "@/lib/site-content";
+import { AUTHOR, LINKS } from "@/lib/site-content";
 import { pageMetadata } from "@/lib/seo";
 import { ArrowUpRight, EnvelopeSimple, GithubLogo, XLogo } from "@phosphor-icons/react/dist/ssr";
 export const metadata = pageMetadata({
   title: "About Jackson",
-  description: HOME.bio,
+  description: AUTHOR.bio,
   path: "/about",
 });
 export default function AboutPage() {
@@ -15,7 +15,7 @@ export default function AboutPage() {
       <SiteHeader />
       <main id="main-content" className="st-shell about-page">
         <img
-          src={HOME.avatar}
+          src={AUTHOR.avatar}
           alt="Jackson Dean"
           width={96}
           height={120}
@@ -25,7 +25,7 @@ export default function AboutPage() {
           <h1 className="st-h1">I’m Jackson.</h1>
         </header>
         <div className="st-prose">
-          <p>{HOME.bio}</p>
+          <p>{AUTHOR.bio}</p>
           <p>
             This collection brings together experiments with images, software,
             and the work of making things.

@@ -1,4 +1,4 @@
-import { GitHubIcon } from "./social-icons"
+import { ArrowUpRight, GithubLogo } from "@phosphor-icons/react/dist/ssr"
 import { MeasuredLink } from "./measured-link"
 
 /** A measured repository link beside the project's installation details. */
@@ -13,12 +13,10 @@ export function SourceRow({ href }: { href: string }) {
       title="View source on GitHub"
     >
       <span className="dt-source-lead">
-        <GitHubIcon size={15} />
+        <GithubLogo size={18} aria-hidden="true" />
         Source on GitHub
       </span>
-      <span className="dt-source-arrow" aria-hidden>
-        →
-      </span>
+      <ArrowUpRight size={18} aria-hidden="true" />
     </MeasuredLink>
   )
 }

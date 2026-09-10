@@ -1,31 +1,13 @@
-
-/**
- * Sitewide copy and structural data — single source of truth for everything
- * the chrome and Home render. Kept here rather
- * than inline so copy edits never touch presentation.
- */
-
 /** External links, kept in one place. */
 export const LINKS = {
-  join:
-    "https://www.skool.com/the-vibe-marketers/about?ref=be313e8087da44cca0ecd7edd9ac0775",
   x: "https://x.com/ctrlswing",
   github: "https://github.com/ctrlswing",
-  linkedin: "https://linkedin.com/in/ctrlswing",
-  // More social profiles join the footer row as they're confirmed — never guess a URL.
-  // Consumed by /session for the Cal.com booking CTA. The session offer is
-  // demoted from primary CTA (2026-07): only the footer links to /session.
   booking: "https://cal.com/ctrlswing/15min",
 } as const
 
-/** Home copy and a small project selection. The latest note is automatic. */
-export const HOME = {
-  headline: "Things I’m making and figuring out.",
-  subhead:
-    "I’m Jackson. I build software, experiment with AI, and write about what I learn along the way. channel47 is where I share the work.",
-  /** The bio block between "Browse all" and the footer. */
+/** Shared author biography. */
+export const AUTHOR = {
   name: "Jackson Dean",
-  tagline: "Buying media · making software · following my curiosity",
   avatar: "/jackson.jpeg",
   bio: "I buy media for a living. Along the way, I build tools for myself, try out ideas, and follow the ones that catch my attention. Some become useful software. Others leave me with something worth sharing. This is where I keep both, including the work in progress.",
 } as const
@@ -34,8 +16,6 @@ export const HOME = {
 export const SESSION = {
   title: "Agentic Systems Working Session",
   intro:
-    "Bring one recurring workflow from your work or business. We'll think through how agents could make it easier, using tools that fit the way you already work: conversation, diagrams, tool recommendations, process mapping, or live experimentation. A finished build isn't required for the hour to be useful.",
-  introShort:
     "Bring one recurring workflow. In sixty minutes we map it together and decide where an agent could help.",
   steps: [
     "You bring one recurring workflow, and the tools already involved.",
@@ -57,16 +37,11 @@ export const SESSION = {
   },
   personal: {
     name: "Jackson Dean",
-    meta: "7 years buying media · building agentic systems",
     bio: "I run ad accounts for a living and build agentic systems for the recurring work around them. I use agents for recurring tasks, such as pulling account data and preparing weekly reports. I share what I learn here.",
-    bioShort:
-      "I run ad accounts for a living and build agentic systems for the recurring work around them. I use agents to pull account data and prepare weekly reports.",
   },
   boundary: {
     label: "What the session covers",
     body: "It's probably not the right fit if you primarily need someone to debug an existing automation or implement a large project during the call. The hour is for thinking through one workflow together.",
-    bodyShort:
-      "Not the right fit if you mainly need someone to debug an existing automation or ship a large project during the call. The hour is for thinking through one workflow together.",
   },
 } as const
 

@@ -49,13 +49,14 @@ The menu scroll uses native browser momentum. Do not add wheel interception, con
 | `PiecePage` | One notes/projects template with aligned serif headline and sans-serif body. Optional full video, installation and FAQs. Original media remains documentary content; generated covers do not replace it. |
 | `BrowseEntryLink` / `BackToBrowse` | Real Next links remember their source and restore the index/collection scroll and focused link when returning. Show a small grid icon with Collection, or a list icon with Index. The accessible label describes returning; the visible label stays short. Direct arrivals use Collection. |
 | `Rows` | Spacious sans-serif titles with subordinate descriptions and compact type/date metadata. Filters stay in the URL. No row entrance replay on filtering. |
-| `CopyButton` | Reports actual success/failure. Measurement fires only after successful copying. |
-| `Faq` / `Unfold` | One answer open at a time. Buttons expose expanded state; closed panels are inert. Height/opacity settle gradually. |
+| `CopyButton` | One button implementation for text and icon variants. Reports actual success/failure with a check or warning icon. Measurement fires only after successful copying. |
+| `Faq` | One answer open at a time. Buttons expose expanded state; closed panels are inert. Height/opacity settle gradually. |
 | `Capture` | Shared capsule input/action. Idle, sending, accepted, unavailable and error states remain real. No fabricated success for an unconfigured service. |
-| `ReadingEnd` | One actual related piece and one email invitation. The next title and direction cue occupy separate grid columns; the arrow never becomes an orphaned text glyph. Sharing stays grouped on the left with its label. |
+| `ReadingEnd` | One actual related piece and one email invitation. The next title and direction cue occupy separate grid columns; the arrow never becomes an orphaned text glyph. Sharing stays grouped on the left with a 12px label gap. Copy, link and social actions use 18px Phosphor icons; the Copy page control keeps its width during feedback. |
 | `DirectionCue` | A regular 20px right arrow inside a 48px circular surface. Internal navigation points right. In the menu it appears beside the word, independent of the serif and perspective; next-reading cues stay visible. A small horizontal response is enough. Never scale arrows with headline type. |
-| `UtilityLink` | A 48px icon-only target with an accessible name and a compact label on hover/focus. Use the same Phosphor icon family as sharing. Work together uses a conversation icon; RSS uses its feed icon. Utility labels use Instrument Sans, never monospace. |
+| `UtilityLink` | A 48px icon-only target with an accessible name and a compact label on hover/focus. Use the same Phosphor icon family as sharing and disclosures; do not add hand-drawn SVG alternatives. Work together uses a conversation icon; RSS uses its feed icon. Utility labels use Instrument Sans, never monospace. |
 | `SiteFooter` | The canonical geometric mark at 28 × 14px inside a 48px link. Legal links and a conversation icon sit opposite it, including on mobile. No repeated name or wordmark. |
+| `SessionPage` | One responsive offer panel and one body, with shared editorial headings, rectangular portrait and direction cues. The offer moves above the body below 900px; phones retain the sticky booking action. No separate mobile biography or duplicated facts. |
 | Author portrait | A small rectangular photograph with the 2px detail radius and a restrained −3° angle, echoing the physical collection. The newsletter pairs it with the About Jackson heading and drops the repeated name/tagline. |
 
 ## Mobile composition

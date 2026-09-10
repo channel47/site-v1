@@ -58,6 +58,7 @@
   --motion-object: 760ms;
   --motion-reveal: 1000ms;
   --motion-logo: 650ms;
+  --ease-logo: cubic-bezier(0.2, 0.7, 0.2, 1);
   --ease-menu: cubic-bezier(0.3, 0, 0.2, 1);
   --motion-menu-open: 900ms;
   --motion-menu-close: 640ms;

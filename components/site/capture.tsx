@@ -1,33 +1,26 @@
 "use client"
 
-import { useId, useState } from "react"
+import { useId, useState, type FormEvent } from "react"
+import { CheckCircle } from "@phosphor-icons/react"
 import { measure } from "./measurement"
 import type { CapturePlacement } from "@/lib/measurement"
 import { CAPTURE } from "@/lib/site-content"
 
 type Status = "idle" | "sending" | "subscribed" | "dormant" | "error"
 
-/**
- * The sitewide email capture — extracted from the retired early-access page.
- * Posts to `/api/subscribe` (env-gated Kit). On a real success we show the
- * confirmation; if the backend is unconfigured we say *that*, honestly — we
- * never fake a "you're on the list".
- */
+/** A shared subscription form with real accepted, unavailable and error states. */
 export function Capture({
   placement,
   helper = CAPTURE.helper,
-  cta = CAPTURE.cta,
 }: {
   placement: CapturePlacement
   helper?: string
-  cta?: string
-
 }) {
   const messageId = useId()
   const [email, setEmail] = useState("")
   const [status, setStatus] = useState<Status>("idle")
 
-  const submit = async (e: React.FormEvent) => {
+  async function submit(e: FormEvent) {
     e.preventDefault()
     if (status === "sending") return
     if (!/.+@.+\..+/.test(email.trim())) {
@@ -67,24 +60,7 @@ export function Capture({
     return (
       <div className="ea-formwrap">
         <div className="ea-ok" role="status">
-          <svg
-            className="ok-check"
-            width="20"
-            height="20"
-            viewBox="0 0 16 16"
-            fill="none"
-            style={{ flex: "none" }}
-            aria-hidden
-          >
-            <circle cx="8" cy="8" r="7" stroke="var(--success)" strokeWidth="1.6" />
-            <path
-              d="M4.8 8.3 L7 10.6 L11.3 5.7"
-              stroke="var(--success)"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <CheckCircle size={20} aria-hidden="true" />
           <span className="serif ea-ok-title">{CAPTURE.successTitle}</span>
         </div>
         <p className="ea-helper">{CAPTURE.successHelper}</p>
@@ -133,10 +109,9 @@ export function Capture({
           }}
           placeholder="Your email"
           aria-label="Email address"
-          style={{ flex: 1, minWidth: 0 }}
         />
         <button type="submit" className="ea-btn" disabled={status === "sending"}>
-          <span style={{ visibility: status === "sending" ? "hidden" : undefined }}>{cta}</span>
+          <span>{CAPTURE.cta}</span>
           {status === "sending" ? <span className="ea-sending" role="status">Sending…</span> : null}
         </button>
       </form>

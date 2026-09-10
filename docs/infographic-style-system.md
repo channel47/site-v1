@@ -1,7 +1,6 @@
 # Channel47 whiteboard infographic system
 
-Status: working art direction for generated editorial diagrams. Generated
-studies remain local until a specific image is approved for publication.
+Reference for diagrams within articles. Collection covers follow [cover-art.md](cover-art.md); interface colors follow [design-system.md](design-system.md).
 
 ## The idea
 
@@ -18,7 +17,7 @@ and level of restraint.
 
 - Use a real warm-white magnetic whiteboard photographed straight-on.
 - Light it evenly with soft room light or daylight. Avoid cinematic lighting.
-- Draw in near-black dry-erase marker with one clear content-type accent route.
+- Draw in near-black dry-erase marker with one clear accent route.
 - Keep the handwriting human and highly legible. Use sentence case only.
 - Leave abundant negative space around the diagram.
 - Allow one faint eraser ghost and one or two real markers in the tray.
@@ -26,21 +25,13 @@ and level of restraint.
 - Use one claim and one obvious reading direction per image.
 - Let the diagram explain the idea before the reader reaches the caption.
 
-## Content-type accent Easter egg
+## Accent
 
-Use the current content type's site accent for exactly one functional marker
-stroke: the route through a diagram, the circle around an outcome, or one
-underline. Everything else stays neutral.
-
-| Content type | Accent |
-| --- | --- |
-| Note / Post | Gold `#a27f30` |
-| Skill | Coral `#bc6b62` |
-| Connector | Teal `#18998b` |
-| Workshop | Mauve `#ad6b9b` |
-
-Keep the accent to roughly 10–15% of the drawn marks. It should reward someone
-who notices the visual system, not announce itself as branding.
+Use one functional marker color for a route, an outcome circle or an underline.
+The existing Google Ads diagrams use gold `#a27f30`. Keep it to roughly 10–15%
+of the marks and retain it when extending that set. It is a property of the
+illustration, not a site category color. Do not restore the retired skill,
+connector or workshop palettes to the interface.
 
 ## Information limits
 
@@ -101,7 +92,7 @@ required count explicitly.]
 
 Photograph a real clean warm-white magnetic whiteboard straight-on in even soft
 daylight. Draw the diagram in neat but unmistakably human near-black dry-erase
-marker. Use the current content-type accent, [accent name and hex], for exactly
+marker. Use [accent name and hex], for exactly
 one functional route, outcome circle, or underline; keep all other marks
 neutral. Use abundant negative space, one faint eraser ghost, and no more than
 two markers resting in the tray.
@@ -130,7 +121,7 @@ Before publishing, confirm:
 
 ## Current Google Ads MCP set
 
-All four diagrams use the Note gold for their main route or underline:
+All four existing diagrams use gold for their main route or underline:
 
 - `public/posts/google-ads-mcp-whiteboard-journey.jpg`
 - `public/posts/google-ads-mcp-whiteboard-three-tools.jpg`

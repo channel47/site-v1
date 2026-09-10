@@ -1,5 +1,4 @@
 import { OG_CONTENT_TYPE, OG_SIZE, renderOgImage } from "@/lib/og-image"
-import { HOME } from "@/lib/site-content"
 import { SITE_NAME } from "@/lib/seo"
 
 export const alt = SITE_NAME
@@ -13,7 +12,7 @@ export const contentType = OG_CONTENT_TYPE
 export default async function Image() {
   return renderOgImage({
     kicker: SITE_NAME,
-    title: HOME.headline,
-    description: HOME.subhead,
+    title: "Things I’m making and figuring out.",
+    description: "I’m Jackson. I build software, experiment with AI, and write about what I learn along the way. channel47 is where I share the work.",
   })
 }

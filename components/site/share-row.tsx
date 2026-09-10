@@ -1,9 +1,8 @@
 import { CopyButton } from "./copy-button"
-import { XIcon, LinkedInIcon } from "./social-icons"
+import { LinkedinLogo, XLogo } from "@phosphor-icons/react/dist/ssr"
 import { taggedShareUrl } from "@/lib/measurement"
 
-/** The unbounded share utility closing every detail page. Individual actions
- * keep their own outlines; source lives separately in source-row.tsx. */
+/** One compact group of sharing actions at the end of a piece. */
 export function ShareRow({
   mdPath,
   url,
@@ -26,26 +25,26 @@ export function ShareRow({
       <span className="dt-share-label">Share</span>
       <div className="dt-share-actions">
         <CopyButton event="page_copy" label="Copy page" title="Copy page as Markdown" fetchPath={mdPath} />
-        <CopyButton event="link_copy" boxed glyph="link" title="Copy link" text={url} />
+        <CopyButton event="link_copy" glyph="link" title="Copy link" text={url} />
         <a
           href={tweetHref}
           target="_blank"
           rel="noopener"
-          className="icon-btn dt-share-btn"
+          className="icon-btn"
           title="Share on X"
           aria-label="Share on X"
         >
-          <XIcon size={13} />
+          <XLogo size={18} aria-hidden="true" />
         </a>
         <a
           href={linkedinHref}
           target="_blank"
           rel="noopener"
-          className="icon-btn dt-share-btn"
+          className="icon-btn"
           title="Share on LinkedIn"
           aria-label="Share on LinkedIn"
         >
-          <LinkedInIcon size={13} />
+          <LinkedinLogo size={18} aria-hidden="true" />
         </a>
       </div>
     </div>

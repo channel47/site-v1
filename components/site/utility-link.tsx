@@ -10,15 +10,11 @@ export function UtilityLink({
   label: string;
   children: ReactNode;
 }) {
-  const content = (
-    <>
+  const Tag = href === "/rss.xml" ? "a" : Link;
+  return (
+    <Tag href={href} className="icon-btn utility-link" aria-label={label}>
       {children}
       <span className="control-caption" aria-hidden="true">{label}</span>
-    </>
-  );
-  return href === "/rss.xml" ? (
-    <a href={href} className="icon-btn utility-link" aria-label={label}>{content}</a>
-  ) : (
-    <Link href={href} className="icon-btn utility-link" aria-label={label}>{content}</Link>
+    </Tag>
   );
 }

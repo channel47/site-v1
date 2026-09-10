@@ -8,6 +8,8 @@ import {
   useRef,
   useState,
   type MouseEvent,
+  type FocusEvent,
+  type KeyboardEvent,
 } from "react";
 import { ChatCircle, RssSimple, X } from "@phosphor-icons/react";
 import { MarkLink } from "./mark-link";
@@ -65,7 +67,8 @@ export function NavigationTakeover({ onDismiss }: { onDismiss: () => void }) {
     [finish],
   );
 
-  const follow = (event: MouseEvent<HTMLElement>) => {
+  // Capture the click before Next Link can navigate; finish the exit first.
+  function follow(event: MouseEvent<HTMLElement>) {
     const link = (event.target as HTMLElement).closest<HTMLAnchorElement>("a");
     if (
       !link ||
@@ -79,7 +82,29 @@ export function NavigationTakeover({ onDismiss }: { onDismiss: () => void }) {
     if (link.getAttribute("href") === "/rss.xml") return;
     event.preventDefault();
     requestClose(link.getAttribute("href") ?? "/");
-  };
+  }
+
+  function centerFocusedLink(event: FocusEvent<HTMLElement>) {
+    const link = event.target.closest<HTMLAnchorElement>("[data-primary] a");
+    const node = reel.current;
+    if (!link || !node) return;
+    const row = link.getBoundingClientRect();
+    node.scrollTo({
+      top: node.scrollTop + row.top - node.getBoundingClientRect().top
+        + (row.height - node.clientHeight) / 2,
+      behavior: "instant",
+    });
+  }
+
+  function moveFocus(event: KeyboardEvent<HTMLElement>) {
+    if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
+    const links = Array.from(reel.current!.querySelectorAll<HTMLAnchorElement>("[data-primary] a"));
+    const index = links.indexOf(event.target as HTMLAnchorElement);
+    if (index === -1) return;
+    event.preventDefault();
+    const direction = event.key === "ArrowDown" ? 1 : -1;
+    links[(index + direction + links.length) % links.length].focus();
+  }
 
   useEffect(() => {
     const node = dialog.current;
@@ -209,6 +234,7 @@ export function NavigationTakeover({ onDismiss }: { onDismiss: () => void }) {
       data-exiting={exiting}
       data-reduced={reduced}
       aria-labelledby="navigation-title"
+      onClickCapture={follow}
       onCancel={(event) => {
         event.preventDefault();
         requestClose();
@@ -222,7 +248,7 @@ export function NavigationTakeover({ onDismiss }: { onDismiss: () => void }) {
       <h2 id="navigation-title" className="sr-only">
         Explore 47
       </h2>
-      <div className="takeover-header" onClick={follow}>
+      <div className="takeover-header">
         <MarkLink />
         <button
           ref={closeButton}
@@ -239,63 +265,34 @@ export function NavigationTakeover({ onDismiss }: { onDismiss: () => void }) {
         ref={reel}
         className="navigation-reel"
         aria-label="Site navigation"
-        onClick={follow}
+        onFocus={centerFocusedLink}
+        onKeyDown={moveFocus}
       >
-        <div className="reel-track">
-          {COPIES.map((copy) => (
-            <div
-              key={copy}
-              className="reel-group"
-              data-primary={copy === PRIMARY ? "true" : undefined}
-              aria-hidden={copy === PRIMARY ? undefined : true}
-            >
-              {LINKS.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="reel-row"
-                  tabIndex={copy === PRIMARY ? 0 : -1}
-                  aria-label={link.label}
-                  onFocus={(event) => {
-                    const node = reel.current;
-                    if (copy === PRIMARY && node) {
-                      const row = event.currentTarget.getBoundingClientRect();
-                      node.scrollTo({
-                        top: node.scrollTop + row.top - node.getBoundingClientRect().top
-                          + (row.height - node.clientHeight) / 2,
-                        behavior: "instant",
-                      });
-                    }
-                  }}
-                  onKeyDown={(event) => {
-                    if (event.key !== "ArrowDown" && event.key !== "ArrowUp")
-                      return;
-                    event.preventDefault();
-                    const siblings = Array.from(
-                      event.currentTarget.parentElement!.querySelectorAll<HTMLAnchorElement>(
-                        "a",
-                      ),
-                    );
-                    const index = siblings.indexOf(event.currentTarget);
-                    siblings[
-                      (index +
-                        (event.key === "ArrowDown" ? 1 : -1) +
-                        siblings.length) %
-                        siblings.length
-                    ].focus();
-                  }}
-                >
-                  <span className="reel-label">
-                    <span className="reel-word">{link.title}</span>
-                    <DirectionCue />
-                  </span>
-                </Link>
-              ))}
-            </div>
-          ))}
-        </div>
+        {COPIES.map((copy) => (
+          <div
+            key={copy}
+            className="reel-group"
+            data-primary={copy === PRIMARY ? "true" : undefined}
+            aria-hidden={copy === PRIMARY ? undefined : true}
+          >
+            {LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="reel-row"
+                tabIndex={copy === PRIMARY ? 0 : -1}
+                aria-label={link.label}
+              >
+                <span className="reel-label">
+                  <span className="reel-word">{link.title}</span>
+                  <DirectionCue />
+                </span>
+              </Link>
+            ))}
+          </div>
+        ))}
       </nav>
-      <footer className="takeover-footer" onClick={follow}>
+      <footer className="takeover-footer">
         <div>
           <UtilityLink href="/session" label="Work together">
             <ChatCircle size={20} aria-hidden="true" />

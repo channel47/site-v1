@@ -1,47 +1,39 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Unfold } from "./unfold"
-import type { FaqItem } from "@/lib/content"
+import { Plus } from "@phosphor-icons/react";
+import { useId, useState } from "react";
+import type { FaqItem } from "@/lib/content";
 
-/**
- * "Common questions" — the detail templates' FAQ accordion (transcribed
- * from the Channel47 FAQ design file). Sits after the article body, before
- * the Share row. Single-open rows on the shared unfold pattern; the "+"
- * rotates 45° into an accent ×, and the question shifts to the page's
- * --type-color on hover — the accent follows the content type via the
- * article shell, exactly like every other detail-page accent. First row
- * open on load.
- */
+/** One answer open at a time; closed answers stay out of keyboard navigation. */
 export function Faq({ items }: { items: FaqItem[] }) {
-  const [openIdx, setOpenIdx] = useState<number | null>(0)
-
-  if (items.length === 0) return null
+  const id = useId();
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  if (!items.length) return null;
 
   return (
     <section className="faq" aria-label="Common questions">
-      <h2 className="st-section-h2 faq-h2">Common questions</h2>
-      <div className="faq-rows">
-        {items.map((item, i) => (
-          <Unfold
-            key={i}
-            className="faq-row"
-            triggerClassName="faq-q"
-            open={openIdx === i}
-            onToggle={(next) => setOpenIdx(next ? i : null)}
-            trigger={
-              <>
-                <span className="faq-q-text">{item.q}</span>
-                <span className="faq-plus" aria-hidden>
-                  +
-                </span>
-              </>
-            }
-          >
-            <p className="faq-a">{item.a}</p>
-          </Unfold>
-        ))}
-      </div>
+      <h2 className="faq-h2">Common questions</h2>
+      {items.map((item, index) => {
+        const open = openIndex === index;
+        const panelId = `${id}-${index}`;
+        return (
+          <div key={item.q}>
+            <button
+              type="button"
+              className="faq-q"
+              aria-expanded={open}
+              aria-controls={panelId}
+              onClick={() => setOpenIndex(open ? null : index)}
+            >
+              <span>{item.q}</span>
+              <Plus className="faq-plus" size={18} aria-hidden="true" />
+            </button>
+            <div id={panelId} className="faq-panel" data-open={open} inert={!open} aria-hidden={!open}>
+              <div><p className="faq-a">{item.a}</p></div>
+            </div>
+          </div>
+        );
+      })}
     </section>
-  )
+  );
 }

@@ -3,7 +3,7 @@ import { SiteHeader } from "@/components/site/header"
 import { SiteFooter } from "@/components/site/footer"
 import { Capture } from "@/components/site/capture"
 import { pageMetadata } from "@/lib/seo"
-import { HOME, CAPTURE } from "@/lib/site-content"
+import { AUTHOR, CAPTURE } from "@/lib/site-content"
 import { RssSimple } from "@phosphor-icons/react/dist/ssr"
 
 export const metadata: Metadata = pageMetadata({
@@ -18,9 +18,9 @@ export default function NewsletterPage() {
     <div className="st-page">
       <SiteHeader />
 
-      <main id="main-content" className="st-shell st-shell-newsletter">
-        <header className="st-head st-head-newsletter">
-          <h1 className="serif st-h1 an-blur">
+      <main id="main-content" className="st-shell">
+        <header className="st-head">
+          <h1 className="st-h1 an-blur">
             Follow what I’m working on.
           </h1>
         </header>
@@ -33,14 +33,14 @@ export default function NewsletterPage() {
           <div className="nl-about-header">
             <h2 id="nl-who-title">About Jackson</h2>
             <img
-              src={HOME.avatar}
-              alt={HOME.name}
+              src={AUTHOR.avatar}
+              alt={AUTHOR.name}
               width={64}
               height={80}
               className="author-portrait"
             />
           </div>
-          <p>{HOME.bio}</p>
+          <p>{AUTHOR.bio}</p>
           <p>
             I’ll send you selected projects and notes about things I’m building,
             experiments, and ideas I’m still working through.
