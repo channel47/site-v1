@@ -52,7 +52,7 @@ export default function SessionPage() {
     <div className="st-page session-page">
       <SiteHeader />
 
-      <main className="st-shell st-shell-full session-layout">
+      <main id="main-content" className="st-shell st-shell-full session-layout">
         <div className="session-main">
           <header className="st-head">
             <h1 className="st-h1 h1-note an-blur">{SESSION.title}</h1>

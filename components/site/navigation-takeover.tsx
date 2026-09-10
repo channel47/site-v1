@@ -1,0 +1,310 @@
+"use client";
+
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type MouseEvent,
+} from "react";
+import { ChatCircle, RssSimple, X } from "@phosphor-icons/react";
+import { MarkLink } from "./mark-link";
+import { DirectionCue } from "./direction-cue";
+import { UtilityLink } from "./utility-link";
+
+const LINKS = [
+  { href: "/", title: "Collection" },
+  { href: "/browse", title: "Index" },
+  { href: "/about", title: "About" },
+  {
+    href: "/newsletter",
+    title: "Letters",
+    label: "Letters — occasional emails",
+  },
+];
+const COPIES = [0, 1, 2, 3, 4];
+const PRIMARY = 2;
+
+/** Native scrolling supplies momentum; identical groups let its position wrap.
+ * Only the middle group participates in Tab order and the accessibility tree. */
+export function NavigationTakeover({ onDismiss }: { onDismiss: () => void }) {
+  const dialog = useRef<HTMLDialogElement>(null);
+  const reel = useRef<HTMLElement>(null);
+  const closeButton = useRef<HTMLButtonElement>(null);
+  const destination = useRef<string | null>(null);
+  const closing = useRef(false);
+  const [exiting, setExiting] = useState(false);
+  const [reduced, setReduced] = useState(false);
+  const router = useRouter();
+
+  const finish = useCallback(() => {
+    dialog.current?.close();
+    const href = destination.current;
+    onDismiss();
+    if (href) router.push(href);
+  }, [onDismiss, router]);
+
+  const requestClose = useCallback(
+    (href?: string) => {
+      if (closing.current) return;
+      closing.current = true;
+      destination.current = href ?? null;
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) finish();
+      else {
+        const node = dialog.current;
+        const wash = node?.querySelector<HTMLElement>(".takeover-wash");
+        if (wash)
+          node?.style.setProperty("--wash-exit-start", getComputedStyle(wash).transform);
+        node?.querySelectorAll<HTMLElement>(".takeover-header, .navigation-reel, .takeover-footer")
+          .forEach((element) => element.style.setProperty("--exit-opacity", getComputedStyle(element).opacity));
+        setExiting(true);
+      }
+    },
+    [finish],
+  );
+
+  const follow = (event: MouseEvent<HTMLElement>) => {
+    const link = (event.target as HTMLElement).closest<HTMLAnchorElement>("a");
+    if (
+      !link ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey ||
+      event.button !== 0
+    )
+      return;
+    if (link.getAttribute("href") === "/rss.xml") return;
+    event.preventDefault();
+    requestClose(link.getAttribute("href") ?? "/");
+  };
+
+  useEffect(() => {
+    const node = dialog.current;
+    if (!node) return;
+    const previous = document.body.style.overflow;
+    const previousPadding = document.body.style.paddingRight;
+    const gutter = window.innerWidth - document.documentElement.clientWidth;
+    node.style.setProperty("--viewport-scrollbar", `${gutter}px`);
+    document.body.style.paddingRight = `${gutter}px`;
+    document.body.style.overflow = "hidden";
+    // Scale one solid layer instead of repainting a clip over the entire reel.
+    const sizeWash = () => {
+      const trigger = node.parentElement?.querySelector(".menu-trigger");
+      const bounds = trigger?.getBoundingClientRect();
+      const x = bounds ? bounds.x + bounds.width / 2 : window.innerWidth;
+      const y = bounds ? bounds.y + bounds.height / 2 : 0;
+      const radius = Math.hypot(
+        Math.max(x, window.innerWidth - x),
+        Math.max(y, window.innerHeight - y),
+      ) + 2;
+      node.style.setProperty("--wash-x", `${x}px`);
+      node.style.setProperty("--wash-y", `${y}px`);
+      node.style.setProperty("--wash-size", `${radius * 2}px`);
+    };
+    sizeWash();
+    window.addEventListener("resize", sizeWash);
+    const media = matchMedia("(prefers-reduced-motion: reduce)");
+    const preference = () => setReduced(media.matches);
+    preference();
+    media.addEventListener("change", preference);
+    node.showModal();
+    closeButton.current?.focus({ preventScroll: true });
+    return () => {
+      media.removeEventListener("change", preference);
+      window.removeEventListener("resize", sizeWash);
+      document.body.style.overflow = previous;
+      document.body.style.paddingRight = previousPadding;
+      node.close();
+    };
+  }, []);
+
+  // A fallback also closes the dialog if animations are disabled by an extension.
+  useEffect(() => {
+    if (!exiting) return;
+    const duration = parseFloat(
+      getComputedStyle(dialog.current!).getPropertyValue("--motion-menu-close"),
+    );
+    const timer = setTimeout(
+      finish,
+      (Number.isFinite(duration) ? duration : 640) + 80,
+    );
+    return () => clearTimeout(timer);
+  }, [exiting, finish]);
+
+  useEffect(() => {
+    const node = reel.current;
+    if (!node) return;
+    let frame = 0;
+    let cancelled = false;
+    const rows = Array.from(node.querySelectorAll<HTMLElement>(".reel-row"));
+    const primary = node.querySelector<HTMLElement>("[data-primary]");
+    if (!primary) return;
+    let rowHeight = 1;
+    let groupHeight = 1;
+    let viewportHeight = 0;
+
+    const paint = () => {
+      frame = 0;
+      if (!reduced) {
+        // Keep a full group above and below the visible region at all times.
+        if (node.scrollTop < groupHeight) node.scrollTop += groupHeight;
+        else if (node.scrollTop > groupHeight * 3)
+          node.scrollTop -= groupHeight;
+      }
+      const center = node.scrollTop + node.clientHeight / 2;
+      rows.forEach((row, index) => {
+        const distance = reduced
+          ? 0
+          : Math.max(
+              -2,
+              Math.min(
+                2,
+                (index * rowHeight + rowHeight / 2 - center) / rowHeight,
+              ),
+            );
+        row.style.setProperty("--reel-distance", String(distance));
+        row.style.setProperty(
+          "--reel-opacity",
+          String(1 - Math.min(Math.abs(distance), 1.6) * 0.24),
+        );
+      });
+    };
+    const measure = () => {
+      if (cancelled) return;
+      const position = viewportHeight
+        ? (node.scrollTop + viewportHeight / 2) / rowHeight
+        : PRIMARY * LINKS.length + 0.5;
+      rowHeight =
+        primary.firstElementChild?.getBoundingClientRect().height || 1;
+      groupHeight = primary.getBoundingClientRect().height;
+      viewportHeight = node.clientHeight;
+      node.scrollTop = reduced
+        ? 0
+        : position * rowHeight - viewportHeight / 2;
+      paint();
+    };
+    const scroll = () => {
+      if (!frame) frame = requestAnimationFrame(paint);
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(node);
+    node.addEventListener("scroll", scroll, { passive: true });
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+      node.removeEventListener("scroll", scroll);
+    };
+  }, [reduced]);
+
+  return (
+    <dialog
+      ref={dialog}
+      id="site-navigation"
+      className="navigation-takeover"
+      data-exiting={exiting}
+      data-reduced={reduced}
+      aria-labelledby="navigation-title"
+      onCancel={(event) => {
+        event.preventDefault();
+        requestClose();
+      }}
+    >
+      <div
+        className="takeover-wash"
+        aria-hidden="true"
+        onAnimationEnd={() => { if (exiting) finish(); }}
+      />
+      <h2 id="navigation-title" className="sr-only">
+        Explore 47
+      </h2>
+      <div className="takeover-header" onClick={follow}>
+        <MarkLink />
+        <button
+          ref={closeButton}
+          type="button"
+          className="icon-btn takeover-close"
+          aria-label="Close menu"
+          onClick={() => requestClose()}
+          autoFocus
+        >
+          <X size={24} weight="light" />
+        </button>
+      </div>
+      <nav
+        ref={reel}
+        className="navigation-reel"
+        aria-label="Site navigation"
+        onClick={follow}
+      >
+        <div className="reel-track">
+          {COPIES.map((copy) => (
+            <div
+              key={copy}
+              className="reel-group"
+              data-primary={copy === PRIMARY ? "true" : undefined}
+              aria-hidden={copy === PRIMARY ? undefined : true}
+            >
+              {LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="reel-row"
+                  tabIndex={copy === PRIMARY ? 0 : -1}
+                  aria-label={link.label}
+                  onFocus={(event) => {
+                    const node = reel.current;
+                    if (copy === PRIMARY && node) {
+                      const row = event.currentTarget.getBoundingClientRect();
+                      node.scrollTo({
+                        top: node.scrollTop + row.top - node.getBoundingClientRect().top
+                          + (row.height - node.clientHeight) / 2,
+                        behavior: "instant",
+                      });
+                    }
+                  }}
+                  onKeyDown={(event) => {
+                    if (event.key !== "ArrowDown" && event.key !== "ArrowUp")
+                      return;
+                    event.preventDefault();
+                    const siblings = Array.from(
+                      event.currentTarget.parentElement!.querySelectorAll<HTMLAnchorElement>(
+                        "a",
+                      ),
+                    );
+                    const index = siblings.indexOf(event.currentTarget);
+                    siblings[
+                      (index +
+                        (event.key === "ArrowDown" ? 1 : -1) +
+                        siblings.length) %
+                        siblings.length
+                    ].focus();
+                  }}
+                >
+                  <span className="reel-label">
+                    <span className="reel-word">{link.title}</span>
+                    <DirectionCue />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          ))}
+        </div>
+      </nav>
+      <footer className="takeover-footer" onClick={follow}>
+        <div>
+          <UtilityLink href="/session" label="Work together">
+            <ChatCircle size={20} aria-hidden="true" />
+          </UtilityLink>
+          <UtilityLink href="/rss.xml" label="RSS feed">
+            <RssSimple size={20} aria-hidden="true" />
+          </UtilityLink>
+        </div>
+      </footer>
+    </dialog>
+  );
+}

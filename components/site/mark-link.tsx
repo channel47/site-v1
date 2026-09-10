@@ -12,10 +12,9 @@ import {
  * navigation, so this renders the same geometry as a plain link — no client
  * JS, no animation.
  */
-export function MarkLink() {
+export function MarkLink({ small = false }: { small?: boolean }) {
   return (
-    <Link href="/" aria-label="channel47 — home" className="st-mark">
-      <span className="brand-word" aria-hidden="true">channel</span>
+    <Link href="/" aria-label="47 — home" className={`st-mark${small ? " st-mark-small" : ""}`}>
       <svg
         viewBox={MARK_VIEWBOX}
         width={MARK_WIDTH}

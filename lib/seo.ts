@@ -1,9 +1,8 @@
 import type { Metadata } from "next"
 import {
-  type Asset,
+  type Project,
   type FaqItem,
   type Note,
-  type Post,
 } from "@/lib/content"
 
 /**
@@ -107,32 +106,6 @@ function breadcrumb(pageUrl: string, section: { name: string; url: string }, nam
   }
 }
 
-/** Per-post graph: BlogPosting + breadcrumb, anchored to the base entities. */
-export function postGraph(post: Post) {
-  const url = `${SITE_URL}/notes/${post.slug}`
-  return {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "BlogPosting",
-        "@id": `${url}#post`,
-        headline: post.title,
-        url,
-        mainEntityOfPage: { "@type": "WebPage", "@id": url },
-        description: post.description,
-        author: personRef,
-        publisher: orgRef,
-        datePublished: post.date,
-        dateModified: post.date,
-        isAccessibleForFree: true,
-        keywords: post.tags.join(", "),
-        isPartOf: { "@id": WEBSITE_ID },
-      },
-      breadcrumb(url, { name: "Notes", url: `${SITE_URL}/browse?type=notes` }, post.title),
-    ],
-  }
-}
-
 /** FAQPage node for a detail page's "Common questions" accordion — returns
  * a zero-or-one element array so callers can spread it into a @graph. The
  * Q&A strings come straight from frontmatter (the same strings the visible
@@ -199,7 +172,7 @@ export function noteGraph(note: Note, section: "notes" | "projects" = "notes") {
 /** Per-asset graph: the skill/connector as SoftwareSourceCode + breadcrumb.
  * SoftwareSourceCode is the honest type — these are installable source
  * artifacts living in a repo, not hosted applications. */
-export function assetGraph(asset: Asset) {
+export function projectGraph(asset: Project) {
   const url = `${SITE_URL}/projects/${asset.slug}`
   return {
     "@context": "https://schema.org",

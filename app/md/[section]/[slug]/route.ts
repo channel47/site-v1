@@ -1,6 +1,6 @@
 import { getContentEntries } from "@/lib/content"
 import { CONTENT_GROUPS } from "@/lib/discovery"
-import { assetTwin, noteTwin, postTwin, workshopTwin } from "@/lib/markdown-twin"
+import { noteTwin } from "@/lib/markdown-twin"
 
 /**
  * The markdown-twin endpoint. Agents reach it as `/posts/<slug>.md` (or via
@@ -26,14 +26,7 @@ export async function GET(_req: Request, { params }: Params) {
   const { section, slug } = await params
   if (!CONTENT_GROUPS.some((group) => group.key === section)) return new Response("Not found", { status: 404 })
   const entry = getContentEntries().find((e) => e.collection.group === section && e.item.slug === slug)
-  let twin: string | undefined
-  if (entry) {
-    const item = entry.item
-    if ("type" in item) twin = assetTwin(item)
-    else if ("asset" in item) twin = postTwin(item)
-    else if ("duration" in item) twin = workshopTwin(item)
-    else twin = noteTwin(item, section as "notes" | "projects")
-  }
+  const twin = entry ? noteTwin(entry.item, entry.collection.group) : undefined
   if (!twin) return new Response("Not found", { status: 404 })
 
   return new Response(twin, {

@@ -26,7 +26,7 @@ export function bitAnim(
 ): CSSProperties {
   return {
     "--c47bit": color,
-    animation: `c47-logo-${pulse % 2 ? "b" : "a"} 0.4s ${BIT_EASE} ${bitDelay(
+    animation: `c47-logo-${pulse % 2 ? "b" : "a"} var(--motion-logo) ${BIT_EASE} ${bitDelay(
       i,
       pulse,
       extra,

@@ -3,7 +3,7 @@
 import { useId, useState } from "react"
 import { measure } from "./measurement"
 import type { CapturePlacement } from "@/lib/measurement"
-import { CAPTURE, LINKS } from "@/lib/site-content"
+import { CAPTURE } from "@/lib/site-content"
 
 type Status = "idle" | "sending" | "subscribed" | "dormant" | "error"
 
@@ -105,16 +105,8 @@ export function Capture({
   if (status === "dormant") {
     return (
       <div className="ea-formwrap">
-        <p className="ea-dormant">
-          Email signup isn&apos;t wired up on this page yet. For now,{" "}
-          <a
-            href={LINKS.join}
-            target="_blank"
-            rel="noopener"
-            className="ul ea-dormant-link"
-          >
-            come build with me live →
-          </a>
+        <p className="ea-dormant" role="status">
+          Email signup is unavailable right now. Try again later, or follow the <a href="/rss.xml" className="ul">RSS feed</a>.
         </p>
       </div>
     )

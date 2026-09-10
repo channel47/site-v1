@@ -39,11 +39,10 @@ export function GlitchLogo({
   return (
     <button
       type="button"
-      aria-label="channel47 — replay logo animation"
+      aria-label="47 — replay logo animation"
       className={`gl-logo${className ? ` ${className}` : ""}`}
       onClick={() => setPulse((p) => p + 1)}
     >
-      <span className="brand-word" aria-hidden="true">channel</span>
       <svg
         aria-hidden="true"
         className="gl gl-base"

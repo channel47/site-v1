@@ -12,5 +12,5 @@ export default async function Image({ params }: { params: Promise<{ slug: string
   const { slug } = await params
   const entry = getContentEntries().find((e) => e.collection.group === "projects" && e.item.slug === slug)
   if (!entry) notFound()
-  return renderOgImage({ kicker: "Project", title: entry.item.title, description: entry.item.description, accent: TYPE_ACCENTS.skill })
+  return renderOgImage({ kicker: "Project", title: entry.item.title, description: entry.item.description, accent: TYPE_ACCENTS.project })
 }

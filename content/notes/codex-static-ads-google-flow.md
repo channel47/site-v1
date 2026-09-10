@@ -41,4 +41,4 @@ I think that's probably the more interesting part of the skill for me. The steps
 
 ### Ships with this build
 
-- [Make Static Ads](/projects/make-static-ads), the public skill that asks the image model to generate the complete ad, including typography and product packaging.
+- [Make Static Ads](https://github.com/channel47/skills/tree/main/skills/creative-production/make-static-ads), the public skill that asks the image model to generate the complete ad, including typography and product packaging.

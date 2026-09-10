@@ -21,9 +21,7 @@ export function buildSharePack(href: string) {
   if (!entry) throw new Error(`No published entry at ${href}. Use a canonical /notes/… or /projects/… path.`)
   const { item, collection } = entry
   const links = Object.fromEntries((Object.keys(SHARE_CHANNELS) as ShareChannel[]).map((channel) => [channel, taggedShareUrl(href, channel)])) as Record<ShareChannel, string>
-  const preview = "screenshot" in item && item.screenshot
-    ? { src: item.screenshot, alt: item.screenshotCaption ?? item.title }
-    : getEntryPreview(item)
+  const preview = getEntryPreview(item)
   const image = preview ? { url: new URL(preview.src, ORIGIN).href, alt: preview.alt } : undefined
   const paragraphs: string[] = []
   for (const token of marked.lexer(item.markdown)) {

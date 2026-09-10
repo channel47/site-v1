@@ -14,7 +14,7 @@ export default function TermsPage() {
     <div className="st-page">
       <SiteHeader />
 
-      <main className="st-shell">
+      <main id="main-content" className="st-shell">
         <header className="st-head">
           <h1 className="serif st-h1 an-blur">Terms</h1>
           <p className="st-byline mono">Last updated July 2026</p>

@@ -17,18 +17,12 @@ import { BLOCKS, MARK_VIEWBOX } from "@/components/site/mark-blocks"
 export const OG_SIZE = { width: 1200, height: 630 }
 export const OG_CONTENT_TYPE = "image/png"
 
-const PAGE = "#fafafa"
+const PAGE = "#f5f5f2"
 const INK = "#191a1c"
 const BODY = "#65676c"
 
 /** Light-scheme section inks; Satori requires literal colors. */
-export const TYPE_ACCENTS = {
-  skill: "#264fd5",
-  connector: "#264fd5",
-  post: "#264fd5",
-  workshop: "#264fd5",
-  note: "#264fd5",
-} as const
+export const TYPE_ACCENTS = { project: "#264fd5", note: "#264fd5" } as const
 
 let fonts: Awaited<ReturnType<typeof loadFonts>> | null = null
 
@@ -57,7 +51,6 @@ export async function renderOgImage({ kicker, title, description, accent = INK }
     <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", background: PAGE, color: INK, padding: "44px 56px", fontFamily: "Geist" }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingBottom: 28 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <span style={{ fontSize: 34, fontWeight: 700, letterSpacing: "-0.05em" }}>channel</span>
           <svg width={54} height={27} viewBox={MARK_VIEWBOX} fill={INK}>
             {BLOCKS.map((b, i) => <rect key={i} {...b} />)}
           </svg>

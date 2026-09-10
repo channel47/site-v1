@@ -1,13 +1,37 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { JsonLd } from "@/components/site/json-ld"
-import { BrowseNavigation } from "@/components/site/browse-navigation"
-import { SiteMeasurement } from "@/components/site/measurement"
-import { getFeedItems } from "@/lib/content"
-import { PUBLIC_PAGES } from "@/lib/discovery"
-import { PostHogAnalytics } from "@/components/site/posthog"
-import { baseGraph, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo"
-import "./globals.css"
+import type React from "react";
+import type { Metadata } from "next";
+import localFont from "next/font/local";
+import { JsonLd } from "@/components/site/json-ld";
+import { BrowseNavigation } from "@/components/site/browse-navigation";
+import { SiteMeasurement } from "@/components/site/measurement";
+import { getFeedItems } from "@/lib/content";
+import { PUBLIC_PAGES } from "@/lib/discovery";
+import { PostHogAnalytics } from "@/components/site/posthog";
+import { baseGraph, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo";
+import "./globals.css";
+
+const sans = localFont({
+  src: "./fonts/instrument-sans-latin.woff2",
+  weight: "400 700",
+  variable: "--font-instrument-sans",
+  display: "swap",
+});
+const serif = localFont({
+  src: [
+    {
+      path: "./fonts/instrument-serif-latin.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "./fonts/instrument-serif-italic-latin.woff2",
+      weight: "400",
+      style: "italic",
+    },
+  ],
+  variable: "--font-instrument-serif",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -31,24 +55,15 @@ export const metadata: Metadata = {
     ],
     apple: "/apple-icon.png",
   },
-}
-
-// Reads the persisted scheme choice before paint so the toggle never flashes.
-// `color-scheme` on <html> defaults to `light dark` (system) in globals.css;
-// this only overrides it once the visitor has explicitly picked a mode (see
-// components/site/theme-toggle.tsx).
-const THEME_INIT_SCRIPT = `(function(){try{var m=localStorage.getItem("ch47-theme");if(m==="light"||m==="dark"){document.documentElement.style.colorScheme=m;document.documentElement.setAttribute("data-theme",m)}}catch(e){}})()`
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
-      </head>
+    <html lang="en" className={`${sans.variable} ${serif.variable}`}>
       <body>
         {/* Rendered here (not via `metadata.alternates`, which page-level
             canonicals would replace wholesale) — React hoists it to <head>. */}
@@ -60,10 +75,20 @@ export default function RootLayout({
         />
         {/* Site-wide entity graph (Organization + Person + WebSite) — see lib/seo.ts. */}
         <JsonLd data={baseGraph()} />
-        <SiteMeasurement paths={[...PUBLIC_PAGES.map((page) => page.path), ...getFeedItems().map((item) => item.href)]} />
-        <BrowseNavigation>{children}</BrowseNavigation>
+        <SiteMeasurement
+          paths={[
+            ...PUBLIC_PAGES.map((page) => page.path),
+            ...getFeedItems().map((item) => item.href),
+          ]}
+        />
+        <BrowseNavigation>
+          <a className="skip-link" href="#main-content">
+            Skip to content
+          </a>
+          {children}
+        </BrowseNavigation>
         <PostHogAnalytics />
       </body>
     </html>
-  )
+  );
 }

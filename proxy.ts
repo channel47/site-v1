@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server"
-import { CONTENT_ROUTE_PATTERN, CONTENT_COLLECTION, isContentFormat } from "@/lib/discovery"
+import { CONTENT_ROUTE_PATTERN } from "@/lib/discovery"
 
 /**
  * Machine-format routing for content URLs (docs/AI-SEO.md, Layer 3).
@@ -16,9 +16,9 @@ import { CONTENT_ROUTE_PATTERN, CONTENT_COLLECTION, isContentFormat } from "@/li
 
 export function proxy(req: NextRequest) {
   const legacy = /^\/(skills|connectors|posts|workshops)\/([a-z0-9-]+)(\.md|\/opengraph-image)?$/.exec(req.nextUrl.pathname)
-  if (legacy && isContentFormat(legacy[1])) {
+  if (legacy) {
     const url = req.nextUrl.clone()
-    url.pathname = `${CONTENT_COLLECTION[legacy[1]].basePath}/${legacy[2]}${legacy[3] ?? ""}`
+    url.pathname = `/${legacy[1] === "skills" || legacy[1] === "connectors" ? "projects" : "notes"}/${legacy[2]}${legacy[3] ?? ""}`
     return NextResponse.redirect(url, 308)
   }
   const match = CONTENT_ROUTE_PATTERN.exec(req.nextUrl.pathname)

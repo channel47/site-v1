@@ -1,5 +1,3 @@
-import { CONTENT_GROUPS, type ContentFormat } from "./discovery"
-export { contentGroup } from "./discovery"
 
 /**
  * Sitewide copy and structural data — single source of truth for everything
@@ -25,7 +23,6 @@ export const HOME = {
   headline: "Things I’m making and figuring out.",
   subhead:
     "I’m Jackson. I build software, experiment with AI, and write about what I learn along the way. channel47 is where I share the work.",
-  selectedProjects: ["make-static-ads", "google-ads", "creative-strategist"],
   /** The bio block between "Browse all" and the footer. */
   name: "Jackson Dean",
   tagline: "Buying media · making software · following my curiosity",
@@ -81,29 +78,3 @@ export const CAPTURE = {
   successTitle: "You're on the list.",
   successHelper: "You'll hear from me when there is something new to share.",
 } as const
-
-/** Shared blue ink; retained source formats inherit their parent section. */
-export type ContentTypeKey = ContentFormat
-
-export const TYPE_COLORS: Record<ContentTypeKey, string> = {
-  projects: "var(--c-project)",
-  notes: "var(--c-note)",
-  skills: "var(--c-project)",
-  connectors: "var(--c-project)",
-  posts: "var(--c-note)",
-  workshops: "var(--c-note)",
-}
-
-/** Section ink for a brief pixel reveal when a disclosure opens. */
-export const TYPE_SHINES: Record<ContentTypeKey, string> = {
-  projects: "var(--shine-skill)",
-  notes: "var(--shine-note)",
-  skills: "var(--shine-skill)",
-  connectors: "var(--shine-connector)",
-  posts: "var(--shine-post)",
-  workshops: "var(--shine-workshop)",
-}
-
-/** Shared section definitions drive every navigation surface. */
-export type Category = (typeof CONTENT_GROUPS)[number]
-export const CATEGORIES = CONTENT_GROUPS

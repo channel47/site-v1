@@ -1,23 +1,9 @@
-import {
-  getContentEntries,
-  type Asset,
-  type Note,
-  type Post,
-  type Workshop,
-} from "@/lib/content"
+import { getContentEntries, type Note } from "@/lib/content"
 import { absoluteUrl } from "@/lib/discovery"
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo"
 
-/**
- * rss.xml — full-content feed of everything the site publishes (posts and
- * asset pages alike, newest first). RSS is the oldest machine-readable
- * surface and still feeds aggregators, newsletter tools, and AI data
- * pipelines; full content means consumers never need a second fetch.
- *
- * Workshops only join once `status: past` — an upcoming session's date is a
- * future call time, not a publish date, and its page is a pre-event
- * announcement rather than the finished recording write-up.
- */
+/** Full-content RSS from the canonical inventory. Historical source paths
+ * remain stable GUIDs after migration, so existing pieces are not re-sent. */
 
 export const dynamic = "force-static"
 
@@ -68,7 +54,7 @@ function noteVideoHtml(note: Note): string {
   ].join("")
 }
 
-function entry(item: Post | Asset | Workshop | Note, url: string): FeedEntry {
+function entry(item: Note, url: string): FeedEntry {
   return {
     title: item.title,
     url,
@@ -85,12 +71,11 @@ function noteEntry(note: Note, url: string): FeedEntry {
 
 export function GET() {
   const entries: FeedEntry[] = getContentEntries()
-    .filter(({ item }) => !("duration" in item) || item.status === "past")
     .map(({ collection, item }) => {
       const url = absoluteUrl(SITE_URL, `${collection.basePath}/${item.slug}`)
       const result = "video" in item ? noteEntry(item, url) : entry(item, url)
       // Keep historical RSS identity so URL consolidation does not republish old entries.
-      return { ...result, guid: `${SITE_URL}/${collection.key}/${item.slug}` }
+      return { ...result, guid: item.rssId ? absoluteUrl(SITE_URL, item.rssId) : `${SITE_URL}/${collection.key}/${item.slug}` }
     })
 
   const rfc822 = (iso: string) => new Date(`${iso}T12:00:00Z`).toUTCString()
