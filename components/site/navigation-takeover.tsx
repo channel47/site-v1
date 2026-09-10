@@ -13,8 +13,8 @@ import {
 } from "react";
 import { ChatCircle, RssSimple, X } from "@phosphor-icons/react";
 import { MarkLink } from "./mark-link";
-import { DirectionCue } from "./direction-cue";
 import { UtilityLink } from "./utility-link";
+import { SocialLinks } from "./social-links";
 
 const LINKS = [
   { href: "/", title: "Collection" },
@@ -31,7 +31,7 @@ const PRIMARY = 2;
 
 /** Native scrolling supplies momentum; identical groups let its position wrap.
  * Only the middle group participates in Tab order and the accessibility tree. */
-export function NavigationTakeover({ onDismiss }: { onDismiss: () => void }) {
+export function NavigationTakeover({ onDismiss, keyboard }: { onDismiss: () => void; keyboard: boolean }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const reel = useRef<HTMLElement>(null);
   const closeButton = useRef<HTMLButtonElement>(null);
@@ -60,7 +60,11 @@ export function NavigationTakeover({ onDismiss }: { onDismiss: () => void }) {
         if (wash)
           node?.style.setProperty("--wash-exit-start", getComputedStyle(wash).transform);
         node?.querySelectorAll<HTMLElement>(".takeover-header, .navigation-reel, .takeover-footer")
-          .forEach((element) => element.style.setProperty("--exit-opacity", getComputedStyle(element).opacity));
+          .forEach((element) => {
+            const style = getComputedStyle(element);
+            element.style.setProperty("--exit-opacity", style.opacity);
+            element.style.setProperty("--exit-transform", style.transform);
+          });
         setExiting(true);
       }
     },
@@ -79,9 +83,10 @@ export function NavigationTakeover({ onDismiss }: { onDismiss: () => void }) {
       event.button !== 0
     )
       return;
-    if (link.getAttribute("href") === "/rss.xml") return;
+    const href = link.getAttribute("href");
+    if (!href?.startsWith("/") || href === "/rss.xml") return;
     event.preventDefault();
-    requestClose(link.getAttribute("href") ?? "/");
+    requestClose(href);
   }
 
   function centerFocusedLink(event: FocusEvent<HTMLElement>) {
@@ -136,7 +141,8 @@ export function NavigationTakeover({ onDismiss }: { onDismiss: () => void }) {
     preference();
     media.addEventListener("change", preference);
     node.showModal();
-    closeButton.current?.focus({ preventScroll: true });
+    // A pointer-opened dialog needs semantic focus, not a highlighted control.
+    (keyboard ? closeButton.current : node)?.focus({ preventScroll: true });
     return () => {
       media.removeEventListener("change", preference);
       window.removeEventListener("resize", sizeWash);
@@ -144,7 +150,7 @@ export function NavigationTakeover({ onDismiss }: { onDismiss: () => void }) {
       document.body.style.paddingRight = previousPadding;
       node.close();
     };
-  }, []);
+  }, [keyboard]);
 
   // A fallback also closes the dialog if animations are disabled by an extension.
   useEffect(() => {
@@ -231,6 +237,7 @@ export function NavigationTakeover({ onDismiss }: { onDismiss: () => void }) {
       ref={dialog}
       id="site-navigation"
       className="navigation-takeover"
+      tabIndex={-1}
       data-exiting={exiting}
       data-reduced={reduced}
       aria-labelledby="navigation-title"
@@ -256,7 +263,7 @@ export function NavigationTakeover({ onDismiss }: { onDismiss: () => void }) {
           className="icon-btn takeover-close"
           aria-label="Close menu"
           onClick={() => requestClose()}
-          autoFocus
+          autoFocus={keyboard}
         >
           <X size={24} weight="light" />
         </button>
@@ -283,24 +290,22 @@ export function NavigationTakeover({ onDismiss }: { onDismiss: () => void }) {
                 tabIndex={copy === PRIMARY ? 0 : -1}
                 aria-label={link.label}
               >
-                <span className="reel-label">
-                  <span className="reel-word">{link.title}</span>
-                  <DirectionCue />
-                </span>
+                <span className="reel-word">{link.title}</span>
               </Link>
             ))}
           </div>
         ))}
       </nav>
       <footer className="takeover-footer">
-        <div>
+        <SocialLinks />
+        <nav className="takeover-utilities" aria-label="Contact and feed">
           <UtilityLink href="/session" label="Work together">
             <ChatCircle size={20} aria-hidden="true" />
           </UtilityLink>
           <UtilityLink href="/rss.xml" label="RSS feed">
             <RssSimple size={20} aria-hidden="true" />
           </UtilityLink>
-        </div>
+        </nav>
       </footer>
     </dialog>
   );

@@ -14,7 +14,6 @@ export function Collection({ items }: { items: CollectionItem[] }) {
           style={
             {
               "--object-angle": `${item.angle}deg`,
-              "--arrival-delay": `${Math.min(index, 4) * 90}ms`,
             } as CSSProperties
           }
         >

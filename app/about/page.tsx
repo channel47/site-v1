@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { SiteHeader } from "@/components/site/header";
 import { SiteFooter } from "@/components/site/footer";
-import { AUTHOR, LINKS } from "@/lib/site-content";
+import { AUTHOR } from "@/lib/site-content";
 import { pageMetadata } from "@/lib/seo";
-import { ArrowUpRight, EnvelopeSimple, GithubLogo, XLogo } from "@phosphor-icons/react/dist/ssr";
+import { AuthorPortrait } from "@/components/site/author-portrait";
+import { SocialLinks } from "@/components/site/social-links";
+import { EnvelopeSimple } from "@phosphor-icons/react/dist/ssr";
 export const metadata = pageMetadata({
   title: "About Jackson",
   description: AUTHOR.bio,
@@ -14,14 +16,8 @@ export default function AboutPage() {
     <div className="st-page">
       <SiteHeader />
       <main id="main-content" className="st-shell about-page">
-        <img
-          src={AUTHOR.avatar}
-          alt="Jackson Dean"
-          width={96}
-          height={120}
-          className="author-portrait about-avatar"
-        />
-        <header className="st-head">
+        <header className="st-head author-heading about-heading">
+          <AuthorPortrait alt="" />
           <h1 className="st-h1">I’m Jackson.</h1>
         </header>
         <div className="st-prose">
@@ -31,11 +27,13 @@ export default function AboutPage() {
             and the work of making things.
           </p>
         </div>
-        <nav className="about-links" aria-label="More from Jackson">
-          <Link href="/newsletter"><EnvelopeSimple size={18} aria-hidden="true" />Occasional emails</Link>
-          <a href={LINKS.x}><XLogo size={16} aria-hidden="true" />X<ArrowUpRight size={12} aria-hidden="true" /></a>
-          <a href={LINKS.github}><GithubLogo size={18} aria-hidden="true" />GitHub<ArrowUpRight size={12} aria-hidden="true" /></a>
-        </nav>
+        <div className="about-follow">
+          <Link href="/newsletter" className="about-email">
+            <EnvelopeSimple size={18} aria-hidden="true" />
+            Occasional emails
+          </Link>
+          <SocialLinks />
+        </div>
       </main>
       <SiteFooter />
     </div>

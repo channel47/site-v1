@@ -11,15 +11,14 @@ The standing send audience is every active Kit subscriber. The old
 cancelled, bounced, complained, and inactive records; the read-only `check`
 command prints the live active count before any draft can be created.
 
-The header uses `public/email/channel47-mark-v2.png`, a static, versioned logo
+The header uses `public/email/channel47-mark-v3.png`, a static, versioned logo
 for the widest inbox compatibility and a fresh URL when image proxies have
 cached an earlier failure. It keeps a transparent background and subtle light
 keyline for reliable light/dark inbox contrast.
 
-Run `newsletter/assets/build-email-logo.py` with Pillow to rebuild the static
-PNG and the optional one-play GIF.
-The static vector source remains `newsletter/assets/channel47-email-mark.svg`,
-and `public/email/channel47-mark.gif` remains available as an animated variant.
+Run `pnpm brand:build` to regenerate the current PNG from the canonical
+`components/site/mark.ts` outlines. The older v2 PNG, GIF, vector and Pillow
+builder are retained only for historical emails; do not overwrite those assets.
 Keep meaningful alt text on the image in case a recipient blocks remote images.
 
 The Kit template uses the public PNG URL from `config.json`. The `render`

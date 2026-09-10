@@ -4,7 +4,8 @@ import { BackToBrowse } from "@/components/site/browse-navigation";
 import { DirectionCue } from "@/components/site/direction-cue";
 import { SiteFooter } from "@/components/site/footer";
 import { SiteHeader } from "@/components/site/header";
-import { getNotes } from "@/lib/content";
+import { getFeedItems } from "@/lib/content";
+import { AuthorPortrait } from "@/components/site/author-portrait";
 import { pageMetadata } from "@/lib/seo";
 import { LINKS, SESSION } from "@/lib/site-content";
 
@@ -20,7 +21,7 @@ export default function SessionPage() {
     <div className="st-page">
       <SiteHeader />
       <main id="main-content" className="st-shell st-shell-full session-layout">
-        <header className="st-head session-heading an-blur">
+        <header className="st-head session-heading">
           <h1 className="st-h1">{SESSION.title}</h1>
           <p className="piece-lede">{SESSION.intro}</p>
         </header>
@@ -55,9 +56,9 @@ export default function SessionPage() {
             <h2>From my own work</h2>
             <p>Notes on tools I’ve built and experiments I’ve worked through:</p>
             <div className="session-proof-list">
-              {getNotes().map((note) => (
-                <Link key={note.slug} href={`/notes/${note.slug}`} className="session-proof-link">
-                  <span>{note.title}</span>
+              {getFeedItems().map((item) => (
+                <Link key={item.href} href={item.href} className="session-proof-link">
+                  <span>{item.title}</span>
                   <DirectionCue />
                 </Link>
               ))}
@@ -65,15 +66,9 @@ export default function SessionPage() {
           </section>
 
           <section className="session-section">
-            <div className="session-personal">
+            <div className="author-heading">
+              <AuthorPortrait />
               <h2>Who you&apos;d be working with</h2>
-              <img
-                src="/jackson.jpeg"
-                alt={SESSION.personal.name}
-                width={64}
-                height={80}
-                className="author-portrait"
-              />
             </div>
             <p>{SESSION.personal.bio}</p>
           </section>

@@ -16,7 +16,7 @@ export default function PrivacyPage() {
 
       <main id="main-content" className="st-shell">
         <header className="st-head">
-          <h1 className="st-h1 an-blur">Privacy</h1>
+          <h1 className="st-h1">Privacy</h1>
           <p className="st-byline">Last updated September 2026</p>
         </header>
 

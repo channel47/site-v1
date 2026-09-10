@@ -16,7 +16,7 @@ export default function TermsPage() {
 
       <main id="main-content" className="st-shell">
         <header className="st-head">
-          <h1 className="st-h1 an-blur">Terms</h1>
+          <h1 className="st-h1">Terms</h1>
           <p className="st-byline">Last updated July 2026</p>
         </header>
 

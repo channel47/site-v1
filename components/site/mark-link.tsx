@@ -1,10 +1,10 @@
 import Link from "next/link"
 import {
-  BLOCKS,
+  MARK_PATH,
   MARK_HEIGHT,
   MARK_VIEWBOX,
   MARK_WIDTH,
-} from "@/components/site/mark-blocks"
+} from "@/components/site/mark"
 
 /**
  * Static "47" mark that links home. The landing page's GlitchLogo is a
@@ -14,7 +14,7 @@ import {
  */
 export function MarkLink({ small = false }: { small?: boolean }) {
   return (
-    <Link href="/" aria-label="47 — home" className={`st-mark${small ? " st-mark-small" : ""}`}>
+    <Link href="/" aria-label="Channel47 — home" className={`st-mark${small ? " st-mark-small" : ""}`}>
       <svg
         viewBox={MARK_VIEWBOX}
         width={MARK_WIDTH}
@@ -22,9 +22,7 @@ export function MarkLink({ small = false }: { small?: boolean }) {
         fill="currentColor"
         aria-hidden
       >
-        {BLOCKS.map((b, i) => (
-          <rect key={i} x={b.x} y={b.y} width={b.width} height={b.height} />
-        ))}
+        <path d={MARK_PATH} />
       </svg>
     </Link>
   )

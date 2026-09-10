@@ -1,0 +1,28 @@
+/* Shared by the home header and the interactive brand preview. */
+.c47-mark { overflow: visible; }
+.c47-piece {
+  animation: c47-assemble calc(var(--motion-logo) * 0.64) var(--ease-logo)
+    calc(var(--motion-logo) * var(--piece-delay)) backwards;
+}
+.c47-complete {
+  animation: c47-resolve var(--motion-logo) linear backwards;
+}
+@keyframes c47-assemble {
+  0% {
+    opacity: 0;
+    transform: translate(var(--piece-x), var(--piece-y));
+    fill: var(--mark-accent, var(--accent));
+  }
+  18% { opacity: 1; }
+  65% { transform: translate(0, 0); }
+  76% { fill: var(--mark-accent, var(--accent)); }
+  100% { opacity: 1; transform: translate(0, 0); fill: currentColor; }
+}
+@keyframes c47-resolve {
+  0%, 76% { opacity: 0.07; }
+  100% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .c47-pieces { display: none; }
+  .c47-complete { animation: none; }
+}

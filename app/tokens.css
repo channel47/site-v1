@@ -28,7 +28,7 @@
   --text-subheading: 2.25rem;
   --text-menu: clamp(5rem, 19vw, 14rem);
   --reading-leading: 1.75;
-  --tracking-label: 0.08em;
+  --tracking-label: 0.01em;
   --tracking-display: -0.025em;
   --space-1: 4px;
   --space-2: 8px;
@@ -53,13 +53,19 @@
   --radius-surface: 16px;
   --radius-detail: 2px;
   --ease-out: cubic-bezier(0.22, 0.68, 0.12, 1);
+  --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-press: 160ms;
   --motion-ui: 320ms;
   --motion-disclosure: 560ms;
-  --motion-object: 760ms;
-  --motion-reveal: 1000ms;
-  --motion-logo: 650ms;
-  --ease-logo: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --motion-object: 860ms;
+  --motion-reveal: 920ms;
+  --motion-stagger: 80ms;
+  --motion-feedback: 420ms;
+  --motion-logo: 1400ms;
+  --ease-logo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-menu: cubic-bezier(0.3, 0, 0.2, 1);
   --motion-menu-open: 900ms;
   --motion-menu-close: 640ms;
+  --motion-menu-content: 700ms;
+  --motion-menu-exit: 240ms;
 }

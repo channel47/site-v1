@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs"
 import { join } from "node:path"
 import { ImageResponse } from "next/og"
-import { BLOCKS, MARK_VIEWBOX } from "@/components/site/mark-blocks"
+import { MARK_PATH, MARK_VIEWBOX } from "@/components/site/mark"
 
 /**
  * Shared renderer for every route's opengraph-image.tsx: notes, posts,
@@ -52,7 +52,7 @@ export async function renderOgImage({ kicker, title, description, accent = INK }
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingBottom: 28 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <svg width={54} height={27} viewBox={MARK_VIEWBOX} fill={INK}>
-            {BLOCKS.map((b, i) => <rect key={i} {...b} />)}
+            <path d={MARK_PATH} />
           </svg>
         </div>
         <span style={{ fontFamily: "Geist Mono", fontSize: 17, color: accent }}>{kicker === "channel47" ? "Projects & notes" : kicker ?? "Projects & notes"}</span>

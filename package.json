@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "brand:build": "node scripts/build-brand-assets.mjs",
     "build": "next build",
     "dev": "next dev",
     "start": "next start",
@@ -10,7 +11,8 @@
     "typecheck": "tsc --noEmit",
     "test:content": "node scripts/test-content-model.cjs",
     "share:pack": "node scripts/share-pack.cjs",
-    "test:measurement": "node scripts/test-measurement.cjs"
+    "test:measurement": "node scripts/test-measurement.cjs",
+    "test:motion": "node scripts/test-motion.cjs"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",

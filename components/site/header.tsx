@@ -8,9 +8,10 @@ import { NavigationTakeover } from "./navigation-takeover";
 export function SiteHeader({ home = false }: { home?: boolean }) {
   const [open, setOpen] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);
+  const keyboard = useRef(false);
   const dismiss = useCallback(() => {
     setOpen(false);
-    trigger.current?.focus({ preventScroll: true });
+    if (keyboard.current) trigger.current?.focus({ preventScroll: true });
   }, []);
   return (
     <header className="site-header">
@@ -23,11 +24,14 @@ export function SiteHeader({ home = false }: { home?: boolean }) {
         aria-haspopup="dialog"
         aria-controls={open ? "site-navigation" : undefined}
         aria-expanded={open}
-        onClick={() => setOpen(true)}
+        onClick={(event) => {
+          keyboard.current = event.detail === 0;
+          setOpen(true);
+        }}
       >
         <DotsThree size={28} weight="bold" />
       </button>
-      {open ? <NavigationTakeover onDismiss={dismiss} /> : null}
+      {open ? <NavigationTakeover onDismiss={dismiss} keyboard={keyboard.current} /> : null}
     </header>
   );
 }

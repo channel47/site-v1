@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { List, SquaresFour } from "@phosphor-icons/react";
+import { ArrowLeft } from "@phosphor-icons/react";
 import {
   createContext,
   useContext,
@@ -11,10 +11,10 @@ import {
   type ComponentProps,
   type ReactNode,
 } from "react";
-type Visit = { href: string; entry: string; scrollY: number };
+type Visit = { href: string; entry: string; scrollY: number; restoreFocus: boolean };
 const BrowseContext = createContext<{
   visit: Visit | null;
-  remember: (entry: string) => void;
+  remember: (entry: string, restoreFocus: boolean) => void;
 }>({ visit: null, remember: () => {} });
 /** Preserve location and keyboard focus from both the object grid and index. */
 export function BrowseNavigation({ children }: { children: ReactNode }) {
@@ -36,13 +36,15 @@ export function BrowseNavigation({ children }: { children: ReactNode }) {
     ) {
       const frame = requestAnimationFrame(() => {
         window.scrollTo({ top: visit.scrollY, behavior: "instant" });
-        Array.from(
-          document.querySelectorAll<HTMLAnchorElement>(
-            ".st-row, .collection-link",
-          ),
-        )
-          .find((link) => link.getAttribute("href") === visit.entry)
-          ?.focus({ preventScroll: true });
+        if (visit.restoreFocus) {
+          Array.from(
+            document.querySelectorAll<HTMLAnchorElement>(
+              ".st-row, .collection-link",
+            ),
+          )
+            .find((link) => link.getAttribute("href") === visit.entry)
+            ?.focus({ preventScroll: true });
+        }
         setVisit(null);
       });
       return () => cancelAnimationFrame(frame);
@@ -53,12 +55,13 @@ export function BrowseNavigation({ children }: { children: ReactNode }) {
     <BrowseContext.Provider
       value={{
         visit,
-        remember: (entry) => {
+        remember: (entry, restoreFocus) => {
           if (pathname === "/" || pathname === "/browse")
             setVisit({
               href: `${window.location.pathname}${window.location.search}`,
               entry,
               scrollY: window.scrollY,
+              restoreFocus,
             });
         },
       }}
@@ -71,7 +74,18 @@ export function BrowseEntryLink(
   props: ComponentProps<typeof Link> & { href: string },
 ) {
   const { remember } = useContext(BrowseContext);
-  return <Link {...props} onNavigate={() => remember(props.href)} />;
+  const keyboard = useRef(false);
+  return (
+    <Link
+      {...props}
+      onClick={(event) => {
+        // Keyboard and assistive-technology activation have no pointer clicks.
+        keyboard.current = event.detail === 0;
+        props.onClick?.(event);
+      }}
+      onNavigate={() => remember(props.href, keyboard.current)}
+    />
+  );
 }
 export function BackToBrowse({
   href,
@@ -87,7 +101,6 @@ export function BackToBrowse({
   const target = returning ? visit.href : href;
   const isIndex = target.startsWith("/browse");
   const label = isIndex ? "Index" : "Collection";
-  const Icon = isIndex ? List : SquaresFour;
   return (
     <Link
       href={target}
@@ -102,8 +115,8 @@ export function BackToBrowse({
           : undefined
       }
     >
-      <Icon size={18} aria-hidden="true" />
-      <span>{label}</span>
+      <ArrowLeft size={18} aria-hidden="true" />
+      <span>Back</span>
     </Link>
   );
 }

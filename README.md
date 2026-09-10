@@ -22,6 +22,7 @@ pnpm check:seo-surfaces
 pnpm build
 pnpm test:content
 pnpm test:measurement
+pnpm test:motion
 # Against a running local server:
 python3 scripts/check-content-surfaces.py http://localhost:3100
 ```
@@ -56,7 +57,8 @@ The newsletter CLI uses Python 3. Run its local checks with:
 python3 -m unittest discover -s tests -p 'test_kit_broadcast.py'
 ```
 
-Pillow is only needed to regenerate the email logo. Newsletter editorial guidance
+Run `pnpm brand:build` on Node 24 to regenerate the mark exports and icons.
+Pillow is only needed for the historical email artwork builder. Newsletter editorial guidance
 lives in [docs/newsletter-playbook.md](docs/newsletter-playbook.md); template setup
 and CLI commands live in [newsletter/README.md](newsletter/README.md).
 
@@ -73,8 +75,8 @@ article and project pages share one reading layout. Read these canonical guides:
 component recipes. `lib/collection.ts` maps covers to published pieces. The
 interface uses one light paper surface; the artwork supplies its color.
 
-The current collection has four square objects representing four published pieces.
-The Flow walkthrough remains inside its note. Old skills, connector catalogs,
+The current collection has three square objects representing three published pieces.
+The Flow walkthrough remains inside the combined Flow-to-Codex note. Old skills, connector catalogs,
 and unused workshop/post layouts have been removed. Keep published media URLs
 stable, including artwork embedded in sent newsletters.
 

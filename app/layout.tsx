@@ -3,6 +3,8 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { JsonLd } from "@/components/site/json-ld";
 import { BrowseNavigation } from "@/components/site/browse-navigation";
+import { SkipLink } from "@/components/site/skip-link";
+import { PageMotion } from "@/components/site/page-motion";
 import { SiteMeasurement } from "@/components/site/measurement";
 import { getFeedItems } from "@/lib/content";
 import { PUBLIC_PAGES } from "@/lib/discovery";
@@ -87,10 +89,9 @@ export default function RootLayout({
           ]}
         />
         <BrowseNavigation>
-          <a className="skip-link" href="#main-content">
-            Skip to content
-          </a>
+          <SkipLink />
           {children}
+          <PageMotion />
         </BrowseNavigation>
         <PostHogAnalytics />
       </body>

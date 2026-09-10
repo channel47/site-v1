@@ -10,7 +10,7 @@ export function UtilityLink({
   label: string;
   children: ReactNode;
 }) {
-  const Tag = href === "/rss.xml" ? "a" : Link;
+  const Tag = href.startsWith("/") && href !== "/rss.xml" ? Link : "a";
   return (
     <Tag href={href} className="icon-btn utility-link" aria-label={label}>
       {children}

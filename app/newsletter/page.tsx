@@ -5,6 +5,7 @@ import { Capture } from "@/components/site/capture"
 import { pageMetadata } from "@/lib/seo"
 import { AUTHOR, CAPTURE } from "@/lib/site-content"
 import { RssSimple } from "@phosphor-icons/react/dist/ssr"
+import { AuthorPortrait } from "@/components/site/author-portrait"
 
 export const metadata: Metadata = pageMetadata({
   title: "Newsletter",
@@ -20,7 +21,7 @@ export default function NewsletterPage() {
 
       <main id="main-content" className="st-shell">
         <header className="st-head">
-          <h1 className="st-h1 an-blur">
+          <h1 className="st-h1">
             Follow what I’m working on.
           </h1>
         </header>
@@ -30,15 +31,9 @@ export default function NewsletterPage() {
         </div>
 
         <section className="st-prose" aria-labelledby="nl-who-title">
-          <div className="nl-about-header">
+          <div className="author-heading">
+            <AuthorPortrait alt="" />
             <h2 id="nl-who-title">About Jackson</h2>
-            <img
-              src={AUTHOR.avatar}
-              alt={AUTHOR.name}
-              width={64}
-              height={80}
-              className="author-portrait"
-            />
           </div>
           <p>{AUTHOR.bio}</p>
           <p>

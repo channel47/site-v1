@@ -16,6 +16,8 @@ import {
   type Project,
 } from "@/lib/content";
 import { marked } from "marked";
+import Link from "next/link";
+import { AuthorPortrait } from "./author-portrait";
 
 /** One reading measure and one template. Project instructions and video are
  * optional parts of a piece, not separate design systems. */
@@ -39,45 +41,25 @@ export function PiecePage({
               project?.repo ? projectGraph(project) : noteGraph(entry, section)
             }
           />
-          <header className="piece-head an-blur">
+          <header className="piece-head">
             <BackToBrowse href="/" className="reading-back" />
             <h1>{entry.title}</h1>
             <p className="piece-lede">{entry.description}</p>
-            <p className="piece-byline">
-              <span>{AUTHOR_NAME}</span>
-              <time dateTime={entry.date}>{shortDate(entry.date)}</time>
-              {minutes > 1 ? <span>{minutes} min read</span> : null}
-              {project?.status ? (
-                <span>{PROJECT_STATUS_LABELS[project.status]}</span>
-              ) : null}
-              {entry.sanitized ? <span>Sanitized example</span> : null}
-            </p>
-          </header>
-          {project?.install ? (
-            <section className="project-install" aria-label="Install">
-              <div className="install-head">
-                <span>Install</span>
-                <CopyButton
-                  event="install_copy"
-                  title="Copy install command"
-                  text={project.install}
-                />
+            <div className="piece-byline">
+              <AuthorPortrait alt="" />
+              <div>
+                <Link href="/about" className="piece-author">{AUTHOR_NAME}</Link>
+                <p className="piece-meta">
+                  <time dateTime={entry.date}>{shortDate(entry.date)}</time>
+                  {minutes > 1 ? <span>{minutes} min read</span> : null}
+                  {project?.status ? (
+                    <span>{PROJECT_STATUS_LABELS[project.status]}</span>
+                  ) : null}
+                  {entry.sanitized ? <span>Sanitized example</span> : null}
+                </p>
               </div>
-              <pre>
-                <code>{project.install}</code>
-              </pre>
-              {project.pairing ? (
-                <p
-                  dangerouslySetInnerHTML={{
-                    __html: marked.parseInline(project.pairing, {
-                      async: false,
-                    }),
-                  }}
-                />
-              ) : null}
-              {project.repo ? <SourceRow href={project.repo} /> : null}
-            </section>
-          ) : null}
+            </div>
+          </header>
           {entry.video ? (
             <figure className="piece-video" id="walkthrough">
               <video
@@ -110,6 +92,31 @@ export function PiecePage({
             className="st-prose"
             dangerouslySetInnerHTML={{ __html: entry.html }}
           />
+          {project?.install ? (
+            <section className="project-install" id="install" aria-label="Install">
+              <div className="install-head">
+                <span>Install</span>
+                <CopyButton
+                  event="install_copy"
+                  title="Copy install command"
+                  text={project.install}
+                />
+              </div>
+              <pre>
+                <code>{project.install}</code>
+              </pre>
+              {project.pairing ? (
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: marked.parseInline(project.pairing, {
+                      async: false,
+                    }),
+                  }}
+                />
+              ) : null}
+              {project.repo ? <SourceRow href={project.repo} /> : null}
+            </section>
+          ) : null}
           {entry.faqs?.length ? <Faq items={entry.faqs} /> : null}
           <ShareRow
             mdPath={`${href}.md`}
