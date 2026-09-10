@@ -137,7 +137,7 @@ when a capitalized "Channel 47"/"Channel47" literal leaks outside
 
 1. Verify live: `curl https://channel47.dev/robots.txt`, `/llms.txt`,
    `/projects/creative-strategist.md`, `curl -H 'Accept: text/markdown'
-   https://channel47.dev/notes/google-ads-mcp`, `/api`, `/api/search?q=google+ads`.
+   https://channel47.dev/projects/google-ads`, `/api`, `/api/search?q=google+ads`.
    Or re-run the auditor: `python3 scripts/audit_ai_readiness.py
    https://channel47.dev` (baseline before this work: **3/14, 21%** —
    2026-07-03).

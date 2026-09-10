@@ -18,19 +18,18 @@ The collection is a small table of objects that invite exploration. A cover give
 - **Materials:** specific and convincing. Chalky tablets on blue enamel, creased printed stock, machined aluminum, smoked glass, lacquer, or anodized metal. Show fine texture without grit overlays. Prefer a strong material contrast within each object.
 - **Color:** deliberate, saturated color belongs inside the object. The surrounding interface stays neutral. The reference blue is cobalt; other covers may use industrial yellow, deep green, red, graphite, or metal. Avoid pastel gradients and candy-colored assortments. One dominant color per cover is usually enough.
 - **Composition:** legible silhouette at thumbnail size, a clear focal point, and room for the material to be seen. Use repetition only when its rhythm makes the object stronger. No decorative filler geometry.
-- **Type:** omit it unless it is inherent to the source artwork, as with the ELT print. Do not put the article headline, date, category, or a fake publication title into the render. Preserve real artwork text when possible; inspect packaging text at full size.
+- **Type:** omit it unless it is inherent to the source artwork, as with the ELT sachet. Do not put the article headline, date, category, or a fake publication title into the render. Preserve real artwork text when possible; inspect packaging text at full size.
 - **Motion:** static covers stay still except for the site's gentle interaction response. Videos belong inside their pieces; do not duplicate a piece in the gallery just to add a moving object. Any future preview must be relevant to a distinct piece and respect reduced motion. Do not animate every object just because it is possible.
 
 ## Current collection
 
 | Piece | Cover direction |
 | --- | --- |
-| Google Flow reference experiment | Keep the approved blue tablet relief unchanged. |
-| ELT / Codex static-ad experiment | A tactile square folded print, recomposing the actual “Built for this heat” artwork to match the other objects’ square footprint. |
-| Google Ads MCP development note | A vivid industrial-yellow relief with dark machined channels converging into three; visually appealing before it is explanatory. No printed labels. |
-| Google Ads connector | A deep-green or graphite material study of connected polished-metal parts. Strong silhouette, one clear connection, no UI or text. |
+| Customer research and ad angles in Claude | A deep-green optical-glass tile with three lens ribs refracting a dot grid. Conceptual cover art, with a separate explanatory storyboard inside the article. |
+| Combined Google Flow and Codex creative workflow | Keep the approved blue tablet relief unchanged. The Flow reference study and original ELT ad examples live inside one piece. |
+| Google Ads MCP story and installation | A vivid industrial-yellow relief with dark machined channels converging into three; visually appealing before it is explanatory. No printed labels. |
 
-The Flow walkthrough remains inside the Flow note. The gallery has one object per piece.
+The Flow walkthrough remains inside the combined note at `/notes/codex-static-ads-google-flow`. The gallery has one object per piece. The red ELT cover remains an available asset but is no longer a separate gallery entry.
 
 ## Agent handoff
 
@@ -48,3 +47,9 @@ Example prompt skeleton:
 - Export responsive WebP assets for the site. Keep high-resolution working images in ignored output; record generation source paths there rather than shipping every iteration.
 - Keep readable titles in HTML and accessible link names. Decorative cover images have empty alt text when the same link already has a complete accessible name.
 - Document a deliberate exception rather than forcing every piece into the same shape. Shared lighting and framing create coherence; subjects should vary.
+
+## ELT production reference
+
+The retained ELT cover was generated with the built-in image tool from the blue tablet and previous ELT cover as references. Exports: `public/collection/elt-specimen.webp` (960px) and `elt-specimen-480.webp` (480px). These, the prior cover and green connector render remain published assets, but no longer appear in the collection.
+
+Reusable brief: one white foil ELT stick sachet on a vermilion enamel square, resting diagonally with a small spill of white powder at the opened end. Near-orthographic overhead camera; slab edges square to the canvas, centered at 82% of its width. Upper-left studio light, lower-right contact shadows, pure white surround. Realistic foil, powder and enamel. Only the ELT brand letters; no headline, scenery, fruit, advertisement or extra props. This is conceptual cover art; preserve the actual campaign images in the article.

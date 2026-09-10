@@ -48,6 +48,8 @@ export interface NoteVideo {
   poster: string;
   captions: string;
   duration: string;
+  /** Preserve the video's original date when it moves to another article. */
+  uploadDate?: string;
   caption?: string;
 }
 export interface Note {

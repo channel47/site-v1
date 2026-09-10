@@ -3,36 +3,28 @@ import { getContentEntries, getEntryPreview } from "./content";
 /** Presentation only. Article text remains in content/. */
 const COVERS = [
   {
+    id: "research-lens",
+    href: "/notes/customer-research-ad-angles-claude",
+    title: "Turning customer research into ad angles with Claude",
+    label: "Creative strategy",
+    image: "research-lens",
+    angle: -2,
+  },
+  {
     id: "flow-specimen",
-    href: "/notes/google-flow-reference-led-product-imagery",
-    title: "Two references. Then Flow.",
-    label: "Image study",
+    href: "/notes/codex-static-ads-google-flow",
+    title: "From Google Flow to making whole ads in Codex",
+    label: "Creative workflow",
     image: "flow-specimen",
     angle: -3,
   },
   {
-    id: "elt",
-    href: "/notes/codex-static-ads-google-flow",
-    title: "Making the whole ad in Codex",
-    label: "ELT · experiment",
-    image: "elt-square",
-    angle: 2,
-  },
-  {
     id: "ads-story",
-    href: "/notes/google-ads-mcp",
+    href: "/projects/google-ads",
     title: "How I built my Google Ads MCP",
-    label: "Build notes",
+    label: "Story & source",
     image: "ads-channels",
     angle: 2,
-  },
-  {
-    id: "ads-connector",
-    href: "/projects/google-ads",
-    title: "Google Ads MCP",
-    label: "Connector",
-    image: "ads-connection",
-    angle: -2,
   },
 ] as const;
 export interface CollectionItem {

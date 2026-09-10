@@ -2,7 +2,7 @@
 
 `content/notes/` and `content/projects/` are the only published collections. One Markdown file supplies the reading page, index, RSS, search, sitemap, metadata and Markdown twin through `lib/content.ts`. A duplicate URL fails validation.
 
-The current selection is the Google Flow reference experiment, the ELT/Codex ad experiment, the Google Ads MCP development note, and the Google Ads connector. The retired skill and other advertising-connector pages are removed; their source remains in Git history. The actual skill/tool repositories are independent and remain available.
+The current selection includes a worked customer-research and ad-angle example in Claude, a note following the creative workflow from Google Flow references to complete static ads in Codex, and a Google Ads MCP piece combining its development story, installation and safety details. The former Flow note redirects to `/notes/codex-static-ads-google-flow`. The retired skill and other advertising-connector pages are removed; their source remains in Git history. The actual skill/tool repositories are independent and remain available.
 
 ## Publishing
 
@@ -17,7 +17,25 @@ tags: [optional-topic]
 ---
 ```
 
-Replace these examples with actual content and its real date. Use direct language and preserve the author's voice. Prefer a literal phrase over metaphor used only for flourish. Never invent experience, results, quotations, or proof to make a short piece feel substantial.
+Replace these examples with actual content and its real date. Follow the [direct-language guidance](#direct-language) below. Never invent experience, results, quotations, or proof to make a short piece feel substantial.
+
+## Direct language
+
+Say what you mean. Prefer a literal phrase when it conveys the idea clearly.
+Do not substitute metaphor, flourish, or a clever turn of phrase for an exact
+statement. For example, write “where an agent could help” instead of “where an
+agent earns its place,” and “save time on recurring work” instead of “save time
+that compounds.”
+
+During review, ask what each phrase tells the reader. Replace decorative
+metaphors, vague promises, staged revelations, and repeated conclusions with
+the specific action, observation, or limitation. Cut the sentence if it adds
+nothing. Preserve actual quotations, conversational qualifiers, and expressions
+that carry Jackson's meaning. Direct language should still sound like him.
+
+Apply this check to article titles and bodies, project descriptions, signup
+copy, and service pages. Avoid colons in titles and headings. This is an editing
+standard, not a requirement to make every piece sound formal or technical.
 
 ## Optional fields
 
@@ -25,7 +43,7 @@ Replace these examples with actual content and its real date. Use direct languag
 | --- | --- |
 | `slug` | Lowercase letters, numbers and hyphens. |
 | `preview: { src, alt }` | An existing image selected instead of the first Markdown image or video poster. |
-| `video: { src, poster, captions, duration, caption }` | Actual MP4, poster, English WebVTT, ISO8601 duration and optional visible caption. |
+| `video: { src, poster, captions, duration, caption, uploadDate }` | Actual MP4, poster, English WebVTT, ISO8601 duration and optional visible caption. Optional quoted `uploadDate` preserves the video's original date when moved to another article. |
 | `faqs: [{ q, a }]` | Authored questions/answers. Rendered visibly and in structured data. |
 | `sanitized` | Mark a real anonymized example in the byline. |
 | `rssId` | Historical path used as feed identity after a source move. Do not change an established identity. |

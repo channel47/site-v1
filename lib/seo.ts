@@ -158,7 +158,7 @@ export function noteGraph(note: Note, section: "notes" | "projects" = "notes") {
               description: note.video.caption ?? note.description,
               contentUrl: `${SITE_URL}${note.video.src}`,
               thumbnailUrl: `${SITE_URL}${note.video.poster}`,
-              uploadDate: note.date,
+              uploadDate: note.video.uploadDate ?? note.date,
               duration: note.video.duration,
               inLanguage: "en-US",
             },

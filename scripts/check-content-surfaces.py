@@ -65,7 +65,7 @@ collection = Page(home.decode())
 assert len(collection.objects) == len(set(collection.objects)), 'Duplicate collection object'
 assert set(collection.objects).issubset(set(all_paths)), 'Collection points to an unpublished piece'
 assert collection.videos == 0, 'The Flow walkthrough belongs inside its article'
-assert '/collection/elt-square.webp' in collection.images
+assert '/collection/flow-specimen.webp' in collection.images
 for image in collection.images:
     image_bytes, _ = fetch(image)
     assert image_bytes[:4] == b'RIFF' and image_bytes[8:12] == b'WEBP', image
@@ -88,6 +88,31 @@ for old, new in legacy:
         _, final = fetch(old + suffix)
         assert final == new + suffix, (old, final)
 
+# The build story and installation page now resolve to one Google Ads piece.
+for suffix in ['', '.md', '/opengraph-image']:
+    body, final = fetch('/notes/google-ads-mcp' + suffix)
+    assert final == '/projects/google-ads' + suffix, final
+merged, final = fetch('/notes/google-ads-mcp', 'text/markdown')
+assert final == '/projects/google-ads'
+assert b'My first MCP' in merged and b'npx @channel47/google-ads-mcp@latest' in merged
+
+# The Flow experiment and Codex follow-up share one canonical note.
+flow_old = '/notes/google-flow-reference-led-product-imagery'
+creative = '/notes/codex-static-ads-google-flow'
+for suffix in ['', '.md', '/opengraph-image']:
+    _, final = fetch(flow_old + suffix)
+    assert final == creative + suffix, final
+_, final = fetch('/md' + flow_old)
+assert final == creative + '.md', final
+combined, _ = fetch(creative)
+assert Page(combined.decode()).videos == 1
+assert b'google-flow-reference-led-product-imagery.vtt' in combined
+assert b'codex-static-ads-composited-pass.jpg' in combined
+assert b'codex-static-ads-native-pass.jpg' in combined
+merged, final = fetch(flow_old, 'text/markdown')
+assert final == creative
+assert b'I attached two reference images' in merged and b'The part I wanted to save' in merged
+
 for old, group in [('skills', 'projects'), ('connectors', 'projects'), ('posts', 'notes'), ('workshops', 'notes')]:
     html, final = fetch('/browse?type=' + old)
     assert final == '/browse?type=' + group, final
@@ -96,6 +121,8 @@ for old, group in [('skills', 'projects'), ('connectors', 'projects'), ('posts',
 xml, _ = fetch('/sitemap.xml')
 root = ET.fromstring(xml)
 urls = [e.text for e in root.findall('{*}url/{*}loc')]
+assert site + '/notes/google-ads-mcp' not in urls
+assert site + flow_old not in urls
 assert all(site + path in urls for path in all_paths)
 assert not any(re.match(site + r'/(skills|connectors|posts|workshops)/', u) for u in urls)
 for index in ['/llms.txt', '/sitemap.md']:
@@ -108,10 +135,18 @@ api, _ = fetch('/api')
 assert [r['name'] for r in json.loads(api)['resources']] == ['projects', 'notes']
 search, _ = fetch('/api/search?q=google')
 results = json.loads(search)['results']
+assert sum(r['url'] == site + '/projects/google-ads' for r in results) == 1
+assert all(r['url'] != site + '/notes/google-ads-mcp' for r in results)
+assert all(r['url'] != site + flow_old for r in results)
+assert sum(r['url'] == site + creative for r in results) == 1
 assert results
 assert all(r['url'].startswith(site + '/' + r['group'] + '/') for r in results)
 rss, _ = fetch('/rss.xml')
 feed = ET.fromstring(rss)
+assert not any(i.findtext('link') == site + flow_old for i in feed.findall('./channel/item'))
+creative_items = [i for i in feed.findall('./channel/item') if i.findtext('link') == site + creative]
+assert len(creative_items) == 1
+assert creative_items[0].findtext('guid') == site + creative
 for item in feed.findall('./channel/item'):
     assert re.match(site + r'/(projects|notes)/', item.findtext('link'))
 for old, new in legacy:

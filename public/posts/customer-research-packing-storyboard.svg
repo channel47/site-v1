@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="860" viewBox="0 0 720 860" role="img" aria-labelledby="title desc">
+  <title id="title">One night here. Everything else stays packed.</title>
+  <desc id="desc">A two-frame proposed storyboard. The first frame shows three packing cubes in an open bag. In the second, the small orange overnight cube has been lifted out while two green cubes remain in the same positions. Illustrative only, not a product demonstration or campaign result.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M1 1 9 5 1 9" fill="none" stroke="#b23f1d" stroke-width="2.5"/></marker>
+    <g id="bag" stroke="#243e32" stroke-width="3" stroke-linejoin="round">
+      <path d="M64 56V42q0-12 12-12h52q12 0 12 12v14" fill="none"/>
+      <rect x="0" y="56" width="416" height="224" rx="22" fill="#e4e7df"/>
+      <rect x="12" y="68" width="392" height="200" rx="15" fill="#f9faf6" stroke-width="1.5"/>
+      <path d="M396 124h13m-13 7h13"/>
+      <rect x="26" y="84" width="166" height="168" rx="12" fill="#b7c8b8"/>
+      <path d="M37 107h143M37 114h143" stroke-width="1"/>
+      <path d="M173 108v13" stroke-width="3"/>
+      <rect x="208" y="84" width="182" height="68" rx="10" fill="#769884"/>
+      <path d="M219 101h159M219 107h159" stroke-width="1"/>
+      <path d="M370 102v12" stroke-width="3"/>
+    </g>
+    <g id="overnight" stroke="#893719" stroke-width="2" stroke-linejoin="round">
+      <rect width="106" height="83" rx="10" fill="#df8157"/>
+      <path d="M10 18h85M10 24h85" stroke-width="1"/>
+      <path d="M87 20v11" stroke-width="3"/>
+    </g>
+  </defs>
+  <rect width="720" height="860" fill="#f0f1ea"/>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#243e32">
+    <text x="40" y="53" font-size="25">Proposed storyboard</text>
+    <text x="40" y="105" font-size="43" letter-spacing="-1">One night here.</text>
+    <use href="#bag" x="40" y="121"/>
+    <use href="#overnight" x="249" y="282"/>
+    <path d="M362 323h114" stroke="#893719" stroke-width="2" fill="none"/>
+    <text x="489" y="314" font-size="27">This stop’s</text>
+    <text x="489" y="349" font-size="27">clothes</text>
+    <text x="40" y="464" font-size="36" letter-spacing="-.7">Everything else stays packed.</text>
+    <use href="#bag" x="40" y="470"/>
+    <rect x="249" y="631" width="106" height="83" rx="10" fill="none" stroke="#a4aea2" stroke-width="2" stroke-dasharray="6 6"/>
+    <use href="#overnight" x="530" y="552"/>
+    <path d="M366 673C445 673 450 595 516 595" fill="none" stroke="#b23f1d" stroke-width="3" marker-end="url(#arrow)"/>
+    <text x="40" y="807" font-size="26">Same bag. Same remaining contents.</text>
+    <text x="40" y="842" font-size="23" fill="#526356">Illustration only. Verify with the actual product.</text>
+  </g>
+</svg>
