@@ -1342,7 +1342,9 @@ pre {
   .collection-object { grid-column: 1 / 6; }
   .collection-object:nth-child(even) { grid-column: 2 / 7; }
   .collection-caption {
-    position: static;
+    /* Stay above the rotated artwork while participating in normal flow. */
+    position: relative;
+    inset: auto;
     padding-inline: 8%;
     opacity: 1;
     transform: none;

@@ -9,6 +9,7 @@ Reviewed September 9, 2026 (America/Los_Angeles). Scope: refine the existing vis
 - Removed four helper files: the separate copy hook, custom social glyphs, generic disclosure wrapper and logo-animation helper. Removed unused logo/form options, redundant button branches, mobile-only biographies, unused copy and obsolete CSS aliases.
 - Menu links, focus and keyboard navigation use delegated handlers. Link clicks are captured before Next Link navigation, so the exit transition completes before the route changes.
 - The canonical guides describe the current controls and responsive layout. The article-diagram guide no longer assigns retired category colors to the interface.
+- Phone gallery captions remain positioned above the rotated artwork. Resetting them to static positioning let the image cover the top of the first title; relative positioning preserves their stacking order and normal-flow layout.
 
 ## Verification
 
@@ -21,6 +22,7 @@ Reviewed September 9, 2026 (America/Los_Angeles). Scope: refine the existing vis
 - Invalid email input is rejected before submission; the form remains idle. No subscriber, booking or external share was created.
 - Inspected desktop, phone and tablet layout geometry. Controls remain inside the viewport; responsive overrides are reset after review.
 - No CSS class selectors remain without a reference in application or published-content source. Diff whitespace check passes.
+- Caption fix: visually checked all four captions at 358px and the first at 388px. Text fits its caption and viewport, and the first caption paints above the overlapping image. Evidence: `output/verification/collection-caption-phone.png`.
 
 ## Visual evidence and limits
 
