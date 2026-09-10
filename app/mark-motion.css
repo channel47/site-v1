@@ -1,4 +1,4 @@
-/* Shared by the home header and the interactive brand preview. */
+/* Shared by the site headers and the interactive brand preview. */
 .c47-mark { overflow: visible; }
 .c47-piece {
   animation: c47-assemble calc(var(--motion-logo) * 0.64) var(--ease-logo)
@@ -6,6 +6,30 @@
 }
 .c47-complete {
   animation: c47-resolve var(--motion-logo) linear backwards;
+}
+.c47-mark[data-motion="still"] .c47-pieces { display: none; }
+.c47-mark[data-motion="still"] .c47-complete { animation: none; }
+.c47-mark[data-motion="hover"] .c47-piece {
+  animation: c47-out-and-back calc(var(--motion-logo-hover) * 0.68) var(--ease-logo)
+    calc(var(--motion-logo-hover) * var(--piece-delay)) backwards;
+}
+.c47-mark[data-motion="hover"] .c47-complete {
+  animation: c47-hover-resolve var(--motion-logo-hover) linear backwards;
+}
+.takeover-header .c47-mark { --mark-accent: var(--takeover-ink); }
+@keyframes c47-out-and-back {
+  0% { opacity: 1; transform: translate(0, 0); fill: currentColor; }
+  28%, 36% {
+    opacity: 0;
+    transform: translate(var(--piece-x), var(--piece-y));
+    fill: var(--mark-accent, var(--accent));
+  }
+  75% { opacity: 1; transform: translate(0, 0); fill: var(--mark-accent, var(--accent)); }
+  100% { opacity: 1; transform: translate(0, 0); fill: currentColor; }
+}
+@keyframes c47-hover-resolve {
+  0%, 100% { opacity: 1; }
+  3%, 90% { opacity: 0; }
 }
 @keyframes c47-assemble {
   0% {

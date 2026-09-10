@@ -23,6 +23,7 @@ pnpm build
 pnpm test:content
 pnpm test:measurement
 pnpm test:motion
+pnpm test:theme
 # Against a running local server:
 python3 scripts/check-content-surfaces.py http://localhost:3100
 ```
@@ -73,7 +74,10 @@ article and project pages share one reading layout. Read these canonical guides:
 
 `app/tokens.css` owns colors, type, spacing and motion; `app/globals.css` owns
 component recipes. `lib/collection.ts` maps covers to published pieces. The
-interface uses one light paper surface; the artwork supplies its color.
+footer switches between light and dark with one click and a short animated reveal.
+Appearance follows the device until chosen explicitly; saved preferences apply
+before paint and persist locally. Reduced motion switches immediately.
+Artwork keeps its original color.
 
 The current collection has three square objects representing three published pieces.
 The Flow walkthrough remains inside the combined Flow-to-Codex note. Old skills, connector catalogs,

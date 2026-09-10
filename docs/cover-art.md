@@ -31,6 +31,13 @@ The collection is a small table of objects that invite exploration. A cover give
 
 The Flow walkthrough remains inside the combined note at `/notes/codex-static-ads-google-flow`. The gallery has one object per piece. The red ELT cover remains an available asset but is no longer a separate gallery entry.
 
+In dark mode, the three current square slabs use an explicit CSS silhouette in
+`lib/collection.ts` to remove only the white studio surround. A small CSS shadow
+replaces the ground shadow. Original media files, color, size and light-mode
+presentation remain unchanged. Verify the silhouette against the physical edge
+when replacing a cover; documentary images added as future covers have no
+automatic crop.
+
 ## Agent handoff
 
 Supply the approved tablet asset, a screenshot of the current collection, any actual artwork to preserve, the intended slot size, and this guide. Brief one asset at a time. Ask for a square, high-resolution raster, then inspect the result before integrating it.

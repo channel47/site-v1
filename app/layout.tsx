@@ -7,6 +7,8 @@ import { SkipLink } from "@/components/site/skip-link";
 import { PageMotion } from "@/components/site/page-motion";
 import { MotionBootstrap } from "@/components/site/motion-bootstrap";
 import { SiteMeasurement } from "@/components/site/measurement";
+import { THEME_BOOT } from "@/lib/theme";
+import { ThemeObserver } from "@/components/site/theme-observer";
 import { getFeedItems } from "@/lib/content";
 import { PUBLIC_PAGES } from "@/lib/discovery";
 import { baseGraph, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo";
@@ -71,8 +73,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${sans.variable} ${serif.variable}`} suppressHydrationWarning>
-      <head><MotionBootstrap /></head>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOT }} />
+        <MotionBootstrap />
+      </head>
       <body>
+        <ThemeObserver />
         {/* Rendered here (not via `metadata.alternates`, which page-level
             canonicals would replace wholesale) — React hoists it to <head>. */}
         <link

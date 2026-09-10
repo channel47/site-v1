@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { ArrowLeft } from "@phosphor-icons/react";
+import { ArrowLeft, CaretRight, List, SquaresFour } from "@phosphor-icons/react";
 import {
   createContext,
   useContext,
@@ -90,9 +90,11 @@ export function BrowseEntryLink(
 export function BackToBrowse({
   href,
   className,
+  breadcrumb = false,
 }: {
   href: string;
   className?: string;
+  breadcrumb?: boolean;
 }) {
   const { visit } = useContext(BrowseContext);
   const pathname = usePathname();
@@ -104,9 +106,9 @@ export function BackToBrowse({
   return (
     <Link
       href={target}
-      className={`icon-btn ${className ?? ""}`}
+      className={`${breadcrumb ? "icon-btn breadcrumb-origin" : "browse-return"} ${className ?? ""}`}
       aria-label={`Back to ${label.toLowerCase()}`}
-      title={`Back to ${label.toLowerCase()}`}
+      title={breadcrumb ? label : undefined}
       onNavigate={
         returning
           ? (event) => {
@@ -116,7 +118,26 @@ export function BackToBrowse({
           : undefined
       }
     >
-      <ArrowLeft size={20} aria-hidden="true" />
+      {breadcrumb ? (
+        isIndex ? <List size={20} aria-hidden="true" /> : <SquaresFour size={20} aria-hidden="true" />
+      ) : (
+        <><ArrowLeft size={20} aria-hidden="true" /><span>Back to {label.toLowerCase()}</span></>
+      )}
     </Link>
+  );
+}
+
+export function ArticleBreadcrumb({ section, title }: { section: "notes" | "projects"; title: string }) {
+  return (
+    <nav className="article-breadcrumb" aria-label="Breadcrumb">
+      <ol>
+        <li><BackToBrowse href="/" breadcrumb /></li>
+        <li className="breadcrumb-section">
+          <CaretRight className="breadcrumb-separator" size={12} aria-hidden="true" />
+          <Link href={`/browse?type=${section}`}>{section === "notes" ? "Notes" : "Projects"}</Link>
+        </li>
+        <li className="sr-only" aria-current="page">{title}</li>
+      </ol>
+    </nav>
   );
 }

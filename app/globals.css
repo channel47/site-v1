@@ -402,10 +402,12 @@ pre {
   font-size: var(--text-xs);
   line-height: 1.6;
 }
+.collection-page .site-footer { margin-top: 0; }
 .footer-legal {
   display: flex;
   align-items: center;
   gap: var(--space-2);
+  margin-left: auto;
 }
 .footer-legal a {
   display: inline-flex;
@@ -417,6 +419,38 @@ pre {
 .site-footer a:hover { color: var(--accent); }
 .st-mark.st-mark-small { width: var(--control-size); }
 .st-mark.st-mark-small svg { width: 28px; height: 14px; }
+.theme-switch {
+  color: var(--muted);
+}
+html:not([data-theme]) .theme-switch { display: none; }
+.theme-glyph {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.5);
+  transition: opacity var(--motion-ui) var(--ease-out), transform var(--motion-feedback) var(--ease-settle);
+}
+.theme-glyph svg { display: block; }
+html[data-theme="light"] [data-theme-icon="light"],
+html[data-theme="dark"] [data-theme-icon="dark"] { opacity: 1; transform: rotate(0) scale(1); }
+
+/* Snapshot the palette change so text keeps its contrast throughout the reveal.
+   Only a deliberate toggle animates; first paint and system changes stay instant. */
+html[data-theme-transition]::view-transition { pointer-events: none; }
+html[data-theme-transition]::view-transition-group(root),
+html[data-theme-transition]::view-transition-old(root) { animation: none; }
+html[data-theme-transition]::view-transition-image-pair(root) { isolation: isolate; }
+html[data-theme-transition]::view-transition-old(root),
+html[data-theme-transition]::view-transition-new(root) { mix-blend-mode: normal; }
+html[data-theme-transition]::view-transition-new(root) {
+  animation: theme-reveal var(--motion-theme) var(--ease-theme) both;
+}
+@keyframes theme-reveal {
+  from { clip-path: circle(0 at var(--theme-x) var(--theme-y)); }
+  to { clip-path: circle(var(--theme-radius) at var(--theme-x) var(--theme-y)); }
+}
 
 /* Collection: unframed objects on one shared surface. */
 .collection-main {
@@ -433,7 +467,7 @@ pre {
 }
 .collection-object {
   min-width: 0;
-  mix-blend-mode: multiply;
+  mix-blend-mode: var(--collection-blend, multiply);
 }
 .collection-link {
   display: block;
@@ -457,6 +491,12 @@ pre {
   width: 100%;
   height: auto;
   user-select: none;
+}
+html[data-theme="dark"] .collection-art {
+  filter: drop-shadow(4px 8px 10px var(--shadow));
+}
+html[data-theme="dark"] .collection-art img {
+  clip-path: var(--object-silhouette, none);
 }
 .collection-caption {
   display: block;
@@ -521,6 +561,8 @@ pre {
 .st-head {
   margin-bottom: var(--space-7);
 }
+.recovery-page .utility-label { margin-bottom: var(--space-4); }
+.recovery-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-5); margin-top: var(--space-6); }
 .st-h1,
 .piece-head h1 {
   font-family: var(--font-display);
@@ -548,9 +590,44 @@ pre {
   margin-bottom: var(--space-8);
 }
 .reading-back {
-  color: var(--muted);
-  margin-left: calc((20px - var(--control-size)) / 2);
   margin-bottom: var(--space-7);
+}
+.browse-return {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--control-size);
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+.browse-return svg { flex-shrink: 0; }
+.browse-return:hover, .browse-return:focus-visible { color: var(--accent); }
+.breadcrumb-origin { color: var(--accent); margin-left: -14px; }
+.browse-return:hover span,
+.browse-return:focus-visible span,
+.breadcrumb-section a:hover,
+.breadcrumb-section a:focus-visible {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+}
+.article-breadcrumb { margin-bottom: var(--space-6); }
+.article-breadcrumb ol {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.breadcrumb-section { display: flex; align-items: center; gap: var(--space-3); }
+.breadcrumb-separator { color: var(--muted); flex-shrink: 0; }
+.breadcrumb-section a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--control-size);
+  color: var(--muted);
+  font-size: var(--text-sm);
 }
 .piece-lede {
   font-size: var(--text-lede);
@@ -835,7 +912,7 @@ pre {
 .session-proof-link:hover .direction-cue,
 .session-proof-link:focus-visible .direction-cue {
   background: var(--accent);
-  color: var(--selection-ink);
+  color: var(--accent-ink);
 }
 .reading-subscribe {
   margin-block: var(--space-9) var(--space-7);
@@ -1389,6 +1466,7 @@ pre {
 }
 /* A phone is a vertical collection: larger objects, alternating on the table. */
 @media (max-width: 520px) {
+  .site-footer { flex-wrap: wrap; }
   .collection-grid {
     grid-template-columns: repeat(6, minmax(0, 1fr));
     column-gap: 0;
