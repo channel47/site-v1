@@ -1,5 +1,9 @@
 # 47 refinement QA
 
+Historical verification record. Some controls and covers changed afterward.
+Current rules live in [the design system](../design-system.md) and
+[cover-art guide](../cover-art.md).
+
 September 10 motion refinement (America/Los_Angeles): shortened page arrival to 720ms with 60ms stagger steps. Text starts with 3px blur and 3px displacement; objects use 6px/8px. The revised curve makes the first heading sharp at about 300ms, with a short opacity finish. A passive browser sampler measured 41%/77%/97% opacity at 100/200/300ms. Both About paragraphs participated; the second was sharp by 400ms. The logo assembly and cobalt menu timing are unchanged.
 
 Removed positional hover/focus motion from index titles, back arrows, next-reading arrows and session-proof arrows. Keyboard checks confirm stationary glyphs and text while color changes. Article prompt/code blocks now share the existing copy icon and feedback; actual browser copy/paste matched the second prompt exactly, including line breaks. Portrait media reserves its reduced layout even before downloading; at an 808 × 631 CSS viewport, all three tall research-article images fit at 454px high without cropping. The article and About page have no horizontal overflow at 388px. Temporary timing and clipboard instrumentation was removed after these checks.

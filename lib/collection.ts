@@ -7,7 +7,7 @@ const COVERS = [
     href: "/notes/customer-research-ad-angles-claude",
     title: "Turning customer research into ad angles with Claude",
     label: "Creative strategy",
-    image: "research-lens",
+    image: "research-loupe",
     angle: -2,
   },
   {
@@ -15,7 +15,7 @@ const COVERS = [
     href: "/notes/codex-static-ads-google-flow",
     title: "From Google Flow to making whole ads in Codex",
     label: "Creative workflow",
-    image: "flow-specimen",
+    image: "elt-specimen",
     angle: -3,
   },
   {
@@ -23,7 +23,7 @@ const COVERS = [
     href: "/projects/google-ads",
     title: "How I built my Google Ads MCP",
     label: "Story & source",
-    image: "ads-channels",
+    image: "ads-plug",
     angle: 2,
   },
 ] as const;

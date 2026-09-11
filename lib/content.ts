@@ -71,6 +71,10 @@ marked.use({
   },
 });
 
+export function renderArticleMarkdown(markdown: string): string {
+  return marked.parse(markdown, { async: false });
+}
+
 export interface FaqItem {
   q: string;
   a: string;
@@ -153,7 +157,7 @@ function loadCollection<T extends Note>(section: ContentGroup): T[] {
         tags: data.tags ?? [],
         date,
         updated,
-        html: marked.parse(content, { async: false }),
+        html: renderArticleMarkdown(content),
         markdown: content.trim(),
       } as T;
     })

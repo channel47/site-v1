@@ -25,13 +25,14 @@ The collection is a small table of objects that invite exploration. A cover give
 
 | Piece | Cover direction |
 | --- | --- |
-| Customer research and ad angles in Claude | A deep-green optical-glass tile with three lens ribs refracting a dot grid. Conceptual cover art, with a separate explanatory storyboard inside the article. |
-| Combined Google Flow and Codex creative workflow | Keep the approved blue tablet relief unchanged. The Flow reference study and original ELT ad examples live inside one piece. |
-| Google Ads MCP story and installation | A vivid industrial-yellow relief with dark machined channels converging into three; visually appealing before it is explanatory. No printed labels. |
+| Customer research and ad angles in Claude | A photographic loupe on deep-green enamel (`research-loupe`). Conceptual cover art, with a separate explanatory storyboard inside the article. |
+| Combined Google Flow and Codex creative workflow | The white ELT sachet on vermilion enamel (`elt-specimen`). The Flow reference study and original ELT ad examples live inside one piece. |
+| Google Ads MCP story and installation | A silver USB-C plug with a braided cable on industrial-yellow enamel (`ads-plug`). No printed labels. |
+| Vellum working draft (local preview only) | A photographic contact sheet on cobalt enamel, partly covered by translucent drafting vellum (`vellum-contact-sheet`). An illustration of image selection and refinement; actual app screenshots remain inside the draft. |
 
-The Flow walkthrough remains inside the combined note at `/notes/codex-static-ads-google-flow`. The gallery has one object per piece. The red ELT cover remains an available asset but is no longer a separate gallery entry.
+The Flow walkthrough remains inside the combined note at `/notes/codex-static-ads-google-flow`. The gallery has one object per piece. The blue tablet, green ribbed glass, and yellow channels remain available assets; Jackson chose the ELT, loupe, and plug covers on September 10, 2026.
 
-In dark mode, the three current square slabs use an explicit CSS silhouette in
+In dark mode, the square slabs use an explicit CSS silhouette in
 `lib/collection.ts` to remove only the white studio surround. A small CSS shadow
 replaces the ground shadow. Original media files, color, size and light-mode
 presentation remain unchanged. Verify the silhouette against the physical edge
@@ -57,6 +58,6 @@ Example prompt skeleton:
 
 ## ELT production reference
 
-The retained ELT cover was generated with the built-in image tool from the blue tablet and previous ELT cover as references. Exports: `public/collection/elt-specimen.webp` (960px) and `elt-specimen-480.webp` (480px). These, the prior cover and green connector render remain published assets, but no longer appear in the collection.
+The ELT cover was generated with the built-in image tool from the blue tablet and previous ELT cover as references. Exports: `public/collection/elt-specimen.webp` (960px) and `elt-specimen-480.webp` (480px). The prior cover and green connector render remain available assets.
 
 Reusable brief: one white foil ELT stick sachet on a vermilion enamel square, resting diagonally with a small spill of white powder at the opened end. Near-orthographic overhead camera; slab edges square to the canvas, centered at 82% of its width. Upper-left studio light, lower-right contact shadows, pure white surround. Realistic foil, powder and enamel. Only the ELT brand letters; no headline, scenery, fruit, advertisement or extra props. This is conceptual cover art; preserve the actual campaign images in the article.

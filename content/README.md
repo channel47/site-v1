@@ -45,6 +45,11 @@ Apply this check to article titles and bodies, project descriptions, signup
 copy, and service pages. Avoid colons in titles and headings. This is an editing
 standard, not a requirement to make every piece sound formal or technical.
 
+Let the work, decisions, frustrations, and surprises give a personal piece its
+structure. Introduce features when they matter to that experience. Avoid turning
+a build story into a feature tour or restating what a screenshot already shows.
+The Flow/Codex note is a useful voice reference for this balance.
+
 State an illustrative example's status once, then keep qualifications where
 they change a reader's decision. Avoid repeating the same disclaimer in the
 body and captions. Reserve display blockquotes for a strong quotation;

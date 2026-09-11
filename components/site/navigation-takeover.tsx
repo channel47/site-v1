@@ -96,7 +96,8 @@ export function NavigationTakeover({ onDismiss, keyboard }: { onDismiss: () => v
   function centerFocusedLink(event: FocusEvent<HTMLElement>) {
     const link = event.target.closest<HTMLAnchorElement>("[data-primary] a");
     const node = reel.current;
-    if (!link || !node) return;
+    // Pointer focus must not move a neighboring link before the click completes.
+    if (!link || !node || !link.matches(":focus-visible")) return;
     const row = link.getBoundingClientRect();
     node.scrollTo({
       top: node.scrollTop + row.top - node.getBoundingClientRect().top

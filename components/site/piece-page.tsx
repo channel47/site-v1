@@ -25,9 +25,11 @@ import { AuthorPortrait } from "./author-portrait";
 export function PiecePage({
   entry,
   section = "notes",
+  preview = false,
 }: {
   entry: Note | Project;
   section?: "notes" | "projects";
+  preview?: boolean;
 }) {
   const href = `/${section}/${entry.slug}`;
   const project = section === "projects" ? (entry as Project) : undefined;
@@ -36,12 +38,14 @@ export function PiecePage({
     <div className="st-page">
       <SiteHeader />
       <main id="main-content" className="st-shell reading-page">
-        <article className="piece-article" data-reading-path={href}>
-          <JsonLd
-            data={
-              project?.repo ? projectGraph(project) : noteGraph(entry, section)
-            }
-          />
+        <article className="piece-article" data-reading-path={preview ? undefined : href}>
+          {!preview ? (
+            <JsonLd
+              data={
+                project?.repo ? projectGraph(project) : noteGraph(entry, section)
+              }
+            />
+          ) : null}
           <header className="piece-head">
             <ArticleBreadcrumb section={section} title={entry.title} />
             <h1>{entry.title}</h1>
@@ -51,7 +55,11 @@ export function PiecePage({
               <div>
                 <Link href="/about" className="piece-author">{AUTHOR_NAME}</Link>
                 <p className="piece-meta">
-                  <time dateTime={entry.date}>{shortDate(entry.date)}</time>
+                  {preview ? (
+                    <span>Unpublished draft</span>
+                  ) : (
+                    <time dateTime={entry.date}>{shortDate(entry.date)}</time>
+                  )}
                   {minutes > 1 ? <span>{minutes} min read</span> : null}
                   {project?.status ? (
                     <span>{PROJECT_STATUS_LABELS[project.status]}</span>
@@ -117,11 +125,13 @@ export function PiecePage({
             </section>
           ) : null}
           {entry.faqs?.length ? <Faq items={entry.faqs} /> : null}
-          <ShareRow
-            mdPath={`${href}.md`}
-            url={`${SITE_URL}${href}`}
-            title={entry.title}
-          />
+          {!preview ? (
+            <ShareRow
+              mdPath={`${href}.md`}
+              url={`${SITE_URL}${href}`}
+              title={entry.title}
+            />
+          ) : null}
         </article>
         <ReadingEnd href={href} newsletter={entry.newsletter} />
       </main>

@@ -1365,6 +1365,12 @@ html[data-theme="dark"] .collection-art img {
     font-size: 0.6875rem;
   }
   .navigation-takeover { --menu-footer-height: calc(72px + var(--safe-bottom)); }
+  .navigation-reel {
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+  }
+  /* Keep both neighboring destinations inside the readable part of the reel. */
+  .reel-row { height: max(132px, calc(var(--reel-height) / 3)); }
   .takeover-footer { padding-bottom: calc(var(--space-2) + var(--safe-bottom)); }
   .st-shell {
     margin-block: var(--space-5) var(--space-8);

@@ -7,8 +7,8 @@ updated: 2026-09-10
 newsletter: More worked examples of customer research and ad creative, with source quotes, prompts, and creative briefs.
 tags: [claude, customer-research, creative-strategy, ad-angles, skills, static-ads, creative-production]
 preview:
-  src: /collection/research-lens.webp
-  alt: A green optical-glass tile refracting a grid of dots through three lenses. Conceptual cover artwork.
+  src: /collection/research-loupe.webp
+  alt: A photographic loupe resting on green enamel. Conceptual cover artwork.
 ---
 
 In a discussion about compression packing cubes, one traveler explains how they separate their clothes, then adds this.

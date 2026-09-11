@@ -6,7 +6,7 @@ import {
 } from "@/lib/content"
 
 /**
- * Entity foundation + JSON-LD builders (docs/AI-SEO.md, Layer 1).
+ * Entity foundation + JSON-LD builders (docs/AI-SEO.md).
  *
  * Search engines and answer engines both reason about entities. This module
  * is the single source of truth for the site's entity graph: one canonical

@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next"
 import { SITE_URL } from "@/lib/seo"
 
 /**
- * Humans-and-machines-welcome crawl policy (docs/AI-SEO.md, Layer 3).
+ * Humans-and-machines-welcome crawl policy (docs/AI-SEO.md).
  *
  * channel47's growth model depends on being known and recommended by AI
  * systems, so AI crawlers — training, search retrieval, and on-demand user

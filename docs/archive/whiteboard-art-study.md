@@ -1,6 +1,8 @@
 # Channel47 whiteboard infographic system
 
-Reference for diagrams within articles. Collection covers follow [cover-art.md](cover-art.md); interface colors follow [design-system.md](design-system.md).
+Historical art study, superseded for the current articles by real screenshots
+and contextual imagery. Current collection covers follow [cover-art.md](../cover-art.md);
+interface rules follow [design-system.md](../design-system.md).
 
 ## The idea
 

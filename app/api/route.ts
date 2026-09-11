@@ -2,7 +2,7 @@ import { CONTENT_GROUPS, CONTENT_COLLECTIONS, MACHINE_SURFACES } from "@/lib/dis
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo"
 
 /**
- * /api — the machine discovery document (docs/AI-SEO.md, Layer 3): a stable,
+ * /api — the machine discovery document (docs/AI-SEO.md): a stable,
  * versioned JSON declaration of what surfaces exist, in which formats, and
  * what an agent should do next. Resource patterns now describe the two canonical public sections.
  */

@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server"
 import { CONTENT_ROUTE_PATTERN } from "@/lib/discovery"
 
 /**
- * Machine-format routing for content URLs (docs/AI-SEO.md, Layer 3).
+ * Machine-format routing for content URLs (docs/AI-SEO.md).
  *
  * Two ways for an agent to get a page as markdown, both landing on the same
  * pre-rendered twin under /md/ (see app/md/[section]/[slug]/route.ts):

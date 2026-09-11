@@ -1,5 +1,6 @@
 """Read-only regression checks against a local dev or production server.
 Run: python3 scripts/check-content-surfaces.py http://localhost:3101
+For a development server with the editorial preview: add --draft-preview.
 """
 import json
 import re
@@ -12,6 +13,7 @@ from urllib.request import Request, urlopen
 from urllib.error import HTTPError
 
 origin = sys.argv[1] if len(sys.argv) > 1 else 'http://localhost:3100'
+draft_preview = '--draft-preview' in sys.argv[2:]
 site = 'https://channel47.dev'
 
 
@@ -20,6 +22,15 @@ def fetch(path, accept=None):
     with urlopen(req) as response:
         assert response.status == 200, path
         return response.read(), response.url.removeprefix(origin)
+
+
+def expect_not_found(path):
+    try:
+        urlopen(origin + path)
+    except HTTPError as error:
+        assert error.code == 404, (path, error.code)
+    else:
+        raise AssertionError('Unexpected public page or asset: ' + path)
 
 
 class Page(HTMLParser):
@@ -63,9 +74,28 @@ assert len(set(all_paths)) == len(all_paths)
 home, _ = fetch('/')
 collection = Page(home.decode())
 assert len(collection.objects) == len(set(collection.objects)), 'Duplicate collection object'
-assert set(collection.objects).issubset(set(all_paths)), 'Collection points to an unpublished piece'
+allowed_paths = set(all_paths) | ({'/preview/vellum'} if draft_preview else set())
+assert set(collection.objects).issubset(allowed_paths), 'Collection points to an unpublished piece'
+if draft_preview:
+    assert '/preview/vellum' in collection.objects
+    draft, _ = fetch('/preview/vellum')
+    assert b'Unpublished draft' in draft
+    assert b'name="robots" content="noindex, nofollow"' in draft
+    assert b'Editorial notes for the next revision' not in draft
+    for name in ['x-all-grid', 'x-all-agent', 'x-all-disposal-viewer']:
+        media_path = f'/preview/vellum/media/{name}.webp'
+        assert media_path.encode() in draft
+        image, _ = fetch(media_path)
+        assert image[:4] == b'RIFF' and image[8:12] == b'WEBP'
+    expect_not_found('/preview/unknown')
+    expect_not_found('/preview/vellum/media/unknown.webp')
+else:
+    expect_not_found('/preview/vellum')
+    expect_not_found('/preview/vellum/media/x-all-grid.webp')
 assert collection.videos == 0, 'The Flow walkthrough belongs inside its article'
-assert '/collection/flow-specimen.webp' in collection.images
+assert '/collection/elt-specimen.webp' in collection.images
+assert '/collection/research-loupe.webp' in collection.images
+assert '/collection/ads-plug.webp' in collection.images
 for image in collection.images:
     image_bytes, _ = fetch(image)
     assert image_bytes[:4] == b'RIFF' and image_bytes[8:12] == b'WEBP', image
@@ -124,6 +154,7 @@ urls = [e.text for e in root.findall('{*}url/{*}loc')]
 assert site + '/notes/google-ads-mcp' not in urls
 assert site + flow_old not in urls
 assert all(site + path in urls for path in all_paths)
+assert not any('/preview/' in url for url in urls)
 assert not any(re.match(site + r'/(skills|connectors|posts|workshops)/', u) for u in urls)
 for index in ['/llms.txt', '/sitemap.md']:
     body, _ = fetch(index)
@@ -131,6 +162,7 @@ for index in ['/llms.txt', '/sitemap.md']:
     assert '## Projects' in text and '## Notes' in text
     assert not re.search(r'^## (Skills|Connectors|Posts|Workshops)$', text, re.M)
     assert all(site + path in text for path in all_paths)
+    assert '/preview/vellum' not in text
 api, _ = fetch('/api')
 assert [r['name'] for r in json.loads(api)['resources']] == ['projects', 'notes']
 search, _ = fetch('/api/search?q=google')
@@ -141,6 +173,8 @@ assert all(r['url'] != site + flow_old for r in results)
 assert sum(r['url'] == site + creative for r in results) == 1
 assert results
 assert all(r['url'].startswith(site + '/' + r['group'] + '/') for r in results)
+draft_search, _ = fetch('/api/search?q=vellum')
+assert not json.loads(draft_search)['results'], 'Draft must not enter public search'
 rss, _ = fetch('/rss.xml')
 feed = ET.fromstring(rss)
 assert not any(i.findtext('link') == site + flow_old for i in feed.findall('./channel/item'))
@@ -149,6 +183,7 @@ assert len(creative_items) == 1
 assert creative_items[0].findtext('guid') == site + creative
 for item in feed.findall('./channel/item'):
     assert re.match(site + r'/(projects|notes)/', item.findtext('link'))
+assert b'/preview/vellum' not in rss
 for old, new in legacy:
     items = [i for i in feed.findall('./channel/item') if i.findtext('link') == site + new]
     if items:
@@ -160,13 +195,8 @@ for slug in retired:
     assert site + retired_path not in urls
     assert not any(i.findtext('link') == site + retired_path for i in feed.findall('./channel/item'))
     for suffix in ['', '.md']:
-        try:
-            urlopen(origin + retired_path + suffix)
-        except HTTPError as error:
-            assert error.code == 404, (retired_path, error.code)
-        else:
-            raise AssertionError('Retired page still published: ' + retired_path + suffix)
+        expect_not_found(retired_path + suffix)
 # Media paths under /posts must not be mistaken for retired article routes.
 media, path = fetch('/posts/codex-static-ads-native-pass.jpg')
 assert media[:2] == b'\xff\xd8' and path.startswith('/posts/')
-print(f'Passed: {len(all_paths)} canonical pages and their markdown, negotiated responses, social previews; {len(legacy) * 3} legacy redirects; browse filters, search, both sitemaps, RSS identity, media URLs, and retired-page 404s.')
+print(f'Passed: {len(all_paths)} canonical pages and their markdown, negotiated responses, social previews; {len(legacy) * 3} legacy redirects; browse filters, search, both sitemaps, RSS identity, media URLs, draft isolation, and retired-page 404s.')
