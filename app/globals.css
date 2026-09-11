@@ -452,7 +452,8 @@ html[data-theme-transition]::view-transition-new(root) {
   to { clip-path: circle(var(--theme-radius) at var(--theme-x) var(--theme-y)); }
 }
 
-/* Collection: unframed objects on one shared surface. */
+/* Collection: a larger upright object balances a smaller, turned companion.
+   The emphasis switches sides every pair; position owns the composition. */
 .collection-main {
   padding: 0 var(--page-gutter) var(--space-8);
 }
@@ -460,14 +461,36 @@ html[data-theme-transition]::view-transition-new(root) {
   list-style: none;
   padding: 0;
   margin: 0 auto;
-  width: min(100%, var(--collection-width), calc(100svh - 152px));
+  width: min(100%, var(--collection-width));
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-6) clamp(36px, 5vw, 88px);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 0;
+  row-gap: var(--space-7);
+  align-items: start;
 }
 .collection-object {
+  --object-angle: 0deg;
+  grid-column: 1 / span 6;
   min-width: 0;
   mix-blend-mode: var(--collection-blend, multiply);
+}
+.collection-object:nth-child(4n + 2) {
+  --object-angle: -4deg;
+  grid-column: 8 / span 5;
+  margin-top: 28%;
+}
+.collection-object:nth-child(4n + 3) {
+  --object-angle: 4deg;
+  grid-column: 1 / span 5;
+  margin-top: 28%;
+}
+.collection-object:nth-child(4n + 4) {
+  grid-column: 7 / span 6;
+}
+.collection-object:last-child:nth-child(odd) {
+  --object-angle: 0deg;
+  grid-column: 4 / span 6;
+  margin-top: 0;
 }
 .collection-link {
   display: block;
@@ -1382,9 +1405,6 @@ html[data-theme="dark"] .collection-art img {
       calc(var(--space-8) + var(--safe-bottom));
   }
   .collection-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    width: 100%;
-    column-gap: 12px;
     row-gap: var(--space-6);
   }
   .collection-caption {
@@ -1499,12 +1519,16 @@ html[data-theme="dark"] .collection-art img {
 @media (max-width: 520px) {
   .site-footer { flex-wrap: wrap; }
   .collection-grid {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    column-gap: 0;
     row-gap: var(--space-6);
   }
-  .collection-object { grid-column: 1 / 6; }
-  .collection-object:nth-child(even) { grid-column: 2 / 7; }
+  .collection-object:nth-child(n) {
+    grid-column: 1 / span 10;
+    margin-top: 0;
+  }
+  .collection-object:nth-child(4n + 2) { grid-column: 4 / span 9; }
+  .collection-object:nth-child(4n + 3) { grid-column: 1 / span 9; }
+  .collection-object:nth-child(4n + 4) { grid-column: 3 / span 10; }
+  .collection-object:last-child:nth-child(odd) { grid-column: 2 / span 10; }
   .collection-caption {
     /* Stay above the rotated artwork while participating in normal flow. */
     position: relative;
@@ -1522,10 +1546,6 @@ html[data-theme="dark"] .collection-art img {
     transform: rotate(var(--object-angle)) scale(0.985);
     transition-duration: var(--motion-press);
   }
-}
-/* A short landscape viewport must not shrink the objects to thumbnails. */
-@media (max-height: 600px) and (min-width: 521px) {
-  .collection-grid { width: min(100%, var(--collection-width)); }
 }
 @media (max-height: 520px) and (min-width: 521px) {
   :root {

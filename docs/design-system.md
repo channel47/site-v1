@@ -119,9 +119,23 @@ Article images reserve their intrinsic width and height before lazy loading. The
 | `SessionPage` | One responsive offer panel and one body, with shared editorial headings, author portrait and direction cues. The offer moves above the body below 900px; phones retain the sticky booking action. No separate mobile biography or duplicated facts. |
 | Author portrait | Use `AuthorPortrait`: the original square photograph, upright with a circular crop. No tilted postcard frame or tall crop. Keep it beside the related name or heading, not at the opposite edge: 44px byline, 56px newsletter/session, 80px About (64px on phones). |
 
+## Collection composition
+
+Arrange objects in balanced pairs on a twelve-column grid. A larger, upright
+object takes six columns; its smaller companion takes five, starts lower, and
+turns four degrees toward it. Switch the larger object from left to right in
+the next pair. The difference in size, height and angle creates a measured
+rhythm across the shared surface. These are spatial roles, not content ranks.
+Keep source and keyboard order intact, and center a final unpaired object.
+
+Composition belongs to the layout in `app/globals.css`, not individual cover
+metadata. New covers continue the same pattern. Keep the gallery's width tied
+to available horizontal space, capped at `--collection-width`; viewport height
+must not shrink the artwork. Preserve the original artwork and lighting.
+
 ## Mobile composition
 
-Give the artwork enough space to show its material and lighting. On phones, alternate objects toward the left and right of the shared surface; do not reduce the desktop grid to four thumbnails. Keep only the title beneath each object, without a category or arrow. The image and title are one link, with a slight compression on touch. Tablet widths retain two columns. Short landscape windows remove the collection's height constraint, so rotation never makes the objects tiny.
+Give the artwork enough space to show its material and lighting. On phones, alternate objects toward the left and right of the shared surface; do not reduce the desktop grid to four thumbnails. Upright objects occupy ten of twelve columns, turned companions nine; remove the pair's vertical offset and center a final unpaired object. Keep only the title beneath each object, without a category or arrow. The image and title are one link, with a slight compression on touch. Tablet widths retain the paired composition.
 
 Use 24px reading gutters, 17px body text and shorter 24–48px intervals within articles. Keep the headline and prose aligned. Mobile index entries stack their title, description and inline metadata instead of squeezing a date column beside the text. Sharing controls remain grouped; related reading keeps its arrow in a separate column.
 

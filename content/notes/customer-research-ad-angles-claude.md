@@ -30,14 +30,9 @@ Packing cubes are zippered containers for organizing clothes inside a bag. The i
 For a real brief, I'd give Claude the product page, price, offer, and any customer research already available. Then I'd ask it to investigate a particular kind of trip.
 
 ```text
-Research why people buy packing cubes and what
-they value or dislike after using them. Focus
-on trips with several overnight stops.
+Research why people buy packing cubes and what they value or dislike after using them. Focus on trips with several overnight stops.
 
-Keep exact quotations and source links.
-Separate observations from interpretation,
-and include contradictory evidence.
-Don't write ads yet.
+Keep exact quotations and source links. Separate observations from interpretation, and include contradictory evidence. Don't write ads yet.
 ```
 
 That last line helps me, too. Once I like a headline, it's tempting to keep the idea before checking whether the research supports it.
@@ -85,12 +80,9 @@ An ordinary pouch might do the overnight job just as well. Q2's inexpensive cube
 Nothing in these comments supports “double your luggage space” or “unpack in ten seconds.” Before settling on an angle, I'd ask Claude to challenge it.
 
 ```text
-Review each angle against its source quotes,
-contradictory evidence, product facts, and the
-closest competing message you found.
+Review each angle against its source quotes, contradictory evidence, product facts, and the closest competing message you found.
 
-Which hooks should we cut or change?
-What do we need to research next?
+Which hooks should we cut or change? What do we need to research next?
 ```
 
 ## Make the brief specific enough to build

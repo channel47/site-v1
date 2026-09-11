@@ -70,6 +70,11 @@ keep supporting excerpts in ordinary prose, and put reusable prompts in fenced
 `text` blocks. Use images to show the work, including distinct treatments when
 an article compares ideas.
 
+Write each prompt paragraph on one source line and separate paragraphs with a
+blank line. The browser wraps the text to fit the screen. Fenced blocks preserve
+line breaks when displayed and copied, so use extra breaks only for intentional
+structure such as lists or code.
+
 Published media URLs under `public/posts/` and `public/email/` are kept stable, including images sent in newsletters. Do not delete an image solely because the current homepage does not use it.
 
 For a frontmatter video, put a standalone Markdown link to its `src` where the

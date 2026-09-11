@@ -21,8 +21,7 @@ We built a first version in about an hour. It used Claude Cowork, Apollo, a Goog
 I pasted the coworker's full message into Claude and added this instruction:
 
 ```text
-Let's build this. But before we do, interview me relentlessly about the task
-until you are confident and aligned.
+Let's build this. But before we do, interview me relentlessly about the task until you are confident and aligned.
 ```
 
 The message gave us a direction, but it left decisions open. Where would candidate data come from? Who would decide whether someone was worth contacting? Where would the team review the list, and how often should the agent run?
