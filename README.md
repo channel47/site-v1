@@ -26,8 +26,6 @@ pnpm test:motion
 pnpm test:theme
 # Against a running local server:
 python3 scripts/check-content-surfaces.py http://localhost:3100
-# For the development server, include its unpublished editorial preview:
-python3 scripts/check-content-surfaces.py http://localhost:3174 --draft-preview
 ```
 
 ## Structure
@@ -40,7 +38,6 @@ python3 scripts/check-content-surfaces.py http://localhost:3174 --draft-preview
 | `lib/content.ts` | Build-time content loading and shared markdown rendering |
 | `lib/site-content.ts` | Shared biography, subscription and working-session copy |
 | `lib/collection.ts` | Cover selection tied to real content URLs |
-| `lib/editorial-preview.ts` | Local-only draft, cover, and screenshot loading |
 | `app/tokens.css` | Canonical design tokens |
 | `lib/discovery.ts` | Public route and machine endpoint registry |
 | `lib/seo.ts` | Canonical URL, metadata, and structured data |
@@ -82,17 +79,16 @@ Appearance follows the device until chosen explicitly; saved preferences apply
 before paint and persist locally. Reduced motion switches immediately.
 Artwork keeps its original color.
 
-The current collection has three square objects representing three published pieces.
+The current collection has four objects representing four published pieces.
 The Flow walkthrough remains inside the combined Flow-to-Codex note. Old skills, connector catalogs,
 and unused workshop/post layouts have been removed. Keep published media URLs
 stable, including artwork embedded in sent newsletters.
 
 Local preview for this direction: `pnpm dev --hostname 127.0.0.1 --port 3174`.
-The unpublished Vellum article is at `/preview/vellum` and reads its working
-file in `docs/content/`. Its cover appears on the development homepage only.
-Production returns 404 for preview pages and screenshots; drafts stay out of
-search, feeds, and sitemaps. Screenshot WebPs retain their native dimensions;
-original PNGs remain in ignored `output/vellum-sources/` on the editing machine.
+Vellum is published at `/projects/vellum`, with its article in
+`content/projects/vellum.md` and screenshots in `public/posts/vellum/`.
+Revision notes and an alternate screenshot remain in `docs/content/`.
+Original PNGs remain in ignored `output/vellum-sources/` on the editing machine.
 
 The standalone study under ignored `output/object-study` is reference material;
 the maintained implementation is now this Next.js app.

@@ -2,7 +2,7 @@
 
 `content/notes/` and `content/projects/` are the only published collections. One Markdown file supplies the reading page, index, RSS, search, sitemap, metadata and Markdown twin through `lib/content.ts`. A duplicate URL fails validation.
 
-The current selection includes a worked customer-research and ad-angle example in Claude, a note following the creative workflow from Google Flow references to complete static ads in Codex, and a Google Ads MCP piece combining its development story, installation and safety details. The former Flow note redirects to `/notes/codex-static-ads-google-flow`. The retired skill and other advertising-connector pages are removed; their source remains in Git history. The actual skill/tool repositories are independent and remain available.
+The current selection includes a worked customer-research and ad-angle example in Claude, a note following the creative workflow from Google Flow references to complete static ads in Codex, a Google Ads MCP piece combining its development story, installation and safety details, and the Vellum build story showing work on X-All product images. The former Flow note redirects to `/notes/codex-static-ads-google-flow`. The retired skill and other advertising-connector pages are removed; their source remains in Git history. The actual skill/tool repositories are independent and remain available.
 
 ## Publishing
 

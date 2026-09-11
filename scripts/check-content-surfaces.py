@@ -1,6 +1,5 @@
 """Read-only regression checks against a local dev or production server.
 Run: python3 scripts/check-content-surfaces.py http://localhost:3101
-For a development server with the editorial preview: add --draft-preview.
 """
 import json
 import re
@@ -13,7 +12,6 @@ from urllib.request import Request, urlopen
 from urllib.error import HTTPError
 
 origin = sys.argv[1] if len(sys.argv) > 1 else 'http://localhost:3100'
-draft_preview = '--draft-preview' in sys.argv[2:]
 site = 'https://channel47.dev'
 
 
@@ -74,24 +72,17 @@ assert len(set(all_paths)) == len(all_paths)
 home, _ = fetch('/')
 collection = Page(home.decode())
 assert len(collection.objects) == len(set(collection.objects)), 'Duplicate collection object'
-allowed_paths = set(all_paths) | ({'/preview/vellum'} if draft_preview else set())
-assert set(collection.objects).issubset(allowed_paths), 'Collection points to an unpublished piece'
-if draft_preview:
-    assert '/preview/vellum' in collection.objects
-    draft, _ = fetch('/preview/vellum')
-    assert b'Unpublished draft' in draft
-    assert b'name="robots" content="noindex, nofollow"' in draft
-    assert b'Editorial notes for the next revision' not in draft
-    for name in ['x-all-grid', 'x-all-agent', 'x-all-disposal-viewer']:
-        media_path = f'/preview/vellum/media/{name}.webp'
-        assert media_path.encode() in draft
-        image, _ = fetch(media_path)
-        assert image[:4] == b'RIFF' and image[8:12] == b'WEBP'
-    expect_not_found('/preview/unknown')
-    expect_not_found('/preview/vellum/media/unknown.webp')
-else:
-    expect_not_found('/preview/vellum')
-    expect_not_found('/preview/vellum/media/x-all-grid.webp')
+assert set(collection.objects).issubset(set(all_paths)), 'Collection points to an unpublished piece'
+assert '/projects/vellum' in collection.objects
+expect_not_found('/preview/vellum')
+expect_not_found('/preview/vellum/media/x-all-grid.webp')
+vellum, _ = fetch('/projects/vellum')
+assert b'Editorial notes' not in vellum and b'Unpublished draft' not in vellum
+for name in ['x-all-grid', 'x-all-agent', 'x-all-disposal-viewer']:
+    media_path = f'/posts/vellum/{name}.webp'
+    assert media_path.encode() in vellum
+    image, _ = fetch(media_path)
+    assert image[:4] == b'RIFF' and image[8:12] == b'WEBP'
 assert collection.videos == 0, 'The Flow walkthrough belongs inside its article'
 assert '/collection/elt-specimen.webp' in collection.images
 assert '/collection/research-loupe.webp' in collection.images
@@ -173,10 +164,11 @@ assert all(r['url'] != site + flow_old for r in results)
 assert sum(r['url'] == site + creative for r in results) == 1
 assert results
 assert all(r['url'].startswith(site + '/' + r['group'] + '/') for r in results)
-draft_search, _ = fetch('/api/search?q=vellum')
-assert not json.loads(draft_search)['results'], 'Draft must not enter public search'
+vellum_search, _ = fetch('/api/search?q=vellum')
+assert any(r['url'] == site + '/projects/vellum' for r in json.loads(vellum_search)['results'])
 rss, _ = fetch('/rss.xml')
 feed = ET.fromstring(rss)
+assert sum(i.findtext('link') == site + '/projects/vellum' for i in feed.findall('./channel/item')) == 1
 assert not any(i.findtext('link') == site + flow_old for i in feed.findall('./channel/item'))
 creative_items = [i for i in feed.findall('./channel/item') if i.findtext('link') == site + creative]
 assert len(creative_items) == 1
@@ -199,4 +191,4 @@ for slug in retired:
 # Media paths under /posts must not be mistaken for retired article routes.
 media, path = fetch('/posts/codex-static-ads-native-pass.jpg')
 assert media[:2] == b'\xff\xd8' and path.startswith('/posts/')
-print(f'Passed: {len(all_paths)} canonical pages and their markdown, negotiated responses, social previews; {len(legacy) * 3} legacy redirects; browse filters, search, both sitemaps, RSS identity, media URLs, draft isolation, and retired-page 404s.')
+print(f'Passed: {len(all_paths)} canonical pages and their markdown, negotiated responses, social previews; {len(legacy) * 3} legacy redirects; browse filters, search, both sitemaps, RSS identity, media URLs, published Vellum assets and retired-preview isolation, and retired-page 404s.')

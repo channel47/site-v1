@@ -3,6 +3,14 @@ import { getContentEntries, getEntryPreview } from "./content";
 /** Presentation only. Article text remains in content/. */
 const COVERS = [
   {
+    id: "vellum",
+    href: "/projects/vellum",
+    title: "I wanted a better Google Flow",
+    label: "Creative workspace",
+    image: "vellum-contact-sheet",
+    angle: -2,
+  },
+  {
     id: "research-lens",
     href: "/notes/customer-research-ad-angles-claude",
     title: "Turning customer research into ad angles with Claude",
@@ -49,7 +57,7 @@ export function getCollectionItems(): CollectionItem[] {
       throw new Error(`Cover has no published piece: ${cover.href}`);
     return {
       ...cover,
-      // The three approved slabs share this photographed footprint. Dark mode
+      // The approved covers share this photographed footprint. Dark mode
       // clips only the white studio surround; the source files stay untouched.
       silhouette: "inset(8.8% 8.7% 8.8% 8.8% round 0.6%)",
       src: `/collection/${cover.image}.webp`,

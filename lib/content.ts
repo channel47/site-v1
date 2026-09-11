@@ -20,30 +20,29 @@ function escapeHtml(value: string): string {
     .replace(/"/g, "&quot;");
 }
 const PUBLIC_DIR = path.join(process.cwd(), "public");
-const imageDimensions = new Map<string, { modified: number; attributes: string }>();
+type ImageDimensions = { width: number; height: number };
+const imageDimensions = new Map<string, { modified: number; dimensions: ImageDimensions }>();
 
 /** Reserve an image's layout before its lazy request begins. Read only local
  * public assets; remote images never trigger a server-side fetch. */
-function localImageDimensions(href: string): string {
-  if (!href.startsWith("/") || href.startsWith("//")) return "";
+function localImageDimensions(href: string): ImageDimensions | undefined {
+  if (!href.startsWith("/") || href.startsWith("//")) return undefined;
   try {
     const file = path.resolve(PUBLIC_DIR, `.${decodeURIComponent(href.split(/[?#]/)[0])}`);
-    if (!file.startsWith(PUBLIC_DIR + path.sep)) return "";
+    if (!file.startsWith(PUBLIC_DIR + path.sep)) return undefined;
     const modified = fs.statSync(file).mtimeMs;
     const cached = imageDimensions.get(file);
-    if (cached?.modified === modified) return cached.attributes;
+    if (cached?.modified === modified) return cached.dimensions;
     const { width, height, orientation } = imageSize(fs.readFileSync(file));
-    if (!(width > 0 && height > 0)) return "";
+    if (!(width > 0 && height > 0)) return undefined;
     // Browsers apply EXIF rotation; orientations 5–8 exchange the two axes.
     const rotated = orientation !== undefined && orientation >= 5;
-    const displayWidth = rotated ? height : width;
-    const displayHeight = rotated ? width : height;
-    const attributes = ` width="${displayWidth}" height="${displayHeight}"${displayHeight > displayWidth ? ` data-orientation="portrait" style="--media-ratio:${displayWidth / displayHeight}"` : ""}`;
-    imageDimensions.set(file, { modified, attributes });
-    return attributes;
+    const dimensions = { width: rotated ? height : width, height: rotated ? width : height };
+    imageDimensions.set(file, { modified, dimensions });
+    return dimensions;
   } catch {
     // Missing/unsupported media retains its alt text and normal browser fallback.
-    return "";
+    return undefined;
   }
 }
 const codeRenderer = new Renderer();
@@ -55,13 +54,20 @@ marked.use({
     image({ href, text, title }) {
       const alt = escapeHtml(text);
       const src = escapeHtml(href);
-      const image = `<img src="${src}" alt="${alt}"${localImageDimensions(href)} loading="lazy" decoding="async" />`;
+      const dimensions = localImageDimensions(href);
+      const portrait = dimensions && dimensions.height > dimensions.width;
+      const attributes = dimensions
+        ? ` width="${dimensions.width}" height="${dimensions.height}"${portrait ? ' data-orientation="portrait"' : ""}`
+        : "";
+      // The image and its caption inherit the same portrait width calculation.
+      const figureStyle = portrait ? ` style="--media-ratio:${dimensions.width / dimensions.height}"` : "";
+      const image = `<img src="${src}" alt="${alt}"${attributes} loading="lazy" decoding="async" />`;
       const caption = text
         ? `<figcaption class="st-shot-cap">${alt}</figcaption>`
         : "";
       return title?.trim().toLowerCase() === "screenshot"
-        ? `<figure class="st-shot">${image}${caption}</figure>`
-        : `<figure class="st-media">${image}${caption}</figure>`;
+        ? `<figure class="st-shot"${figureStyle}>${image}${caption}</figure>`
+        : `<figure class="st-media"${figureStyle}>${image}${caption}</figure>`;
     },
     paragraph({ tokens }) {
       if (tokens.length === 1 && tokens[0].type === "image")

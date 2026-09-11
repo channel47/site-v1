@@ -581,7 +581,6 @@ html[data-theme="dark"] .collection-art img {
 .st-prose,
 .project-install,
 .reading-end,
-.dt-share,
 .faq {
   max-width: var(--reading-width);
   margin-inline: auto;
@@ -648,6 +647,51 @@ html[data-theme="dark"] .collection-art img {
 }
 .piece-author {
   color: var(--ink);
+}
+.piece-author-details { min-width: 0; }
+.article-share {
+  position: relative;
+  flex-shrink: 0;
+  margin-left: auto;
+  color: var(--muted);
+  z-index: 2;
+}
+.share-trigger {
+  width: auto;
+  padding-inline: var(--space-3);
+  font-size: var(--text-sm);
+}
+.share-trigger[aria-expanded="true"] { color: var(--accent); }
+.share-popover {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  right: 0;
+  width: 204px;
+  padding: var(--space-2);
+  border-radius: var(--radius-surface);
+  background: var(--surface-raised);
+  color: var(--ink);
+  box-shadow: 0 8px 32px var(--shadow);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px) scale(0.97);
+  transform-origin: top right;
+  transition: opacity var(--motion-press) var(--ease-out),
+    transform var(--motion-feedback) var(--ease-settle),
+    visibility var(--motion-press);
+}
+.share-popover[data-open="true"] {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+.share-popover-actions { display: grid; }
+.share-popover-actions .icon-btn {
+  width: 100%;
+  justify-content: flex-start;
+  padding-inline: var(--space-3);
+  font-size: var(--text-sm);
+  border-radius: var(--radius-media);
 }
 .piece-author:hover { text-decoration: underline; text-underline-offset: 3px; }
 .piece-meta {
@@ -801,7 +845,7 @@ html[data-theme="dark"] .collection-art img {
   border-radius: var(--radius-media);
 }
 @media (min-width: 721px) {
-  .st-media > img[data-orientation="portrait"] {
+  .st-media:has(> img[data-orientation="portrait"]) > :is(img, figcaption) {
     width: min(100%, calc(640px * var(--media-ratio)), calc(72svh * var(--media-ratio)));
     margin-inline: auto;
   }
@@ -811,7 +855,6 @@ html[data-theme="dark"] .collection-art img {
   color: var(--muted);
   font: var(--text-xs) / 1.6 var(--font-body);
   margin-top: var(--space-4);
-  max-width: var(--reading-width);
   margin-inline: auto;
 }
 .piece-video {
@@ -866,23 +909,6 @@ html[data-theme="dark"] .collection-art img {
 }
 .dt-source:hover {
   color: var(--accent);
-}
-.dt-share {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-start;
-  gap: var(--space-3);
-  margin-top: var(--space-8);
-}
-.dt-share-label {
-  font-size: var(--text-xs);
-  color: var(--muted);
-}
-.dt-share-actions {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
 }
 .copy-label {
   width: auto;
@@ -1428,13 +1454,6 @@ html[data-theme="dark"] .collection-art img {
   }
   .st-row-meta time { display: inline; }
   .site-footer { margin-top: var(--space-8); }
-  .dt-share {
-    gap: var(--space-3);
-    margin-top: var(--space-7);
-  }
-  .dt-share-actions {
-    gap: 0;
-  }
   .reading-end { margin-top: var(--space-8); }
   .next-read { column-gap: var(--space-4); }
   .reading-subscribe { margin-top: var(--space-8); }

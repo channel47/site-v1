@@ -10,13 +10,14 @@ type CopyButtonProps = {
   title: string;
   label?: string;
   glyph?: "copy" | "link";
+  onCopied?: () => void;
 } & (
   | { text: string; fetchPath?: never }
   | { fetchPath: string; text?: never }
 );
 
 /** Literal text or a Markdown twin; report and measure only real copy results. */
-export function CopyButton({ event, text, fetchPath, title, label, glyph = "copy" }: CopyButtonProps) {
+export function CopyButton({ event, text, fetchPath, title, label, glyph = "copy", onCopied }: CopyButtonProps) {
   const [state, setState] = useState<CopyState>("idle");
   const reset = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   useEffect(() => () => clearTimeout(reset.current), []);
@@ -32,6 +33,7 @@ export function CopyButton({ event, text, fetchPath, title, label, glyph = "copy
       await navigator.clipboard.writeText(value!);
       setState("copied");
       if (event) measure(event);
+      onCopied?.();
     } catch {
       setState("failed");
     }

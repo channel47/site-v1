@@ -10,9 +10,9 @@ should describe the work accurately without dictating how a personal story is to
 `lib/content.ts` loads them once for pages, browse, search, feeds, and sitemaps.
 `lib/discovery.ts` owns the public route and endpoint registry.
 
-Drafts stay in `docs/content/`. `lib/editorial-preview.ts` supplies the local
-Vellum preview and its collection card. Production serves neither its article
-nor its screenshots, and the draft is excluded from every published inventory.
+Drafts and editorial notes stay in `docs/content/`, outside published inventories.
+Vellum is published at `/projects/vellum`; its former local-preview routes have
+been removed.
 
 ## Metadata and structured data
 
@@ -44,8 +44,8 @@ identities after source moves. Published media URLs remain stable.
 
 Run `pnpm check:seo-surfaces` for route and metadata consistency, then
 `python3 scripts/check-content-surfaces.py <local-production-origin>` for the
-rendered pages and machine surfaces. Add `--draft-preview` against a development
-server to check the local draft as well.
+rendered pages and machine surfaces, including Vellum publication and the
+retired preview routes.
 
 The [README measurement section](../README.md#measurement) describes Vercel
 Analytics, Statsig reading events, and their limits. The parent workspace has

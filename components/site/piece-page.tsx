@@ -6,7 +6,7 @@ import { CopyButton } from "./copy-button";
 import { CodeCopyButtons } from "./code-copy-buttons";
 import { SourceRow } from "./source-row";
 import { Faq } from "./faq";
-import { ShareRow } from "./share-row";
+import { SharePopover } from "./share-popover";
 import { JsonLd } from "./json-ld";
 import { noteGraph, projectGraph, SITE_URL, AUTHOR_NAME } from "@/lib/seo";
 import {
@@ -25,11 +25,9 @@ import { AuthorPortrait } from "./author-portrait";
 export function PiecePage({
   entry,
   section = "notes",
-  preview = false,
 }: {
   entry: Note | Project;
   section?: "notes" | "projects";
-  preview?: boolean;
 }) {
   const href = `/${section}/${entry.slug}`;
   const project = section === "projects" ? (entry as Project) : undefined;
@@ -38,28 +36,22 @@ export function PiecePage({
     <div className="st-page">
       <SiteHeader />
       <main id="main-content" className="st-shell reading-page">
-        <article className="piece-article" data-reading-path={preview ? undefined : href}>
-          {!preview ? (
-            <JsonLd
-              data={
-                project?.repo ? projectGraph(project) : noteGraph(entry, section)
-              }
-            />
-          ) : null}
+        <article className="piece-article" data-reading-path={href}>
+          <JsonLd
+            data={
+              project?.repo ? projectGraph(project) : noteGraph(entry, section)
+            }
+          />
           <header className="piece-head">
             <ArticleBreadcrumb section={section} title={entry.title} />
             <h1>{entry.title}</h1>
             <p className="piece-lede">{entry.description}</p>
             <div className="piece-byline">
               <AuthorPortrait alt="" />
-              <div>
+              <div className="piece-author-details">
                 <Link href="/about" className="piece-author">{AUTHOR_NAME}</Link>
                 <p className="piece-meta">
-                  {preview ? (
-                    <span>Unpublished draft</span>
-                  ) : (
-                    <time dateTime={entry.date}>{shortDate(entry.date)}</time>
-                  )}
+                  <time dateTime={entry.date}>{shortDate(entry.date)}</time>
                   {minutes > 1 ? <span>{minutes} min read</span> : null}
                   {project?.status ? (
                     <span>{PROJECT_STATUS_LABELS[project.status]}</span>
@@ -67,6 +59,7 @@ export function PiecePage({
                   {entry.sanitized ? <span>Sanitized example</span> : null}
                 </p>
               </div>
+              <SharePopover mdPath={`${href}.md`} url={`${SITE_URL}${href}`} title={entry.title} />
             </div>
           </header>
           {entry.video ? (
@@ -125,13 +118,6 @@ export function PiecePage({
             </section>
           ) : null}
           {entry.faqs?.length ? <Faq items={entry.faqs} /> : null}
-          {!preview ? (
-            <ShareRow
-              mdPath={`${href}.md`}
-              url={`${SITE_URL}${href}`}
-              title={entry.title}
-            />
-          ) : null}
         </article>
         <ReadingEnd href={href} newsletter={entry.newsletter} />
       </main>
