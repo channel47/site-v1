@@ -3,9 +3,9 @@
 Published September 10, 2026 at `/projects/vellum`. The canonical article is `content/projects/vellum.md`. These notes support a future revision.
 
 - Add one completed X-All example with the original references, a few consequential iterations, and the final asset in its actual page placement. Identify which work came from Vellum; do not attribute every image on X-All to it.
-- Add a specific Flow failure alongside its input and output if it helps explain a Vellum decision. The opening's ignored-edit example comes from Jackson's published Flow/Codex account; it does not establish the technical cause.
-- Ask Jackson what Vellum improved in practice and what remains frustrating. The current draft describes motivation and functionality, not demonstrated quality, time, cost, or consistency gains.
-- The supplied grid, agent conversation, and image-viewer screenshots are placed in the draft. Capture Subjects and Placements when they contain useful work to show. Keep unfinished visual placeholders out of the article.
+- Add a specific Flow failure alongside its input and output if it helps explain a Vellum decision. The ignored-edit example comes from Jackson's published Flow/Codex account; it does not establish the technical cause.
+- Ask Jackson what Vellum improved in practice and what remains frustrating. The current article describes motivation and functionality, not demonstrated quality, time, cost, or consistency gains.
+- The supplied grid, agent conversation, and image-viewer screenshots are placed in the article. Capture Subjects and Placements when they contain useful work to show. Keep unfinished visual placeholders out of the article.
 - Published screenshots live in `public/posts/vellum/`. The alternate grid capture remains in `docs/content/assets/vellum/2026-09-10/`. Original PNGs are preserved locally under ignored `output/vellum-sources/2026-09-10/` and in the supplied Desktop files.
 - Update external-agent access only when its actual scope is known. The proposed agent interface is not described as shipped; Vellum already has an internal application API.
 

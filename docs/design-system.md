@@ -51,7 +51,7 @@ versioned email artwork unchanged so sent messages retain their original art.
 | Corners | `--radius-control`: 999px, for circular icon buttons and pill-shaped actions/fields. `--radius-surface`: 16px, for installation/code/utility insets. `--radius-media`: 8px, for article photos, screenshots and video. `--radius-detail`: 2px, only for tiny inline details and focus boundaries. Collection objects retain their actual silhouettes. |
 | Controls | Minimum 48px hit area. Focus is a clear 2px outline; it changes to light ink inside the cobalt menu. The email input and submit action share one capsule, with a single focus treatment. |
 
-Quotations are set as italic display text with breathing room, without a generic tinted quote box. Body paragraphs remain sans serif for sustained reading. Never use a display flourish to rewrite the author's voice.
+Quotations are set as italic display text with breathing room, without a generic tinted quote box. Body paragraphs remain sans serif for sustained reading, with 24px between paragraphs. The article body begins 48px below the byline on desktop and 36px on mobile. Never use a display flourish to rewrite the author's voice.
 
 ## Color and motion
 
@@ -74,7 +74,7 @@ Page arrivals use `--ease-arrival` for an immediate response with a short, soft 
 | Moment | Chosen behavior |
 | --- | --- |
 | Home mark | Preserve the six-piece blue-to-ink assembly and explicit replay. Hover briefly disassembles and reassembles the same six pieces over 960ms. No perpetual glitch or additional wobble. |
-| New page | `PageMotion` sequences the visible heading, introduction and first content blocks. Text resolves from 3px blur and 3px below; objects from 6px blur and 8px below. At 75% eased progress both are sharp, in their final position and 96% opaque. The last few percent settle without a lingering blur. Visible artwork decodes and fonts finish loading before the sequence starts. Only the first viewport participates in long reading pages. Both About paragraphs and its follow row can arrive once on entering the viewport. |
+| New page | `PageMotion` sequences visible headings, bylines and utility-page introductions. Article body text is visible from first paint, so an opening paragraph never disappears while the next paragraph is already readable. Animated text resolves from 3px blur and 3px below; objects from 6px blur and 8px below. At 75% eased progress both are sharp, in their final position and 96% opaque. The last few percent settle without a lingering blur. Visible artwork decodes and fonts finish loading before the sequence starts. Only the first viewport participates in long reading pages. Both About paragraphs and its follow row can arrive once on entering the viewport. |
 | More collection objects | Objects below the viewport resolve once when they enter. They never animate out or repeat on reverse scrolling. Focusing or pressing an arriving object settles it immediately. |
 | Returning / filtering | History restores fully visible content and the original scroll position. Index filters update without replaying rows. Cancelling a visit or entering the back-forward cache clears unfinished arrivals. |
 | Object focus | Artwork lifts 10px, keeps a trace of its original angle, and expands 2.5%; its caption follows 80ms later. The link target stays still. Touch compresses just 1.5% over 160ms, then settles. No cursor tracking or parallax. |

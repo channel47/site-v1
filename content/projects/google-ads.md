@@ -1,16 +1,16 @@
 ---
-title: "How I built my Google Ads MCP"
+title: "Building my own Google Ads MCP"
 slug: google-ads
 rssId: /connectors/google-ads
-description: "Drip showed me I could build tools for an agent. Then I found the Google Ads API and started working through the account tasks I wanted it to do."
+description: "An email tool gave me the confidence to build a Google Ads MCP. Using it on real accounts taught me what I had to fix."
 preview:
   src: /projects/google-ads/opengraph-image
-  alt: How I built my Google Ads MCP, with the yellow collection artwork.
+  alt: Building my own Google Ads MCP, with the yellow collection artwork.
 repo: https://github.com/channel47/mcps/tree/main/google-ads
 install: npx @channel47/google-ads-mcp@latest
 package: "@channel47/google-ads-mcp"
 date: 2026-07-02
-updated: 2026-09-10
+updated: 2026-09-11
 newsletter: I write about the tools I build for media buying, including what breaks and what I change.
 tags: [google-ads, mcp, gaql, paid-media, automation, agents, guardrails]
 sanitized: true
@@ -19,34 +19,34 @@ faqs:
   - q: "Is it safe to point at a live account?"
     a: "The mutate tool defaults to a dry-run preview. Applying a change requires dry_run=false. For reporting only, set GOOGLE_ADS_READ_ONLY=true to remove the mutation tool entirely."
   - q: "What credentials does it need?"
-    a: "Google Ads API access and OAuth credentials for the account. The server runs locally over stdio, so credentials stay on your machine."
+    a: "A Google Ads developer token, OAuth client ID and client secret, and an OAuth refresh token for the account. You configure these locally as environment variables; the server uses them to authenticate with Google."
   - q: "What can my agent actually do with it?"
     a: "List the accounts visible to the configured credentials, run GAQL queries with structured results, and preview or apply mutations."
 ---
 
-My first MCP wasn't for Google Ads. It was for Drip.
-
-I was using Drip for email at my own business in the middle of 2025, right as agentic coding tools started becoming useful. Discovering its API meant I could get at the same things I was using inside the app. An MCP would give an agent a way to use that API, so I used Anthropic's MCP Builder skill to help build one.
-
-That was about as technical as my understanding went. I don't know how to write the code underneath an MCP server. But I could describe what I wanted, point a coding agent at the API docs, and test what came back.
-
-The first version had 18 named actions. Add a subscriber. Apply a tag. Start a workflow. Pull a campaign. These were things I already knew how to do inside Drip. Now I could ask an agent to do them through a tool I'd helped build.
+My Google Ads tool told me it had validated a new ad without making any changes. I opened the account and found the ad sitting there. When I ran what was supposed to be the real version, I got a second one. This was a week after I'd released the first public version.
 
 [Jump to installation](#install)
 
-## Then I found the Google Ads API
+## It started with an email app
 
-I started a new job in November and came across the Google Ads API. I'd managed Google Ads for years. I understood accounts, campaigns, search terms, budgets, and the reports I needed to make decisions. The API appeared to reach almost all of it.
+In the middle of 2025, I was using Drip for email at my own business. Agentic coding tools were becoming useful, and I discovered that Drip had an API: a way for software to do many of the things I did inside the app.
 
-I remember looking through the documentation and thinking, I could do basically anything with this. After Drip, building another MCP felt like something I could actually attempt. And I had a long list of account tasks I wanted to stop doing by hand.
+An MCP server could make those actions available to an agent. That was about as far as my technical understanding went. I couldn't write the server myself, but I could describe what I wanted, point a coding agent at the documentation, and try what it built. Anthropic's MCP Builder skill helped me get started.
+
+The first version had 18 named actions, including adding subscribers, applying tags, starting workflows, and pulling campaigns. I knew these jobs from using Drip. Now I could ask an agent to do them through a tool I'd helped build.
+
+When I started a new job in November, I came across the Google Ads API. I'd managed Google Ads for years, so I knew the accounts, campaigns, search terms, budgets, and reports I wanted to work with. Looking through the documentation, it seemed I could reach almost all of them.
+
+After Drip, another MCP felt like something I could attempt. I had a long list of account tasks I wanted to stop doing by hand.
 
 ![An agent connects through the MCP to the Google Ads API. The physical objects are generated illustrations of that relationship.](/posts/google-ads-connection-v3.webp)
 
 ## Thirteen commands became three tools
 
-My first instinct was to give every familiar Google Ads task its own command. Get campaign performance. Pull search terms. Find wasted spend. Check Quality Score. Track budget pacing.
+I began by giving each familiar task its own command: get campaign performance, pull search terms, find wasted spend, check Quality Score, track budget pacing. Whenever I thought of another job, I asked the coding agent to add it.
 
-I kept asking the coding agent to add one more until the MCP had 13 separate commands. Eventually I realized they were all variations of three things.
+At 13 commands, I realized I was describing variations of three operations.
 
 - Find the accounts available to me with `list_accounts`.
 - Read and report on the data with `query`.
@@ -54,38 +54,30 @@ I kept asking the coding agent to add one more until the MCP had 13 separate com
 
 ![The three tools in MCP Inspector, with an example query for enabled campaigns. This shows the real tool interface; no account query was run.](/posts/google-ads-inspector-v2.webp "screenshot")
 
-I didn't need a separate command for every question I might ask. The smaller version could still pull search terms, check budgets, find wasted spend, and update campaigns. The agent worked out the query or change from the job I described.
+The `query` tool uses GAQL, Google's query language for Ads data. I could describe the report I wanted and let the agent write the query. The same idea applied to changes: I described the account task, and the agent worked out the mutation. I no longer needed to add a command for every new question.
 
-On January 7, 2026, the first public version shipped as `@channel47/google-ads-mcp`. Then I started using it on real accounts.
+On January 7, 2026, I released `@channel47/google-ads-mcp` and started using it on real accounts.
 
-## The preview created a real ad
+## Why the preview made changes
 
-A week after release, I asked the MCP to validate a new ad without publishing it. The server came back and said no changes were made.
+Then came the duplicate ads.
 
-I checked the Google Ads account. The ad was sitting there. Then I ran what was supposed to be the real version, and that created a second one.
+I couldn't explain which part of the code had failed. I could explain what I'd asked for and show what had happened in the account. I took that back to the coding agent.
 
-I couldn't have explained which part of the code had failed. I knew what I'd asked the system to do, and I could see what it had actually done.
+It traced the problem to two setting names. They were written in a format the Google Ads connection ignored, so the validation settings never reached Google. Nothing crashed; the request went through without the protection I thought I'd asked for.
 
-I brought it back to the coding agent. It traced the problem to two setting names written in a format the connection to Google Ads ignored. Nothing had crashed. The safety settings simply never reached Google.
-
-The agent [fixed the names](https://github.com/channel47/google-ads-mcp-server/commit/3de539fa396183acfb59e76fdafbc514236a2402) and added tests. My job was to check what happened in the account and bring back anything that didn't match what I'd asked for.
+The agent [fixed the names](https://github.com/channel47/google-ads-mcp-server/commit/3de539fa396183acfb59e76fdafbc514236a2402) and added tests.
 
 ![The original fix: partialFailure and validateOnly became partial_failure and validate_only, so the API received the validation settings.](/posts/google-ads-dry-run-fix-v3.webp "screenshot")
 
-## Adding previews and a read-only mode
+I also wanted the server to limit what an agent could do. The mutation tool now defaults to `dry_run: true`, which validates a request without applying it. Applying a change requires `dry_run: false`. For reporting only, `GOOGLE_ADS_READ_ONLY=true` removes the mutation tool entirely.
 
-I needed the server to enforce those checks even if the agent got the request wrong.
+I kept write access as an option because I use the MCP for account work as well as reporting. I've since had an agent set up a Google search campaign through it. When I only need data, I can leave it with the two tools for finding accounts and querying them.
 
-The mutation tool now defaults to `dry_run: true`, which validates the request without applying it. Applying a change requires `dry_run: false`. For reporting, setting `GOOGLE_ADS_READ_ONLY=true` removes the mutation tool entirely.
+## Monday reporting
 
-I kept optional write access because I use the server for hands-on account work. The read-only setting lets me limit it to finding accounts and pulling data when that's all I need.
-
-I've since had an agent set up a Google search campaign through the MCP I built. That's one of the moments that changed my sense of what I could do myself. I knew how I wanted to run campaigns, and now I could build a way for an agent to help me do it.
-
-## The report I use every Monday
-
-The regular job is Monday reporting. An agent pulls the previous seven days from more than a dozen accounts under two manager accounts, then combines that Google Ads data with our CRM data. The report is grouped by offer and campaign type, so I can see which accounts need attention without opening them one by one.
+The job I use it for most regularly is the Monday report. An agent pulls the previous seven days from more than a dozen accounts under two manager accounts, then combines the Google Ads data with our CRM data. Grouping the report by offer and campaign type lets me see which accounts need attention without opening them one by one.
 
 ![An illustrated report layout: Google Ads and CRM records come together by offer and campaign type, with spend, revenue, conversions, ROAS, and changes over time.](/posts/google-ads-monday-report-v2.webp)
 
-I don't write the queries for that report. I ask for it and check it against what I know about the accounts. Most weeks I never open the dashboards.
+I don't write the queries. I ask for the report and check it against what I know about the accounts. Most weeks I never open the dashboards.

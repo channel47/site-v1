@@ -77,6 +77,27 @@ try {
   const withCode = content.getNoteBySlug('quick-note').html
   assert.match(withCode, /<div class="st-code"><pre><code class="language-text">Keep &lt;source&gt; &amp; evidence\./, 'Copyable prompts retain safe escaped Markdown rendering')
   assert.equal((withCode.match(/<span class="code-copy"><\/span>/g) || []).length, 2, 'Each code block has one enhancement slot without inert buttons in feeds')
+  const video = { src: '/walkthrough.mp4', poster: '/poster.jpg', captions: '/captions.vtt', duration: 'PT1M' }
+  function videoParts(markdown, metadata = video) {
+    return content.splitArticleAtVideo({ markdown, html: content.renderArticleMarkdown(markdown), video: metadata })
+  }
+  const introduction = 'Opening paragraph.\n\nSecond paragraph.\n\n## The experiment\n\nSome context.\n\n'
+  const continuation = '\n\nWhat happened next.\n\n```text\nKeep this prompt.\n```\n'
+  const placement = '[Watch the walkthrough.](/walkthrough.mp4)'
+  const placed = videoParts(introduction + placement + continuation)
+  assert.equal(placed.beforeVideo, content.renderArticleMarkdown(introduction), 'All opening paragraphs and context remain before the chosen video placement')
+  assert.equal(placed.afterVideo, content.renderArticleMarkdown(continuation), 'Following prose and copyable prompts remain after the player')
+  for (const markdown of [
+    introduction,
+    '[Watch the walkthrough.](/walkthrough.mp4) Then keep reading.',
+    '> [Watch the walkthrough.](/walkthrough.mp4)',
+    '```text\n[Watch the walkthrough.](/walkthrough.mp4)\n```',
+    '[A different video.](/another.mp4)',
+  ]) {
+    assert.deepEqual(videoParts(markdown), { beforeVideo: content.renderArticleMarkdown(markdown), afterVideo: '' }, 'Without a standalone matching link, preserve the complete story before the video')
+  }
+  const linkedHtml = content.renderArticleMarkdown(introduction + placement)
+  assert.deepEqual(content.splitArticleAtVideo({ markdown: introduction + placement, html: linkedHtml }), { beforeVideo: linkedHtml, afterVideo: '' }, 'Ordinary articles keep their video links')
   assert.deepEqual(content.getEntryPreview({ ...note, markdown: '![Draft](placeholder:later)\n\n![A result](/result.jpg)' }), { src: '/result.jpg', alt: 'A result' })
   assert.deepEqual(content.getEntryPreview({ ...note, video: { poster: '/poster.jpg', caption: 'A walkthrough' } }), { src: '/poster.jpg', alt: 'A walkthrough' })
   assert.deepEqual(content.getEntryPreview({ ...note, preview: { src: '/selected.jpg', alt: 'Selected result' }, markdown: '![Other](/other.jpg)' }), { src: '/selected.jpg', alt: 'Selected result' })

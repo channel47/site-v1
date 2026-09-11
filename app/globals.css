@@ -586,7 +586,7 @@ html[data-theme="dark"] .collection-art img {
   margin-inline: auto;
 }
 .piece-head {
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-7);
 }
 .reading-back {
   margin-bottom: var(--space-7);
@@ -712,6 +712,12 @@ html[data-theme="dark"] .collection-art img {
 .st-prose ol,
 .st-prose blockquote {
   margin-bottom: var(--space-6);
+}
+.piece-prose p,
+.piece-prose ul,
+.piece-prose ol,
+.piece-prose blockquote {
+  margin-bottom: var(--space-5);
 }
 .st-prose h2,
 .session-section h2 {
@@ -858,7 +864,7 @@ html[data-theme="dark"] .collection-art img {
   margin-inline: auto;
 }
 .piece-video {
-  margin: 0 0 var(--space-8);
+  margin: var(--space-7) 0;
   scroll-margin-top: var(--space-5);
 }
 .piece-video video {
@@ -1404,7 +1410,7 @@ html[data-theme="dark"] .collection-art img {
   .st-head { margin-bottom: var(--space-6); }
   .reading-back { margin-bottom: var(--space-5); }
   .piece-head {
-    margin-bottom: var(--space-7);
+    margin-bottom: var(--space-6);
   }
   .piece-lede { margin-top: var(--space-5); }
   .piece-byline {

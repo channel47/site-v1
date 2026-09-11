@@ -120,6 +120,26 @@ export interface Project extends Note {
   package?: string;
   pairing?: string;
 }
+
+/** A standalone Markdown link chooses the player's place in the reading page.
+ * Keep the original link in Markdown/RSS; unplaced videos follow the story. */
+export function splitArticleAtVideo(entry: Pick<Note, "html" | "markdown" | "video">) {
+  const fallback = { beforeVideo: entry.html, afterVideo: "" };
+  if (!entry.video) return fallback;
+  const link = marked.lexer(entry.markdown).find((token) =>
+    token.type === "paragraph" && token.tokens?.length === 1
+    && token.tokens[0].type === "link" && token.tokens[0].href === entry.video?.src,
+  );
+  if (!link) return fallback;
+  const placeholder = renderArticleMarkdown(link.raw);
+  const index = entry.html.indexOf(placeholder);
+  if (index < 0) return fallback;
+  return {
+    beforeVideo: entry.html.slice(0, index),
+    afterVideo: entry.html.slice(index + placeholder.length),
+  };
+}
+
 export const PROJECT_STATUS_LABELS = {
   experiment: "Experiment",
   "in-progress": "In progress",

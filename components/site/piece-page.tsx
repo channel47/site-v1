@@ -12,6 +12,7 @@ import { noteGraph, projectGraph, SITE_URL, AUTHOR_NAME } from "@/lib/seo";
 import {
   shortDate,
   readTime,
+  splitArticleAtVideo,
   PROJECT_STATUS_LABELS,
   type Note,
   type Project,
@@ -32,6 +33,7 @@ export function PiecePage({
   const href = `/${section}/${entry.slug}`;
   const project = section === "projects" ? (entry as Project) : undefined;
   const minutes = readTime(entry.markdown);
+  const { beforeVideo, afterVideo } = splitArticleAtVideo(entry);
   return (
     <div className="st-page">
       <SiteHeader />
@@ -61,6 +63,7 @@ export function PiecePage({
               <SharePopover mdPath={`${href}.md`} url={`${SITE_URL}${href}`} title={entry.title} />
             </div>
           </header>
+          {beforeVideo ? <div className="st-prose piece-prose" dangerouslySetInnerHTML={{ __html: beforeVideo }} /> : null}
           {entry.video ? (
             <figure className="piece-video" id="walkthrough">
               <video
@@ -89,7 +92,7 @@ export function PiecePage({
               ) : null}
             </figure>
           ) : null}
-          <div className="st-prose" dangerouslySetInnerHTML={{ __html: entry.html }} />
+          {afterVideo ? <div className="st-prose piece-prose" dangerouslySetInnerHTML={{ __html: afterVideo }} /> : null}
           <CodeCopyButtons key={href} />
           {project?.install ? (
             <section className="project-install" id="install" aria-label="Install">

@@ -5,8 +5,7 @@ import sharp from "sharp"
 import { MARK_PATH, MARK_VIEWBOX } from "@/components/site/mark"
 
 /**
- * Shared renderer for every route's opengraph-image.tsx: notes, posts,
- * skills, connectors, workshops, and the site-wide default.
+ * Shared renderer for project, note, and site-wide social previews.
  * One card layout, one font load, so every route file stays a
  * thin `getX(slug) → renderOgImage(...)` call.
  *
@@ -50,7 +49,7 @@ async function loadFonts() {
 }
 
 interface OgImageProps {
-  /** Small label above the title, e.g. "Skill", "Post" — omitted on the site-wide default. */
+  /** Small label above the title, e.g. "Project", "Note" — omitted on the site-wide default. */
   kicker?: string
   title: string
   description?: string

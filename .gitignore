@@ -41,3 +41,4 @@ skills-lock.json
 # macOS
 .DS_Store
 output/
+.playwright-mcp/

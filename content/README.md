@@ -2,7 +2,7 @@
 
 `content/notes/` and `content/projects/` are the only published collections. One Markdown file supplies the reading page, index, RSS, search, sitemap, metadata and Markdown twin through `lib/content.ts`. A duplicate URL fails validation.
 
-The current selection includes a worked customer-research and ad-angle example in Claude, a note following the creative workflow from Google Flow references to complete static ads in Codex, a Google Ads MCP piece combining its development story, installation and safety details, and the Vellum build story showing work on X-All product images. The former Flow note redirects to `/notes/codex-static-ads-google-flow`. The retired skill and other advertising-connector pages are removed; their source remains in Git history. The actual skill/tool repositories are independent and remain available.
+The current selection includes a worked customer-research and ad-angle example in Claude, a note following the creative workflow from Google Flow references to complete static ads in Codex, a Google Ads MCP piece combining its development story, installation and safety details, the Vellum build story showing work on X-All product images, and projects about Valle Ballet and Born Simple, PhantomRack, and a recurring recruiting workflow. The former Flow note redirects to `/notes/codex-static-ads-google-flow`. The retired skill and other advertising-connector pages are removed; their source remains in Git history. The actual skill/tool repositories are independent and remain available.
 
 ## Editorial direction
 
@@ -71,6 +71,12 @@ keep supporting excerpts in ordinary prose, and put reusable prompts in fenced
 an article compares ideas.
 
 Published media URLs under `public/posts/` and `public/email/` are kept stable, including images sent in newsletters. Do not delete an image solely because the current homepage does not use it.
+
+For a frontmatter video, put a standalone Markdown link to its `src` where the
+player should appear in the article. The reading page replaces that link with
+the player and caption; Markdown and RSS keep the link. Without a placement
+link, the player follows the story. Videos never move ahead of the opening
+automatically.
 
 ## Collection artwork
 

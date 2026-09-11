@@ -29,8 +29,16 @@ The collection is a small table of objects that invite exploration. A cover give
 | Combined Google Flow and Codex creative workflow | The white ELT sachet on vermilion enamel (`elt-specimen`). The Flow reference study and original ELT ad examples live inside one piece. |
 | Google Ads MCP story and installation | A silver USB-C plug with a braided cable on industrial-yellow enamel (`ads-plug`). No printed labels. |
 | Vellum (`/projects/vellum`) | A photographic contact sheet on cobalt enamel, partly covered by translucent drafting vellum (`vellum-contact-sheet`). An illustration of image selection and refinement; actual app screenshots remain inside the article. |
+| Ballet / Born Simple (`/projects/ballet-born-simple`) | An ivory satin pointe shoe and loose ribbons on deep plum enamel (`ballet-pointe`). Conceptual artwork, not a photograph of the author's possessions. |
+| PhantomRack (`/projects/phantomrack`) | Three brushed-aluminum audio faders in graphite enamel (`phantom-faders`). An illustration of adjustable audio effects, not actual PhantomRack hardware. |
+| Recruiting (`/projects/recruiting`) | A steel card selector with ivory cards and one selected card on petrol-teal enamel (`recruiting-selector`). No candidate information or invented results. |
 
 The Flow walkthrough remains inside the combined note at `/notes/codex-static-ads-google-flow`. The gallery has one object per piece. The blue tablet, green ribbed glass, and yellow channels remain available assets; Jackson chose the ELT, loupe, and plug covers on September 10, 2026.
+
+The ballet, PhantomRack, and recruiting covers were generated with the built-in image tool on September 11, 2026, using the blue
+tablet as the material, lighting, and framing reference. Each cover has 960px
+and 480px WebP exports in `public/collection/`. The original renders, exact
+prompts, and source paths are kept in ignored `output/editorial-preview/`.
 
 In dark mode, the square slabs use an explicit CSS silhouette in
 `lib/collection.ts` to remove only the white studio surround. A small CSS shadow

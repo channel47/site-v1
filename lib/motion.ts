@@ -8,7 +8,7 @@ export function motionMilliseconds(value: string, fallback: number): number {
 export const ARRIVAL_SELECTOR = [
   ".collection-object",
   ".piece-head > h1", ".piece-lede", ".piece-byline",
-  ".st-head", ".st-prose > :first-child", ".st-row",
+  ".st-head", ".st-prose:not(.piece-prose) > :first-child", ".st-row",
   ".about-page .st-prose > p",
   ".nl-capture", ".session-aside", ".about-follow",
 ].join(",");

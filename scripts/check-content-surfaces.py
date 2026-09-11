@@ -36,8 +36,11 @@ class Page(HTMLParser):
         super().__init__()
         self.rows = []
         self.objects = []
+        self.object_labels = {}
         self.images = []
         self.videos = 0
+        self.dates = []
+        self.reading_blocks = []
         self.canonical = None
         self.feed(html)
 
@@ -49,13 +52,22 @@ class Page(HTMLParser):
             self.rows.append(attrs['href'])
         if tag == 'a' and attrs.get('class') == 'collection-link':
             self.objects.append(attrs['href'])
+            self.object_labels[attrs['href']] = attrs.get('aria-label', '')
         if tag == 'img' and attrs.get('src', '').startswith('/collection/'):
             self.images.append(attrs['src'])
         if tag == 'video':
             self.videos += 1
+        if tag == 'time':
+            self.dates.append(attrs.get('datetime'))
+        classes = attrs.get('class', '').split()
+        if 'piece-prose' in classes:
+            self.reading_blocks.append('prose')
+        if 'piece-video' in classes:
+            self.reading_blocks.append('video')
 
 
 expected = {'projects': [], 'notes': []}
+titles = {}
 legacy = []
 for folder, group in [('projects', 'projects'), ('notes', 'notes')]:
     for source in Path('content', folder).glob('*.md'):
@@ -63,6 +75,8 @@ for folder, group in [('projects', 'projects'), ('notes', 'notes')]:
         slug = slug_match.group(1).strip(' "\'') if slug_match else source.stem
         path = f'/{group}/{slug}'
         expected[group].append(path)
+        title = re.search(r'^title: *([^\n]+)', source.read_text(), re.M).group(1)
+        titles[path] = title.strip(' "\'')
         historical = re.search(r'^rssId: *([^\n]+)', source.read_text(), re.M)
         if historical:
             legacy.append((historical.group(1).strip(), path))
@@ -73,7 +87,28 @@ home, _ = fetch('/')
 collection = Page(home.decode())
 assert len(collection.objects) == len(set(collection.objects)), 'Duplicate collection object'
 assert set(collection.objects).issubset(set(all_paths)), 'Collection points to an unpublished piece'
+for path in collection.objects:
+    assert collection.object_labels[path].startswith(titles[path] + ' — '), path
 assert '/projects/vellum' in collection.objects
+new_projects = ['ballet-born-simple', 'phantomrack', 'recruiting']
+expect_not_found('/preview')
+for slug in new_projects:
+    assert '/projects/' + slug in collection.objects
+    expect_not_found('/preview/drafts/' + slug)
+    article, _ = fetch('/projects/' + slug)
+    assert Page(article.decode()).dates == ['2026-09-11'], slug
+    for editorial_text in [b'Unpublished draft', b'Source basis', b'Production status', b'Before publication']:
+        assert editorial_text not in article, (slug, editorial_text)
+    result, _ = fetch('/api/search?q=' + ('ballet' if slug == 'ballet-born-simple' else slug))
+    assert any(item['url'] == site + '/projects/' + slug for item in json.loads(result)['results']), slug
+phantom, _ = fetch('/projects/phantomrack')
+for audio in ['hiphop-dry.mp3', 'hiphop-wet.mp3']:
+    path = '/posts/phantomrack/' + audio
+    assert path.encode() in phantom
+    body, _ = fetch(path)
+    assert len(body) > 1000, path
+for cover in ['ballet-pointe', 'phantom-faders', 'recruiting-selector']:
+    assert '/collection/' + cover + '.webp' in collection.images
 expect_not_found('/preview/vellum')
 expect_not_found('/preview/vellum/media/x-all-grid.webp')
 vellum, _ = fetch('/projects/vellum')
@@ -115,7 +150,7 @@ for suffix in ['', '.md', '/opengraph-image']:
     assert final == '/projects/google-ads' + suffix, final
 merged, final = fetch('/notes/google-ads-mcp', 'text/markdown')
 assert final == '/projects/google-ads'
-assert b'My first MCP' in merged and b'npx @channel47/google-ads-mcp@latest' in merged
+assert b'My Google Ads tool told me it had validated a new ad' in merged and b'npx @channel47/google-ads-mcp@latest' in merged
 
 # The Flow experiment and Codex follow-up share one canonical note.
 flow_old = '/notes/google-flow-reference-led-product-imagery'
@@ -127,12 +162,13 @@ _, final = fetch('/md' + flow_old)
 assert final == creative + '.md', final
 combined, _ = fetch(creative)
 assert Page(combined.decode()).videos == 1
+assert Page(combined.decode()).reading_blocks == ['prose', 'video', 'prose'], 'The walkthrough follows its introduction and keeps the following prose'
 assert b'google-flow-reference-led-product-imagery.vtt' in combined
 assert b'codex-static-ads-composited-pass.jpg' in combined
 assert b'codex-static-ads-native-pass.jpg' in combined
 merged, final = fetch(flow_old, 'text/markdown')
 assert final == creative
-assert b'I attached two reference images' in merged and b'The part I wanted to save' in merged
+assert b'The Flow experiments started with two reference images' in merged and b'Saving the instruction for next time' in merged
 
 for old, group in [('skills', 'projects'), ('connectors', 'projects'), ('posts', 'notes'), ('workshops', 'notes')]:
     html, final = fetch('/browse?type=' + old)
@@ -168,6 +204,11 @@ vellum_search, _ = fetch('/api/search?q=vellum')
 assert any(r['url'] == site + '/projects/vellum' for r in json.loads(vellum_search)['results'])
 rss, _ = fetch('/rss.xml')
 feed = ET.fromstring(rss)
+for slug in new_projects:
+    items = [item for item in feed.findall('./channel/item') if item.findtext('link') == site + '/projects/' + slug]
+    assert len(items) == 1, slug
+    assert items[0].findtext('guid') == site + '/projects/' + slug
+    assert '11 Sep 2026' in items[0].findtext('pubDate'), slug
 assert sum(i.findtext('link') == site + '/projects/vellum' for i in feed.findall('./channel/item')) == 1
 assert not any(i.findtext('link') == site + flow_old for i in feed.findall('./channel/item'))
 creative_items = [i for i in feed.findall('./channel/item') if i.findtext('link') == site + creative]
@@ -191,4 +232,4 @@ for slug in retired:
 # Media paths under /posts must not be mistaken for retired article routes.
 media, path = fetch('/posts/codex-static-ads-native-pass.jpg')
 assert media[:2] == b'\xff\xd8' and path.startswith('/posts/')
-print(f'Passed: {len(all_paths)} canonical pages and their markdown, negotiated responses, social previews; {len(legacy) * 3} legacy redirects; browse filters, search, both sitemaps, RSS identity, media URLs, published Vellum assets and retired-preview isolation, and retired-page 404s.')
+print(f'Passed: {len(all_paths)} canonical pages and their markdown, negotiated responses, social previews; {len(legacy) * 3} legacy redirects; browse filters, search, both sitemaps, RSS identity, publication dates, media URLs, new covers, and retired-page and preview 404s.')

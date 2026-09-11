@@ -81,7 +81,7 @@ and CLI commands live in [newsletter/README.md](newsletter/README.md).
 ## Working context
 
 The published inventory comes from `content/notes/` and `content/projects/`.
-Unpublished drafts and their supporting evidence live in `docs/content/`.
+Supporting editorial notes and any future unpublished drafts live in `docs/content/`.
 Putting a draft into a published collection makes it public on deployment.
 
 `docs/archive/` contains historical plans, not current instructions. It and
