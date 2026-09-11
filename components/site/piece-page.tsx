@@ -45,7 +45,6 @@ export function PiecePage({
           <header className="piece-head">
             <ArticleBreadcrumb section={section} title={entry.title} />
             <h1>{entry.title}</h1>
-            <p className="piece-lede">{entry.description}</p>
             <div className="piece-byline">
               <AuthorPortrait alt="" />
               <div className="piece-author-details">

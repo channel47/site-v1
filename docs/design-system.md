@@ -27,8 +27,6 @@ Default to ink on paper or white on dark. Cobalt is an available accent version.
 The home mark assembles in six clipped sections over 1.4 seconds on arrival
 and replay. A blue accent settles to ink; the complete master outline takes
 over at rest to remove seams. Reduced motion immediately uses the static mark.
-The isolated `/brand/refinement` preview shares `AnimatedMark` with the
-header and includes replay, slow motion and color controls.
 Header marks replay a 960ms out-and-back cycle on mouse hover. Each cycle completes after pointer exit, and rapid re-entry cannot restart an unfinished cycle. Inner-page marks still navigate home immediately on click. The small footer mark stays static.
 
 `pnpm brand:build` (Node 24) generates the SVG and transparent PNG masters in
@@ -44,7 +42,7 @@ versioned email artwork unchanged so sent messages retain their original art.
 | Role | Canonical choice |
 | --- | --- |
 | Display | **Instrument Serif**, regular for article headlines and subheads; italic for the menu, Index heading and quotations. Weight 400, close tracking, compact line-height. Do not synthesize bold serif. |
-| Reading / interface | **Instrument Sans**, variable 400–700. Body 18px desktop / 17px mobile at 1.75. Ledes are slightly larger, closer-tracked sans serif. |
+| Reading / interface | **Instrument Sans**, variable 400–700. Body 18px desktop / 17px mobile at 1.75. Article headers show the title and byline; descriptions are retained for metadata and indexes. The session page still uses a larger introductory lede. |
 | Utility | Small Instrument Sans, 11–14px. Sentence case throughout; close `--tracking-label` spacing for short metadata. Preserve acronyms and real brand names. Code uses the system monospace stack. |
 | Font delivery | Local WOFF2 files in `app/fonts`, loaded through `next/font/local`. No runtime font-provider request. OFL licenses live beside the files. Social-preview fonts remain in `assets/fonts`. |
 | Heading scale | `--text-heading` is 42–72px desktop / 40–56px mobile, with a 1.02 line-height. The text index has a deliberately larger italic heading; its entries stay sans serif. The menu has its own viewport-scaled display size. |

@@ -27,37 +27,14 @@ Good triggers include:
 There is no required weekly cadence. One worthwhile email beats a roundup sent
 to satisfy a schedule.
 
-## Issue shape
+## Writing and format
 
-Use this sequence as a guide, not a rigid template:
+Use the [site’s voice brief](../content/VOICE.md) for all newsletter writing.
+Keep each broadcast to one topic with one primary link; additional links
+should support the same topic. Let the material determine its structure.
 
-1. Open on a concrete problem, observation, or moment from the work.
-2. Show what Jackson tried, made, or noticed.
-3. Focus on one decision that mattered.
-4. Share what was interesting or useful; a reusable artifact is optional.
-5. Link to the complete note or relevant asset when one exists.
-6. Mention working-session availability only when it naturally follows from
-   the topic.
-
-Keep each broadcast to one topic. Start cold, without a welcome paragraph or a
-table of contents. End with a thought, question, or unresolved thread rather
-than a summary of what the reader just read.
-
-## Editorial standard
-
-Apply the [site’s direct-language guidance](../content/README.md#direct-language)
-to newsletter drafts as well.
-
-- Write in first person and from work that actually happened.
-- Prefer specific decisions, constraints, commands, numbers, and failure modes
-  over general advice.
-- Explain the work in plain language. Avoid AI hype and inflated claims.
-- Do not invent proof, outcomes, testimonials, or capabilities.
-- Do not withhold the useful part to manufacture a click.
-- Keep HTML email-safe: paragraphs, headings, links, emphasis, short lists, and
-  occasional blockquotes or images.
-- Use screenshots only when they prove or clarify something.
-- Include one primary link. Additional links must support the same topic.
+Keep HTML email-safe: paragraphs, headings, links, emphasis, short lists,
+and occasional blockquotes or images.
 
 ## Kit template brief
 

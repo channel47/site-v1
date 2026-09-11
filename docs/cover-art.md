@@ -28,7 +28,7 @@ The collection is a small table of objects that invite exploration. A cover give
 | Customer research and ad angles in Claude | A photographic loupe on deep-green enamel (`research-loupe`). Conceptual cover art, with a separate explanatory storyboard inside the article. |
 | Combined Google Flow and Codex creative workflow | The white ELT sachet on vermilion enamel (`elt-specimen`). The Flow reference study and original ELT ad examples live inside one piece. |
 | Google Ads MCP story and installation | A silver USB-C plug with a braided cable on industrial-yellow enamel (`ads-plug`). No printed labels. |
-| Vellum working draft (local preview only) | A photographic contact sheet on cobalt enamel, partly covered by translucent drafting vellum (`vellum-contact-sheet`). An illustration of image selection and refinement; actual app screenshots remain inside the draft. |
+| Vellum (`/projects/vellum`) | A photographic contact sheet on cobalt enamel, partly covered by translucent drafting vellum (`vellum-contact-sheet`). An illustration of image selection and refinement; actual app screenshots remain inside the article. |
 
 The Flow walkthrough remains inside the combined note at `/notes/codex-static-ads-google-flow`. The gallery has one object per piece. The blue tablet, green ribbed glass, and yellow channels remain available assets; Jackson chose the ELT, loupe, and plug covers on September 10, 2026.
 

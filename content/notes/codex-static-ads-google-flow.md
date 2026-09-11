@@ -1,7 +1,7 @@
 ---
 title: From Google Flow to making whole ads in Codex
 slug: codex-static-ads-google-flow
-description: I started with product references in Google Flow, then moved into Codex to generate complete static ads with the products and typography together.
+description: I was using Codex to write prompts for Google Flow. Then I realized we could try making the whole ad in Codex, including the text and packaging.
 date: 2026-07-24
 updated: 2026-09-10
 newsletter: I share creative experiments and the prompts, outputs, and corrections that mattered.
@@ -26,9 +26,9 @@ In the same prompt, I told it I wanted that visual language for X-All. The agent
 
 ## Starting with references
 
-The style references set the visual direction. The product photos gave Flow the actual products to work with. I used the lighting and composition details from that first answer in the next prompt, keeping the direction in the conversation as we went.
+I carried the lighting and composition details from that answer into the next prompt, alongside the product photos.
 
-The first useful surprise was how far the agent moved beyond a literal product-on-a-table shot. It built action scenes around the toilet-cleaning foam powder, tried a bubbly version of the X-All logo, froze tablets against water, and turned a stack of cleaning products into a whole blue visual system.
+What surprised me was how far the agent moved beyond a literal product-on-a-table shot. It built action scenes around the toilet-cleaning foam powder, tried a bubbly version of the X-All logo, froze tablets against water, and tried a whole set of blue compositions with the cleaning products.
 
 ![One of Flow's generated directions, a grid of white tablets under hard directional light.](/posts/google-flow-tablet-grid-blue.jpg)
 
@@ -42,8 +42,6 @@ For getting an actual design direction in place, it was pretty dang good.
 
 The single-product shots held together better than the more complicated compositions. Once several products appeared in the same image, labels started drifting. A package could look right from across the room while saying the wrong thing up close. Some colors moved, too.
 
-I couldn't use those outputs as finished product images without correcting them. They still gave me lighting and composition ideas I wanted to try.
-
 As I kept using Flow to make static ads, the inconsistency got frustrating. Maybe one out of ten times it would really nail it. The image would feel incredibly on brand and look like something a high-end creative studio had made. The other nine were more or less total AI slop. They were too busy, had weird artifacts, or used generic versions of products that Flow had made up instead of actually using the references I gave it.
 
 So there was a lot of back and forth. I'd ask Flow to fix something and sometimes it would literally just ignore the edit.
@@ -56,9 +54,9 @@ The first versions weren't actually bad. Codex generated the scenes and then add
 
 ![The first Codex pass for ELT used generated scenes with composited headlines and Shop ELT CTA buttons.](/posts/codex-static-ads-composited-pass.jpg)
 
-But I could tell it had chosen the safer route. It was using the image generator for the part it trusted, then handling the details separately because those were more likely to go wrong.
+It seemed to be choosing the safer route, using the image generator for the scene and handling the text separately. But I wanted to see what the image generator could actually manage.
 
-My reaction was basically that it was underestimating what the image generator could do. I wanted it to push the bounds a little and try making the entire ad natively, instead of treating things like text, CTA labels, and product packaging as elements it had to add later.
+My reaction was basically that it was underestimating what the image generator could do. I asked it to push the bounds a little and try making the entire ad in one generation, text, CTA labels, product packaging, and all.
 
 Once it did that, the results felt more like complete concepts than generated scenes with ad elements added afterward.
 
@@ -66,9 +64,9 @@ Once it did that, the results felt more like complete concepts than generated sc
 
 They still weren't perfect. There were some visual artifacts, and certain outputs were clearly stronger than others. But the process felt a lot easier to work with than Flow. The UI was cleaner, the product references seemed to carry through more consistently, and when I asked it to correct something, it usually did.
 
-Before using an output, check the packaging text, product shape, color, and any claims in the ad against the actual product. A convincing composition can still get those details wrong.
+The labels still need a close look, along with the product shape, color, and claims. A good-looking ad can be wrong in ways that only become obvious when you compare it with the actual product.
 
-I still use Flow, just far less than I did. It can still produce something incredible, so I haven't written it off. Codex has just become a much easier place to work through the idea.
+I still use Flow, just far less than I did. It can still produce something incredible, so I haven't written it off. Codex has just become a much easier place to work through the idea. And I liked enough about Flow's workspace that I started [building my own version in Vellum](/projects/vellum).
 
 ## The part I wanted to save
 
@@ -78,6 +76,6 @@ It wasn't really the sequence of steps I wanted to save. It was the judgment I'd
 
 That's what I put into [Make Static Ads](https://github.com/channel47/skills/tree/main/skills/creative-production/make-static-ads), the public skill that asks the image model to generate the complete ad, including typography and product packaging.
 
-For the step before image generation, the [customer-research walkthrough](/notes/customer-research-ad-angles-claude) follows a source quote into a reason to buy and a demonstration the ad needs to show.
+The [customer-research walkthrough](/notes/customer-research-ad-angles-claude) works through what an ad should show in the first place. Once I have a brief, I want to be able to give it to the agent without having the same conversation about how to make it every time.
 
 I think that's probably the more interesting part of the skill for me. The steps are useful, but the judgment is the part I don't want to teach again.
