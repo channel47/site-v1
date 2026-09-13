@@ -124,6 +124,9 @@ Article images reserve their intrinsic width and height before lazy loading. The
 
 ## Collection composition
 
+Use the same newest-first publication order as Index, including its same-day
+tie-breaks. Cover metadata selects artwork and labels, never display order.
+
 Arrange objects in balanced pairs on a twelve-column grid. A larger, upright
 object takes six columns; its smaller companion takes five, starts lower, and
 turns four degrees toward it. Switch the larger object from left to right in

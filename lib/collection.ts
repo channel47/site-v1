@@ -75,13 +75,20 @@ export function getCollectionItems(): CollectionItem[] {
       srcSet: `/collection/${cover.image}-480.webp 480w, /collection/${cover.image}.webp 960w`,
     };
   });
+  const coversByPath = new Map(covers.map((cover) => [cover.href, cover]));
+  const items: CollectionItem[] = [];
+  // Follow Index's canonical newest-first order, including its same-day ties.
   // New real images can join without custom art. Text-only pieces remain in Index.
   for (const { collection, item } of entries) {
     const href = `${collection.basePath}/${item.slug}`;
-    if (covers.some((cover) => cover.href === href)) continue;
+    const cover = coversByPath.get(href);
+    if (cover) {
+      items.push(cover);
+      continue;
+    }
     const preview = getEntryPreview(item);
     if (preview)
-      covers.push({
+      items.push({
         id: `${collection.key}-${item.slug}`,
         href,
         title: item.title,
@@ -89,5 +96,5 @@ export function getCollectionItems(): CollectionItem[] {
         src: preview.src,
       });
   }
-  return covers;
+  return items;
 }
