@@ -20,6 +20,7 @@ export function BrowseViews({ current }: { current: BrowseView }) {
       <span className="browse-selection" aria-hidden="true" />
       <Link
         href="/"
+        prefetch={true}
         className="icon-btn browse-view"
         aria-label="Collection — view as objects"
         aria-current={current === "collection" ? "page" : undefined}
@@ -31,6 +32,7 @@ export function BrowseViews({ current }: { current: BrowseView }) {
       </Link>
       <Link
         href="/browse"
+        prefetch={true}
         className="icon-btn browse-view"
         aria-label="Index — view as a list"
         aria-current={current === "index" ? "page" : undefined}
