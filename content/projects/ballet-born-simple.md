@@ -1,46 +1,32 @@
 ---
 title: "Three days to build a ballet website"
 slug: ballet-born-simple
-description: "Building a site for my fiancée's ballet lessons gave me the confidence to try one for a client. The site went live in three days; the first booking took longer."
+description: "I wanted to help people find my fiancée's ballet lessons. Building her website gave me the confidence to try a client's, too."
 date: 2026-09-11
 storyDate: "2026-01"
-updated: 2026-09-12
+updated: 2026-09-13
 tags: [websites, claude-code, astro, agents]
 preview:
   src: /projects/ballet-born-simple/opengraph-image
   alt: "Three days to build a ballet website, with the plum pointe-shoe artwork."
 ---
 
-My fiancée is a professional ballerina who teaches private lessons. She had room for more students, but most people found her through word of mouth. I wanted people searching for lessons to have a way to find her.
+I'd been experimenting with Claude Code for months when James Dickerson posted a website he'd made for a business called Diesel Dudes. James goes by [the Boring Marketer on Twitter](https://x.com/boringmarketer), and he'd used the AI coding agent to help someone in his life who needed a site. I wanted to see if I could do the same for my fiancée.
 
-I'd been experimenting with Claude Code for months when I saw a post by James Dickerson, who goes by [the Boring Marketer on Twitter](https://x.com/boringmarketer). He'd used it to build a website for Diesel Dudes, helping someone in his life who needed one. I could imagine doing the same, and I had someone in mind.
+She's a professional ballerina who teaches private lessons in San Diego, and she had room for more students. Most people found her through word of mouth. I wanted to give someone searching for lessons a chance to find her without needing an introduction, to read about her teaching and get in touch.
 
-Last August, I started building Valle Ballet. Three days later, it was live.
+I started Valle Ballet last August, making pages about her lessons and where she taught. They were working on the first try, and I was enjoying myself enough to keep going after dinner one evening, setting up the email forms that would let people ask about a lesson. Three days after I began, she had a live website.
 
-## Building Valle Ballet
+![Valle Ballet's homepage in September 2026, more than a year after the build, showing private lessons in San Diego and a trial booking option.](/posts/ballet-born-simple/valle-ballet.webp "screenshot")
 
-The site was for people searching for private ballet lessons in San Diego. I used Claude Code to build it in Astro, a framework for websites, with pages for the services and locations and a way to get in touch.
+Getting Valle Ballet live made me want to keep building. I'd been managing advertising for Born Simple, a food brand with a Squarespace site I didn't think much of. Making them a better one would mean taking on work beyond the ads I'd been running, and after those three days on Valle Ballet, I was willing to try.
 
-Seeing the pages work on the first go was rewarding enough to keep me at it. One evening, I stayed up after dinner setting up the email forms. Eventually I connected the inquiries to Slack, so I'd know when someone wrote in.
+I started later that same August, before anyone had booked through the ballet site. I built pages for the meals and flavors, brought in recipes and nutrition information, and added links to help people find a retailer. I'd known the brand through my advertising work; now I was working out how to present it across a whole website.
 
-![Valle Ballet’s homepage in September 2026, with private lessons and trial bookings.](/posts/ballet-born-simple/valle-ballet.webp "screenshot")
+![Born Simple's homepage in September 2026, showing the meals, flavors, and Where to Buy link.](/posts/ballet-born-simple/born-simple.webp "screenshot")
 
-## Trying it for a client
+Born Simple replaced their Squarespace site with the one I'd built, and their organic traffic rose. The project also changed how they saw me: I was an engineer as well as a media buyer now, and that felt good.
 
-I was enjoying the work and wanted to try it again. Later that month, I started a website for Born Simple, a food brand I'd worked with as a media buyer.
+The ballet site was easy to leave alone while I got on with the Born Simple work. I'd arranged for inquiries to send me a notification in Slack, so I didn't have to keep checking it. For weeks, nothing came through, and I more or less forgot about the site.
 
-They had a Squarespace site I didn't think was very good. Building websites wasn't what they'd known me for, but after Valle Ballet I was willing to try making them a new one.
-
-For Born Simple, the site needed to answer a different set of questions. What was in each meal? How did you prepare it? Where could you buy it? I built product pages, nutrition information, recipes, and retailer links. I was still figuring things out as I went, now on a client's site.
-
-![Born Simple’s homepage in September 2026, introducing the meals and where to buy them.](/posts/ballet-born-simple/born-simple.webp "screenshot")
-
-## The first booking took longer
-
-The ballet site was quick to build. Getting a student through it took longer.
-
-For weeks, nothing happened. With the Slack notifications set up, I more or less forgot about it. Then the inquiries began. Five people reached out without booking; the sixth became her first client through the site.
-
-At the start of that lesson, the student wouldn't let go of her dad's hand. By the end of the hour, she didn't want to leave.
-
-When I shared the story in James's community, another lesson from the website was already scheduled. This month, he posted my message on Twitter. A few months ago, his example helped me decide to try building a site. Now he's sharing mine.
+When people did start to write in, the first five inquiries went no further. It was the sixth that became a booking, and my fiancée was going to teach someone who had found her through the website. At the start of that lesson, the student wouldn't let go of her dad's hand. By the end of the hour, she didn't want to leave.

@@ -190,8 +190,14 @@ try {
   }
 
   const sharing = require(path.join(temp, 'sharing.js'))
+  const sourceOpening = (relativePath) => {
+    const { content } = require('gray-matter')(fs.readFileSync(path.join(root, relativePath), 'utf8'))
+    const opening = content.trim().split(/\n\s*\n/)[0]
+    assert(opening.length > 0, 'The sharing source must have an opening paragraph')
+    return require('marked').marked.parseInline(opening, { async: false })
+  }
   const pack = sharing.buildSharePack('/notes/codex-static-ads-google-flow')
-  assert(pack.email.includes('I was using Codex to help write prompts for Google Flow.'))
+  assert(pack.email.includes(sourceOpening('content/notes/codex-static-ads-google-flow.md')), 'The email must reuse the current article opening')
   assert(pack.email.includes('href="https://channel47.dev/notes/codex-static-ads-google-flow?'))
   assert(pack.email.includes('utm_source=newsletter'))
   assert(pack.email.startsWith('---\nsubject: Making the whole ad in Codex'))
@@ -202,7 +208,7 @@ try {
   assert.throws(() => sharing.buildSharePack('/notes/not-published'), /No published entry/)
   const project = sharing.buildSharePack('/projects/google-ads')
   assert(project.image.url.endsWith('/projects/google-ads/opengraph-image'))
-  assert(project.email.includes('My Google Ads tool told me it had validated a new ad'))
+  assert(project.email.includes(sourceOpening('content/projects/google-ads.md')), 'The project email must reuse the current article opening')
   assert.throws(() => sharing.buildSharePack('/notes/google-ads-mcp'), /No published entry/)
   assert(project.email.includes('Explore the project'))
   console.log('Passed: foreground and idle timing, suspended timers, streamed article bodies, route-scoped observation, cleanup, milestone deduplication, privacy and development guards, provider failure, attribution, navigation, and sharing output.')

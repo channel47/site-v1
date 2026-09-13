@@ -14,9 +14,12 @@ mean; prefer a literal phrase to a decorative one.
 Give a new reader enough context to follow. Introduce people and unfamiliar
 tools naturally. Choose details that move the story forward or make it clearer.
 
-Craft the prose freely from the source material. Shape the opening, sequence,
-and ending; preserve Jackson's meaning and uncertainty. Keep journals and
-research in the background. Never invent experiences, dialogue, or results.
+Craft the prose freely from the source material. Follow what Jackson wanted
+to try or understand and what changed as he went. Give the moments that changed
+his expectations or actions room to unfold before explaining their meaning.
+Let the source determine the story's shape. Preserve Jackson's meaning and
+uncertainty. Keep journals and research in the background. Never invent
+experiences, dialogue, or results.
 
 Write close to the experience as it unfolds. Use past tense for what has
 happened and present tense for what Jackson is trying, noticing, or still

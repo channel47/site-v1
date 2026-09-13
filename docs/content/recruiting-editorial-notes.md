@@ -21,10 +21,13 @@ the approximate 20–30% agency benchmark.
 
 ## Optional supporting media
 
-The published article has conceptual cover art. Workflow screenshots have not
-been supplied. Useful future captures would show the scheduled task, the four
-Sheet tabs, review states, a flagged profile, the Slack summary, and outreach
-drafts. The original production plan remains in Git history.
+The published article has conceptual cover art and a workflow diagram at
+`public/posts/recruiting-workflow.svg`, drawn from the process described in the
+article. The diagram contains no candidate records and is not a screenshot.
+Workflow screenshots have not been supplied. Useful future captures would show
+the scheduled task, the four Sheet tabs, review states, a flagged profile, the
+Slack summary, and outreach drafts. The original production plan remains in Git
+history.
 
 Use sanitized duplicates for any future public captures. Label fictional sample
 rows explicitly, omit internal names, company and candidate details, account

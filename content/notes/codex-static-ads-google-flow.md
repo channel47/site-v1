@@ -3,7 +3,7 @@ title: Making the whole ad in Codex
 slug: codex-static-ads-google-flow
 description: I tried making a complete ad in Codex, from the scene and product packaging to the headline and call to action.
 date: 2026-07-24
-updated: 2026-09-12
+updated: 2026-09-13
 newsletter: I share creative experiments and the prompts, outputs, and corrections that mattered.
 tags: [codex, google-flow, image-generation, static-ads, skills, creative-production, product-imagery, art-direction]
 preview:
@@ -18,54 +18,48 @@ video:
   caption: The original four-minute Flow walkthrough, including the outputs that worked and the packaging details that didn't.
 ---
 
-I was using Codex to help write prompts for Google Flow. We'd work out what to ask for, then I'd copy the prompt over and work through the images there. Eventually I realized Codex had its own image generator. We could try making the ads in the same place we were discussing them.
+I was asking Codex to help me write prompts for Google Flow. We'd work out the image I wanted, I'd copy the prompt into Flow, and then I'd work through the results there. Codex was the coding agent helping me think; Flow was where I made the images. Eventually I realized I could generate images inside Codex, too.
 
-That led to a second question: how much of an ad could the image generator make at once?
+That made me curious about how much of the process I could keep in one place. I wanted to try a complete ad: the scene, the product packaging, the headline, and the call to action, all generated together.
 
-## What I liked about Flow
-
-The Flow experiments started with two reference images and a question for its agent.
+I had good reasons to keep using Flow. For X-All, a cleaning brand I was working on, I'd found a way to get product imagery I was excited about. I started with two reference images whose lighting and composition I liked and asked Flow's agent a simple question:
 
 ```text
 How would you describe these from a lighting and composition point of view?
 ```
 
-I wanted to use the same visual language for X-All's cleaning products. The agent described hard lighting, frozen motion, and a polished studio look, then asked what X-All sold. I uploaded real product photos, carried those lighting and composition details into the next prompt, and gave it room to experiment.
+It described hard lighting, frozen motion, and a polished studio look, then asked what X-All sold. I uploaded photographs of the actual products, asked it to carry that visual direction across, and gave it room to experiment.
 
-It went well beyond putting a product on a table. There were action scenes around the toilet-cleaning foam powder, a bubbly version of the X-All logo, tablets frozen against water, and a whole set of blue compositions.
+The results went well beyond a product placed on a table. It made action scenes around the toilet-cleaning foam powder, a bubbly version of the X-All logo, and tablets suspended against water. There was a whole set of blue compositions I hadn't thought to ask for.
 
-![One of Flow's generated directions, a grid of white tablets under hard directional light.](/posts/google-flow-tablet-grid-blue.jpg)
+![A Flow-generated arrangement of white cleaning tablets against blue, with hard directional light and long shadows.](/posts/google-flow-tablet-grid-blue.jpg)
 
-I hadn't asked for those particular ideas. Some looked usable straight away, especially the microfiber cloth shot and the tablet dissolving inside a bottle. For finding a design direction, it was pretty dang good.
+Some images looked usable straight away. I liked the microfiber cloth shot and a tablet dissolving inside a bottle. The best outputs had the finish I'd associate with a high-end creative studio. For finding a visual direction, it was pretty dang good.
+
+In the original walkthrough, I go through those images and the details that still needed work.
 
 [Watch the original four-minute Flow walkthrough.](/posts/google-flow-reference-led-product-imagery.mp4)
 
-Getting the actual product right was less reliable. Single-product shots tended to hold together, but labels drifted when several products appeared in one image. A package could look convincing at a glance and say the wrong thing up close. Colors changed, too.
+Packaging was the persistent problem. A single product often held together, but when several appeared in one image, the labels could drift. A package would look convincing until I looked closely at the words. Colors changed, too. The reference photos helped, but they didn't make the output dependable.
 
-Maybe one in ten of the static ads really looked the way I wanted. The good ones felt on brand and as polished as something from a high-end creative studio. The rest were often busy, full of artifacts, or built around generic products it had invented despite the references.
+As I kept working on static ads, maybe one in ten looked the way I wanted. The good ones felt on brand and polished enough to keep me trying. Others were crowded, full of artifacts, or built around products Flow had invented despite the references. Sometimes I'd ask for a correction and it would ignore the change.
 
-I kept trying because I liked the good images so much, but the back and forth got frustrating. Sometimes I'd ask for an edit and Flow would ignore it.
+By the time I tried making ads in Codex, I wanted a process that was easier to revise as well as images I liked. My first attempts were for ELT, an electrolyte drink mix. Codex generated the scenes, then added the headlines and calls to action separately.
 
-## Asking Codex to make all of it
+![The first Codex pass for ELT combines generated product scenes with separately added headlines and Shop ELT buttons.](/posts/codex-static-ads-composited-pass.jpg)
 
-When I tried making ads in Codex, it generated the scenes and added the headlines and calls to action separately. The ads below, for ELT's electrolyte drink mix, came from that first approach. The text was clean, and the ads probably would have been fine to use.
+The text was clean. The ads probably would have been fine to use after checking the product details. But Codex seemed to have decided that typography was a separate job before we'd tried the alternative. I asked it to generate the whole ad in one pass, including the packaging and words.
 
-![The first Codex pass for ELT used generated scenes with composited headlines and Shop ELT CTA buttons.](/posts/codex-static-ads-composited-pass.jpg)
+The next results felt more like complete concepts. The headline's scale and placement were part of the composition. On one, large blue type occupied most of the sky above a padel court; on another, the type sat across a split blue-and-yellow scene. I could see what the generator was attempting with the entire image.
 
-Codex seemed to be assuming the text would be better handled separately. I wanted to see what the image generator could manage, so I asked it to try the entire ad in one generation: scene, headline, call to action, product packaging, all of it.
+![The second pass generates the ELT scenes, packaging, and typography together. These are creative concepts; the visible product and advertising claims still need checking.](/posts/codex-static-ads-native-pass.jpg)
 
-The next pass felt more like a set of complete concepts. The typography belonged to the composition instead of looking added afterward.
+There were still artifacts, and some outputs were much stronger than others. What made me want to continue was the back and forth. The interface felt cleaner, the product references seemed to carry through more consistently, and corrections usually did what I'd asked. I could discuss an image and work on it in the same conversation.
 
-![The second Codex pass generated the scenes, products, and typography together as complete native compositions.](/posts/codex-static-ads-native-pass.jpg)
+Generating the whole composition didn't remove the need to inspect it. Labels, package shape, color, and claims still had to be compared with the actual product. The finished appearance could make those checks easier to overlook. The images showed what the generator could make; they couldn't tell me how the ads would perform.
 
-Some outputs were stronger than others, and there were still visual artifacts. Even so, I found the process easier to work with. The interface was cleaner, the product references seemed to carry through more consistently, and corrections usually did what I'd asked.
+Almost immediately, I wanted to save the instruction as a skill, a set of directions the agent could reuse. I'd had to encourage it to try something it could already do, and I didn't want to have that conversation at the start of every project. That became part of [Make Static Ads](https://github.com/channel47/skills/tree/main/skills/creative-production/make-static-ads): try generating the complete ad first, with the typography and packaging included.
 
-The result still needs a close comparison with the actual product. Labels, shape, color, and claims all need checking. An ad can look finished before those details are right.
+The brief still comes before any of this. I work through that part in the [customer-research essay](/notes/customer-research-ad-angles-claude), following a packing habit from a customer's comment into an ad concept. Once I know what the image should demonstrate, I can bring that brief and the real product photos into Codex and begin.
 
-## Saving the instruction for next time
-
-Almost immediately, I wanted to turn this into a skill: a set of instructions the agent could use again. I'd had to encourage it to try something it was capable of, and I didn't want to repeat that conversation every time.
-
-I've since put that instruction into [Make Static Ads](https://github.com/channel47/skills/tree/main/skills/creative-production/make-static-ads): try generating the complete ad first, including typography and packaging. The [customer-research walkthrough](/notes/customer-research-ad-angles-claude) covers working out what an ad should show before handing over the brief and product images.
-
-I still use Flow, though much less. It can produce images I love, and I liked its workspace enough to start [building my own in Vellum](/projects/vellum). For working through a static ad, I now reach for Codex. Once I have a brief, we can try the whole thing there.
+I still use Flow, though much less. It can produce images I love, and I liked its workspace enough to start [building one of my own, called Vellum](/projects/vellum). For a static ad, I now tend to open Codex. I can ask for the whole idea, see what comes back, and keep working on the parts that aren't right yet.

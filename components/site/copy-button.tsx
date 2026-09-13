@@ -26,7 +26,7 @@ export function CopyButton({ event, text, fetchPath, title, label, glyph = "copy
     try {
       let value = text;
       if (fetchPath) {
-        const response = await fetch(fetchPath);
+        const response = await fetch(fetchPath, { cache: "no-cache" });
         if (!response.ok) throw new Error(`Copy request failed: ${response.status}`);
         value = await response.text();
       }

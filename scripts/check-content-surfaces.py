@@ -189,7 +189,8 @@ for suffix in ['', '.md', '/opengraph-image']:
     assert final == '/projects/google-ads' + suffix, final
 merged, final = fetch('/notes/google-ads-mcp', 'text/markdown')
 assert final == '/projects/google-ads'
-assert b'My Google Ads tool told me it had validated a new ad' in merged and b'npx @channel47/google-ads-mcp@latest' in merged
+ads_source = Path('content/projects/google-ads.md').read_text().split('---', 2)[2].strip().encode()
+assert ads_source in merged and b'npx @channel47/google-ads-mcp@latest' in merged
 
 # The Flow experiment and Codex follow-up share one canonical note.
 flow_old = '/notes/google-flow-reference-led-product-imagery'
@@ -207,7 +208,8 @@ assert b'codex-static-ads-composited-pass.jpg' in combined
 assert b'codex-static-ads-native-pass.jpg' in combined
 merged, final = fetch(flow_old, 'text/markdown')
 assert final == creative
-assert b'The Flow experiments started with two reference images' in merged and b'Saving the instruction for next time' in merged
+creative_source = Path('content/notes/codex-static-ads-google-flow.md').read_text().split('---', 2)[2].strip().encode()
+assert creative_source in merged, 'The legacy URL must serve the complete current article'
 
 for old, group in [('skills', 'projects'), ('connectors', 'projects'), ('posts', 'notes'), ('workshops', 'notes')]:
     html, final = fetch('/browse?type=' + old)

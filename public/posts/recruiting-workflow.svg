@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="840" viewBox="0 0 840 840" role="img" aria-labelledby="title desc">
+  <title id="title">From an open role to an outreach draft</title>
+  <desc id="desc">Roles and target companies in a Google Sheet guide a recurring Claude Cowork task. It searches Apollo, removes duplicates, and adds candidates. The team reviews candidates before Cowork drafts outreach for approved people. A person reviews and sends the messages. Each run ends with a Slack summary. This is a workflow diagram, not a screenshot or candidate record.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 1 1 L 8 5 L 1 9" fill="none" stroke="#59716b" stroke-width="1.6"/>
+    </marker>
+    <style>
+      text { font-family: Arial, Helvetica, sans-serif; fill: #193f36; }
+      .label { font-size: 18px; font-weight: 700; letter-spacing: 2px; }
+      .name { font-size: 30px; font-weight: 700; }
+      .detail { font-size: 24px; fill: #405e55; }
+      .arrow { fill: none; stroke: #59716b; stroke-width: 2; marker-end: url(#arrow); }
+    </style>
+  </defs>
+  <rect width="840" height="840" fill="#f5f4ee"/>
+  <text x="48" y="43" class="label">THE RECRUITING WORKFLOW</text>
+  <text x="48" y="85" font-size="32" font-weight="700">From a role to an outreach draft</text>
+
+  <rect x="48" y="116" width="744" height="108" rx="8" fill="#fffef9" stroke="#cbd3c9"/>
+  <text x="76" y="144" class="label">GOOGLE SHEET · INPUTS</text>
+  <text x="76" y="180" class="name">Roles + Companies</text>
+  <text x="76" y="209" class="detail">Who we need, and where to look.</text>
+  <path d="M 420 230 V 242" class="arrow"/>
+
+  <rect x="48" y="252" width="744" height="108" rx="8" fill="#e4efe8" stroke="#b4cbbd"/>
+  <text x="76" y="280" class="label">COWORK · MONDAY + THURSDAY</text>
+  <text x="76" y="316" class="name">Search Apollo</text>
+  <text x="76" y="345" class="detail">Find people, remove duplicates, add new rows.</text>
+  <path d="M 420 366 V 378" class="arrow"/>
+
+  <rect x="48" y="388" width="744" height="108" rx="8" fill="#f4e9cb" stroke="#d2c39e"/>
+  <text x="76" y="416" class="label">CANDIDATES TAB · TEAM REVIEW</text>
+  <text x="76" y="452" class="name">Approve candidates</text>
+  <text x="76" y="481" class="detail">Review each person before drafting outreach.</text>
+  <path d="M 420 502 V 514" class="arrow"/>
+
+  <rect x="48" y="524" width="744" height="108" rx="8" fill="#e4efe8" stroke="#b4cbbd"/>
+  <text x="76" y="552" class="label">OUTREACH QUEUE TAB · COWORK</text>
+  <text x="76" y="588" class="name">Prepare draft messages</text>
+  <text x="76" y="617" class="detail">For approved candidates, on a scheduled run.</text>
+  <path d="M 420 638 V 650" class="arrow"/>
+
+  <rect x="48" y="660" width="744" height="108" rx="8" fill="#f4e9cb" stroke="#d2c39e"/>
+  <text x="76" y="688" class="label">TEAM REVIEW</text>
+  <text x="76" y="724" class="name">Review and send</text>
+  <text x="76" y="753" class="detail">A person sends the messages manually.</text>
+
+  <text x="48" y="816" class="detail">Each Cowork run ends with a Slack summary.</text>
+</svg>
