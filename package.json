@@ -13,7 +13,7 @@
     "test:content": "node scripts/test-content-model.cjs",
     "share:pack": "node scripts/share-pack.cjs",
     "test:measurement": "node scripts/test-measurement.cjs",
-    "test:motion": "node scripts/test-motion.cjs",
+    "test:motion": "node scripts/test-motion.cjs && node scripts/test-browse-transition.cjs",
     "test:theme": "node scripts/test-theme.cjs"
   },
   "dependencies": {

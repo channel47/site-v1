@@ -3,6 +3,7 @@
 import { useLayoutEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { ARRIVAL_SELECTOR, SCROLL_ARRIVAL_SELECTOR, motionMilliseconds } from "@/lib/motion";
+import { completeBrowseTransition } from "@/lib/browse-transition";
 
 /** Enhance visible arrivals, never the act of reading or restoring a position.
  * Content is visible without JS; no hidden styles survive a cancelled animation. */
@@ -19,6 +20,7 @@ export function PageMotion() {
   }, []);
 
   useLayoutEffect(() => {
+    const browseSnapshot = completeBrowseTransition(pathname);
     const navigation = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
     const root = document.documentElement;
     // Remember this through Strict Mode's setup/cleanup replay. Once the guard
@@ -83,6 +85,7 @@ export function PageMotion() {
       const object = node.matches(".collection-object");
       if (!object && bounds.height > innerHeight * 0.8) return;
       const visible = bounds.top < innerHeight;
+      if (browseSnapshot && visible) return;
       if (!visible && !node.matches(SCROLL_ARRIVAL_SELECTOR)) return;
       const delay = visible ? Math.min(visibleIndex++, 3) * step : 0;
       const animation = node.animate([

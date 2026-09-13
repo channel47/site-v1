@@ -41,6 +41,7 @@ class Page(HTMLParser):
         self.videos = 0
         self.dates = []
         self.reading_blocks = []
+        self.related_reads = []
         self.canonical = None
         self.feed(html)
 
@@ -60,6 +61,10 @@ class Page(HTMLParser):
         if tag == 'time':
             self.dates.append(attrs.get('datetime'))
         classes = attrs.get('class', '').split()
+        if tag == 'a' and 'next-read' in classes:
+            assert attrs.get('rel') not in ['prev', 'next'], 'Related reading is not chronological pagination'
+            self.related_reads.append(attrs['href'])
+        assert 'adjacent-read' not in classes, 'Chronological pagination has been replaced by related reading'
         if 'piece-prose' in classes:
             self.reading_blocks.append('prose')
         if 'piece-video' in classes:
@@ -130,7 +135,10 @@ for group, paths in expected.items():
     assert set(Page(html.decode()).rows) == set(paths), group
     for path in paths:
         html, _ = fetch(path)
-        assert Page(html.decode()).canonical == site + path, path
+        article = Page(html.decode())
+        assert article.canonical == site + path, path
+        assert len(article.related_reads) <= 1, (path, article.related_reads)
+        assert all(target in all_paths and target != path for target in article.related_reads), (path, article.related_reads)
         md, _ = fetch(path + '.md')
         negotiated, _ = fetch(path, 'text/markdown')
         assert md == negotiated, path

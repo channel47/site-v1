@@ -8,15 +8,13 @@ export function ReadingEnd({ href, newsletter }: { href: string; newsletter?: st
   return (
     <aside className="reading-end" aria-label="Keep exploring">
       {next ? (
-        <MeasuredLink
-          href={next.href}
-          className="next-read"
-          event="related_click"
-        >
-          <span className="utility-label">Next</span>
-          <span className="next-read-title">{next.title}</span>
-          <DirectionCue />
-        </MeasuredLink>
+        <nav aria-label="Related reading">
+          <MeasuredLink href={next.href} className="next-read" event="related_click">
+            <span className="next-read-label">Read next</span>
+            <span className="next-read-title">{next.title}</span>
+            <DirectionCue />
+          </MeasuredLink>
+        </nav>
       ) : null}
       <section className="reading-subscribe" aria-label="Subscribe">
         <h2>Follow what I’m working on.</h2>

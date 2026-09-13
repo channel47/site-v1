@@ -9,7 +9,7 @@ const token = key => tokens.match(new RegExp(`${key}:\\s*([^;]+)`))[1]
 
 // Exercise the actual lifecycle against browser doubles. No browser settings,
 // network calls, timers or subscriber records are changed by these tests.
-function app({ reduced = false, historyDocument = false, gate = 'pending', fonts = Promise.resolve(), hash = '' } = {}) {
+function app({ reduced = false, historyDocument = false, gate = 'pending', fonts = Promise.resolve(), hash = '', browseSnapshot = false } = {}) {
   class Events {
     handlers = new Map()
     addEventListener(name, fn) { this.handlers.set(name, fn) }
@@ -72,6 +72,7 @@ function app({ reduced = false, historyDocument = false, gate = 'pending', fonts
     getComputedStyle: () => ({ getPropertyValue: key => token(key).replace(/([\d.]+)ms$/, (_, ms) => `${Number(ms) / 1000}s`) }),
     require: name => {
       if (name === '@/lib/motion') return motion
+      if (name === '@/lib/browse-transition') return { completeBrowseTransition: () => browseSnapshot }
       if (name === 'next/navigation') return { usePathname: () => pathname }
       if (name === 'react') return {
         useRef(value) { const i = cursor++; return refs[i] ??= { current: value } },
@@ -204,6 +205,15 @@ assert.equal(fresh.plays[0].state, 'cancelled', 'A cached page must not retain a
 b.unmount()
 assert.equal(b.window.handlers.size, 0)
 assert.equal(b.media.handlers.size, 0)
+
+const switching = app({ browseSnapshot: true })
+const shown = switching.node(100, true), later = switching.node(1200, true)
+switching.render('/', [shown, later])
+assert.equal(shown.plays.length, 0, 'The view snapshot owns visible arrivals without a second blur underneath')
+assert.equal(later.plays[0].state, 'paused', 'Off-screen gallery objects retain their scroll arrivals after switching views')
+switching.observers[0].enter(later); await flush()
+assert.equal(later.plays[0].state, 'running')
+switching.unmount()
 
 const d = app(), pressed = d.node(100), waiting = d.node(1200, true)
 d.render('/', [pressed, waiting])

@@ -27,6 +27,7 @@
   --text-lede: 1.1875rem;
   --text-heading: clamp(2.625rem, 5.3vw, 4.5rem);
   --text-subheading: 2.25rem;
+  --text-navigation: 1.875rem;
   --text-menu: clamp(5rem, 19vw, 14rem);
   --reading-leading: 1.75;
   --tracking-label: 0.01em;

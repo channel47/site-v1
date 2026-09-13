@@ -188,7 +188,7 @@ function loadCollection<T extends Note>(section: ContentGroup): T[] {
       } as T;
     })
     .sort(
-      (a, b) => b.date.localeCompare(a.date) || a.title.localeCompare(b.title),
+      (a, b) => b.date.localeCompare(a.date) || a.title.localeCompare(b.title, "en") || a.slug.localeCompare(b.slug, "en"),
     );
 }
 export const getNotes = cache(() => loadCollection<Note>("notes"));
@@ -212,7 +212,8 @@ export const getContentEntries = cache(() => {
   ].sort(
     (a, b) =>
       b.item.date.localeCompare(a.item.date) ||
-      a.item.title.localeCompare(b.item.title),
+      a.item.title.localeCompare(b.item.title, "en") ||
+      `${a.collection.basePath}/${a.item.slug}`.localeCompare(`${b.collection.basePath}/${b.item.slug}`, "en"),
   );
   const urls = new Set<string>();
   for (const { collection, item } of entries) {
@@ -269,32 +270,33 @@ export function getEntryPreview(
   return preview;
 }
 
-/** Related reading uses authored links and shared tags, with recency as a
- * tie-breaker. Prefer a note about the work; never suggest the current page. */
+/** Recommend one related piece across notes and projects. Authored article
+ * links carry four points each, shared tags one; publication order breaks ties.
+ * Never recommend the current page or force an unrelated destination. */
 export function getNextRead(href: string): FeedItem | undefined {
-  const entries = getContentEntries();
-  const current = entries.find(
-    ({ collection, item }) => `${collection.basePath}/${item.slug}` === href,
-  );
+  const entries = getContentEntries().map(({ collection, item }) => {
+    const links = new Set<string>();
+    marked.walkTokens(marked.lexer(item.markdown), (token) => {
+      if (token.type === "link") links.add(token.href.split(/[?#]/)[0]);
+    });
+    return { href: `${collection.basePath}/${item.slug}`, item, links };
+  });
+  const current = entries.find((entry) => entry.href === href);
   if (!current) return undefined;
-  const candidates = entries
-    .flatMap(({ collection, item }) => {
-      const candidateHref = `${collection.basePath}/${item.slug}`;
-      if (candidateHref === href) return [];
-      const score =
-        item.tags.filter((tag) => current.item.tags.includes(tag)).length +
-        (current.item.markdown.includes(`](${candidateHref})`) ? 4 : 0) +
-        (item.markdown.includes(`](${href})`) ? 4 : 0);
-      return score
-        ? [{ href: candidateHref, group: collection.group, score }]
-        : [];
-    })
-    .sort(
-      (a, b) =>
-        Number(b.group === "notes") - Number(a.group === "notes") ||
-        b.score - a.score,
-    );
-  return getFeedItems().find((item) => item.href === candidates[0]?.href);
+  let bestHref: string | undefined;
+  let bestScore = 0;
+  for (const candidate of entries) {
+    if (candidate.href === href) continue;
+    const sharedTags = new Set(candidate.item.tags.filter((tag) => current.item.tags.includes(tag)));
+    const score = sharedTags.size
+      + (current.links.has(candidate.href) ? 4 : 0)
+      + (candidate.links.has(href) ? 4 : 0);
+    if (score > bestScore) {
+      bestHref = candidate.href;
+      bestScore = score;
+    }
+  }
+  return getFeedItems().find((item) => item.href === bestHref);
 }
 
 /** Word count / 200wpm, rounded up to at least 1 — the post byline's read time. */

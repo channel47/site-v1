@@ -4,8 +4,10 @@ import { DotsThree } from "@phosphor-icons/react";
 import { GlitchLogo } from "./glitch-logo";
 import { MarkLink } from "./mark-link";
 import { NavigationTakeover } from "./navigation-takeover";
+import { BrowseViews, type BrowseView } from "./browse-views";
+import { isBrowseTransitionTo } from "@/lib/browse-transition";
 
-export function SiteHeader({ home = false }: { home?: boolean }) {
+export function SiteHeader({ home = false, browseView }: { home?: boolean; browseView?: BrowseView }) {
   const [open, setOpen] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);
   const keyboard = useRef(false);
@@ -15,7 +17,8 @@ export function SiteHeader({ home = false }: { home?: boolean }) {
   }, []);
   return (
     <header className="site-header">
-      {home ? <GlitchLogo /> : <MarkLink />}
+      {home ? <GlitchLogo animateOnMount={!isBrowseTransitionTo("/")} /> : <MarkLink />}
+      {browseView ? <BrowseViews current={browseView} /> : null}
       <button
         ref={trigger}
         type="button"

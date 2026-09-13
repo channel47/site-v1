@@ -66,7 +66,7 @@ hydration and never delays content.
 | `content_depth` | The viewport reached 50% or 90% of the article body; `depth` identifies the milestone |
 | `content_end` | The bottom of the article body entered the viewport |
 | `prompt_copy`, `code_copy` | An article prompt or code block was successfully copied |
-| `related_click` | The suggested next piece was clicked; includes `target_path` |
+| `related_click` | The related article under Read next was clicked; includes `target_path` |
 | `repository_click` | The project's source link was clicked |
 | `install_copy` | An install command was successfully copied |
 | `page_copy`, `link_copy` | Markdown or the page URL was successfully copied |

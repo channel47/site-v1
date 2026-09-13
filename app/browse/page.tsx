@@ -32,7 +32,7 @@ export default async function BrowsePage({
   );
   return (
     <div className="st-page">
-      <SiteHeader />
+      <SiteHeader browseView="index" />
       <main id="main-content" className="st-shell index-page">
         <header className="st-head">
           <h1 className="st-h1">Index</h1>

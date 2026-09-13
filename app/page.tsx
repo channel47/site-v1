@@ -8,7 +8,7 @@ export default function Page() {
   const items = getCollectionItems();
   return (
     <div className="st-page collection-page">
-      <SiteHeader home />
+      <SiteHeader home browseView="collection" />
       <main id="main-content" className="collection-main">
         <h1 className="sr-only">Projects and experiments by Jackson Dean</h1>
         <Collection items={items} />
