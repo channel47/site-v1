@@ -1,5 +1,5 @@
 import { BrowseEntryLink } from "./browse-navigation";
-import { shortDate, type FeedItem } from "@/lib/content";
+import { getStoryDate, shortDate, type FeedItem } from "@/lib/content";
 export function Rows({ items }: { items: FeedItem[] }) {
   return (
     <ul className="st-rows">
@@ -12,7 +12,7 @@ export function Rows({ items }: { items: FeedItem[] }) {
             </span>
             <span className="st-row-meta">
               {item.typeLabel}
-              <time dateTime={item.date}>{shortDate(item.date)}</time>
+              <time dateTime={getStoryDate(item)}>{shortDate(getStoryDate(item))}</time>
             </span>
           </BrowseEntryLink>
         </li>

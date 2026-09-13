@@ -22,6 +22,7 @@ export function noteTwin(
       description: note.description,
       author: AUTHOR_NAME,
       publishedAt: note.date,
+      storyDate: note.storyDate,
       updatedAt: note.updated ?? note.date,
       canonical: `${SITE_URL}/${section}/${note.slug}`,
       repo: "repo" in note ? note.repo : undefined,

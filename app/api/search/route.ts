@@ -21,6 +21,7 @@ interface Doc {
   group: ContentGroup
   description: string
   date: string
+  storyDate?: string
   haystack: { title: string; tags: string; description: string; body: string }
 }
 
@@ -31,6 +32,7 @@ function doc(
     slug: string
     description: string
     date: string
+    storyDate?: string
     tags: string[]
     markdown: string
   },
@@ -44,6 +46,7 @@ function doc(
     group: collection.group,
     description: item.description,
     date: item.date,
+    storyDate: item.storyDate,
     haystack: {
       title: `${item.title} ${item.slug}`.toLowerCase(),
       tags: item.tags.join(" ").toLowerCase(),
@@ -95,6 +98,7 @@ export async function GET(req: Request) {
       group: d.group,
       description: d.description,
       date: d.date,
+      storyDate: d.storyDate,
     }))
 
   return Response.json(

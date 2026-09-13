@@ -3,6 +3,7 @@ title: "From a reference track to an Ableton rack"
 slug: phantomrack
 description: "A college friend built an app that estimates the effects on a reference vocal and makes an Ableton rack. I joined him to design my first app interface."
 date: 2026-09-11
+updated: 2026-09-12
 tags: [phantomrack, music, ableton, gemini, agents, design]
 preview:
   src: /projects/phantomrack/opengraph-image
@@ -13,7 +14,7 @@ When my college friend Mike asked whether I'd tried Replit, a tool for building 
 
 A week later, we met at a coffee shop and he showed me what he'd made. His app could take a song, isolate the vocal, and use Google's Gemini model to estimate the effects on it. Then it put together an effects rack you could open in Ableton, the music production software, and try on another vocal.
 
-I hadn't realized the models could understand audio well enough to attempt that. Afterward, I went looking for other people doing something similar. I didn't find much like it, and I wanted to get involved. I joined Mike to work on the interface of what became PhantomRack.
+I hadn't realized the models could understand audio well enough to attempt that. Afterward, I went looking for other people doing something similar. I didn't find much like it, and I wanted to get involved. I joined Mike to work on the interface of PhantomRack.
 
 An effects rack is a group of audio effects and their settings saved together. PhantomRack uses the effects included with Ableton, so you can load the rack onto your own vocal and adjust it as you listen.
 
@@ -43,6 +44,6 @@ I was surprised by how faithfully the coding agents could reproduce the designs.
 
 ![PhantomRack’s current homepage.](/posts/phantomrack/homepage.webp "screenshot")
 
-As of September 2026, PhantomRack has about 300 users, mostly on the free plan, and a handful who pay. Neither of us has worked on it much in recent weeks. Life gets busy.
+PhantomRack has about 300 users, mostly on the free plan, and a handful who pay. Neither of us has worked on it much in recent weeks. Life gets busy.
 
 We're still proud of it. I think it's useful, and I still haven't found another tool that reliably does the same job.

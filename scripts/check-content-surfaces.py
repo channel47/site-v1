@@ -8,6 +8,7 @@ import sys
 import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 from pathlib import Path
+from email.utils import parsedate_to_datetime
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError
 
@@ -73,6 +74,9 @@ class Page(HTMLParser):
 
 expected = {'projects': [], 'notes': []}
 titles = {}
+publication_dates = {}
+story_dates = {}
+revision_dates = {}
 legacy = []
 for folder, group in [('projects', 'projects'), ('notes', 'notes')]:
     for source in Path('content', folder).glob('*.md'):
@@ -82,6 +86,12 @@ for folder, group in [('projects', 'projects'), ('notes', 'notes')]:
         expected[group].append(path)
         title = re.search(r'^title: *([^\n]+)', source.read_text(), re.M).group(1)
         titles[path] = title.strip(' "\'')
+        def date_field(name):
+            match = re.search(rf'^{name}: *([^\n]+)', source.read_text(), re.M)
+            return match.group(1).strip(' "\'') if match else None
+        publication_dates[path] = date_field('date')
+        story_dates[path] = date_field('storyDate') or publication_dates[path]
+        revision_dates[path] = date_field('updated') or publication_dates[path]
         historical = re.search(r'^rssId: *([^\n]+)', source.read_text(), re.M)
         if historical:
             legacy.append((historical.group(1).strip(), path))
@@ -101,11 +111,13 @@ for slug in new_projects:
     assert '/projects/' + slug in collection.objects
     expect_not_found('/preview/drafts/' + slug)
     article, _ = fetch('/projects/' + slug)
-    assert Page(article.decode()).dates == ['2026-09-11'], slug
+    assert Page(article.decode()).dates == [story_dates['/projects/' + slug]], slug
     for editorial_text in [b'Unpublished draft', b'Source basis', b'Production status', b'Before publication']:
         assert editorial_text not in article, (slug, editorial_text)
     result, _ = fetch('/api/search?q=' + ('ballet' if slug == 'ballet-born-simple' else slug))
-    assert any(item['url'] == site + '/projects/' + slug for item in json.loads(result)['results']), slug
+    match = next(item for item in json.loads(result)['results'] if item['url'] == site + '/projects/' + slug)
+    assert match['date'] == '2026-09-11', slug
+    assert match.get('storyDate', match['date']) == story_dates['/projects/' + slug], slug
 phantom, _ = fetch('/projects/phantomrack')
 for audio in ['hiphop-dry.mp3', 'hiphop-wet.mp3']:
     path = '/posts/phantomrack/' + audio
@@ -130,6 +142,14 @@ assert '/collection/ads-plug.webp' in collection.images
 for image in collection.images:
     image_bytes, _ = fetch(image)
     assert image_bytes[:4] == b'RIFF' and image_bytes[8:12] == b'WEBP', image
+index, _ = fetch('/browse')
+index_page = Page(index.decode())
+assert collection.objects == [path for path in index_page.rows if path in collection.objects], 'Collection and Index share story order'
+assert index_page.dates == [story_dates[path] for path in index_page.rows]
+assert index_page.dates == sorted(index_page.dates, reverse=True), 'Browsing is newest-story-first'
+assert story_dates['/projects/ballet-born-simple'] == '2026-01'
+assert story_dates['/projects/google-ads'] == '2026-01'
+assert story_dates['/projects/recruiting'] == '2026-07'
 for group, paths in expected.items():
     html, _ = fetch('/browse?type=' + group)
     assert set(Page(html.decode()).rows) == set(paths), group
@@ -137,6 +157,13 @@ for group, paths in expected.items():
         html, _ = fetch(path)
         article = Page(html.decode())
         assert article.canonical == site + path, path
+        assert article.dates == [story_dates[path]], path
+        graphs = [json.loads(block) for block in re.findall(r'<script type="application/ld\+json">(.*?)</script>', html.decode())]
+        nodes = [node for graph in graphs for node in graph.get('@graph', []) if node.get('@id') in [site + path + '#article', site + path + '#code']]
+        assert len(nodes) == 1, path
+        assert nodes[0]['dateModified'] == revision_dates[path], path
+        if nodes[0]['@type'] == 'Article':
+            assert nodes[0]['datePublished'] == publication_dates[path], path
         assert len(article.related_reads) <= 1, (path, article.related_reads)
         assert all(target in all_paths and target != path for target in article.related_reads), (path, article.related_reads)
         md, _ = fetch(path + '.md')
@@ -144,6 +171,10 @@ for group, paths in expected.items():
         assert md == negotiated, path
         assert f'canonical: "{site}{path}"' in md.decode(), path
         assert f'group: "{group}"' in md.decode(), path
+        assert f'publishedAt: "{publication_dates[path]}"' in md.decode(), path
+        assert f'updatedAt: "{revision_dates[path]}"' in md.decode(), path
+        if story_dates[path] != publication_dates[path]:
+            assert f'storyDate: "{story_dates[path]}"' in md.decode(), path
         png, _ = fetch(path + '/opengraph-image')
         assert png[:8] == b'\x89PNG\r\n\x1a\n' and struct.unpack('>II', png[16:24]) == (1200, 630), path
 
@@ -212,6 +243,13 @@ vellum_search, _ = fetch('/api/search?q=vellum')
 assert any(r['url'] == site + '/projects/vellum' for r in json.loads(vellum_search)['results'])
 rss, _ = fetch('/rss.xml')
 feed = ET.fromstring(rss)
+feed_items = feed.findall('./channel/item')
+feed_dates = [parsedate_to_datetime(item.findtext('pubDate')) for item in feed_items]
+assert feed_dates == sorted(feed_dates, reverse=True), 'RSS retains publication order'
+assert parsedate_to_datetime(feed.findtext('./channel/lastBuildDate')).date().isoformat() == max(revision_dates.values())
+for item in feed_items:
+    path = item.findtext('link').removeprefix(site)
+    assert parsedate_to_datetime(item.findtext('pubDate')).date().isoformat() == publication_dates[path], path
 for slug in new_projects:
     items = [item for item in feed.findall('./channel/item') if item.findtext('link') == site + '/projects/' + slug]
     assert len(items) == 1, slug

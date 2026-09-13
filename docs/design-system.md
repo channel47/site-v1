@@ -113,7 +113,7 @@ Article images reserve their intrinsic width and height before lazy loading. The
 | `CopyButton` | One button implementation for text and icon variants, with the same 18px Phosphor glyph, 48px target, hover color and two-second feedback everywhere. Reports actual success/failure with a check or warning icon. Measurement fires only after successful copying. Installation and code blocks share their inset recipe. In fenced blocks, the copy glyph aligns with the first text line in a reserved right-hand column; long code scrolls within the text column and never runs underneath the button. `CodeCopyButtons` enhances fenced blocks with Copy prompt or Copy code, preserving line breaks and excluding UI labels. Static HTML and feeds retain readable code without inert buttons. |
 | `Faq` | One answer open at a time. Buttons expose expanded state; closed panels are inert. Height/opacity settle gradually. |
 | `Capture` | Shared capsule input/action. Idle, sending, accepted, unavailable and error states remain real. No fabricated success for an unconfigured service. |
-| `ReadingEnd` | One related article under Read next, across notes and projects. Authored article links carry four points each and shared tags one; the shared feed's publication order breaks equal scores. Omit the link when no related piece exists and never link to the current article. Keep the label above its left-aligned title across the reading measure, with a separate 48px arrow column on the right. Use this same composition on phones. The whole entry is one link; title and arrow turn blue on hover/focus without displacement. One email invitation follows. Sharing stays grouped on the left with a 12px label gap. Copy, link and social actions use 18px Phosphor icons; the Copy page control keeps its width during feedback. |
+| `ReadingEnd` | One related article under Read next, across notes and projects. Authored article links carry four points each and shared tags one; the shared inventory's story order breaks equal scores. Omit the link when no related piece exists and never link to the current article. Keep the label above its left-aligned title across the reading measure, with a separate 48px arrow column on the right. Use this same composition on phones. The whole entry is one link; title and arrow turn blue on hover/focus without displacement. One email invitation follows. Sharing stays grouped on the left with a 12px label gap. Copy, link and social actions use 18px Phosphor icons; the Copy page control keeps its width during feedback. |
 | `DirectionCue` | A regular 20px right arrow inside a stationary 48px circular surface, used for related reading and session-proof links. The glyph stays in place while the surface changes to blue. Use --accent-ink on that fill so the arrow stays legible in both themes. The menu is text only, with no arrows beside its links. Never scale arrows with headline type. |
 | `UtilityLink` | A 48px icon-only target with an accessible name and a compact label on hover/focus. Use the same Phosphor icon family as sharing and disclosures; do not add hand-drawn SVG alternatives. Work together uses a conversation icon; RSS uses its feed icon. Utility labels use Instrument Sans, never monospace. |
 | `SocialLinks` | One shared pair of 20px X and GitHub icons, each inside a 48px target. Blue on paper; light ink on the cobalt menu. Accessible profile names and labels on hover/focus supply context without persistent text or outbound arrows. Menu social profiles sit at lower left, opposite contact and RSS. External links keep native navigation. |
@@ -124,8 +124,11 @@ Article images reserve their intrinsic width and height before lazy loading. The
 
 ## Collection composition
 
-Use the same newest-first publication order as Index, including its same-day
-tie-breaks. Cover metadata selects artwork and labels, never display order.
+Use the same newest-first story order as Index, falling back to publication
+when no story date is set. Preserve the source's date precision and use the
+shared title/path tie-breaks. Cover metadata selects artwork and labels, never
+display order. Article bylines and Index show the story date in the existing
+month/year treatment; publication dates remain separate in feeds and metadata.
 
 Arrange objects in balanced pairs on a twelve-column grid. A larger, upright
 object takes six columns; its smaller companion takes five, starts lower, and

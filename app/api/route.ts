@@ -35,7 +35,8 @@ export function GET() {
       search: {
         endpoint: "/api/search",
         params: { q: "keyword query, required" },
-        returns: "{ version, query, count, results: [{title, url, markdownUrl, type, group, description, date}] }",
+        returns: "{ version, query, count, results: [{title, url, markdownUrl, type, group, description, date, storyDate?}] }",
+        dates: "date is the publication date. Optional storyDate is the story's point in time (YYYY-MM or YYYY-MM-DD), used for the article byline and browsing order.",
       },
       nextActions: [
         "Read /sitemap.md for a markdown-oriented index of every public URL.",

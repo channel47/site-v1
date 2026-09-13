@@ -23,7 +23,12 @@ tags: [optional-topic]
 ---
 ```
 
-Replace these examples with actual content and its real date.
+Replace these examples with actual content and its real publication date.
+Keep `date` stable when revising an existing piece: RSS, publication metadata,
+and Markdown `publishedAt` use it. When the story belongs to another moment,
+add `storyDate`. The byline, Collection, and Index use that date instead.
+Use a quoted month (`"2026-01"`) when the source does not establish a day;
+do not invent one. Without `storyDate`, browsing falls back to `date`.
 
 ## Direct language
 
@@ -44,7 +49,8 @@ The working guidance is in [VOICE.md](VOICE.md).
 | Field | Purpose |
 | --- | --- |
 | `slug` | Lowercase letters, numbers and hyphens. |
-| `updated` | Date of a substantive revision, on or after `date`. Used by sitemap and structured data; does not change publication order or RSS identity. Do not bump it for routine builds. |
+| `storyDate` | The main story's point in time: quoted `YYYY-MM` or `YYYY-MM-DD`. Controls the visible date and browsing order; must not be later than `updated` (or `date` when unrevised). Available separately in Markdown and search; never substitutes for publication metadata. |
+| `updated` | Date of a substantive revision, on or after `date`. Used by sitemap and structured data; does not change story order, RSS publication order, or RSS identity. Do not bump it for routine builds. |
 | `newsletter` | A short, article-specific reason to subscribe. The reading template adds the shared occasional-email cadence. |
 | `preview: { src, alt }` | An existing image selected instead of the first Markdown image or video poster. |
 | `video: { src, poster, captions, duration, caption, uploadDate }` | Actual MP4, poster, English WebVTT, ISO8601 duration and optional visible caption. Optional quoted `uploadDate` preserves the video's original date when moved to another article. |

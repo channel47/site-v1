@@ -14,6 +14,7 @@ interface FeedEntry {
   description: string
   html: string
   date: string
+  updated?: string
 }
 
 function esc(text: string): string {
@@ -61,6 +62,7 @@ function entry(item: Note, url: string): FeedEntry {
     description: item.description,
     html: item.html,
     date: item.date,
+    updated: item.updated,
   }
 }
 
@@ -77,8 +79,14 @@ export function GET() {
       // Keep historical RSS identity so URL consolidation does not republish old entries.
       return { ...result, guid: item.rssId ? absoluteUrl(SITE_URL, item.rssId) : `${SITE_URL}/${collection.key}/${item.slug}` }
     })
+    // A retrospective's story date must not reorder publication in feed readers.
+    .sort((a, b) => b.date.localeCompare(a.date) || a.title.localeCompare(b.title, "en") || a.url.localeCompare(b.url, "en"))
 
   const rfc822 = (iso: string) => new Date(`${iso}T12:00:00Z`).toUTCString()
+  const lastBuildDate = entries.reduce((latest, item) => {
+    const modified = item.updated ?? item.date
+    return modified > latest ? modified : latest
+  }, entries[0]?.date ?? "2026-01-01")
 
   const items = entries
     .map((e) =>
@@ -102,7 +110,7 @@ export function GET() {
     <link>${SITE_URL}</link>
     <description>${esc(SITE_DESCRIPTION)}</description>
     <language>en-us</language>
-    <lastBuildDate>${rfc822(entries[0]?.date ?? "2026-01-01")}</lastBuildDate>
+    <lastBuildDate>${rfc822(lastBuildDate)}</lastBuildDate>
     <atom:link href="${SITE_URL}/rss.xml" rel="self" type="application/rss+xml"/>
 ${items}
   </channel>

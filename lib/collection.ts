@@ -77,7 +77,7 @@ export function getCollectionItems(): CollectionItem[] {
   });
   const coversByPath = new Map(covers.map((cover) => [cover.href, cover]));
   const items: CollectionItem[] = [];
-  // Follow Index's canonical newest-first order, including its same-day ties.
+  // Follow Index's canonical story order, including its date ties.
   // New real images can join without custom art. Text-only pieces remain in Index.
   for (const { collection, item } of entries) {
     const href = `${collection.basePath}/${item.slug}`;

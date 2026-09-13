@@ -27,7 +27,7 @@ try {
   fixture('notes', 'duplicate-tags', 'tags: [agents, agents, agents]\n', { date: '2026-09-12' })
   assert.equal(content.getNextRead('/notes/current').href, '/projects/strong-match', 'Repeated tags must not inflate relevance')
   fixture('projects', 'recent-match', 'tags: [agents, images]\n', { date: '2026-09-11', title: 'A recent match' })
-  assert.equal(content.getNextRead('/notes/current').href, '/projects/recent-match', 'Publication recency breaks equal relevance; revisions do not')
+  assert.equal(content.getNextRead('/notes/current').href, '/projects/recent-match', 'Story recency (falling back to publication) breaks equal relevance; revisions do not')
   fixture('projects', 'same-day-match', 'tags: [agents, images]\n', { date: '2026-09-11', title: 'Z same-day match' })
   assert.equal(content.getNextRead('/notes/current').href, '/projects/recent-match', 'Same-day ties retain the deterministic feed order')
   fixture('projects', 'linked-match', '', { date: '2026-09-05' })
@@ -39,6 +39,29 @@ try {
   assert.equal(content.getNextRead('/notes/current').href, '/projects/recent-match', 'Removed destinations cannot be recommended')
   for (const href of ['/notes/current', '/notes/unrelated', '/notes/weak-match', '/notes/duplicate-tags', '/projects/strong-match', '/projects/recent-match', '/projects/same-day-match']) {
     fs.rmSync(path.join(temp, 'content', `${href.slice(1)}.md`), { force: true })
+  }
+  fixture('projects', 'retrospective', 'storyDate: "2026-01"\nupdated: 2026-09-12\n', { date: '2026-09-11' })
+  fixture('notes', 'summer-note', '', { date: '2026-07-24' })
+  fixture('notes', 'summer-work', 'storyDate: 2026-07-15\n', { date: '2026-09-12' })
+  const datedItems = content.getFeedItems()
+  assert.deepEqual(datedItems.map(item => item.href), ['/notes/summer-note', '/notes/summer-work', '/projects/retrospective'], 'Browsing follows the work, not when a retrospective was published')
+  assert.equal(datedItems[2].date, '2026-09-11', 'Story dates never overwrite publication dates')
+  assert.equal(datedItems[2].updated, '2026-09-12', 'Later revisions do not move a story forward')
+  assert.equal(content.getStoryDate(datedItems[2]), '2026-01', 'Unknown days retain month precision')
+  assert.equal(content.getStoryDate(datedItems[0]), '2026-07-24', 'Undated stories fall back to publication')
+  assert.equal(content.shortDate('2026-01'), 'Jan 2026')
+  assert.equal(content.shortDate('2026-01-31'), 'Jan 2026')
+  fixture('notes', 'summer-work', 'storyDate: 2026-07-15\nupdated: 2026-09-12\n', { date: '2026-09-12' })
+  assert.deepEqual(content.getFeedItems().map(item => item.href), datedItems.map(item => item.href), 'A revision leaves browsing order unchanged')
+  fixture('notes', 'later-version', 'storyDate: "2026-09"\nupdated: 2026-09-12\n', { date: '2026-07-02' })
+  assert.equal(content.getStoryDate(content.getNoteBySlug('later-version')), '2026-09', 'A revised story may describe a moment after original publication')
+  for (const storyDate of ['2026-13', '2026-02-31', '2026-09-31', '2026-09-13', '2027-01', 'yesterday', '47']) {
+    fixture('notes', 'invalid-story', `storyDate: "${storyDate}"\nupdated: 2026-09-12\n`)
+    assert.throws(() => content.getNotes(), /Invalid story date/)
+    fs.unlinkSync(path.join(temp, 'content/notes/invalid-story.md'))
+  }
+  for (const href of ['/projects/retrospective', '/notes/summer-note', '/notes/summer-work', '/notes/later-version']) {
+    fs.unlinkSync(path.join(temp, 'content', `${href.slice(1)}.md`))
   }
   fixture('projects', 'personal-tool', 'status: experiment\n')
   fixture('notes', 'observation')
@@ -129,7 +152,7 @@ try {
   fs.unlinkSync(path.join(temp, 'content/projects/bad-status.md'))
   fs.writeFileSync(path.join(temp, 'content/projects/alias.md'), '---\ntitle: Alias\nslug: personal-tool\ndescription: Duplicate URL fixture\ndate: 2026-09-09\n---\nDuplicate.\n')
   assert.throws(() => content.getContentEntries(), /Duplicate content URL/)
-  console.log('Content model passed: sections, canonical paths, image dimensions and local-path boundaries, minimal publishing, preview fallbacks, relevant reading recommendations, status validation, collision detection.')
+  console.log('Content model passed: story/publication dates, month precision, chronology, sections, canonical paths, image dimensions and local-path boundaries, minimal publishing, preview fallbacks, relevant reading recommendations, status validation, collision detection.')
 } finally {
   process.chdir(root)
   fs.rmSync(temp, { recursive: true, force: true })

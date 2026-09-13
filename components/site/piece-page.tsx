@@ -11,6 +11,7 @@ import { JsonLd } from "./json-ld";
 import { noteGraph, projectGraph, SITE_URL, AUTHOR_NAME } from "@/lib/seo";
 import {
   shortDate,
+  getStoryDate,
   readTime,
   splitArticleAtVideo,
   PROJECT_STATUS_LABELS,
@@ -52,7 +53,7 @@ export function PiecePage({
               <div className="piece-author-details">
                 <Link href="/about" className="piece-author">{AUTHOR_NAME}</Link>
                 <p className="piece-meta">
-                  <time dateTime={entry.date}>{shortDate(entry.date)}</time>
+                  <time dateTime={getStoryDate(entry)}>{shortDate(getStoryDate(entry))}</time>
                   {minutes > 1 ? <span>{minutes} min read</span> : null}
                   {project?.status ? (
                     <span>{PROJECT_STATUS_LABELS[project.status]}</span>

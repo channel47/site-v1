@@ -32,7 +32,7 @@ export function GET() {
     "",
     ...CONTENT_GROUPS.flatMap((group) => [
       `## ${group.title}`,
-      ...items.filter((item) => item.group === group.key).map((item) => row(`${SITE_URL}${item.href}`, item.title, item.date)),
+      ...items.filter((item) => item.group === group.key).map((item) => row(`${SITE_URL}${item.href}`, item.title, item.updated ?? item.date)),
       "",
     ]),
     "## Machine access",

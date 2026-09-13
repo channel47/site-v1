@@ -1,8 +1,10 @@
 ---
 title: "A recruiting workflow in a Google Sheet"
 slug: recruiting
-description: "A coworker's recruiting idea became a recurring workflow in Claude Cowork and Google Sheets. It has since led to interviews and one hire."
+description: "A coworker's idea became a recurring recruiting workflow in Claude Cowork and Google Sheets. Now we have a candidate list to work through."
 date: 2026-09-11
+storyDate: "2026-07"
+updated: 2026-09-12
 tags: [recruiting, claude-cowork, google-sheets, automation, agents]
 sanitized: true
 preview:
@@ -10,7 +12,7 @@ preview:
   alt: "A recruiting workflow in a Google Sheet, with the teal card-selector artwork."
 ---
 
-In July 2026, a coworker asked whether we could build an agent to help with recruiting. The company was using agencies to fill several open roles, but too many candidates were spending time in long interviews for jobs that weren't a good fit.
+A coworker asked whether we could build an agent to help with recruiting. The company was using agencies to fill several open roles, but too many candidates were spending time in long interviews for jobs that weren't a good fit.
 
 The coworker's message included an idea for where to look instead. Start with companies we thought did this work well. Find people there whose experience might fit our roles, then have someone on the team review them before reaching out.
 
@@ -53,13 +55,13 @@ The candidates came from companies on our target list. Claude flagged a few reco
 
 I spot-checked some of the list. The people I reviewed worked at the intended companies and had titles related to our open roles. Given how quickly we'd put the system together, the results were better than I expected.
 
-There was still plenty to do. A relevant title doesn't tell us whether someone wants to move or would be a good fit. At that point, the full review, outreach, and interviews were all ahead of us.
+There's still plenty to do. A relevant title doesn't tell us whether someone wants to move or would be a good fit. The full review, outreach, and interviews are all ahead of us.
 
-We were using Apollo's [14-day free trial](https://knowledge.apollo.io/hc/en-us/articles/5288168088205-Access-a-Free-Trial-of-Apollo). The plan was to decide what to pay for after seeing the outreach results and understanding the API limits we'd need.
+We're using Apollo's [14-day free trial](https://knowledge.apollo.io/hc/en-us/articles/5288168088205-Access-a-Free-Trial-of-Apollo). The plan is to decide what to pay for after seeing the outreach results and understanding the API limits we'll need.
 
-## Interviews and a hire
+## Update: September 11, 2026
 
-As of September 11, the workflow has led to interviews and one new hire. I still want to see how it compares with the agencies across the whole hiring process.
+The workflow has led to interviews and one new hire. I still want to see how it compares with the agencies across the whole hiring process.
 
 Only about 20–30% of the candidates introduced by agencies were making it past the first interview. I'm interested in whether a higher share advances through our new process, and whether we can reduce agency spending.
 

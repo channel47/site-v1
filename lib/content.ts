@@ -98,8 +98,11 @@ export interface Note {
   title: string;
   slug: string;
   description: string;
+  /** Actual publication date, retained for RSS and machine metadata. */
   date: string;
-  /** Date of a substantive revision; publication order and RSS identity stay put. */
+  /** The story's point in time. Use YYYY-MM when the day is unknown. */
+  storyDate?: string;
+  /** Date of a substantive revision; story order and RSS identity stay put. */
   updated?: string;
   /** The specific reason to follow this piece, followed by the shared cadence. */
   newsletter?: string;
@@ -148,6 +151,19 @@ export const PROJECT_STATUS_LABELS = {
 } as const;
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
+function isCalendarDate(value: unknown, allowMonth = false): value is string {
+  if (typeof value !== "string" || !/^\d{4}-\d{2}(?:-\d{2})?$/.test(value)) return false;
+  if (value.length === 7 && !allowMonth) return false;
+  const day = value.length === 7 ? `${value}-01` : value;
+  const time = Date.parse(day);
+  return Number.isFinite(time) && new Date(time).toISOString().slice(0, 10) === day;
+}
+
+/** Display and browse by the story's moment, falling back to publication. */
+export function getStoryDate(entry: { date: string; storyDate?: string }): string {
+  return entry.storyDate ?? entry.date;
+}
+
 function loadCollection<T extends Note>(section: ContentGroup): T[] {
   const dir = path.join(CONTENT_DIR, section);
   if (!fs.existsSync(dir)) return [];
@@ -172,23 +188,28 @@ function loadCollection<T extends Note>(section: ContentGroup): T[] {
         if (!data[key]) throw new Error(`Missing ${key} in ${section}/${file}`);
       }
       const date = data.date instanceof Date ? data.date.toISOString().slice(0, 10) : String(data.date);
+      const storyDate = data.storyDate instanceof Date ? data.storyDate.toISOString().slice(0, 10) : data.storyDate;
       const updated = data.updated instanceof Date ? data.updated.toISOString().slice(0, 10) : data.updated;
-      if (updated !== undefined && (typeof updated !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(updated)
-        || !Number.isFinite(Date.parse(updated)) || new Date(updated).toISOString().slice(0, 10) !== updated || updated < date)) {
+      if (!isCalendarDate(date)) throw new Error(`Invalid publication date in ${section}/${file}`);
+      if (updated !== undefined && (!isCalendarDate(updated) || updated < date)) {
         throw new Error(`Invalid revision date in ${section}/${file}`);
+      }
+      if (storyDate !== undefined && (!isCalendarDate(storyDate, true) || storyDate > (updated ?? date))) {
+        throw new Error(`Invalid story date in ${section}/${file}`);
       }
       return {
         ...data,
         slug,
         tags: data.tags ?? [],
         date,
+        storyDate,
         updated,
         html: renderArticleMarkdown(content),
         markdown: content.trim(),
       } as T;
     })
     .sort(
-      (a, b) => b.date.localeCompare(a.date) || a.title.localeCompare(b.title, "en") || a.slug.localeCompare(b.slug, "en"),
+      (a, b) => getStoryDate(b).localeCompare(getStoryDate(a)) || a.title.localeCompare(b.title, "en") || a.slug.localeCompare(b.slug, "en"),
     );
 }
 export const getNotes = cache(() => loadCollection<Note>("notes"));
@@ -211,7 +232,7 @@ export const getContentEntries = cache(() => {
     })),
   ].sort(
     (a, b) =>
-      b.item.date.localeCompare(a.item.date) ||
+      getStoryDate(b.item).localeCompare(getStoryDate(a.item)) ||
       a.item.title.localeCompare(b.item.title, "en") ||
       `${a.collection.basePath}/${a.item.slug}`.localeCompare(`${b.collection.basePath}/${b.item.slug}`, "en"),
   );
@@ -233,6 +254,7 @@ export interface FeedItem {
   type: ContentFormat;
   group: ContentGroup;
   date: string;
+  storyDate?: string;
   updated?: string;
 }
 
@@ -245,6 +267,7 @@ export const getFeedItems = cache((): FeedItem[] =>
     type: collection.key,
     group: collection.group,
     date: item.date,
+    storyDate: item.storyDate,
     updated: item.updated,
   })),
 );
@@ -271,7 +294,7 @@ export function getEntryPreview(
 }
 
 /** Recommend one related piece across notes and projects. Authored article
- * links carry four points each, shared tags one; publication order breaks ties.
+ * links carry four points each, shared tags one; story order breaks ties.
  * Never recommend the current page or force an unrelated destination. */
 export function getNextRead(href: string): FeedItem | undefined {
   const entries = getContentEntries().map(({ collection, item }) => {
@@ -305,9 +328,9 @@ export function readTime(markdown: string): number {
   return Math.max(1, Math.round(words / 200));
 }
 
-/** "2026-07-02" → "Jul 2026" (browse-row date treatment). */
+/** Full dates and month-only story dates share the same visible treatment. */
 export function shortDate(iso: string): string {
-  const d = new Date(`${iso}T00:00:00Z`);
+  const d = new Date(`${iso.length === 7 ? `${iso}-01` : iso}T00:00:00Z`);
   return d.toLocaleDateString("en-US", {
     month: "short",
     year: "numeric",
