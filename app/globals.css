@@ -603,6 +603,11 @@ html[data-theme-transition]::view-transition-new(root) {
   position: relative;
   border-radius: var(--radius-detail);
 }
+/* Artwork and its gallery label share one tilt and one interaction. */
+.collection-piece {
+  transform: rotate(var(--object-angle));
+  transition: transform var(--motion-object) var(--ease-settle);
+}
 .collection-space {
   width: 100%;
   aspect-ratio: 1;
@@ -612,8 +617,6 @@ html[data-theme-transition]::view-transition-new(root) {
 }
 .collection-art {
   width: 100%;
-  transform: rotate(var(--object-angle));
-  transition: transform var(--motion-object) var(--ease-settle);
 }
 .collection-art img {
   display: block;
@@ -661,7 +664,7 @@ html[data-theme="dark"] .collection-art img {
 .collection-link:focus-visible .collection-caption svg {
   color: var(--accent);
 }
-.collection-link:focus-visible .collection-art {
+.collection-link:focus-visible .collection-piece {
   transform: translateY(-10px) rotate(calc(var(--object-angle) * 0.2)) scale(1.025);
 }
 @media (hover: hover) and (pointer: fine) {
@@ -669,7 +672,7 @@ html[data-theme="dark"] .collection-art img {
   .collection-link:hover .collection-caption svg {
     color: var(--accent);
   }
-  .collection-link:hover .collection-art {
+  .collection-link:hover .collection-piece {
     transform: translateY(-10px) rotate(calc(var(--object-angle) * 0.2)) scale(1.025);
   }
 }
@@ -1647,7 +1650,7 @@ html[data-theme="dark"] .collection-art img {
   .collection-object:last-child:nth-child(odd) { grid-column: 2 / span 10; }
 }
 @media (hover: none) and (pointer: coarse) {
-  .collection-link:active .collection-art {
+  .collection-link:active .collection-piece {
     transform: rotate(var(--object-angle)) scale(0.985);
     transition-duration: var(--motion-press);
   }
@@ -1667,9 +1670,9 @@ html[data-theme="dark"] .collection-art img {
     transition: none !important;
     scroll-behavior: auto !important;
   }
-  .collection-link:hover .collection-art,
-  .collection-link:active .collection-art,
-  .collection-link:focus-visible .collection-art {
+  .collection-link:hover .collection-piece,
+  .collection-link:active .collection-piece,
+  .collection-link:focus-visible .collection-piece {
     transform: rotate(var(--object-angle));
   }
   .collection-object {

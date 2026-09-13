@@ -22,28 +22,30 @@ export function Collection({ items }: { items: CollectionItem[] }) {
             className="collection-link"
             aria-label={`${item.title} — ${item.label}`}
           >
-            <div className="collection-space">
-              <div className="collection-art">
-                <img
-                  src={item.src}
-                  srcSet={item.srcSet}
-                  sizes="(max-width: 520px) 84vw, (max-width: 720px) 50vw, 490px"
-                  width={960}
-                  height={960}
-                  alt=""
-                  draggable={false}
-                  loading={index < 2 ? "eager" : "lazy"}
-                  fetchPriority={index === 0 ? "high" : "auto"}
-                />
+            <div className="collection-piece">
+              <div className="collection-space">
+                <div className="collection-art">
+                  <img
+                    src={item.src}
+                    srcSet={item.srcSet}
+                    sizes="(max-width: 520px) 84vw, (max-width: 720px) 50vw, 490px"
+                    width={960}
+                    height={960}
+                    alt=""
+                    draggable={false}
+                    loading={index < 2 ? "eager" : "lazy"}
+                    fetchPriority={index === 0 ? "high" : "auto"}
+                  />
+                </div>
               </div>
-            </div>
-            <span className="collection-caption" aria-hidden="true">
-              <span>
-                {item.title}
-                <ArrowRight size={16} aria-hidden="true" />
+              <span className="collection-caption" aria-hidden="true">
+                <span>
+                  {item.title}
+                  <ArrowRight size={16} aria-hidden="true" />
+                </span>
+                <small>{item.label}</small>
               </span>
-              <small>{item.label}</small>
-            </span>
+            </div>
           </BrowseEntryLink>
         </li>
       ))}
