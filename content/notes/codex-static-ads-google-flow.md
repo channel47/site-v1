@@ -66,10 +66,6 @@ The result still needs a close comparison with the actual product. Labels, shape
 
 Almost immediately, I wanted to turn this into a skill: a set of instructions the agent could use again. I'd had to encourage it to try something it was capable of, and I didn't want to repeat that conversation every time.
 
-I still use Flow, though much less. It can produce images I love. For working through a static ad, I now reach for Codex. Once I have a brief, we can try the whole thing there.
+I've since put that instruction into [Make Static Ads](https://github.com/channel47/skills/tree/main/skills/creative-production/make-static-ads): try generating the complete ad first, including typography and packaging. The [customer-research walkthrough](/notes/customer-research-ad-angles-claude) covers working out what an ad should show before handing over the brief and product images.
 
-## Update: September 2026
-
-I've put that instruction into [Make Static Ads](https://github.com/channel47/skills/tree/main/skills/creative-production/make-static-ads): try generating the complete ad first, including typography and packaging. The [customer-research walkthrough](/notes/customer-research-ad-angles-claude) covers working out what an ad should show before handing over the brief and product images.
-
-I also liked Flow's workspace enough to start [building my own in Vellum](/projects/vellum). I'm using it to make product images for X-All, with the agent beside the image grid.
+I still use Flow, though much less. It can produce images I love, and I liked its workspace enough to start [building my own in Vellum](/projects/vellum). For working through a static ad, I now reach for Codex. Once I have a brief, we can try the whole thing there.

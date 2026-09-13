@@ -71,15 +71,13 @@ The agent [fixed the names](https://github.com/channel47/google-ads-mcp-server/c
 
 ![The original fix: partialFailure and validateOnly became partial_failure and validate_only, so the API received the validation settings.](/posts/google-ads-dry-run-fix-v3.webp "screenshot")
 
-## Update: September 2026
-
-I'm using the MCP for account work as well as reporting. I want to keep write access available, with a way to limit what an agent can do.
+Over the following months, I kept using the MCP for account work as well as reporting. I wanted to keep write access available, with a way to limit what an agent could do.
 
 The mutation tool now defaults to `dry_run: true`, which validates a request without applying it. Applying a change requires `dry_run: false`. For reporting only, `GOOGLE_ADS_READ_ONLY=true` removes the mutation tool entirely.
 
 I've since had an agent set up a Google search campaign through it. When I only need data, I can leave it with the two tools for finding accounts and querying them.
 
-### Monday reporting
+## Monday reporting
 
 The job I use it for most regularly is the Monday report. An agent pulls the previous seven days from more than a dozen accounts under two manager accounts, then combines the Google Ads data with our CRM data. Grouping the report by offer and campaign type lets me see which accounts need attention without opening them one by one.
 

@@ -18,17 +18,20 @@ Craft the prose freely from the source material. Shape the opening, sequence,
 and ending; preserve Jackson's meaning and uncertainty. Keep journals and
 research in the background. Never invent experiences, dialogue, or results.
 
-Write close to the story's chosen moment. Use past tense for what has just
+Write close to the experience as it unfolds. Use past tense for what has
 happened and present tense for what Jackson is trying, noticing, or still
 unsure about. Natural past-tense storytelling is welcome; do not force every
 scene into the present or add a feeling he never expressed.
 
-Let the displayed story date establish the period. Keep dates and elapsed time
-in the prose when they explain a sequence, a wait, or a change; cut calendar
-references that only repeat the byline. Keep later outcomes, changed practices,
-and follow-up projects in a short dated update. Label later screenshots when
-their timing could be mistaken for evidence from the original moment. Keep the
-main story within what Jackson knew at its chosen date. Never invent a more
+Let the displayed story date establish the central experience. Keep dates and
+elapsed time in the prose when they explain a sequence, a wait, or a change;
+cut calendar references that only repeat the byline. Later outcomes and
+follow-up work can continue naturally in the story. Use a brief time cue where
+needed, and keep discoveries and results in the order they happened. Avoid
+routine "Update: [date]" headings that interrupt the reader to announce an
+edit. Reserve separate updates for corrections or substantial new developments
+that warrant their own section. Label later screenshots when their timing
+could be mistaken for evidence from the original moment. Never invent a more
 precise date than the source supports.
 
 Let enthusiasm, curiosity, and occasional humor come through without forcing

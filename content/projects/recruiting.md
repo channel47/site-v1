@@ -1,7 +1,7 @@
 ---
 title: "A recruiting workflow in a Google Sheet"
 slug: recruiting
-description: "A coworker's idea became a recurring recruiting workflow in Claude Cowork and Google Sheets. Now we have a candidate list to work through."
+description: "A coworker's idea became a recurring recruiting workflow in Claude Cowork and Google Sheets. The first run gave us a candidate list to work through."
 date: 2026-09-11
 storyDate: "2026-07"
 updated: 2026-09-12
@@ -55,13 +55,11 @@ The candidates came from companies on our target list. Claude flagged a few reco
 
 I spot-checked some of the list. The people I reviewed worked at the intended companies and had titles related to our open roles. Given how quickly we'd put the system together, the results were better than I expected.
 
-There's still plenty to do. A relevant title doesn't tell us whether someone wants to move or would be a good fit. The full review, outreach, and interviews are all ahead of us.
+There was still plenty to do. A relevant title doesn't tell us whether someone wants to move or would be a good fit. The full review, outreach, and interviews were ahead of us.
 
-We're using Apollo's [14-day free trial](https://knowledge.apollo.io/hc/en-us/articles/5288168088205-Access-a-Free-Trial-of-Apollo). The plan is to decide what to pay for after seeing the outreach results and understanding the API limits we'll need.
+We were using Apollo's [14-day free trial](https://knowledge.apollo.io/hc/en-us/articles/5288168088205-Access-a-Free-Trial-of-Apollo). The plan was to decide what to pay for after seeing the outreach results and understanding the API limits we'd need.
 
-## Update: September 11, 2026
-
-The workflow has led to interviews and one new hire. I still want to see how it compares with the agencies across the whole hiring process.
+By September, the workflow had led to interviews and one new hire. I still want to see how it compares with the agencies across the whole hiring process.
 
 Only about 20–30% of the candidates introduced by agencies were making it past the first interview. I'm interested in whether a higher share advances through our new process, and whether we can reduce agency spending.
 
