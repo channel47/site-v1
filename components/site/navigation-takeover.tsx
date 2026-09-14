@@ -19,6 +19,7 @@ import { motionMilliseconds } from "@/lib/motion";
 
 const LINKS = [
   { href: "/", title: "Collection" },
+  { href: "/tools", title: "Tools" },
   { href: "/browse", title: "Index" },
   { href: "/about", title: "About" },
   {

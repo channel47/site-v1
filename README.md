@@ -53,6 +53,7 @@ python3 scripts/check-content-surfaces.py http://localhost:3100
 | `lib/content.ts` | Build-time content loading and shared markdown rendering |
 | `lib/site-content.ts` | Shared biography, subscription and working-session copy |
 | `lib/collection.ts` | Cover selection tied to real content URLs |
+| `lib/tools.ts` | Tools page entries with optional hosted, source, and build-story links |
 | `app/tokens.css` | Canonical design tokens |
 | `lib/discovery.ts` | Public route and machine endpoint registry |
 | `lib/seo.ts` | Canonical URL, metadata, and structured data |

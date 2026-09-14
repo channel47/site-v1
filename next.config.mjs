@@ -25,7 +25,6 @@ const nextConfig = {
       })),
       { source: "/guides", destination: "/browse?type=notes", permanent: true },
       { source: "/labs", destination: "/browse?type=notes", permanent: true },
-      { source: "/tools", destination: "/browse", permanent: true },
       // The Flow experiment and its Codex follow-up are one evolving workflow.
       ...["", ".md", "/opengraph-image"].map((suffix) => ({
         source: `/notes/google-flow-reference-led-product-imagery${suffix}`,

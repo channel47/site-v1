@@ -1248,6 +1248,190 @@ html[data-theme="dark"] .collection-art img {
   padding-bottom: var(--space-5);
 }
 
+/* Tools: a product note beside the actual workspace. Let the software's
+   images carry the color; identity, description and destinations stay together. */
+.tools-page {
+  width: min(100% - 2 * var(--page-gutter), calc(var(--media-width) + 2 * var(--space-10)));
+}
+.tools-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--space-6);
+  margin-bottom: 0;
+}
+.tools-heading .st-h1 {
+  font-style: italic;
+  font-size: clamp(5rem, 10vw, 8rem);
+}
+.tools-heading > p {
+  max-width: 320px;
+  padding-bottom: var(--space-2);
+  color: var(--body);
+  font-size: var(--text-ui);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+.tools-list {
+  display: grid;
+  gap: var(--space-10);
+  margin-top: var(--space-8);
+}
+.tool-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 264px) minmax(0, 1fr);
+  grid-template-areas: "identity gallery" "details gallery";
+  column-gap: var(--space-8);
+  row-gap: var(--space-5);
+}
+.tool-identity {
+  grid-area: identity;
+  align-self: end;
+}
+.tool-name {
+  width: min(100%, 200px);
+  font: 400 var(--text-subheading) / 1.1 var(--font-display);
+  letter-spacing: var(--tracking-display);
+}
+.tool-name img { display: block; width: 100%; height: auto; }
+.tool-name .tool-logo-dark { display: none; }
+html[data-theme="dark"] .tool-name .tool-logo-light { display: none; }
+html[data-theme="dark"] .tool-name .tool-logo-dark { display: block; }
+.tool-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  margin-top: var(--space-5);
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.tool-details {
+  grid-area: details;
+  align-self: start;
+}
+.tool-description {
+  color: var(--body);
+  font-size: var(--text-body);
+  line-height: var(--reading-leading);
+  text-wrap: pretty;
+}
+.tool-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-top: var(--space-6);
+}
+.tool-action,
+.tool-story {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--control-size);
+  gap: var(--space-5);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  transition: color var(--motion-ui) var(--ease-out);
+}
+.tool-action-primary { color: var(--ink); font-size: var(--text-ui); }
+.tool-story { color: var(--muted); }
+.tool-story,
+.tool-action:not(.tool-action-primary) {
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 0.3em;
+  text-decoration-thickness: 1px;
+}
+.tool-action:hover,
+.tool-action:focus-visible,
+.tool-story:hover,
+.tool-story:focus-visible {
+  color: var(--accent);
+  text-decoration-color: currentColor;
+}
+.tool-action:hover .direction-cue,
+.tool-action:focus-visible .direction-cue {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+.tool-gallery {
+  grid-area: gallery;
+  min-width: 0;
+  align-self: center;
+}
+.tool-gallery-screen { display: grid; }
+.tool-gallery-panel { grid-area: 1 / 1; min-width: 0; }
+.tool-gallery-panel:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 8px;
+  border-radius: var(--radius-media);
+}
+.tool-gallery-panel:not([hidden]) {
+  animation: tool-preview-reveal var(--motion-feedback) var(--ease-arrival);
+}
+.tool-gallery-panel img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-media);
+}
+@keyframes tool-preview-reveal {
+  from { opacity: 0.5; }
+  to { opacity: 1; }
+}
+.tool-gallery-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: var(--space-2);
+}
+.tool-gallery-tabs { display: flex; gap: var(--space-5); }
+.tool-gallery-tabs button {
+  position: relative;
+  min-height: var(--control-size);
+  padding: var(--space-3) 0;
+  background: none;
+  border: 0;
+  border-radius: var(--radius-detail);
+  color: var(--muted);
+  font-size: var(--text-sm);
+  transition: color var(--motion-ui) var(--ease-out);
+}
+.tool-gallery-tabs button[aria-selected="true"] { color: var(--ink); }
+.tool-gallery-tabs button::after {
+  content: "";
+  position: absolute;
+  height: 2px;
+  inset: auto 0 var(--space-1);
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--motion-feedback) var(--ease-settle);
+}
+.tool-gallery-tabs button[aria-selected="true"]::after { transform: scaleX(1); }
+.tool-gallery-expand { color: var(--muted); }
+.tool-gallery-tabs button:hover,
+.tool-gallery-tabs button:focus-visible,
+.tool-gallery-expand:hover,
+.tool-gallery-expand:focus-visible { color: var(--accent); }
+
+@media (max-width: 1100px) and (min-width: 901px) {
+  .tool-feature { grid-template-columns: minmax(0, 240px) minmax(0, 1fr); column-gap: var(--space-7); }
+  .tool-description { font-size: var(--text-ui); }
+}
+@media (max-width: 900px) {
+  .tool-feature {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "identity" "gallery" "details";
+    row-gap: var(--space-5);
+  }
+  .tool-identity { display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); }
+  .tool-meta { flex-direction: column; gap: var(--space-1); margin: 0; }
+  .tool-details { max-width: var(--reading-width); }
+  .tool-actions { flex-direction: row; flex-wrap: wrap; align-items: center; gap: var(--space-5); margin-top: var(--space-5); }
+}
+
 /* Index and subscription surfaces */
 .index-page {
   max-width: var(--media-width);
@@ -1638,6 +1822,13 @@ html[data-theme="dark"] .collection-art img {
     margin-block: var(--space-5) var(--space-8);
   }
   .st-head { margin-bottom: var(--space-6); }
+  .tools-heading { align-items: flex-start; flex-direction: column; gap: var(--space-4); margin-bottom: 0; }
+  .tools-heading > p { max-width: 280px; padding: 0; }
+  .tools-list { margin-top: var(--space-8); gap: var(--space-9); }
+  .tool-name { width: min(48%, 176px); }
+  .tool-meta { font-size: var(--text-xs); }
+  .tool-description { font-size: var(--text-body); }
+  .tool-gallery-tabs { gap: var(--space-4); }
   .reading-back { margin-bottom: var(--space-5); }
   .piece-head {
     margin-bottom: var(--space-6);

@@ -23,6 +23,11 @@ export const PUBLIC_PAGES = [
     lastModified: "content",
   },
   {
+    path: "/tools",
+    title: "Tools",
+    description: "Things I’m building for myself, shared for you to try.",
+  },
+  {
     path: "/about",
     title: "About",
     description: "About Jackson Dean and the collection.",

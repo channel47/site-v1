@@ -33,6 +33,10 @@ export function GET() {
         `- ${absoluteUrl(SITE_URL, surface.path)} : ${surface.label} (${surface.description})`,
     ),
     "",
+    ...PUBLIC_PAGES.filter((page) => page.path === "/tools").map(
+      (page) => `- [${page.title}](${absoluteUrl(SITE_URL, page.path)}): ${page.description}`,
+    ),
+    "",
     "Route families:",
     ...CONTENT_GROUPS.map(
       (collection) =>
