@@ -558,10 +558,100 @@ html[data-theme-transition]::view-transition-new(root) {
   to { clip-path: circle(var(--theme-radius) at var(--theme-x) var(--theme-y)); }
 }
 
-/* Collection: a larger upright object balances a smaller, turned companion.
-   The emphasis switches sides every pair; position owns the composition. */
+/* Collection: one object in focus on a native horizontal shelf.
+   The original paired grid is preserved below for a possible return. */
 .collection-main {
-  padding: 0 var(--page-gutter) var(--space-8);
+  padding: var(--space-4) 0 var(--space-6);
+}
+.collection-intro {
+  padding-inline: var(--page-gutter);
+  text-align: center;
+}
+.collection-intro h1 {
+  font: 400 clamp(2.75rem, 4.2vw, 3.5rem) / 1.06 var(--font-display);
+  letter-spacing: var(--tracking-display);
+  text-wrap: balance;
+}
+.collection-intro h1 i { white-space: nowrap; }
+.collection-intro p {
+  max-width: 520px;
+  margin: var(--space-2) auto 0;
+  color: var(--body);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+.collection-shelf {
+  width: min(100%, calc(var(--collection-width) + 2 * var(--space-10)));
+  margin: var(--space-4) auto 0;
+}
+.collection-track {
+  position: relative;
+  display: flex;
+  align-items: start;
+  gap: var(--collection-slide-gap);
+  margin: 0;
+  padding: 0 calc((100% - var(--collection-slide-width)) / 2) var(--space-4);
+  list-style: none;
+  overflow-x: auto;
+  background: var(--page);
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  cursor: grab;
+  mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+}
+.collection-track::-webkit-scrollbar { display: none; }
+.collection-track:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -5px;
+  border-radius: var(--radius-detail);
+}
+.collection-track[data-dragging] { scroll-snap-type: none; cursor: grabbing; user-select: none; }
+.collection-track[data-dragging] a { cursor: grabbing; }
+.collection-slide {
+  --object-angle: 0deg;
+  flex: 0 0 var(--collection-slide-width);
+  min-width: 0;
+  scroll-snap-align: center;
+  mix-blend-mode: var(--collection-blend, multiply);
+}
+.collection-slide:not([data-active="true"]) .collection-piece {
+  transform: translateY(var(--space-6)) rotate(var(--object-angle)) scale(0.86);
+}
+.collection-slide .collection-caption {
+  min-height: 60px;
+  transition: opacity var(--motion-ui) var(--ease-out);
+}
+.collection-shelf[data-enhanced="true"] .collection-slide:not([data-active="true"]) .collection-caption { opacity: 0; }
+.collection-controls {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  margin: var(--space-2) auto 0;
+  padding: var(--space-1);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+}
+.collection-shelf:not([data-enhanced="true"]) .collection-controls { display: none; }
+.collection-controls .icon-btn { color: var(--muted); }
+.collection-controls .icon-btn:hover,
+.collection-controls .icon-btn:focus-visible { color: var(--accent); }
+.collection-controls .icon-btn::before { background: var(--page); }
+.collection-intro p a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--muted);
+  text-underline-offset: 3px;
+  transition: color var(--motion-ui) var(--ease-out);
+}
+.collection-intro p a:hover { color: var(--accent); }
+@media (max-width: 720px) {
+  .collection-shelf { --collection-slide-width: min(82vw, 400px); --collection-slide-gap: 0px; }
+  .collection-slide:not(:last-child) { margin-right: calc(-1 * var(--space-7)); }
+  .collection-intro h1 { max-width: 470px; margin-inline: auto; }
+  .collection-intro p { max-width: 350px; }
+  .collection-shelf { margin-top: var(--space-4); }
 }
 .collection-grid {
   list-style: none;
@@ -1523,8 +1613,7 @@ html[data-theme="dark"] .collection-art img {
   }
 
   .collection-main {
-    padding: var(--space-4) max(var(--space-3), var(--safe-inline))
-      calc(var(--space-8) + var(--safe-bottom));
+    padding: var(--space-4) 0 calc(var(--space-7) + var(--safe-bottom));
   }
   .collection-grid {
     row-gap: var(--space-6);

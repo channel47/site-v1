@@ -6,6 +6,7 @@ export function motionMilliseconds(value: string, fallback: number): number {
 
 /** Shared by the first-paint guard and the hydrated arrival controller. */
 export const ARRIVAL_SELECTOR = [
+  ".collection-intro",
   ".collection-object",
   ".piece-head > h1", ".piece-lede", ".piece-byline",
   ".st-head", ".st-prose:not(.piece-prose) > :first-child", ".st-row",

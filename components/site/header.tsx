@@ -7,6 +7,9 @@ import { NavigationTakeover } from "./navigation-takeover";
 import { BrowseViews, type BrowseView } from "./browse-views";
 import { isBrowseTransitionTo } from "@/lib/browse-transition";
 
+// Keep the alternate browse view intact while trying the horizontal collection.
+const SHOW_BROWSE_VIEWS = false;
+
 export function SiteHeader({ home = false, browseView }: { home?: boolean; browseView?: BrowseView }) {
   const [open, setOpen] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);
@@ -18,7 +21,7 @@ export function SiteHeader({ home = false, browseView }: { home?: boolean; brows
   return (
     <header className="site-header">
       {home ? <GlitchLogo animateOnMount={!isBrowseTransitionTo("/")} /> : <MarkLink />}
-      {browseView ? <BrowseViews current={browseView} /> : null}
+      {SHOW_BROWSE_VIEWS && browseView ? <BrowseViews current={browseView} /> : null}
       <button
         ref={trigger}
         type="button"

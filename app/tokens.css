@@ -49,6 +49,9 @@
   --reading-width: 660px;
   --media-width: 960px;
   --collection-width: 980px;
+  --collection-slide-width: clamp(280px, min(39vw, 100svh - 392px), 460px);
+  --collection-slide-gap: clamp(64px, 12vw, 192px);
+  --collection-interval: 12s;
   --header-height: calc(112px + var(--safe-top));
   --control-size: 48px;
   --radius-control: 999px;

@@ -39,7 +39,7 @@ export function BrowseNavigation({ children }: { children: ReactNode }) {
         if (visit.restoreFocus) {
           Array.from(
             document.querySelectorAll<HTMLAnchorElement>(
-              ".st-row, .collection-link",
+              ".st-row, [data-collection-primary], .collection-object .collection-link",
             ),
           )
             .find((link) => link.getAttribute("href") === visit.entry)
@@ -86,6 +86,12 @@ export function BrowseEntryLink(
       onNavigate={() => remember(props.href, keyboard.current)}
     />
   );
+}
+
+/** The selected object belongs to the same visit as the page's scroll position. */
+export function useReturningCollectionEntry() {
+  const { visit } = useContext(BrowseContext);
+  return visit?.href === "/" ? visit.entry : null;
 }
 export function BackToBrowse({
   href,
