@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   useCallback,
   useEffect,
@@ -42,6 +42,8 @@ export function NavigationTakeover({ onDismiss, keyboard }: { onDismiss: () => v
   const [exiting, setExiting] = useState(false);
   const [reduced, setReduced] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
+  const initialIndex = Math.max(0, LINKS.findIndex(link => link.href === pathname));
 
   const finish = useCallback(() => {
     if (finished.current) return;
@@ -185,15 +187,27 @@ export function NavigationTakeover({ onDismiss, keyboard }: { onDismiss: () => v
     let rowHeight = 1;
     let groupHeight = 1;
     let viewportHeight = 0;
+    let edgeSpace = 0;
+    let position = (reduced ? 0 : PRIMARY * LINKS.length) + initialIndex + 0.5;
+
+    const rememberPosition = () => {
+      // Resize can clamp scrollTop before its observer runs. Keep the last
+      // position measured with matching geometry rather than that clamped value.
+      if (!viewportHeight || node.clientHeight !== viewportHeight
+        || Math.abs((primary.firstElementChild?.getBoundingClientRect().height || 1) - rowHeight) > 0.5) return;
+      position = (node.scrollTop + viewportHeight / 2 - edgeSpace) / rowHeight;
+    };
 
     const paint = () => {
       frame = 0;
+      if (node.clientHeight !== viewportHeight) return;
       if (!reduced) {
         // Keep a full group above and below the visible region at all times.
         if (node.scrollTop < groupHeight) node.scrollTop += groupHeight;
         else if (node.scrollTop > groupHeight * 3)
           node.scrollTop -= groupHeight;
       }
+      rememberPosition();
       const center = node.scrollTop + node.clientHeight / 2;
       rows.forEach((row, index) => {
         const distance = reduced
@@ -214,19 +228,18 @@ export function NavigationTakeover({ onDismiss, keyboard }: { onDismiss: () => v
     };
     const measure = () => {
       if (cancelled) return;
-      const position = viewportHeight
-        ? (node.scrollTop + viewportHeight / 2) / rowHeight
-        : PRIMARY * LINKS.length + 0.5;
       rowHeight =
         primary.firstElementChild?.getBoundingClientRect().height || 1;
       groupHeight = primary.getBoundingClientRect().height;
       viewportHeight = node.clientHeight;
-      node.scrollTop = reduced
-        ? 0
-        : position * rowHeight - viewportHeight / 2;
+      // The ordinary reduced-motion list needs room to center its endpoints.
+      edgeSpace = reduced ? Math.max(0, (viewportHeight - rowHeight) / 2) : 0;
+      node.style.setProperty("--reel-edge-space", `${edgeSpace}px`);
+      node.scrollTop = position * rowHeight + edgeSpace - viewportHeight / 2;
       paint();
     };
     const scroll = () => {
+      rememberPosition();
       if (!frame) frame = requestAnimationFrame(paint);
     };
     measure();
@@ -239,7 +252,7 @@ export function NavigationTakeover({ onDismiss, keyboard }: { onDismiss: () => v
       observer.disconnect();
       node.removeEventListener("scroll", scroll);
     };
-  }, [reduced]);
+  }, [reduced, initialIndex]);
 
   return (
     <dialog
@@ -300,6 +313,7 @@ export function NavigationTakeover({ onDismiss, keyboard }: { onDismiss: () => v
                 className="reel-row"
                 tabIndex={copy === PRIMARY ? 0 : -1}
                 aria-label={link.label}
+                aria-current={link.href === pathname ? "page" : undefined}
               >
                 <span className="reel-word">{link.title}</span>
               </Link>

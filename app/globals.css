@@ -479,7 +479,11 @@ html[data-browse-transition]::view-transition-new(root) {
 }
 .navigation-takeover[data-reduced="true"] .reel-group:not([data-primary]) { display: none; }
 .navigation-takeover[data-reduced="true"] .reel-word { transform: none; opacity: 1; }
-.navigation-takeover[data-reduced="true"] .navigation-reel { -webkit-mask-image: none; mask-image: none; }
+.navigation-takeover[data-reduced="true"] .navigation-reel {
+  padding-block: var(--reel-edge-space, 0px);
+  -webkit-mask-image: none;
+  mask-image: none;
+}
 @keyframes takeover-open {
   from { transform: translate(-50%, -50%) scale(0); }
   to { transform: translate(-50%, -50%) scale(1); }
