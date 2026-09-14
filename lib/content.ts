@@ -94,6 +94,13 @@ export interface NoteVideo {
   uploadDate?: string;
   caption?: string;
 }
+export interface NoteGallery {
+  id: string;
+  title: string;
+  description: string;
+  initial?: number;
+  images: [{ src: string; label: string; alt: string; caption: string; width: number; height: number }, ...{ src: string; label: string; alt: string; caption: string; width: number; height: number }[]];
+}
 export interface Note {
   title: string;
   slug: string;
@@ -109,6 +116,7 @@ export interface Note {
   tags: string[];
   preview?: { src: string; alt: string };
   video?: NoteVideo;
+  gallery?: NoteGallery;
   faqs?: FaqItem[];
   sanitized?: boolean;
   /** Retain a historical feed identity when a source file moves. */
@@ -140,6 +148,28 @@ export function splitArticleAtVideo(entry: Pick<Note, "html" | "markdown" | "vid
   return {
     beforeVideo: entry.html.slice(0, index),
     afterVideo: entry.html.slice(index + placeholder.length),
+  };
+}
+
+/** A normal standalone fragment link places an interactive study in prose.
+ * Markdown and feeds retain the link and the authored narrative. */
+export function splitArticleAtGallery(entry: Pick<Note, "html" | "markdown" | "gallery">) {
+  const fallback = { beforeGallery: entry.html, afterGallery: "", placed: false };
+  if (!entry.gallery) return fallback;
+  const link = marked.lexer(entry.markdown).find((token) =>
+    token.type === "paragraph" && token.tokens?.length === 1
+    && token.tokens[0].type === "link"
+    && (token.tokens[0].href === `#${entry.gallery?.id}`
+      || token.tokens[0].href.startsWith('https://channel47.dev/') && token.tokens[0].href.endsWith(`#${entry.gallery?.id}`)),
+  );
+  if (!link) return fallback;
+  const placeholder = renderArticleMarkdown(link.raw);
+  const index = entry.html.indexOf(placeholder);
+  if (index < 0) return fallback;
+  return {
+    beforeGallery: entry.html.slice(0, index),
+    afterGallery: entry.html.slice(index + placeholder.length),
+    placed: true,
   };
 }
 
@@ -196,6 +226,20 @@ function loadCollection<T extends Note>(section: ContentGroup): T[] {
       }
       if (storyDate !== undefined && (!isCalendarDate(storyDate, true) || storyDate > (updated ?? date))) {
         throw new Error(`Invalid story date in ${section}/${file}`);
+      }
+      if (data.gallery) {
+        const gallery = data.gallery;
+        if (!/^[a-z][a-z0-9-]*$/.test(gallery.id ?? '') || !gallery.title || !gallery.description
+          || !Array.isArray(gallery.images) || gallery.images.length === 0
+          || gallery.images.some((image: NoteGallery['images'][number]) =>
+            !image.src?.startsWith('/posts/') || !image.label || !image.alt || !image.caption
+            || !(image.width > 0 && image.height > 0))
+          || (gallery.initial !== undefined && (!Number.isInteger(gallery.initial) || gallery.initial < 0 || gallery.initial >= gallery.images.length))) {
+          throw new Error(`Invalid gallery in ${section}/${file}`);
+        }
+        if (!splitArticleAtGallery({ markdown: content, html: renderArticleMarkdown(content), gallery }).placed) {
+          throw new Error(`Missing standalone gallery link in ${section}/${file}`);
+        }
       }
       return {
         ...data,

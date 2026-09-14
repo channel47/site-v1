@@ -4,6 +4,7 @@ export interface ToolPreview {
   alt: string;
   width: number;
   height: number;
+  caption?: string;
 }
 
 /** Tools people can use. Build stories remain in content/projects/. */

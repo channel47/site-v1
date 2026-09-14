@@ -5,13 +5,14 @@ import { useRef, useState, type KeyboardEvent } from "react";
 import { ArrowsOut } from "@phosphor-icons/react";
 import type { ToolPreview } from "@/lib/tools";
 
-export function ToolGallery({ id, name, previews, preload = false }: {
+export function ToolGallery({ id, name, previews, preload = false, initialIndex = 0 }: {
   id: string;
   name: string;
   previews: readonly [ToolPreview, ...ToolPreview[]];
   preload?: boolean;
+  initialIndex?: number;
 }) {
-  const [selected, setSelected] = useState(0);
+  const [selected, setSelected] = useState(initialIndex);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
 
   function move(event: KeyboardEvent<HTMLButtonElement>, index: number) {
@@ -37,6 +38,7 @@ export function ToolGallery({ id, name, previews, preload = false }: {
             aria-labelledby={`${id}-tab-${index}`}
             hidden={selected !== index}
             tabIndex={0}
+            aria-describedby={preview.caption ? `${id}-caption-${index}` : undefined}
           >
             <Image
               src={preview.src}
@@ -47,6 +49,7 @@ export function ToolGallery({ id, name, previews, preload = false }: {
               preload={preload && index === 0}
               loading={preload && index > 0 ? "eager" : undefined}
             />
+            {preview.caption ? <p className="tool-gallery-caption" id={`${id}-caption-${index}`}>{preview.caption}</p> : null}
           </div>
         ))}
       </div>

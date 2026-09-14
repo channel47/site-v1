@@ -1,0 +1,48 @@
+{
+  "version": "first-pilot",
+  "transformation": "WebP encoding only; no compositional changes",
+  "files": [
+    {
+      "file": "public/posts/product-gallery-codex/01-product-and-contents.webp",
+      "sourceFile": "01-product-and-contents.png",
+      "sourceSha256": "66c3d225979a0fc866407a2c5c3bd452cde992a9e79106bf43bdfc8a89046140",
+      "bytes": 297624
+    },
+    {
+      "file": "public/posts/product-gallery-codex/02-less-scrubbing.webp",
+      "sourceFile": "02-less-scrubbing.png",
+      "sourceSha256": "439a735b8b0b15e4a283a587e1419d46cb6e83e2eeec48dbd1ce8c58fcdfe14e",
+      "bytes": 343446
+    },
+    {
+      "file": "public/posts/product-gallery-codex/03-where-to-use.webp",
+      "sourceFile": "03-where-to-use.png",
+      "sourceSha256": "22800087e56f9951be2c7b3f26aae1fd7fa4813be7d01d8fe3ac03295a88ea4e",
+      "bytes": 323840
+    },
+    {
+      "file": "public/posts/product-gallery-codex/04-how-it-works.webp",
+      "sourceFile": "04-how-it-works.png",
+      "sourceSha256": "20981ccb0cf68d4e97a5a665472f6bdb987772708c6fc1bc9d4f9c99c038a767",
+      "bytes": 180940
+    },
+    {
+      "file": "public/posts/product-gallery-codex/05-keep-and-refill.webp",
+      "sourceFile": "05-keep-and-refill.png",
+      "sourceSha256": "78e642edbf852ab50d02828ae717d37dcf8f43b2b8ca5ce6a8453e0beef478c8",
+      "bytes": 317970
+    },
+    {
+      "file": "public/posts/product-gallery-codex/06-pack-facts.webp",
+      "sourceFile": "06-pack-facts.png",
+      "sourceSha256": "d98818c5464d72ca057efdb29a46305b9e396d31adec5f76e6512aa8e79bd6e5",
+      "bytes": 329766
+    },
+    {
+      "file": "public/posts/product-gallery-codex/07-choose-your-routine.webp",
+      "sourceFile": "07-choose-your-routine.png",
+      "sourceSha256": "512352a64903b5975ada70fb69c7e4ffdd1927a6ba27a8e9bc0ca4100f1307cc",
+      "bytes": 286010
+    }
+  ]
+}

@@ -147,6 +147,24 @@ try {
   assert.deepEqual(content.getEntryPreview({ ...note, markdown: '![Draft](placeholder:later)\n\n![A result](/result.jpg)' }), { src: '/result.jpg', alt: 'A result' })
   assert.deepEqual(content.getEntryPreview({ ...note, video: { poster: '/poster.jpg', caption: 'A walkthrough' } }), { src: '/poster.jpg', alt: 'A walkthrough' })
   assert.deepEqual(content.getEntryPreview({ ...note, preview: { src: '/selected.jpg', alt: 'Selected result' }, markdown: '![Other](/other.jpg)' }), { src: '/selected.jpg', alt: 'Selected result' })
+  const gallery = { id: 'study', title: 'Study', description: 'Actual outputs.', images: [{ src: '/posts/tablets.jpg', label: 'One', alt: 'Tablets', caption: 'The original result.', width: 1200, height: 1200 }] }
+  function galleryParts(markdown) {
+    return content.splitArticleAtGallery({ markdown, html: content.renderArticleMarkdown(markdown), gallery })
+  }
+  for (const link of ['[Explore](#study)', '[Explore](https://channel47.dev/notes/example#study)']) {
+    const parts = galleryParts(introduction + link + continuation)
+    assert.equal(parts.placed, true)
+    assert.equal(parts.beforeGallery, content.renderArticleMarkdown(introduction), 'Gallery placement preserves the preceding story')
+    assert.equal(parts.afterGallery, content.renderArticleMarkdown(continuation), 'Gallery placement preserves the following copyable prompt')
+  }
+  for (const markdown of ['Read [Explore](#study) here.', '> [Explore](#study)', '```text\n[Explore](#study)\n```', '[Other](#another)', '[External](https://example.com/#study)']) {
+    const parts = galleryParts(markdown)
+    assert.equal(parts.placed, false, 'Only a standalone authored study link becomes interactive')
+    assert.equal(parts.beforeGallery, content.renderArticleMarkdown(markdown))
+  }
+  fixture('notes', 'gallery-invalid', 'gallery:\n  id: study\n  title: Study\n  description: Actual outputs\n  images: []\n')
+  assert.throws(() => content.getNotes(), /Invalid gallery/, 'An empty study cannot render broken gallery controls')
+  fs.unlinkSync(path.join(temp, 'content/notes/gallery-invalid.md'))
   fixture('projects', 'bad-status', 'status: shipped-ish\n')
   assert.throws(() => content.getProjects(), /Invalid project status/)
   fs.unlinkSync(path.join(temp, 'content/projects/bad-status.md'))

@@ -54,6 +54,7 @@ The working guidance is in [VOICE.md](VOICE.md).
 | `newsletter` | A short, article-specific reason to subscribe. The reading template adds the shared occasional-email cadence. |
 | `preview: { src, alt }` | An existing image selected instead of the first Markdown image or video poster. |
 | `video: { src, poster, captions, duration, caption, uploadDate }` | Actual MP4, poster, English WebVTT, ISO8601 duration and optional visible caption. Optional quoted `uploadDate` preserves the video's original date when moved to another article. |
+| `gallery: { id, title, description, initial, images }` | An optional study using real local images. Each image has `src`, `label`, `alt`, `caption`, `width`, and `height`. `initial` is the zero-based opening image. Place a standalone link to the article's full canonical URL plus `#id` where the viewer belongs; this remains useful in feeds. |
 | `faqs: [{ q, a }]` | Authored questions/answers. Rendered visibly and in structured data. |
 | `sanitized` | Mark a real anonymized example in the byline. |
 | `rssId` | Historical path used as feed identity after a source move. Do not change an established identity. |
@@ -96,3 +97,7 @@ Artwork is presentation data in `lib/collection.ts`, separate from article front
 Read [cover-art.md](../docs/cover-art.md) before making a render and [design-system.md](../docs/design-system.md) before changing layouts. The approved blue tablet relief is the visual benchmark. A cover may be abstract; the opened piece contains the information and original evidence.
 
 Publishing content does not send email. Follow the existing [newsletter playbook](../docs/newsletter-playbook.md) for preparing and sending updates.
+
+## Downloadable workflows
+
+Keep authored skill source under `workflows/<name>/`. Run `node scripts/package-workflow.mjs <name>` to copy its explicit public-file allowlist into `public/downloads/` and build the version-one ZIP and checksum. Inspect the archive before publishing. The download's license applies to its instructions and documentation, not to brand assets in a companion article. Subsequent public releases should receive a new versioned filename so existing download URLs remain stable.

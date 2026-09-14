@@ -21,6 +21,7 @@ import {
 import { marked } from "marked";
 import Link from "next/link";
 import { AuthorPortrait } from "./author-portrait";
+import { ArticleProse } from "./article-prose";
 
 /** One reading measure and one template. Project instructions and video are
  * optional parts of a piece, not separate design systems. */
@@ -64,7 +65,7 @@ export function PiecePage({
               <SharePopover mdPath={`${href}.md`} url={`${SITE_URL}${href}`} title={entry.title} />
             </div>
           </header>
-          {beforeVideo ? <div className="st-prose piece-prose" dangerouslySetInnerHTML={{ __html: beforeVideo }} /> : null}
+          {beforeVideo ? <ArticleProse html={beforeVideo} entry={entry} /> : null}
           {entry.video ? (
             <figure className="piece-video" id="walkthrough">
               <video
@@ -93,7 +94,7 @@ export function PiecePage({
               ) : null}
             </figure>
           ) : null}
-          {afterVideo ? <div className="st-prose piece-prose" dangerouslySetInnerHTML={{ __html: afterVideo }} /> : null}
+          {afterVideo ? <ArticleProse html={afterVideo} entry={entry} /> : null}
           <CodeCopyButtons key={href} />
           {project?.install ? (
             <section className="project-install" id="install" aria-label="Install">
