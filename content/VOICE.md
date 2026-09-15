@@ -51,3 +51,6 @@ opinion, a punchline, or a grand conclusion to sound like himself.
 Read the draft aloud before finishing. Smooth the places that stumble, cut
 what repeats, and ask whether each paragraph gives the reader a reason to
 continue.
+
+Keep prompts featured in articles brief and easy to try. Put detailed workflow
+instructions in the downloadable assets.

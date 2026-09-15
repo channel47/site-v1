@@ -26,7 +26,7 @@ The collection is a small table of objects that invite exploration. A cover give
 | Piece | Cover direction |
 | --- | --- |
 | Product gallery (`/notes/product-gallery-codex`) | Seven ivory photographic slide mounts with amber transparencies, fanned across petrol-teal enamel (`product-gallery-slides`). A conceptual illustration of arranging an image sequence; the actual generated product artwork remains inside the article. |
-| Customer research and ad angles in Claude | A photographic loupe on deep-green enamel (`research-loupe`). Conceptual cover art, with a separate explanatory storyboard inside the article. |
+| Building a creative research pipeline | A photographic loupe on deep-green enamel (`research-loupe`). Conceptual cover art; the article contains a workflow diagram, a concept illustration, and the saved lab dashboard. |
 | Combined Google Flow and Codex creative workflow | The white ELT sachet on vermilion enamel (`elt-specimen`). The Flow reference study and original ELT ad examples live inside one piece. |
 | Google Ads MCP story and installation | A silver USB-C plug with a braided cable on industrial-yellow enamel (`ads-plug`). No printed labels. |
 | Vellum (`/projects/vellum`) | A photographic contact sheet on cobalt enamel, partly covered by translucent drafting vellum (`vellum-contact-sheet`). An illustration of image selection and refinement; actual app screenshots remain inside the article. |

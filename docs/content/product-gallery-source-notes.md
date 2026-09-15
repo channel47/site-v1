@@ -2,6 +2,8 @@
 
 Prepared 2026-09-14 from the completed source-session turns, the seven-image pilot, its per-image prompts, content plan, concept QA, and subsequent storefront review. The source task continued working on the revised sequence while this article was prepared. The article intentionally presents the first set and the documented decision to revise it.
 
+Rewritten locally on September 14 from these source notes and inspection of all seven artworks and the storefront capture. The story now follows the creative work into the page review, preserving the first-pass status, the request for a revised sequence, and the absence of conversion results. The gallery, media URLs, downloadable workflow, and short starter prompt remain in place. This rewrite has not been published.
+
 ## Story evidence
 
 - The owner supplied Primal Queen's purchase-section URL and initially requested a read-only review and questions.

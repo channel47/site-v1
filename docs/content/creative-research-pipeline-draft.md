@@ -1,27 +1,4 @@
----
-title: Building a creative research pipeline
-slug: customer-research-ad-angles-claude
-description: >-
-  I built a workflow that turns customer research into buyer profiles and ad
-  concepts, then demonstrated it in the Vibe Marketer community.
-date: 2026-09-09
-updated: '2026-09-14'
-newsletter: >-
-  More notes on turning customer research into creative work, with reusable
-  prompts and examples.
-tags:
-  - claude
-  - customer-research
-  - creative-strategy
-  - ad-angles
-  - skills
-  - static-ads
-  - creative-production
-preview:
-  src: /collection/research-loupe.webp
-  alt: A photographic loupe resting on green enamel. Conceptual cover artwork.
-storyDate: "2026-04"
----
+# Building a creative research pipeline
 
 A cupboard full of half-used protein powder is a pretty good place to start an ad.
 
@@ -39,7 +16,9 @@ I split the work into three skills for Claude: Customer Research, Persona Builde
 
 Customer Research gathered source material and organized what people were struggling with, what they had already tried, and the language they used. Persona Builder used that material to describe different kinds of buyers. Angle Generator took both documents and proposed ways to reach those people.
 
-![The three stages used in the lab: customer research, buyer profiles, and creative directions. Each stage carries the previous work forward.](/posts/creative-research/pipeline.webp)
+![Three stages: gather customer language and sources, describe buyers and their objections, then propose creative directions and visuals.](assets/creative-research/pipeline.png)
+
+*The three stages used in the lab. Each stage carries the previous work forward.*
 
 Keeping the documents separate made the thinking easier to inspect. If an angle seemed promising, I could look at the buyer it was written for and the research underneath it. If it seemed strange, there was somewhere to go back and look.
 
@@ -57,7 +36,9 @@ For the first person, another promise of great taste has a history to contend wi
 
 That distinction gave the creative work somewhere to go. The angle document proposed six directions, including a label comparison and a daily-habit story. “The Protein Graveyard” took the history of disappointing purchases and gave it a physical form.
 
-![A new AI-generated illustration of the cupboard concept, made for this article. The lab output was a written creative direction.](/posts/creative-research/protein-graveyard.webp)
+![An open kitchen cupboard containing several unbranded, partly used protein powder tubs and pouches.](assets/creative-research/protein-graveyard.png)
+
+*A new AI-generated illustration of the cupboard concept, made for this article. The lab output was a written creative direction.*
 
 I like how much of the story the objects can carry. You don’t need a paragraph explaining that someone has tried several products. You can see the accumulation. A half-used tub is a more interesting prop than a pristine one when the subject is giving up on something you bought.
 
@@ -69,7 +50,9 @@ I can change the setting or throw out a headline while keeping that original obs
 
 The lab files also include a small dashboard with tabs for research, competitors, personas, and angles.
 
-![The original NØRSE CØDE lab dashboard, rendered for this article from the saved April code.](/posts/creative-research/lab-dashboard.webp "screenshot")
+![The original NØRSE CØDE lab dashboard, showing its navigation and a customer-language excerpt.](assets/creative-research/lab-dashboard.png)
+
+*The original lab dashboard, rendered for this article from the saved April code.*
 
 It puts the work within reach. You can move from a profile to an angle, open the proposed hooks, and look at the visual direction. Those are the things you need in front of you when deciding what to make.
 

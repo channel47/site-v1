@@ -1,6 +1,6 @@
 # Vellum editorial notes
 
-Published September 10, 2026 at `/projects/vellum`. The canonical article is `content/projects/vellum.md`. These notes support a future revision.
+Published September 10, 2026 at `/projects/vellum`. The canonical article is `content/projects/vellum.md`. Rewritten locally September 14 around the missing direct-generation option and the documented X-All session. The three source screenshots remain in place. Jackson chose a direct invitation to try the app for the closing CTA, replacing the generic product brief. His interest in open sourcing is tentative and is described as something he is considering, not as an available repository or commitment. Nothing has been published from this rewrite.
 
 - Add one completed X-All example with the original references, a few consequential iterations, and the final asset in its actual page placement. Identify which work came from Vellum; do not attribute every image on X-All to it.
 - Add a specific Flow failure alongside its input and output if it helps explain a Vellum decision. The ignored-edit example comes from Jackson's published Flow/Codex account; it does not establish the technical cause.
