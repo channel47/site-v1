@@ -72,14 +72,14 @@ and drafts are not automatically approved style examples.
 
 ### Newsletter activity
 
-The newsletter calendar combines public commits attributed to `ctrlswing` and
-`jackson4am` with completed Kit broadcast send dates. `lib/newsletter-activity.ts`
+The newsletter calendar combines public commits attributed to `ctrlswing`
+with completed Kit broadcast send dates. `lib/newsletter-activity.ts`
 loads both sources on the server; the page and source requests revalidate hourly.
 GitHub works without authentication; `GITHUB_ACTIVITY_TOKEN` optionally raises
 the search rate limit. Kit uses the existing server-only `KIT_API_KEY`.
 
-Days follow `America/Los_Angeles`. Commit SHAs are deduplicated across accounts
-and repositories. Private repositories are excluded even with an authenticated
+Days follow `America/Los_Angeles`. Commit SHAs are deduplicated across
+repositories. Private repositories are excluded even with an authenticated
 request. Drafts, scheduled and aborted broadcasts are excluded. Only daily
 counts reach the page; email bodies, subjects, recipients and engagement data
 are not published. GitHub commit search reflects indexed public history, not

@@ -54,4 +54,28 @@ export const TOOLS: readonly Tool[] = [
       },
     ],
   },
+  {
+    id: "phantomrack",
+    name: "PhantomRack",
+    category: "Vocal effects for Ableton",
+    description:
+      "Turn a reference track into an editable vocal effects rack for Ableton Live, built from stock devices you can adjust by ear.",
+    hostedUrl: "https://phantomrack.ai/",
+    storyPath: "/projects/phantomrack",
+    logo: {
+      light: "/tools/phantomrack/logo-ink.svg",
+      dark: "/tools/phantomrack/logo-white.svg",
+      width: 225,
+      height: 40,
+    },
+    previews: [
+      {
+        label: "Homepage",
+        src: "/posts/phantomrack/homepage.webp",
+        alt: "PhantomRack’s homepage introducing reference-based vocal effects racks for Ableton Live.",
+        width: 1274,
+        height: 717,
+      },
+    ],
+  },
 ];

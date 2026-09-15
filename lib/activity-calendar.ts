@@ -1,6 +1,6 @@
 /** Public activity only. Calendar dates use Jackson's local time. */
 export const ACTIVITY_TIME_ZONE = "America/Los_Angeles";
-export const ACTIVITY_ACCOUNTS = ["ctrlswing", "jackson4am"];
+export const ACTIVITY_ACCOUNTS = ["ctrlswing"];
 
 export type ActivitySource = {
   from: string;

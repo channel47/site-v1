@@ -74,7 +74,7 @@ async function verifySources() {
     },
   });
   const fresh = await service.getNewsletterActivity(now);
-  assert.deepEqual(plain(fresh.github.counts), { '2026-09-14': 1 }, 'The same commit found through both accounts or forks counts once');
+  assert.deepEqual(plain(fresh.github.counts), { '2026-09-14': 1 }, 'The same commit found through forks counts once');
   assert.deepEqual(plain(fresh.email.counts), { '2026-07-18': 1 });
   assert.equal(requests.filter(r => r.url.hostname === 'api.kit.com').length, 2);
   assert.ok(requests.every(r => r.options.next.revalidate === 3600));
