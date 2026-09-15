@@ -58,7 +58,7 @@ Quotations are set as italic display text with breathing room, without a generic
 
 | Token role | Use |
 | --- | --- |
-| `--page` / `--surface` | Mineral paper in Light; warm charcoal with pale reading ink in Dark. System follows the device. Original image colors are preserved; never invert or dim the media. |
+| `--page` / `--surface` | Mineral paper in Light; warm charcoal with pale reading ink in Dark. System follows the device. Original image colors are preserved. Only the collection spotlight temporarily dims neighboring cards during browsing; never invert the media. |
 | `--ink` / `--body` / `--muted` | Headings and controls, sustained reading, supporting text. |
 | `--accent` | Strong blue for actual links and focus. Saturated artwork does not become a category color. |
 | `--takeover` / `--takeover-ink` | Cobalt and light ink reserved for the full-screen menu. This is the main color event in the interface. |
@@ -76,10 +76,10 @@ Page arrivals use `--ease-arrival` for an immediate response with a short, soft 
 | --- | --- |
 | Home mark | Preserve the six-piece blue-to-ink assembly and explicit replay. Hover briefly disassembles and reassembles the same six pieces over 960ms. No perpetual glitch or additional wobble. |
 | New page | `PageMotion` sequences visible headings, bylines and utility-page introductions. Article body text is visible from first paint, so an opening paragraph never disappears while the next paragraph is already readable. Animated text resolves from 3px blur and 3px below; objects from 6px blur and 8px below. At 75% eased progress both are sharp, in their final position and 96% opaque. The last few percent settle without a lingering blur. Visible artwork decodes and fonts finish loading before the sequence starts. Only the first viewport participates in long reading pages. Both About paragraphs and its follow row can arrive once on entering the viewport. |
-| Collection browsing | A native horizontal scroll shelf centers one object at a time. Neighboring objects keep a small tilt and scale down using the existing 860ms settling curve. Swipe, horizontal scroll, mouse drag and arrows all wrap in both directions. Five identical visual copies keep neighboring artwork present; after scrolling settles, the shelf recenters on the middle copy without a visual change. Only the primary copy participates in the accessibility tree and Tab order. Automatic advance waits 12 seconds per project, continues through the last-to-first boundary, pauses on hover, while offscreen, in a hidden tab or behind the menu, and stops on manual input or keyboard focus. Reduced motion disables automatic advance and animated scrolling. |
+| Collection browsing | An upright, equal-sized grid shows three columns on desktop, two below 960px and one below 520px. Hover or keyboard focus keeps one card clear while the other cards fade to 38% opacity with 3px blur over the shared 320ms timing. Keyboard focus takes precedence over hover. Leaving the cards clears the effect. Every card remains a native link in the accessibility tree and Tab order. |
 | Returning / filtering | History restores fully visible content and the original scroll position. Index filters update without replaying rows. Cancelling a visit or entering the back-forward cache clears unfinished arrivals. |
 | Switching Collection / Index (preserved, currently hidden) | Explicit grid/list clicks reuse the theme switch's native view snapshots. The selection circle travels between stationary icons over the existing 420ms feedback duration and settling curve. Outgoing content fades over 160ms; incoming content uses the existing 3px rise and blur-to-sharp arrival over 420ms. Header and footer snapshots stay still; returning to Collection through the switch does not replay the logo assembly. Visible content skips the ordinary arrival to avoid a second blur. Off-screen objects retain their once-only scroll arrivals. Navigation begins after capture without waiting for an exit animation. |
-| Object focus | Artwork lifts 10px, keeps a trace of its original angle, and expands 2.5%. The gallery label stays visible and stationary; its title and arrow change to blue. The link target stays still. Touch compresses just 1.5% over 160ms, then settles. No cursor tracking or parallax. |
+| Object focus | The artwork and caption stay in place. Hover or keyboard focus changes the title and arrow to blue; the surrounding cards soften. On touch phones, the card nearest the viewport center stays clear while neighbors use a lighter 65% opacity and 1.5px blur. Scrolling moves the focus without intercepting gestures or taps. Reduced motion disables the scroll-driven spotlight and all transitions. Touch compresses just 1.5% over 160ms. |
 | Menu trigger / wash | On desktop hover or keyboard focus, the three dots turn vertical to suggest the reel. The circle expands from that control. Type follows through a 24px rise; close freezes its current transform before fading, including an interrupted opening. |
 | Menu scrolling | Keep native momentum, perspective and edge fades. No automatic scroll, snap interception or lagging spring applied to the scroll position. |
 | Icon utilities | A circular surface expands underneath a stationary target. The glyph compresses slightly on press; labels arrive after a short dwell and leave promptly. The menu Close remains a bare X. |
@@ -106,7 +106,7 @@ Article images reserve their intrinsic width and height before lazy loading. The
 | `NavigationTakeover` | Native modal dialog with a transparent shell. A separate solid circle scales from the trigger to the farthest viewport corner; do not animate a clip over the entire dialog or blur the repeated reel. Partial words dissolve through a stationary 18% edge mask at the top and bottom, suggesting continuation without a written scroll instruction. The current main destination is centered on opening and marked with `aria-current`, including filtered Index views. Pages without a matching menu destination start at Collection. Resize preserves the reader's current reel position. Reduced motion uses an unmasked ordinary list with enough end spacing to center any destination. Footer utilities are icons. Five visual copies support looping; only the central set is exposed to assistive technology and Tab navigation. All visible copies remain normal pointer links. |
 | Menu keyboard behavior | Keyboard opening focuses Close; pointer opening focuses the dialog itself. Close is a bare X, with a short underline for keyboard focus instead of a circle. Tab remains inside the native dialog. Arrow keys move between the main links. Escape closes, restores the trigger and preserves page position. Navigating waits for the exit transition. Reduced motion closes immediately. |
 | Tools | Product introductions at `/tools`, sourced from `lib/tools.ts`. The large italic page heading shares the Index scale. A compact original product logo, availability, description and destination links sit beside a wide, undistorted screenshot. On tablets and phones, the order is identity, preview, then details. Preview tabs use the same quiet underline as Index filters, with arrow-key, Home and End navigation. The full-size link opens the selected original screenshot in a new tab. Hosted destinations use the shared `DirectionCue`; source and build-story links stay secondary. Keep original image colors in both themes, with no perspective, added frame or shadow. Vellum uses its original outlined light/dark logo assets. Only available hosted, source and build-story links appear. |
-| `Collection` | A short, personal introduction leads into a looping horizontal shelf with one centered object and glimpses of its neighbors. The active title, stationary arrow and subject align with the artwork's inset. One compact capsule groups previous and next; no position counter, progress strips or written browsing instructions. Inactive slides are inert after hydration; duplicate copies are hidden from assistive technology. Manual changes are announced, automatic changes are quiet. Native links and horizontal scrolling remain available without JavaScript. The original paired composition remains as `CollectionGrid`. |
+| `Collection` | A short, personal introduction leads into a flat responsive grid. Each upright object, title, stationary arrow and subject form one link. Desktop hover and keyboard focus soften the other cards; on touch phones the spotlight follows reading position. No carousel controls, looping copies or automatic advance. All cards and native links remain available without JavaScript. |
 | `PiecePage` | One notes/projects template with aligned serif headline and sans-serif body. Optional full video, installation and FAQs. The author’s name links to About beside a 44px portrait, with sentence-case date and reading metadata underneath. Installation follows the story. Original media remains documentary content; generated covers do not replace it. |
 | `SharePopover` | A compact Share button beside the byline opens a right-aligned panel with Copy link, Copy page, X and LinkedIn. It uses the existing feedback timing and settle curve, with reduced motion respected. Selecting an action keeps the panel open so the copy button's checkmark and Copied state, or retry feedback, remain visible. Social links open in a new tab without dismissing the panel. Escape, outside click, the Share toggle, or focus moving to another control on the page close it; focus leaving the document does not. Escape restores focus to the trigger. Sharing appears only beside the byline. |
 | `BrowseEntryLink` / `BackToBrowse` | Real Next links remember their source and restore the index/collection scroll and the selected collection object when returning. Restore the focused link only when the piece was opened with a keyboard or assistive technology; pointer/touch visits must not acquire a focus outline on return. Article headers use an ordered breadcrumb: a blue 20px Phosphor SquaresFour (Collection) or List (Index) return icon, a muted 12px Phosphor CaretRight separator, and a Notes or Projects category link. The icon has an accessible return label and native title. The current article title is included for assistive technology without visually duplicating the headline. Reading-end returns use a quiet 14px Instrument Sans “Back to collection” or “Back to index” label with a stationary 20px Phosphor ArrowLeft, distinct from the header breadcrumb. Direct arrivals return to Collection. All links retain 48px targets and align with the reading measure. |
@@ -131,37 +131,36 @@ shared title/path tie-breaks. Cover metadata selects artwork and labels, never
 display order. Article bylines and Index show the story date in the existing
 month/year treatment; publication dates remain separate in feeds and metadata.
 
-Center one object on a horizontally scrolling shelf. Keep the newest-first order
-and use native scroll snapping; leave vertical page scrolling alone. The active
-object is upright, while neighbors use the established four-degree tilt and a
-smaller scale. A narrow edge fade suggests continuation. Keep original artwork,
-lighting, title and subject. Slide width responds to desktop height as well as
-width so the controls remain close to the object on shorter laptop screens.
+Arrange upright, equally sized objects in a flat grid capped at 1140px. Use three
+columns above 960px, two columns through tablet widths, and one below 520px.
+Keep original artwork, lighting, title and subject. Use 24px column gaps and
+48px row gaps (36px on smaller screens), with no tilt, staggered layout or lift.
+The existing artwork inset aligns each title and subject beneath its image.
 
 The introduction is a centered Instrument Sans paragraph with Jackson's name
-and the site's focus on AI experiments. His name links to About. There is no
-visible headline; a screen-reader heading identifies the Collection. Leave 36px between the
-paragraph and shelf, in addition to the artwork's own inset. A single neutral capsule
-groups previous and next, each with a 48px target. The 12-second
-automatic advance loops into the first piece without rewinding across the
-shelf. Returning from a story restores the selected primary object, with
-automatic movement stopped. There is no separate play/pause button: any manual
-browsing or keyboard focus stops autoplay for the visit, and reduced motion
-keeps it off from arrival. Resize preserves selection. Without JavaScript,
-one ordinary set of real story links remains horizontally scrollable.
+linked to About. A screen-reader heading identifies the Collection. Leave 36px
+between the paragraph and grid, in addition to the artwork's own inset. Hover
+or keyboard focus sharpens attention by dimming and blurring the other cards;
+all cards return to full clarity when focus leaves. Focus-visible takes precedence
+when a mouse is parked over a different card. The focus outline stays sharp.
 
-The former paired grid remains in `CollectionGrid` and `.collection-grid` for
-reconsideration. The Index route and view-switch implementation are preserved;
+Returning from a story restores the page's scroll position and keyboard focus.
+Every object appears once and remains an ordinary link without JavaScript.
+The Index route and view-switch implementation are preserved;
 `SHOW_BROWSE_VIEWS` controls their header visibility.
 
 ## Mobile composition
 
-Keep the same horizontal shelf on phones, with a large centered object and
-small glimpses of its neighbors. The introduction keeps a comfortable 350px measure.
-The same compact control capsule keeps its 48px hit areas. Both directions
-loop continuously, with no empty end of the shelf. Keep the title, arrow and subject beneath the object, using a
-14px title and 12px subject. The image and label remain one link, with a slight
-compression on touch. Native swiping selects another object; one tap opens it.
+Phones use one column of upright objects. On coarse touch screens, the card
+nearest the viewport center stays clear as the reader scrolls; neighboring cards
+soften more gently than on desktop. Leaving the collection clears the spotlight.
+One tap opens any card immediately. The scroll behavior uses native vertical
+scrolling and never intercepts a gesture. Reduced motion keeps all mobile cards
+clear and still. Tablets retain the two-column grid and direct links.
+
+The introduction keeps a comfortable 350px measure. Keep the title, arrow and
+subject beneath each object, using a 14px title and 12px subject. The image and
+label remain one link, with a slight compression on touch.
 
 Use 24px reading gutters, 17px body text and shorter 24–48px intervals within articles. Keep the headline and prose aligned. Mobile index entries stack their title, description and inline metadata instead of squeezing a date column beside the text. Sharing controls remain grouped; article navigation keeps each arrow in a separate column.
 

@@ -562,8 +562,7 @@ html[data-theme-transition]::view-transition-new(root) {
   to { clip-path: circle(var(--theme-radius) at var(--theme-x) var(--theme-y)); }
 }
 
-/* Collection: one object in focus on a native horizontal shelf.
-   The original paired grid is preserved below for a possible return. */
+/* Collection: a flat grid with a temporary spotlight on one object. */
 .collection-main {
   padding: var(--space-4) 0 var(--space-6);
 }
@@ -579,63 +578,10 @@ html[data-theme-transition]::view-transition-new(root) {
   line-height: 1.7;
   text-wrap: pretty;
 }
-.collection-shelf {
-  width: min(100%, calc(var(--collection-width) + 2 * var(--space-10)));
-  margin: var(--space-6) auto 0;
+.collection {
+  width: min(100% - 2 * var(--page-gutter), var(--collection-width));
+  margin: var(--space-6) auto var(--space-8);
 }
-.collection-track {
-  position: relative;
-  display: flex;
-  align-items: start;
-  gap: var(--collection-slide-gap);
-  margin: 0;
-  padding: 0 calc((100% - var(--collection-slide-width)) / 2) var(--space-4);
-  list-style: none;
-  overflow-x: auto;
-  background: var(--page);
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  cursor: grab;
-  mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
-}
-.collection-track::-webkit-scrollbar { display: none; }
-.collection-track:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: -5px;
-  border-radius: var(--radius-detail);
-}
-.collection-track[data-dragging] { scroll-snap-type: none; cursor: grabbing; user-select: none; }
-.collection-track[data-dragging] a { cursor: grabbing; }
-.collection-slide {
-  --object-angle: 0deg;
-  flex: 0 0 var(--collection-slide-width);
-  min-width: 0;
-  scroll-snap-align: center;
-  mix-blend-mode: var(--collection-blend, multiply);
-}
-.collection-slide:not([data-active="true"]) .collection-piece {
-  transform: translateY(var(--space-6)) rotate(var(--object-angle)) scale(0.86);
-}
-.collection-slide .collection-caption {
-  min-height: 60px;
-  transition: opacity var(--motion-ui) var(--ease-out);
-}
-.collection-shelf[data-enhanced="true"] .collection-slide:not([data-active="true"]) .collection-caption { opacity: 0; }
-.collection-controls {
-  display: flex;
-  align-items: center;
-  width: fit-content;
-  margin: var(--space-2) auto 0;
-  padding: var(--space-1);
-  border-radius: var(--radius-control);
-  background: var(--surface);
-}
-.collection-shelf:not([data-enhanced="true"]) .collection-controls { display: none; }
-.collection-controls .icon-btn { color: var(--muted); }
-.collection-controls .icon-btn:hover,
-.collection-controls .icon-btn:focus-visible { color: var(--accent); }
-.collection-controls .icon-btn::before { background: var(--page); }
 .collection-intro p a {
   color: var(--ink);
   text-decoration: underline;
@@ -644,55 +590,39 @@ html[data-theme-transition]::view-transition-new(root) {
   transition: color var(--motion-ui) var(--ease-out);
 }
 .collection-intro p a:hover { color: var(--accent); }
-@media (max-width: 720px) {
-  .collection-shelf { --collection-slide-width: min(82vw, 400px); --collection-slide-gap: 0px; }
-  .collection-slide:not(:last-child) { margin-right: calc(-1 * var(--space-7)); }
-  .collection-intro p { max-width: 350px; }
-}
 .collection-grid {
   list-style: none;
   padding: 0;
-  margin: 0 auto;
-  width: min(100%, var(--collection-width));
+  margin: 0;
   display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  column-gap: 0;
-  row-gap: var(--space-7);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-7) var(--space-5);
   align-items: start;
 }
 .collection-object {
-  --object-angle: 0deg;
-  grid-column: 1 / span 6;
   min-width: 0;
   mix-blend-mode: var(--collection-blend, multiply);
-}
-.collection-object:nth-child(4n + 2) {
-  --object-angle: -4deg;
-  grid-column: 8 / span 5;
-  margin-top: 28%;
-}
-.collection-object:nth-child(4n + 3) {
-  --object-angle: 4deg;
-  grid-column: 1 / span 5;
-  margin-top: 28%;
-}
-.collection-object:nth-child(4n + 4) {
-  grid-column: 7 / span 6;
-}
-.collection-object:last-child:nth-child(odd) {
-  --object-angle: 0deg;
-  grid-column: 4 / span 6;
-  margin-top: 0;
 }
 .collection-link {
   display: block;
   position: relative;
   border-radius: var(--radius-detail);
 }
-/* Artwork and its gallery label share one tilt and one interaction. */
+/* Spotlight the inner piece so page arrivals and focus outlines stay independent. */
 .collection-piece {
-  transform: rotate(var(--object-angle));
-  transition: transform var(--motion-object) var(--ease-settle);
+  transition: opacity var(--motion-ui) var(--ease-out),
+    filter var(--motion-ui) var(--ease-out),
+    transform var(--motion-object) var(--ease-settle);
+}
+.collection-grid:has(.collection-link:focus-visible) .collection-link:not(:focus-visible) .collection-piece {
+  opacity: var(--collection-dim-opacity);
+  filter: blur(var(--collection-blur));
+}
+@media (max-width: 960px) {
+  .collection-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 720px) {
+  .collection-intro p { max-width: 350px; }
 }
 .collection-space {
   width: 100%;
@@ -750,16 +680,14 @@ html[data-theme="dark"] .collection-art img {
 .collection-link:focus-visible .collection-caption svg {
   color: var(--accent);
 }
-.collection-link:focus-visible .collection-piece {
-  transform: translateY(-10px) rotate(calc(var(--object-angle) * 0.2)) scale(1.025);
-}
 @media (hover: hover) and (pointer: fine) {
   .collection-link:hover .collection-caption > span,
   .collection-link:hover .collection-caption svg {
     color: var(--accent);
   }
-  .collection-link:hover .collection-piece {
-    transform: translateY(-10px) rotate(calc(var(--object-angle) * 0.2)) scale(1.025);
+  .collection-grid:has(.collection-link:hover):not(:has(.collection-link:focus-visible)) .collection-link:not(:hover) .collection-piece {
+    opacity: var(--collection-dim-opacity);
+    filter: blur(var(--collection-blur));
   }
 }
 
@@ -1962,24 +1890,23 @@ html[data-theme="dark"] .tool-name .tool-logo-dark { display: block; }
     margin-top: var(--space-1);
   }
 }
-/* A phone is a vertical collection: larger objects, alternating on the table. */
+/* On phones, the spotlight follows reading position without consuming a tap. */
 @media (max-width: 520px) {
   .site-footer { flex-wrap: wrap; }
   .collection-grid {
+    grid-template-columns: minmax(0, 1fr);
     row-gap: var(--space-6);
   }
-  .collection-object:nth-child(n) {
-    grid-column: 1 / span 10;
-    margin-top: 0;
+}
+@media (max-width: 520px) and (hover: none) and (pointer: coarse) and (prefers-reduced-motion: no-preference) {
+  .collection-grid[data-spotlight]:not(:has(.collection-link:focus-visible)) .collection-object:not([data-centered]) .collection-piece {
+    opacity: var(--collection-mobile-dim-opacity);
+    filter: blur(var(--collection-mobile-blur));
   }
-  .collection-object:nth-child(4n + 2) { grid-column: 4 / span 9; }
-  .collection-object:nth-child(4n + 3) { grid-column: 1 / span 9; }
-  .collection-object:nth-child(4n + 4) { grid-column: 3 / span 10; }
-  .collection-object:last-child:nth-child(odd) { grid-column: 2 / span 10; }
 }
 @media (hover: none) and (pointer: coarse) {
   .collection-link:active .collection-piece {
-    transform: rotate(var(--object-angle)) scale(0.985);
+    transform: scale(0.985);
     transition-duration: var(--motion-press);
   }
 }
@@ -2001,7 +1928,7 @@ html[data-theme="dark"] .tool-name .tool-logo-dark { display: block; }
   .collection-link:hover .collection-piece,
   .collection-link:active .collection-piece,
   .collection-link:focus-visible .collection-piece {
-    transform: rotate(var(--object-angle));
+    transform: none;
   }
   .collection-object {
     opacity: 1;
