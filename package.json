@@ -14,7 +14,8 @@
     "share:pack": "node scripts/share-pack.cjs",
     "test:measurement": "node scripts/test-measurement.cjs",
     "test:motion": "node scripts/test-motion.cjs && node scripts/test-browse-transition.cjs",
-    "test:theme": "node scripts/test-theme.cjs"
+    "test:theme": "node scripts/test-theme.cjs",
+    "test:activity": "node scripts/test-activity-calendar.cjs"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",

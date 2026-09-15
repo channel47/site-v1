@@ -39,6 +39,7 @@ pnpm test:content
 pnpm test:measurement
 pnpm test:motion
 pnpm test:theme
+pnpm test:activity
 # Against a running local server:
 python3 scripts/check-content-surfaces.py http://localhost:3100
 ```
@@ -68,6 +69,26 @@ python3 scripts/check-content-surfaces.py http://localhost:3100
 The parent `AGENTS.md` is the canonical guide for the Channel47 workspace.
 Current code defines behavior; `content/VOICE.md` defines voice. Existing articles
 and drafts are not automatically approved style examples.
+
+### Newsletter activity
+
+The newsletter calendar combines public commits attributed to `ctrlswing` and
+`jackson4am` with completed Kit broadcast send dates. `lib/newsletter-activity.ts`
+loads both sources on the server; the page and source requests revalidate hourly.
+GitHub works without authentication; `GITHUB_ACTIVITY_TOKEN` optionally raises
+the search rate limit. Kit uses the existing server-only `KIT_API_KEY`.
+
+Days follow `America/Los_Angeles`. Commit SHAs are deduplicated across accounts
+and repositories. Private repositories are excluded even with an authenticated
+request. Drafts, scheduled and aborted broadcasts are excluded. Only daily
+counts reach the page; email bodies, subjects, recipients and engagement data
+are not published. GitHub commit search reflects indexed public history, not
+all local work or a count of shipped releases.
+
+`data/newsletter-activity.json` holds a sanitized, dated fallback. Provider
+failures retain each source's last snapshot with its actual coverage date;
+unknown days remain unavailable instead of becoming zeros. Incomplete or
+over-limit GitHub search results also fall back rather than showing partial totals.
 
 The newsletter CLI uses Python 3. Run its local checks with:
 

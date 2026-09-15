@@ -3,9 +3,14 @@ import { SiteHeader } from "@/components/site/header"
 import { SiteFooter } from "@/components/site/footer"
 import { Capture } from "@/components/site/capture"
 import { pageMetadata } from "@/lib/seo"
-import { AUTHOR, CAPTURE } from "@/lib/site-content"
+import { CAPTURE } from "@/lib/site-content"
 import { RssSimple } from "@phosphor-icons/react/dist/ssr"
-import { AuthorPortrait } from "@/components/site/author-portrait"
+import Link from "next/link"
+import { ActivityCalendar } from "@/components/site/activity-calendar"
+import { getNewsletterActivity } from "@/lib/newsletter-activity"
+import { localActivityDate } from "@/lib/activity-calendar"
+
+export const revalidate = 3600
 
 export const metadata: Metadata = pageMetadata({
   title: "Newsletter",
@@ -14,7 +19,9 @@ export const metadata: Metadata = pageMetadata({
   path: "/newsletter",
 })
 
-export default function NewsletterPage() {
+export default async function NewsletterPage() {
+  const now = new Date()
+  const activity = await getNewsletterActivity(now)
   return (
     <div className="st-page">
       <SiteHeader />
@@ -30,22 +37,13 @@ export default function NewsletterPage() {
           <Capture placement="newsletter" helper={`${CAPTURE.helper} Unsubscribe anytime.`} />
         </div>
 
-        <section className="st-prose" aria-labelledby="nl-who-title">
-          <div className="author-heading">
-            <AuthorPortrait alt="" />
-            <h2 id="nl-who-title">About Jackson</h2>
-          </div>
-          <p>{AUTHOR.bio}</p>
-          <p>
-            I’ll share new experiments and the questions I’m still working
-            through, including the attempts that change my mind. You’ll get the
-            story behind the work and, when there’s something to use or adapt,
-            a way to try it yourself.
-          </p>
+        <div className="newsletter-context">
+          <p className="newsletter-intro">I’m <Link href="/about">Jackson</Link>. I buy media for a living and experiment with AI.</p>
+          <ActivityCalendar activity={activity} today={localActivityDate(now)} />
           <p className="nl-rss">
             <a href="/rss.xml"><RssSimple size={18} aria-hidden="true" />Read via RSS</a>
           </p>
-        </section>
+        </div>
       </main>
 
       <SiteFooter />
