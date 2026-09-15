@@ -3,6 +3,12 @@ import { getContentEntries, getEntryPreview } from "./content";
 /** Presentation only. Article text remains in content/. */
 const COVERS = [
   {
+    id: "product-gallery",
+    href: "/notes/product-gallery-codex",
+    label: "Product gallery",
+    image: "product-gallery-slides",
+  },
+  {
     id: "ballet-site",
     href: "/projects/ballet-born-simple",
     label: "Websites",
@@ -13,12 +19,6 @@ const COVERS = [
     href: "/projects/phantomrack",
     label: "Audio experiment",
     image: "phantom-faders",
-  },
-  {
-    id: "recruiting",
-    href: "/projects/recruiting",
-    label: "Recruiting workflow",
-    image: "recruiting-selector",
   },
   {
     id: "vellum",

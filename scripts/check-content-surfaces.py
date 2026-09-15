@@ -105,7 +105,7 @@ assert set(collection.objects).issubset(set(all_paths)), 'Collection points to a
 for path in collection.objects:
     assert collection.object_labels[path].startswith(titles[path] + ' — '), path
 assert '/projects/vellum' in collection.objects
-new_projects = ['ballet-born-simple', 'phantomrack', 'recruiting']
+new_projects = ['ballet-born-simple', 'phantomrack']
 expect_not_found('/preview')
 for slug in new_projects:
     assert '/projects/' + slug in collection.objects
@@ -124,7 +124,7 @@ for audio in ['hiphop-dry.mp3', 'hiphop-wet.mp3']:
     assert path.encode() in phantom
     body, _ = fetch(path)
     assert len(body) > 1000, path
-for cover in ['ballet-pointe', 'phantom-faders', 'recruiting-selector']:
+for cover in ['ballet-pointe', 'phantom-faders']:
     assert '/collection/' + cover + '.webp' in collection.images
 expect_not_found('/preview/vellum')
 expect_not_found('/preview/vellum/media/x-all-grid.webp')
@@ -149,7 +149,6 @@ assert index_page.dates == [story_dates[path] for path in index_page.rows]
 assert index_page.dates == sorted(index_page.dates, reverse=True), 'Browsing is newest-story-first'
 assert story_dates['/projects/ballet-born-simple'] == '2026-01'
 assert story_dates['/projects/google-ads'] == '2026-01'
-assert story_dates['/projects/recruiting'] == '2026-07'
 for group, paths in expected.items():
     html, _ = fetch('/browse?type=' + group)
     assert set(Page(html.decode()).rows) == set(paths), group
@@ -270,13 +269,16 @@ for old, new in legacy:
     if items:
         assert items[0].findtext('guid') == site + old, old
 # Retired pieces must disappear everywhere, not merely from the gallery.
-retired = ['ad-recon', 'brief-me', 'creative-strategist', 'make-static-ads', 'bing-ads', 'linkedin-ads', 'meta-ads', 'pinterest-ads', 'tiktok-ads']
+retired = ['ad-recon', 'brief-me', 'creative-strategist', 'make-static-ads', 'bing-ads', 'linkedin-ads', 'meta-ads', 'pinterest-ads', 'tiktok-ads', 'recruiting']
 for slug in retired:
     retired_path = '/projects/' + slug
     assert site + retired_path not in urls
     assert not any(i.findtext('link') == site + retired_path for i in feed.findall('./channel/item'))
-    for suffix in ['', '.md']:
+    for suffix in ['', '.md', '/opengraph-image']:
         expect_not_found(retired_path + suffix)
+recruiting_search, _ = fetch('/api/search?q=recruiting')
+assert not any(r['url'] == site + '/projects/recruiting' for r in json.loads(recruiting_search)['results'])
+expect_not_found('/preview/drafts/recruiting')
 # Media paths under /posts must not be mistaken for retired article routes.
 media, path = fetch('/posts/codex-static-ads-native-pass.jpg')
 assert media[:2] == b'\xff\xd8' and path.startswith('/posts/')

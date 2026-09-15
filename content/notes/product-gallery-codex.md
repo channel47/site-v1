@@ -1,6 +1,6 @@
 ---
-title: Building a product gallery in Codex
-description: I used a product photo and a gallery reference to make seven images for X-All. The useful part came when we reviewed them together on the page.
+title: Seven images for one product page
+description: I asked Codex to make a gallery from one product photograph. I loved the seven images, then saw what needed to change when we put them on the store.
 date: 2026-09-14
 newsletter: I share the workflows, images, and revisions behind experiments like this one.
 tags: [codex, image-generation, product-imagery, art-direction, skills, ecommerce]
@@ -11,7 +11,7 @@ gallery:
   id: gallery-study
   title: The first seven images
   initial: 4
-  description: These are the original generated concepts. The cleaning scene is illustrative, the instructions were provisional, and small packaging details still needed inspection.
+  description: The first set, with notes from the review. These are generated concepts; the product details and instructions still needed checking.
   images:
     - src: /posts/product-gallery-codex/01-product-and-contents.webp
       label: Product
@@ -57,69 +57,55 @@ gallery:
       height: 1254
 ---
 
-I sent Codex a link to [Primal Queen’s product page](https://primalqueen.com/#join_pkg) because I liked how much its image gallery explained. There were big headlines, product shots, diagrams, and textured backgrounds. Moving through it felt like getting a different part of the product story with each image.
+“These are fantastic,” I told Codex, and asked it to put the images on the store. It had turned one product photograph into seven pieces of gallery artwork, with a blue-and-gold style running through the set. Later, when we reviewed the product page, we found that a shopper couldn’t even reach the last two.
 
-I wanted to try that for X-All, the cleaning brand I work on. We had product photos. I wanted the gallery to do more with them: explain what the product was for, how someone would use it, and what they would receive when they ordered.
+I’d started with a link to [Primal Queen’s product page](https://primalqueen.com/#join_pkg). I liked how much its gallery explained as I moved through it. Big headlines, product shots, diagrams, and textured backgrounds gave each image something of its own to say. I wanted to try that for X-All, the cleaning brand I work on. We had photographs of the products; I wanted to use the gallery to explain what someone could do with them.
 
-I’d already been [making complete static ads in Codex](/notes/codex-static-ads-google-flow). A product gallery gave me a different problem. The images had to work together, and their order mattered.
+I’d already been [making complete static ads in Codex](/notes/codex-static-ads-google-flow), so I knew it could put the product, setting, and words together in an image. This time I wanted six to eight images that would make sense in sequence. If we could get one product right, I wanted to work through the others and eventually the kits.
 
-![The first generated concept established the blue-and-gold treatment around the supplied bottle and pouch.](/posts/product-gallery-codex/01-product-and-contents.webp)
+Before making anything, I asked Codex to look at the reference and ask me questions. It wanted to know whether I meant the gallery artwork or the whole page, which parts of the reference appealed to me, and where to begin. We settled on the educational sequence and colorful, textured artwork, adapted to X-All’s packaging and colors. Multi-Purpose Spray would be the first product.
 
-My first request was deliberately small: look at the reference, then ask me questions. Codex asked whether I meant the gallery artwork or the whole product page, what I liked about the reference, and which product we should start with.
+That gave us more to explain than a spray bottle. The product comes with a bottle and a pouch of cleaning tablets; a customer needs to understand how they go together and what happens when it’s time for a refill. We used one photograph of the bottle and pouch as the appearance reference throughout the set.
 
-That helped me make the brief more specific. I wanted the educational sequence and the colorful treatment that made me want to keep browsing. I wanted to adapt it to X-All’s own packaging and colors. Six to eight images would be enough.
+Codex planned seven images before it generated them. The first would introduce the product and its contents, followed by the cleaning benefit, suitable kitchen surfaces, instructions, refills, packaging details, and purchase options. It wrote the copy for each and noted where the information came from. I could look through the proposed sequence before there was any artwork to get attached to.
 
-We chose Multi-Purpose Spray as the pilot. It comes with a bottle and a pouch of cleaning tablets, so there was something useful to explain beyond the bottle itself. If the process worked, I wanted to adapt it to the other products and eventually the kits.
+The first image made the direction much easier to see. A large white headline sat above the bottle and pouch on saturated blue, with yellow-gold accents cutting across the composition. The product took up much of the lower half. Codex used this image as a style reference for the next ones, alongside the original photograph that showed what the product actually looked like.
 
-## Give each image a job
+![The first image established the white type, saturated blue, and yellow-gold accents used across the gallery.](/posts/product-gallery-codex/01-product-and-contents.webp)
 
-I uploaded the product packshots and made them the source of truth for appearance. The working set covered 21 products, but this gallery used one bottle-and-pouch photograph throughout. That kept the pilot manageable.
+As the set grew, the layouts changed with the information. Three kitchen surfaces got three separate photo windows. The instructions became a pale-blue diagram. The refill image used a yellow background, giving it a different feel while keeping the same bottle, pouch, and type. There was enough in common to recognize the set, and enough variety to make the next image worth opening.
 
-Before generating anything, Codex built a plan for seven images: the product and contents, the main cleaning benefit, suitable kitchen surfaces, instructions, refills, packaging details, and purchase options. Each had its own copy and a note about where the information came from.
-
-That plan gave me something I could judge before looking at the artwork. Did we explain the refill format? Were we repeating ourselves? Was there a reason for the next image to exist?
-
-The first generated image established the direction: a large white headline, saturated blue, yellow-gold accents, and the bottle and pouch taking up most of the lower half. Codex then used that image as a style reference alongside the original product photo.
-
-The layouts could change without starting over. The kitchen-use image had three photo windows. The instructions became a pale-blue diagram. The refill image switched to a yellow background. The repeated colors and type connected them, while the changes gave the gallery some movement.
+There were small corrections along the way. A headline and caption on the applications image sat too close to the edges, so Codex revised the typography and spacing. The product itself needed close inspection, too. Fine packaging text drifted, especially on the tiny bottle pictured on the pouch. The original photograph kept the product recognizable across the set, though the generator was still redrawing details I needed to check.
 
 [Explore the first seven images.](https://channel47.dev/notes/product-gallery-codex#gallery-study)
 
-I liked the set enough to ask Codex to put it on the store. My response was, “These are fantastic.”
+This was the set I was so pleased with. Once it was on the store, I asked for the original product photograph to be the first image. It gave someone the clearest look at what they were buying. That left the generated introduction immediately behind it, showing the bottle and pouch again under the big headline. We were introducing the product twice before getting to what it could help someone do.
 
-There were details to fix even then. The first applications image had a headline and a caption too close to the edges. Codex made a focused revision to the typography and spacing. Small packaging text also drifted in the generated images, particularly the tiny bottle pictured on the pouch. Supplying a real product photo helped keep the product recognizable, but it didn’t make every printed detail exact.
+![The storefront during review. The original product photograph is first, followed by the generated introduction. The black bar is part of the inspection session.](/posts/product-gallery-codex/storefront-review.webp "screenshot")
 
-## Look at the page, too
+I asked Codex whether the setup was likely to help conversion and what it would improve. That was when it found the missing images. We had eight attached to the product—the original photograph plus the seven new ones—but the theme only displayed six. The last two existed in the store’s records without being available in the gallery. Before we could learn anything from their order or their content, a shopper needed to be able to see them.
 
-Once the artwork was on the product, I asked for the original packshot to be the hero. It was the clearest introduction to what someone was buying.
+Then there was the instruction diagram. I hadn’t supplied verified mixing directions, and when Codex asked for them, I told it to assume defaults. It kept amounts and timings out of the artwork and gave us four steps: add water, add a tablet, let it dissolve, then “Spray & wipe.” They looked simple enough. Elsewhere on the same page, the written instructions told the customer to wait before wiping.
 
-That changed how the rest of the sequence read. The first generated slide now introduced the same product again. The cleaning-benefit image could do more useful work in that second position.
+I’d treated the missing directions as something we could work around while making the images. Now we had two versions of how to use the product. Leaving out a number hadn’t removed the assumption; “Spray & wipe” still suggested that one action could follow the other immediately. We needed the actual product directions to resolve the disagreement, rather than choosing whichever version fit the layout better.
 
-![The storefront during review, after the original packshot was restored as the hero. The next thumbnail repeats the product introduction. The black bar belongs to the inspection session.](/posts/product-gallery-codex/storefront-review.webp "screenshot")
+![The original instruction image. Its final step says “Spray & wipe,” leaving out the waiting step described elsewhere on the page.](/posts/product-gallery-codex/04-how-it-works.webp)
 
-I asked Codex whether this was a good setup for conversion and what it would improve. It found a more immediate problem: eight images were attached to the product, but the theme displayed only six. The final two were saved in the store and still unavailable to a shopper browsing the gallery.
+Looking at the sequence also changed what I wanted from the packaging-details image. It repeated phrases from the package, which we were already showing. I wanted that space to add something a customer hadn’t learned yet. A real demonstration or a specific customer review could do that, once we had the material to support it.
 
-The instructions needed another look as well. I hadn’t supplied verified mixing directions. When Codex asked, I told it to assume defaults. It avoided specific amounts and timings, but the resulting diagram ended with “Spray & wipe.” The written product page told the customer to wait before wiping.
+I asked Codex to revise the gallery around a tighter order. The original photograph would come first, with the main benefit or a demonstration directly after it. Suitable surfaces and verified instructions would explain the use, then contents and refills would explain the format. Customer proof and purchase options would finish the sequence. The gallery above is the first set, including the images we decided to rethink.
 
-Even that short, apparently simple instruction had introduced an assumption. The page text didn’t settle which directions were correct; it showed that the two versions disagreed. The actual product directions needed to settle it.
-
-![The original instruction concept was easy to scan, but its last step compressed spraying and wiping into one action. This is the version we identified for revision.](/posts/product-gallery-codex/04-how-it-works.webp)
-
-The review also made the packaging-details slide less convincing to me. It repeated what the package said. A real demonstration or a specific customer review could give someone a different reason to believe the product would help.
-
-We settled on a tighter order: packshot, main benefit or demonstration, suitable surfaces, how to use it, contents and refills, customer proof, then purchase options. I asked Codex to make that revision. The gallery above preserves the first set so you can see what we were changing.
-
-I still want to know whether this approach gets more people to buy. The work here doesn’t answer that yet. It gave me a gallery I wanted to use and, after review, a clearer version to test. Completed purchases will matter more than how much I like the images.
+I still want to test whether the gallery helps more people buy. Liking the artwork hasn’t answered that question. But reviewing it on the page gave me specific things to change before I could learn much from a test: show the whole set, stop repeating the introduction, and make the instructions agree. I’d asked for better images and got a set I wanted to use. Putting them together made me much more particular about what each one was there to explain.
 
 ## Try it with your product
 
-I wanted to keep the process: inspect a reference, define what each image needs to explain, establish a visual direction, and review the set on the page. I’ve packaged it as a downloadable skill, which is a set of instructions an agent can reuse.
+I wanted to take this process to the next product without reconstructing it from the conversation. I’ve packaged it as a downloadable skill: instructions an agent can reuse to inspect a reference, plan the sequence, make the images, and review them on the page.
 
 <p class="workflow-downloads"><a class="workflow-download" href="/downloads/make-product-galleries-v1.zip" download>Download the gallery skill</a><a href="/downloads/make-product-galleries/SKILL.md">Read the instructions</a></p>
 
-The download includes the skill, a blank brief, and a starting prompt. It contains the reusable method; the X-All product assets stay with this example. To use it, unzip the folder and ask Codex to install the included `SKILL.md` as a personal skill. You’ll need an agent environment with image generation to make the artwork.
+The download includes the skill, a blank brief, and a starting prompt. Bring your own product photographs and facts; X-All’s assets aren’t included. Unzip the folder and ask Codex to install the included `SKILL.md` as a personal skill, in an environment with image generation available.
 
-Start with one product photograph, the facts you can stand behind, and a reference whose gallery you like. If you want to try the approach before installing anything, attach those materials in an image-capable agent and use this prompt:
+You can also try it without installing the skill. Attach a product photograph, the verified product facts, and a reference whose gallery you like, then use this prompt:
 
 ```text
 Help me create a product-image gallery using the attached product photo as the appearance reference and the product facts I supply as the factual source. Inspect my visual reference and explain what makes its information sequence and artwork useful.
@@ -128,5 +114,3 @@ Plan 6–8 images. Give each a distinct customer question, a short headline, its
 
 Review the product details, text, and mobile readability. Finally, review the gallery in order alongside the product page: remove repeated explanations, reconcile instructions, and make sure every image is accessible. Save the artwork, prompts, and notes about anything still unverified.
 ```
-
-The part I want to repeat is that last review. In this case, it changed what belonged in the gallery and what needed to happen before I could judge it. I started by asking for better images. By the end, I was looking much more closely at what each image was asking a customer to understand.
