@@ -24,8 +24,8 @@ import {
 
 export const SITE_URL = "https://channel47.dev"
 
-/** Canonical brand string — lowercase, matches the site design rule
- * ("channel47" everywhere) and drives every page title, OG tag, and schema
+/** Canonical metadata name — lowercase, matches the site design rule
+ * and drives every page title, OG tag, and schema
  * `name` field. Historical capitalized spellings live only in `alternateName`
  * below, so entity matching still works for engines that know the brand
  * that way. */
@@ -34,7 +34,7 @@ export const SITE_NAME = "channel47"
 /** The canonical positioning string: homepage meta description, WebSite/Org
  * schema description, and the llms.txt blockquote. One string, everywhere. */
 export const SITE_DESCRIPTION =
-  "Projects and notes by Jackson Dean. Software, AI experiments, and things I’m making and figuring out."
+  "Exploring what we can learn to make with AI. Projects, experiments, and notes by Jackson Dean, with ideas to try for yourself."
 
 export const AUTHOR_NAME = "Jackson Dean"
 
@@ -76,7 +76,7 @@ export function baseGraph() {
         name: AUTHOR_NAME,
         url: SITE_URL,
         description:
-          "Builds software, experiments with AI, and shares projects and notes at channel47. Buys media for a living.",
+          "Buys media for a living and explores what he can learn to make with AI. Shares experiments, tools, and the thinking behind them at channel47.",
         worksFor: orgRef,
       },
       {

@@ -9,7 +9,7 @@ export const LINKS = {
 export const AUTHOR = {
   name: "Jackson Dean",
   avatar: "/jackson.jpeg",
-  bio: "I buy media for a living. Along the way, I build tools for myself, try out ideas, and follow the ones that catch my attention. Some become useful software. Others leave me with something worth sharing. This is where I keep both, including the work in progress.",
+  bio: "I buy media for a living. I also use AI to explore ideas and make things I couldn’t make before, from a ballet website for my fiancée to tools for my own work.",
 } as const
 
 /** Working-session offer page. Keep the published offer facts intact. */
@@ -47,9 +47,10 @@ export const SESSION = {
 
 /** Sitewide email-capture copy. */
 export const CAPTURE = {
+  title: "Follow the experiments.",
   cta: "Subscribe",
   helper:
-    "Occasional emails with new projects, experiments, and notes. No fixed schedule.",
+    "Occasional emails about what I’m making, what I’m learning, and where it leads next. No fixed schedule.",
   successTitle: "You're on the list.",
   successHelper: "You'll hear from me when there is something new to share.",
 } as const

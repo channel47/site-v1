@@ -9,7 +9,7 @@ import { TOOLS } from "@/lib/tools";
 
 export const metadata = pageMetadata({
   title: "Tools",
-  description: "Things I’m building for myself, shared for you to try.",
+  description: "Tools that grew out of my own experiments. Explore what they do, read how they came about, and see what you might make with them.",
   path: "/tools",
 });
 
@@ -20,7 +20,7 @@ export default function ToolsPage() {
       <main id="main-content" className="st-shell tools-page">
         <header className="st-head tools-heading">
           <h1 className="st-h1">Tools</h1>
-          <p>Things I’m building for myself, shared for you to try.</p>
+          <p>Tools that grew out of my own experiments. Explore what they do, read how they came about, and see what you might make with them.</p>
         </header>
         <div className="tools-list">
           {TOOLS.map((tool, index) => (

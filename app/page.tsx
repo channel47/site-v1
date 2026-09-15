@@ -11,12 +11,12 @@ export default function Page() {
     <div className="st-page collection-page">
       <SiteHeader home browseView="collection" />
       <main id="main-content" className="collection-main">
+        <h1 className="sr-only">Collection</h1>
         <div className="collection-intro">
-          <h1>Things I’m making <i>and figuring out.</i></h1>
           <p>
-            I’m <Link href="/about">Jackson</Link>. I buy media for a living, build tools for myself,
-            and follow the ideas that catch my attention. This is where I share
-            what I’m learning along the way.
+            I’m <Link href="/about">Jackson</Link>. I experiment with AI to
+            understand what it’s capable of and, in turn, what I might be capable
+            of. This is a collection of that work, with ideas you can take further.
           </p>
         </div>
         <Collection items={items} />

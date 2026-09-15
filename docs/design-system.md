@@ -138,9 +138,10 @@ smaller scale. A narrow edge fade suggests continuation. Keep original artwork,
 lighting, title and subject. Slide width responds to desktop height as well as
 width so the controls remain close to the object on shorter laptop screens.
 
-The introduction uses the existing Instrument Serif and Instrument Sans,
-keeping the broad headline and adding Jackson's name, day job and curiosity
-in the supporting paragraph. His name links to About. A single neutral capsule
+The introduction is a centered Instrument Sans paragraph with Jackson's name
+and the site's focus on AI experiments. His name links to About. There is no
+visible headline; a screen-reader heading identifies the Collection. Leave 36px between the
+paragraph and shelf, in addition to the artwork's own inset. A single neutral capsule
 groups previous and next, each with a 48px target. The 12-second
 automatic advance loops into the first piece without rewinding across the
 shelf. Returning from a story restores the selected primary object, with
@@ -156,7 +157,7 @@ reconsideration. The Index route and view-switch implementation are preserved;
 ## Mobile composition
 
 Keep the same horizontal shelf on phones, with a large centered object and
-small glimpses of its neighbors. The headline wraps to two balanced lines.
+small glimpses of its neighbors. The introduction keeps a comfortable 350px measure.
 The same compact control capsule keeps its 48px hit areas. Both directions
 loop continuously, with no empty end of the shelf. Keep the title, arrow and subject beneath the object, using a
 14px title and 12px subject. The image and label remain one link, with a slight

@@ -13,7 +13,7 @@ export const PUBLIC_PAGES = [
     path: "/",
     title: "Home",
     description:
-      "Projects and notes by Jackson Dean: software, experiments, and things learned along the way.",
+      "Jackson Dean’s experiments with AI: what he’s making, what he’s learning, and ideas to try for yourself.",
     lastModified: "content",
   },
   {
@@ -25,17 +25,17 @@ export const PUBLIC_PAGES = [
   {
     path: "/tools",
     title: "Tools",
-    description: "Things I’m building for myself, shared for you to try.",
+    description: "Tools that grew out of my own experiments. Explore what they do, read how they came about, and see what you might make with them.",
   },
   {
     path: "/about",
     title: "About",
-    description: "About Jackson Dean and the collection.",
+    description: "Why Jackson Dean is exploring AI, developing his own abilities, and sharing the work at channel47.",
   },
   {
     path: "/newsletter",
     title: "Newsletter",
-    description: "Subscribe for channel47 updates.",
+    description: "Occasional emails about Jackson Dean’s experiments, what he’s learning, and ideas you can try yourself.",
   },
   {
     path: "/session",
@@ -61,7 +61,7 @@ export const CONTENT_GROUPS = [
     title: "Projects",
     icon: "projects",
     href: "/browse?type=projects",
-    desc: "Software, tools, and experiments. Things I’m making for myself and sharing along the way.",
+    desc: "Things I’m learning to make, from software to experiments with sound and images. The work, the story behind it, and ways to explore further.",
     linkText: "Browse all projects →",
   },
   {
@@ -69,7 +69,7 @@ export const CONTENT_GROUPS = [
     title: "Notes",
     icon: "notes",
     href: "/browse?type=notes",
-    desc: "What I’m trying, learning, and figuring out. Short observations and longer write-ups about the work.",
+    desc: "What I’m trying, what changes my mind, and the questions I want to keep following. Observations and write-ups from the experiments.",
     linkText: "Browse all notes →",
   },
 ] as const;

@@ -3,6 +3,7 @@ import { getNextRead } from "@/lib/content";
 import { Capture } from "./capture";
 import { BackToBrowse } from "./browse-navigation";
 import { DirectionCue } from "./direction-cue";
+import { CAPTURE } from "@/lib/site-content";
 export function ReadingEnd({ href, newsletter }: { href: string; newsletter?: string }) {
   const next = getNextRead(href);
   return (
@@ -17,7 +18,7 @@ export function ReadingEnd({ href, newsletter }: { href: string; newsletter?: st
         </nav>
       ) : null}
       <section className="reading-subscribe" aria-label="Subscribe">
-        <h2>Follow what I’m working on.</h2>
+        <h2>{CAPTURE.title}</h2>
         <Capture placement="article_end" helper={newsletter ? `${newsletter} Occasional emails, no fixed schedule.` : undefined} />
       </section>
       <BackToBrowse href="/" className="reading-back" />

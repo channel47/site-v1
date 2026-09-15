@@ -10,7 +10,7 @@ import { AuthorPortrait } from "@/components/site/author-portrait"
 export const metadata: Metadata = pageMetadata({
   title: "Newsletter",
   description:
-    "Occasional emails from Jackson Dean with new projects, experiments, and notes. No fixed schedule.",
+    "Follow Jackson Dean’s experiments with AI, what he’s learning, and ideas you can try yourself. Occasional emails, no fixed schedule.",
   path: "/newsletter",
 })
 
@@ -22,7 +22,7 @@ export default function NewsletterPage() {
       <main id="main-content" className="st-shell">
         <header className="st-head">
           <h1 className="st-h1">
-            Follow what I’m working on.
+            {CAPTURE.title}
           </h1>
         </header>
 
@@ -37,9 +37,10 @@ export default function NewsletterPage() {
           </div>
           <p>{AUTHOR.bio}</p>
           <p>
-            I’ll send you selected projects and notes about things I’m building,
-            experiments, and ideas I’m still working through.
-            There’s no fixed schedule and no requirement for everything to be finished.
+            I’ll share new experiments and the questions I’m still working
+            through, including the attempts that change my mind. You’ll get the
+            story behind the work and, when there’s something to use or adapt,
+            a way to try it yourself.
           </p>
           <p className="nl-rss">
             <a href="/rss.xml"><RssSimple size={18} aria-hidden="true" />Read via RSS</a>

@@ -3,23 +3,30 @@
 Use this brief when choosing, drafting, or editing site content, newsletters,
 and sharing text.
 
-Write about the curiosity and growing confidence that come from trying things
-and discovering you can make them yourself. Help the reader understand why
-Jackson wanted to try, without requiring every piece to state a lesson.
+Preserve the thought before polishing the sentence. Keep Jackson’s specific
+distinctions, interests, and unresolved tensions.
 
-Use simple words, simple sentences, and a rhythm that makes the reader want to
-continue. Vary sentence length and write connected paragraphs. Say what you
-mean; prefer a literal phrase to a decorative one.
+Write clearly for an interested adult. Let sentence length and rhythm follow
+the thought. Make complex ideas understandable without reducing them to general
+statements about learning, curiosity, or making things.
+
+Preserve conviction as carefully as uncertainty. Don’t add a humble disclaimer,
+a lesson, or a story about growing confidence unless the source supports it.
+
+Give each piece the structure its purpose requires. An About page should explain
+what interests Jackson and why someone might follow along. An essay can develop
+an experience or argument.
+
+When editing, check what meaning disappeared—not just whether the result reads
+smoothly.
 
 Give a new reader enough context to follow. Introduce people and unfamiliar
 tools naturally. Choose details that move the story forward or make it clearer.
 
-Craft the prose freely from the source material. Follow what Jackson wanted
-to try or understand and what changed as he went. Give the moments that changed
-his expectations or actions room to unfold before explaining their meaning.
-Let the source determine the story's shape. Preserve Jackson's meaning and
-uncertainty. Keep journals and research in the background. Never invent
-experiences, dialogue, or results.
+Craft the prose freely from the source material while preserving its meaning.
+When telling a story, give the moments that changed Jackson’s expectations or
+actions room to unfold before explaining their meaning. Keep journals and
+research in the background. Never invent experiences, dialogue, or results.
 
 Write close to the experience as it unfolds. Use past tense for what has
 happened and present tense for what Jackson is trying, noticing, or still
