@@ -18,9 +18,9 @@ import { SocialLinks } from "./social-links";
 import { motionMilliseconds } from "@/lib/motion";
 
 const LINKS = [
-  { href: "/", title: "Collection" },
-  { href: "/tools", title: "Tools" },
+  { href: "/", title: "Gallery" },
   { href: "/browse", title: "Index" },
+  { href: "/tools", title: "Tools" },
   { href: "/about", title: "About" },
   {
     href: "/newsletter",
